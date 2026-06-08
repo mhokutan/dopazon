@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dopazon — Confession Cart</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
@@ -29,7 +30,6 @@
   .nav-link{color:#fff;text-decoration:none;font-size:13px;padding:9px 10px;white-space:nowrap;border:1px solid transparent;}
   .nav-link:hover{border-color:#fff;border-radius:2px;}
   .nav-link.active{background:#131921;}
-  /* Hero */
   .confession-hero{background:linear-gradient(135deg,#131921,#1a2a3a);color:#fff;padding:35px 20px;text-align:center;}
   .confession-hero h1{font-size:36px;font-weight:700;margin-bottom:8px;}
   .confession-hero h1 span{color:#FF9900;}
@@ -37,36 +37,29 @@
   .hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
   .hero-stat strong{display:block;font-size:28px;color:#FF9900;font-weight:700;}
   .hero-stat span{font-size:12px;color:#aaa;}
-  /* Layout */
   .confession-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;max-width:1200px;margin:20px auto;padding:0 15px;}
-  /* Feed */
   .feed-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
   .sort-btn{background:#fff;border:1px solid #ddd;border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;}
   .sort-btn.active{background:#232F3E;color:#fff;border-color:#232F3E;}
   .cat-filter-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
   .cat-btn{background:#fff;border:1px solid #ddd;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;}
   .cat-btn.active{background:#FF9900;border-color:#FF9900;font-weight:700;}
-  /* Confession card */
   .confession-card{background:#fff;border-radius:4px;padding:16px;margin-bottom:12px;border-left:4px solid #FF9900;}
   .card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;}
+  .avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;color:#fff;}
   .card-meta{flex:1;}
   .card-user{font-size:13px;font-weight:700;}
   .card-time{font-size:11px;color:#777;}
   .card-saved{background:#CC0C39;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
-  .card-mood{font-size:18px;margin-left:4px;}
   .card-item{font-size:15px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
-  .card-item-emoji{font-size:24px;}
   .card-story{font-size:13px;color:#555;line-height:1.5;margin-bottom:10px;}
   .card-actions{display:flex;gap:10px;align-items:center;}
   .reaction-btn{background:none;border:1px solid #ddd;border-radius:20px;padding:5px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;}
   .reaction-btn:hover{border-color:#FF9900;background:#FFF8EE;}
   .reaction-btn.liked{background:#FFF8EE;border-color:#FF9900;color:#C7511F;}
   .share-btn{background:none;border:none;color:#007185;font-size:13px;cursor:pointer;margin-left:auto;}
-  .share-btn:hover{text-decoration:underline;}
-  /* Confession Form */
   .confession-form-box{background:#fff;border-radius:4px;padding:20px;margin-bottom:16px;}
-  .confession-form-box h3{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .confession-form-box h3{font-size:16px;font-weight:700;margin-bottom:12px;}
   .form-group{margin-bottom:12px;}
   .form-group label{display:block;font-size:13px;font-weight:700;margin-bottom:4px;}
   .form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #aaa;border-radius:4px;padding:8px;font-size:13px;outline:none;font-family:Arial,sans-serif;}
@@ -76,95 +69,77 @@
   .mood-btn.selected{border-color:#FF9900;background:#FFF8EE;}
   .submit-confession{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;}
   .submit-confession:hover{background:#F7CA00;}
-  /* Preview */
-  .preview-box{background:#EAEDED;border-radius:4px;padding:12px;margin-bottom:12px;display:none;}
-  .preview-box.show{display:block;}
-  .preview-label{font-size:11px;color:#777;font-weight:700;text-transform:uppercase;margin-bottom:6px;}
-  /* Sidebar */
+  .submit-confession:disabled{opacity:0.6;cursor:not-allowed;}
   .sidebar-widget{background:#fff;border-radius:4px;padding:15px;margin-bottom:15px;}
   .sidebar-widget h3{font-size:14px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #eee;}
   .leaderboard-item{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;}
   .rank-num{font-weight:700;color:#555;width:18px;}
-  .rank-medal{font-size:16px;}
   .rank-info{flex:1;}
   .rank-name{font-weight:500;}
   .rank-amount{color:#CC0C39;font-weight:700;font-size:14px;}
   .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:13px;}
   .stat-row:last-child{border:none;}
   .stat-val{font-weight:700;color:#CC0C39;}
-  .cat-list{list-style:none;}
-  .cat-list li{padding:6px 0;border-bottom:1px solid #eee;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;}
-  .cat-list li:hover{color:#C7511F;}
-  .cat-list li:last-child{border:none;}
-  /* Toast */
+  .loading-state{text-align:center;padding:30px;color:#777;font-size:14px;}
+  .spinner{display:inline-block;width:20px;height:20px;border:3px solid #ddd;border-top-color:#FF9900;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .empty-state{text-align:center;padding:40px;color:#777;}
+  .empty-state div{font-size:50px;margin-bottom:12px;}
   .cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;}
-  @media(max-width:768px){.confession-layout{grid-template-columns:1fr;}.sidebar-widget:nth-child(n+2){display:none;}}
+  .error-msg{background:#FFEEEE;border:1px solid #CC0C39;color:#CC0C39;padding:8px 12px;border-radius:4px;font-size:13px;margin-top:6px;display:none;}
+  @media(max-width:768px){.confession-layout{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header id="header">
-  <a href="index.html" class="logo">
-    <div class="logo-text">dopa<span>zon</span></div>
-    <div class="logo-sub">.com</div>
-  </a>
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
   <div class="search-bar">
     <select class="search-select"><option>All</option></select>
     <input class="search-input" type="text" placeholder="Search confessions...">
-    <button class="search-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </button>
+    <button class="search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
   <a href="index.html" class="header-link"><span>Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="header-link"><span>Continue</span><strong>Shopping Free</strong></a>
-  <a href="shop.html" class="cart-link">
-    <span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
-    <strong>Cart</strong>
-  </a>
+  <a href="#" class="header-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account ▾</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
-<!-- NAV -->
 <nav id="navbar">
   <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="shop.html" class="nav-link">Shop</a>
-  <a href="confessions.html" class="nav-link active" style="background:#131921;">💬 Confession Cart</a>
-  <a href="shop.html" class="nav-link">Community Stores</a>
+  <a href="confessions.html" class="nav-link active">💬 Confession Cart</a>
   <a href="#" class="nav-link" style="color:#FF9900;">🎁 Always Free</a>
 </nav>
 
-<!-- HERO -->
 <div class="confession-hero">
   <h1>💬 Confession <span>Cart</span></h1>
   <p>Share what you almost bought. The community saves millions together — and feels way better.</p>
   <div class="hero-stats">
-    <div class="hero-stat"><strong id="hSaved">$0</strong><span>Saved Today</span></div>
+    <div class="hero-stat"><strong id="hSaved">$0</strong><span>Saved by Community</span></div>
     <div class="hero-stat"><strong id="hConfessions">0</strong><span>Confessions</span></div>
-    <div class="hero-stat"><strong id="hReactions">0</strong><span>"Same" Reactions</span></div>
-    <div class="hero-stat"><strong id="hAvg">$0</strong><span>Avg. Saved per Person</span></div>
+    <div class="hero-stat"><strong id="hReactions">0</strong><span>Reactions</span></div>
+    <div class="hero-stat"><strong id="hAvg">$0</strong><span>Avg. Saved</span></div>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
 <div class="confession-layout">
-
-  <!-- LEFT: Form + Feed -->
   <div>
     <!-- Form -->
     <div class="confession-form-box">
       <h3>🤫 Add Your Confession</h3>
       <div class="form-group">
         <label>What did you almost buy?</label>
-        <input type="text" id="confItem" placeholder="e.g. Wireless noise-cancelling headphones" oninput="updatePreview()">
+        <input type="text" id="confItem" placeholder="e.g. Wireless noise-cancelling headphones">
       </div>
       <div class="form-group">
-        <label>How much would you have spent?</label>
-        <input type="number" id="confAmount" placeholder="249" min="1" oninput="updatePreview()">
+        <label>How much would you have spent? ($)</label>
+        <input type="number" id="confAmount" placeholder="249" min="1">
       </div>
       <div class="form-group">
         <label>Category</label>
-        <select id="confCat" onchange="updatePreview()">
+        <select id="confCat">
           <option value="electronics">📱 Electronics</option>
           <option value="fashion">👗 Fashion</option>
           <option value="beauty">💄 Beauty</option>
@@ -176,294 +151,329 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Your story (what happened?)</label>
-        <textarea id="confStory" rows="3" placeholder="It was 2am, I had 14 tabs open..." oninput="updatePreview()"></textarea>
+        <label>Your story</label>
+        <textarea id="confStory" rows="3" placeholder="It was 2am, I had 14 tabs open..."></textarea>
       </div>
       <div class="form-group">
         <label>Your mood</label>
         <div class="mood-grid" id="moodGrid">
-          <div class="mood-btn selected" onclick="selectMood('😤','this')" data-mood="😤" title="Frustrated">😤</div>
-          <div class="mood-btn" onclick="selectMood('😌','this')" data-mood="😌" title="Relieved">😌</div>
-          <div class="mood-btn" onclick="selectMood('😂','this')" data-mood="😂" title="Amused">😂</div>
-          <div class="mood-btn" onclick="selectMood('😅','this')" data-mood="😅" title="Close call">😅</div>
-          <div class="mood-btn" onclick="selectMood('💪','this')" data-mood="💪" title="Proud">💪</div>
+          <div class="mood-btn selected" data-mood="😤">😤</div>
+          <div class="mood-btn" data-mood="😌">😌</div>
+          <div class="mood-btn" data-mood="😂">😂</div>
+          <div class="mood-btn" data-mood="😅">😅</div>
+          <div class="mood-btn" data-mood="💪">💪</div>
         </div>
       </div>
-      <!-- Preview -->
-      <div class="preview-box" id="previewBox">
-        <div class="preview-label">Preview</div>
-        <div id="previewContent"></div>
+      <div class="form-group">
+        <label>Your name (optional)</label>
+        <input type="text" id="confUsername" placeholder="Anonymous Shopper">
       </div>
-      <button class="submit-confession" onclick="submitConfession()">Confess &amp; Save 💬</button>
+      <div class="error-msg" id="formError"></div>
+      <button class="submit-confession" id="submitBtn" onclick="submitConfession()">Confess &amp; Save 💬</button>
     </div>
 
-    <!-- Sort + Filter -->
-    <div>
-      <div class="feed-header">
-        <strong style="font-size:14px;">Community Confessions</strong>
-        <button class="sort-btn active" onclick="setSort('recent',this)">Recent</button>
-        <button class="sort-btn" onclick="setSort('top',this)">Top</button>
-        <button class="sort-btn" onclick="setSort('saved',this)">Most Saved</button>
-      </div>
-      <div class="cat-filter-btns">
-        <button class="cat-btn active" onclick="setCatFilter('',this)">All</button>
-        <button class="cat-btn" onclick="setCatFilter('electronics',this)">📱 Electronics</button>
-        <button class="cat-btn" onclick="setCatFilter('fashion',this)">👗 Fashion</button>
-        <button class="cat-btn" onclick="setCatFilter('beauty',this)">💄 Beauty</button>
-        <button class="cat-btn" onclick="setCatFilter('home',this)">🏠 Home</button>
-        <button class="cat-btn" onclick="setCatFilter('sports',this)">🏃 Sports</button>
-      </div>
-      <div id="confessionFeed"></div>
+    <!-- Feed -->
+    <div class="feed-header">
+      <strong style="font-size:14px;">Community Confessions</strong>
+      <button class="sort-btn active" onclick="setSort('recent',this)">Recent</button>
+      <button class="sort-btn" onclick="setSort('top',this)">Top</button>
+      <button class="sort-btn" onclick="setSort('saved',this)">Most Saved</button>
     </div>
+    <div class="cat-filter-btns">
+      <button class="cat-btn active" onclick="setCatFilter('',this)">All</button>
+      <button class="cat-btn" onclick="setCatFilter('electronics',this)">📱</button>
+      <button class="cat-btn" onclick="setCatFilter('fashion',this)">👗</button>
+      <button class="cat-btn" onclick="setCatFilter('beauty',this)">💄</button>
+      <button class="cat-btn" onclick="setCatFilter('home',this)">🏠</button>
+      <button class="cat-btn" onclick="setCatFilter('sports',this)">🏃</button>
+      <button class="cat-btn" onclick="setCatFilter('pets',this)">🐾</button>
+    </div>
+    <div id="confessionFeed"><div class="loading-state"><span class="spinner"></span>Loading confessions...</div></div>
   </div>
 
-  <!-- RIGHT: Sidebar -->
   <aside>
     <div class="sidebar-widget">
       <h3>💰 Biggest Saves</h3>
-      <div id="leaderboard"></div>
+      <div id="leaderboard"><div class="loading-state" style="padding:10px;"><span class="spinner"></span></div></div>
     </div>
     <div class="sidebar-widget">
-      <h3>📊 Today's Stats</h3>
+      <h3>📊 Community Stats</h3>
       <div class="stat-row"><span>Total Saved</span><span class="stat-val" id="sTotalSaved">$0</span></div>
       <div class="stat-row"><span>Confessions</span><span class="stat-val" id="sCount">0</span></div>
       <div class="stat-row"><span>Avg. Save</span><span class="stat-val" id="sAvg">$0</span></div>
-      <div class="stat-row"><span>❤️ Reactions</span><span class="stat-val" id="sReactions">0</span></div>
-    </div>
-    <div class="sidebar-widget">
-      <h3>📦 By Category</h3>
-      <ul class="cat-list" id="catStats"></ul>
     </div>
     <div class="sidebar-widget" style="background:#131921;color:#fff;">
-      <h3 style="color:#FF9900;border-color:#333;">🛍️ Still Feeling the Urge?</h3>
-      <p style="font-size:13px;color:#ccc;margin-bottom:12px;">Get the dopamine hit without spending a dollar.</p>
+      <h3 style="color:#FF9900;border-color:#333;">🛍️ Still Feeling It?</h3>
+      <p style="font-size:13px;color:#ccc;margin-bottom:12px;">Get the dopamine hit without the bill.</p>
       <a href="shop.html" style="display:block;background:#FF9900;color:#0F1111;text-align:center;padding:10px;border-radius:4px;font-weight:700;text-decoration:none;font-size:14px;">Shop for Free →</a>
     </div>
   </aside>
 </div>
 
-<!-- TOAST -->
-<div class="cart-toast" id="cartToast">Done!</div>
+<div class="cart-toast" id="cartToast"></div>
 
 <script>
-const AVATARS = ['bg:#FF9900','bg:#00A8E0','bg:#CC0C39','bg:#067D62','bg:#9C27B0','bg:#FF6900','bg:#37475A'];
-const NAMES = ['Anonymous Shopper','SaverPro_99','NoBuyNovember','ImpulseAvoider','BudgetHero','TreatYoSelf','FrugalFred','SavingsQueen','CartAbandon','ClickedAway'];
+const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const CAT_EMOJI = {electronics:'📱',fashion:'👗',beauty:'💄',home:'🏠',sports:'🏃',pets:'🐾',food:'🍔',other:'📦'};
+const COLORS = ['#FF9900','#00A8E0','#CC0C39','#067D62','#9C27B0','#FF6900','#37475A'];
 
 let selectedMood = '😤';
-let confessions = [];
 let sortMode = 'recent';
 let catFilter = '';
-let reactions = JSON.parse(localStorage.getItem('dz_reactions') || '{}');
+let allConfessions = [];
+let localReactions = JSON.parse(localStorage.getItem('dz_reactions') || '{}');
+let currentUser = null;
+let submitting = false;
 
-const SEED_CONFESSIONS = [
-  {id:1,item:'Wireless Noise-Cancelling Headphones',amount:349,cat:'electronics',story:"It was 2am and they were 30% off. I had them in my cart for 45 minutes. Finally closed the tab. My bank account thanks me.",mood:'😅',user:'SoundwaveAddict',time:Date.now()-3600000,likes:142,sames:89},
-  {id:2,item:'Stand Mixer — 7 Quart Pro',amount:449,cat:'home',story:"I don't even bake. But the copper finish... I wanted it so bad. Sat there for an hour convincing myself I'd become a baker. I won't.",mood:'😂',user:'NotABaker2024',time:Date.now()-7200000,likes:287,sames:201},
-  {id:3,item:'Smart Fitness Ring',amount:299,cat:'sports',story:"Already own a smartwatch. Was going to buy this because it tracks HRV better. Talked myself out of it. I never check my HRV anyway.",mood:'💪',user:'DataNerd_Fit',time:Date.now()-10800000,likes:98,sames:134},
-  {id:4,item:'Oversize Designer Sunglasses',amount:285,cat:'fashion',story:"Convinced myself they were an 'investment piece.' They're sunglasses. I have seven pairs already. Closed the tab, made tea instead.",mood:'😌',user:'MinimalistHope',time:Date.now()-14400000,likes:312,sames:178},
-  {id:5,item:'Espresso Machine Pro',amount:599,cat:'home',story:"There's a coffee shop literally 2 minutes from my house. I make $0 lattes there in my head every morning. Today I almost made it real. Didn't.",mood:'😤',user:'CaffeineDream',time:Date.now()-18000000,likes:421,sames:356},
-  {id:6,item:'Vintage Leather Jacket',amount:389,cat:'fashion',story:"It was the exact jacket I'd been searching for 3 years. 'Only 1 left.' That's what they all say. Closed the tab. Still thinking about it.",mood:'😅',user:'StyleObsessed',time:Date.now()-21600000,likes:156,sames:203},
-  {id:7,item:'4K OLED 65" TV',amount:1299,cat:'electronics',story:"My current TV works perfectly. It's just... not OLED. Spent 2 hours reading reviews. Went to bed. Woke up. Still don't have an OLED TV. Probably for the best.",mood:'😌',user:'TVResearcher99',time:Date.now()-25200000,likes:234,sames:167},
-  {id:8,item:'Skincare Routine Overhaul (12 Products)',amount:342,cat:'beauty',story:"Watched one 'evening routine' video on YouTube and nearly bought 12 products. I already have a drawer full of half-used serums. Said no. Barely.",mood:'😂',user:'SkincareScroller',time:Date.now()-28800000,likes:189,sames:245},
-  {id:9,item:'Standing Desk + Monitor Arm Bundle',amount:587,cat:'home',story:"WFH setup optimization spiral. It started with an ergonomic mouse. Four hours later I had a $900 cart. Scaled back. Said no. Sat down.",mood:'😤',user:'WorkFromHoping',time:Date.now()-32400000,likes:301,sames:189},
-  {id:10,item:'Premium Pet Camera with Treat Dispenser',amount:179,cat:'pets',story:"My cat would literally rather stare at a wall. He doesn't care I'm gone. He doesn't miss me. I was going to spend $179 because I miss HIM.",mood:'😅',user:'CatMom_Regrets',time:Date.now()-36000000,likes:478,sames:389},
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-  const saved = JSON.parse(localStorage.getItem('dz_confessions') || '[]');
-  confessions = [...saved, ...SEED_CONFESSIONS];
+// Init
+document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('cartCount').textContent = JSON.parse(localStorage.getItem('dz_cart')||'[]').length;
-  // Check for pending confession from shop
+
+  // Mood buttons
+  document.querySelectorAll('.mood-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      selectedMood = b.dataset.mood;
+      document.querySelectorAll('.mood-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+    });
+  });
+
+  // Auth state
+  const { data: { session } } = await sb.auth.getSession();
+  currentUser = session?.user || null;
+  updateUserUI();
+
+  await loadConfessions();
+
+  // Check for pending confession from shop page
   const pending = localStorage.getItem('dz_pending_confession');
   if (pending) {
     const p = JSON.parse(pending);
     document.getElementById('confAmount').value = p.amount;
-    document.getElementById('confItem').value = 'Multiple items from my cart';
-    document.getElementById('confStory').value = "Just placed a fake order on Dopazon and saved real money!";
+    document.getElementById('confItem').value = 'Multiple items from fake cart';
+    document.getElementById('confStory').value = 'Just placed a fake order on Dopazon and saved real money!';
     localStorage.removeItem('dz_pending_confession');
-    updatePreview();
   }
-  renderFeed();
-  renderLeaderboard();
-  renderCatStats();
-  startStats();
 });
 
-function startStats() {
-  let s = 847293, c = confessions.length, r = 41234;
-  function tick() {
-    s += Math.floor(Math.random()*300);
-    r += Math.floor(Math.random()*5);
-    document.getElementById('hSaved').textContent = '$'+s.toLocaleString();
-    document.getElementById('hConfessions').textContent = confessions.length.toLocaleString();
-    document.getElementById('hReactions').textContent = r.toLocaleString();
-    document.getElementById('hAvg').textContent = '$'+Math.floor(s/Math.max(confessions.length,1)).toLocaleString();
-    document.getElementById('sTotalSaved').textContent = '$'+s.toLocaleString();
-    document.getElementById('sCount').textContent = confessions.length;
-    document.getElementById('sAvg').textContent = '$'+Math.floor(s/Math.max(confessions.length,1)).toLocaleString();
-    document.getElementById('sReactions').textContent = r.toLocaleString();
+sb.auth.onAuthStateChange((_event, session) => {
+  currentUser = session?.user || null;
+  updateUserUI();
+});
+
+function updateUserUI() {
+  const name = currentUser?.user_metadata?.name || currentUser?.email?.split('@')[0];
+  document.getElementById('acctGreet').textContent = currentUser ? 'Hello, ' + name : 'Hello, sign in';
+  if (currentUser) document.getElementById('confUsername').value = name || '';
+}
+
+function handleAcctClick(e) {
+  if (!currentUser) { e.preventDefault(); window.location = 'index.html'; }
+}
+
+async function loadConfessions() {
+  try {
+    let query = sb.from('confessions').select('*');
+    if (catFilter) query = query.eq('category', catFilter);
+    if (sortMode === 'top') query = query.order('likes', { ascending: false });
+    else if (sortMode === 'saved') query = query.order('amount', { ascending: false });
+    else query = query.order('created_at', { ascending: false });
+    query = query.limit(50);
+
+    const { data, error } = await query;
+    if (error) throw error;
+    allConfessions = data || [];
+    renderFeed();
+    renderLeaderboard();
+    updateStats();
+  } catch (err) {
+    document.getElementById('confessionFeed').innerHTML = `<div class="empty-state"><div>😕</div><p>Could not load confessions. Check your connection.</p></div>`;
+    console.error(err);
   }
-  tick(); setInterval(tick, 2500);
 }
 
 function renderFeed() {
-  let items = [...confessions];
-  if (catFilter) items = items.filter(c => c.cat === catFilter);
-  if (sortMode === 'top') items.sort((a,b) => (b.likes+b.sames) - (a.likes+a.sames));
-  else if (sortMode === 'saved') items.sort((a,b) => b.amount - a.amount);
-  else items.sort((a,b) => b.time - a.time);
-  document.getElementById('confessionFeed').innerHTML = items.map(c => confessionCard(c)).join('');
+  if (allConfessions.length === 0) {
+    document.getElementById('confessionFeed').innerHTML = `<div class="empty-state"><div>💬</div><p>No confessions yet. Be the first!</p></div>`;
+    return;
+  }
+  document.getElementById('confessionFeed').innerHTML = allConfessions.map(c => confessionCard(c)).join('');
 }
 
 function confessionCard(c) {
-  const timeAgo = getTimeAgo(c.time);
-  const hasLiked = reactions['like_'+c.id];
-  const hasSamed = reactions['same_'+c.id];
+  const timeAgo = getTimeAgo(c.created_at);
+  const colorIdx = c.username ? c.username.charCodeAt(0) % COLORS.length : 0;
+  const hasLiked = localReactions['like_'+c.id];
+  const hasSamed = localReactions['same_'+c.id];
   return `
   <div class="confession-card" id="card_${c.id}">
     <div class="card-header">
-      <div class="avatar" style="background:${AVATARS[c.id%AVATARS.length].replace('bg:','')};color:#fff;">${(c.user||'?')[0]}</div>
-      <div class="card-meta">
-        <div class="card-user">${c.user || 'Anonymous Shopper'}</div>
-        <div class="card-time">${timeAgo}</div>
-      </div>
-      <div class="card-saved">💰 $${c.amount.toLocaleString()} saved</div>
-      <div class="card-mood">${c.mood||'😅'}</div>
+      <div class="avatar" style="background:${COLORS[colorIdx]}">${(c.username||'A')[0].toUpperCase()}</div>
+      <div class="card-meta"><div class="card-user">${escHtml(c.username||'Anonymous Shopper')}</div><div class="card-time">${timeAgo}</div></div>
+      <div class="card-saved">💰 $${Number(c.amount).toLocaleString()} saved</div>
+      <span style="font-size:20px;margin-left:4px;">${c.mood||'😅'}</span>
     </div>
-    <div class="card-item"><span class="card-item-emoji">${CAT_EMOJI[c.cat]||'📦'}</span><strong>${c.item}</strong></div>
-    ${c.story ? `<div class="card-story">"${c.story}"</div>` : ''}
+    <div class="card-item"><span>${CAT_EMOJI[c.category]||'📦'}</span><strong>${escHtml(c.item)}</strong></div>
+    ${c.story ? `<div class="card-story">"${escHtml(c.story)}"</div>` : ''}
     <div class="card-actions">
-      <button class="reaction-btn ${hasLiked?'liked':''}" onclick="react(${c.id},'like')">❤️ <span id="likes_${c.id}">${c.likes}</span></button>
-      <button class="reaction-btn ${hasSamed?'liked':''}" onclick="react(${c.id},'same')">😅 Same — <span id="sames_${c.id}">${c.sames}</span></button>
-      <button class="share-btn" onclick="shareCard(${c.id})">Share ↗</button>
+      <button class="reaction-btn ${hasLiked?'liked':''}" onclick="react('${c.id}','like',this)">❤️ <span id="likes_${c.id}">${c.likes||0}</span></button>
+      <button class="reaction-btn ${hasSamed?'liked':''}" onclick="react('${c.id}','same',this)">😅 Same — <span id="sames_${c.id}">${c.sames||0}</span></button>
+      <button class="share-btn" onclick="shareCard('${c.id}')">Share ↗</button>
     </div>
   </div>`;
 }
 
-function react(id, type) {
+async function react(id, type, btn) {
   const key = type+'_'+id;
-  const c = confessions.find(x => x.id === id);
-  if (!c) return;
-  if (reactions[key]) {
-    reactions[key] = false;
-    if (type==='like') c.likes--; else c.sames--;
+  const countEl = document.getElementById((type==='like'?'likes_':'sames_')+id);
+  const conf = allConfessions.find(x => x.id === id);
+  if (!conf) return;
+
+  if (localReactions[key]) {
+    localReactions[key] = false;
+    btn.classList.remove('liked');
+    const fn = type === 'like' ? 'decrement_likes' : 'decrement_sames';
+    await sb.rpc(fn, { confession_id: id });
+    const newCount = Math.max((type==='like'?conf.likes:conf.sames) - 1, 0);
+    if (type==='like') conf.likes = newCount; else conf.sames = newCount;
+    countEl.textContent = newCount;
   } else {
-    reactions[key] = true;
-    if (type==='like') c.likes++; else c.sames++;
+    localReactions[key] = true;
+    btn.classList.add('liked');
+    const fn = type === 'like' ? 'increment_likes' : 'increment_sames';
+    await sb.rpc(fn, { confession_id: id });
+    const newCount = (type==='like'?conf.likes:conf.sames) + 1;
+    if (type==='like') conf.likes = newCount; else conf.sames = newCount;
+    countEl.textContent = newCount;
   }
-  localStorage.setItem('dz_reactions', JSON.stringify(reactions));
-  document.getElementById(type==='like'?'likes_'+id:'sames_'+id).textContent = type==='like'?c.likes:c.sames;
-  const btn = event.target.closest('.reaction-btn');
-  btn.classList.toggle('liked', reactions[key]);
+  localStorage.setItem('dz_reactions', JSON.stringify(localReactions));
 }
 
 function shareCard(id) {
-  const c = confessions.find(x => x.id === id);
-  const text = `I almost spent $${c.amount} on "${c.item}" but didn't. Confession via Dopazon.com — the $0 shopping site. ${c.mood}`;
-  if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => showToast('📋 Copied! Paste to share.'));
+  const c = allConfessions.find(x => x.id === id);
+  if (!c) return;
+  const text = `I almost spent $${c.amount} on "${c.item}" but didn't 💪 — Confession via Dopazon.com`;
+  navigator.clipboard?.writeText(text).then(() => showToast('📋 Copied! Paste to share.'));
 }
 
-function setSort(mode, btn) {
-  sortMode = mode;
-  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderFeed();
-}
-
-function setCatFilter(cat, btn) {
-  catFilter = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderFeed();
-}
-
-function renderLeaderboard() {
-  const sorted = [...confessions].sort((a,b) => b.amount - a.amount).slice(0,5);
-  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
-  document.getElementById('leaderboard').innerHTML = sorted.map((c,i) => `
-    <div class="leaderboard-item">
-      <div class="rank-num">${i+1}</div>
-      <div class="rank-medal">${medals[i]}</div>
-      <div class="rank-info">
-        <div class="rank-name">${c.user}</div>
-        <div style="font-size:11px;color:#555;">${c.item.slice(0,30)}...</div>
-      </div>
-      <div class="rank-amount">$${c.amount.toLocaleString()}</div>
-    </div>
-  `).join('');
-}
-
-function renderCatStats() {
-  const counts = {};
-  confessions.forEach(c => { counts[c.cat] = (counts[c.cat]||0)+1; });
-  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  document.getElementById('catStats').innerHTML = sorted.map(([cat,n]) => `
-    <li onclick="setCatFilter('${cat}',document.querySelector('[onclick*=\\'${cat}\\']'))">${CAT_EMOJI[cat]||'📦'} ${cat.charAt(0).toUpperCase()+cat.slice(1)} <span style="color:#555;">${n}</span></li>
-  `).join('');
-}
-
-function selectMood(mood) {
-  selectedMood = mood;
-  document.querySelectorAll('.mood-btn').forEach(b => {
-    b.classList.toggle('selected', b.dataset.mood === mood);
-  });
-  updatePreview();
-}
-// Fix mood click handlers
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.mood-btn').forEach(b => {
-    b.onclick = () => selectMood(b.dataset.mood);
-  });
-});
-
-function updatePreview() {
-  const item = document.getElementById('confItem').value;
-  const amount = document.getElementById('confAmount').value;
-  const story = document.getElementById('confStory').value;
-  if (!item && !amount) { document.getElementById('previewBox').classList.remove('show'); return; }
-  document.getElementById('previewBox').classList.add('show');
-  document.getElementById('previewContent').innerHTML = confessionCard({
-    id: 0, item: item||'Something tempting', amount: parseInt(amount)||0,
-    cat: document.getElementById('confCat').value, story: story,
-    mood: selectedMood, user: 'You', time: Date.now(), likes:0, sames:0
-  });
-}
-
-function submitConfession() {
+async function submitConfession() {
+  if (submitting) return;
   const item = document.getElementById('confItem').value.trim();
   const amount = parseInt(document.getElementById('confAmount').value);
   const story = document.getElementById('confStory').value.trim();
   const cat = document.getElementById('confCat').value;
-  if (!item || !amount) { alert('Please fill in what you almost bought and the amount.'); return; }
-  const user = JSON.parse(localStorage.getItem('dz_user')||'null');
-  const conf = {
-    id: Date.now(), item, amount, cat, story,
-    mood: selectedMood, user: user ? user.name : 'Anonymous Shopper',
-    time: Date.now(), likes:0, sames:0
-  };
-  confessions.unshift(conf);
-  const saved = JSON.parse(localStorage.getItem('dz_confessions')||'[]');
-  saved.unshift(conf);
-  localStorage.setItem('dz_confessions', JSON.stringify(saved.slice(0,50)));
-  // Reset form
-  ['confItem','confAmount','confStory'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('previewBox').classList.remove('show');
-  renderFeed();
-  renderLeaderboard();
-  renderCatStats();
-  showToast('💬 Confessed! You saved $'+amount.toLocaleString()+' today.');
-  if (typeof gtag !== 'undefined') gtag('event','confession_submit',{value:amount});
+  const username = document.getElementById('confUsername').value.trim() || 'Anonymous Shopper';
+  const errEl = document.getElementById('formError');
+
+  errEl.style.display = 'none';
+  if (!item) { showError('Please enter what you almost bought.'); return; }
+  if (!amount || amount < 1) { showError('Please enter a valid amount.'); return; }
+
+  submitting = true;
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const { data, error } = await sb.from('confessions').insert([{
+      user_id: currentUser?.id || null,
+      username,
+      item,
+      amount,
+      category: cat,
+      story: story || null,
+      mood: selectedMood,
+      likes: 0,
+      sames: 0
+    }]).select().single();
+
+    if (error) throw error;
+
+    allConfessions.unshift(data);
+    renderFeed();
+    renderLeaderboard();
+    updateStats();
+
+    // Reset
+    ['confItem','confAmount','confStory'].forEach(id => document.getElementById(id).value = '');
+    showToast(`💬 Confessed! You saved $${amount.toLocaleString()} today.`);
+    gtag('event','confession_submit',{value: amount});
+  } catch (err) {
+    showError('Could not save confession. Please try again.');
+    console.error(err);
+  } finally {
+    submitting = false;
+    btn.disabled = false;
+    btn.textContent = 'Confess & Save 💬';
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('formError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function renderLeaderboard() {
+  const top = [...allConfessions].sort((a,b) => b.amount - a.amount).slice(0, 5);
+  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+  document.getElementById('leaderboard').innerHTML = top.length === 0
+    ? '<div style="font-size:13px;color:#777;text-align:center;padding:10px;">No confessions yet</div>'
+    : top.map((c,i) => `
+    <div class="leaderboard-item">
+      <div class="rank-num">${i+1}</div>
+      <div style="font-size:16px;">${medals[i]}</div>
+      <div class="rank-info">
+        <div class="rank-name">${escHtml(c.username||'Anon')}</div>
+        <div style="font-size:11px;color:#555;">${escHtml(c.item.slice(0,28))}...</div>
+      </div>
+      <div class="rank-amount">$${Number(c.amount).toLocaleString()}</div>
+    </div>`).join('');
+}
+
+function updateStats() {
+  const total = allConfessions.reduce((s,c) => s + (c.amount||0), 0);
+  const reactions = allConfessions.reduce((s,c) => s + (c.likes||0) + (c.sames||0), 0);
+  document.getElementById('hSaved').textContent = '$' + total.toLocaleString();
+  document.getElementById('hConfessions').textContent = allConfessions.length.toLocaleString();
+  document.getElementById('hReactions').textContent = reactions.toLocaleString();
+  document.getElementById('hAvg').textContent = allConfessions.length ? '$' + Math.floor(total/allConfessions.length).toLocaleString() : '$0';
+  document.getElementById('sTotalSaved').textContent = '$' + total.toLocaleString();
+  document.getElementById('sCount').textContent = allConfessions.length;
+  document.getElementById('sAvg').textContent = allConfessions.length ? '$' + Math.floor(total/allConfessions.length).toLocaleString() : '$0';
+}
+
+async function setSort(mode, btn) {
+  sortMode = mode;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('confessionFeed').innerHTML = '<div class="loading-state"><span class="spinner"></span>Loading...</div>';
+  await loadConfessions();
+}
+
+async function setCatFilter(cat, btn) {
+  catFilter = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('confessionFeed').innerHTML = '<div class="loading-state"><span class="spinner"></span>Loading...</div>';
+  await loadConfessions();
 }
 
 function getTimeAgo(ts) {
-  const diff = Date.now() - ts;
-  const m = Math.floor(diff/60000);
-  const h = Math.floor(diff/3600000);
-  const d = Math.floor(diff/86400000);
+  const diff = Date.now() - new Date(ts).getTime();
+  const m = Math.floor(diff/60000), h = Math.floor(diff/3600000), d = Math.floor(diff/86400000);
   if (m < 1) return 'just now';
   if (m < 60) return m+'m ago';
   if (h < 24) return h+'h ago';
   return d+'d ago';
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function showToast(msg) {
@@ -475,3 +485,4 @@ function showToast(msg) {
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dopazon.com: Satisfy the Urge. Keep the Money.</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -457,13 +458,19 @@ const PRODUCTS = [
   {id:12,emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover',price:299,cat:'home',stars:4.5,reviews:6789},
 ];
 
+const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
-let user = JSON.parse(localStorage.getItem('dz_user') || 'null');
+let user = null;
 let authMode = 'login';
 
 // ===== INIT =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
+  const { data: { session } } = await sb.auth.getSession();
+  user = session?.user ? { name: session.user.user_metadata?.name || session.user.email.split('@')[0], email: session.user.email, id: session.user.id } : null;
   updateUserUI();
   renderBestSellers();
   renderNewArrivals();
@@ -621,31 +628,15 @@ function toggleAuthMode() { openModal(authMode === 'login' ? 'signup' : 'login')
 function handleAccountClick(e) {
   if (user) e.preventDefault();
 }
-function submitAuth() {
-  const email = document.getElementById('authEmail').value;
+async function submitAuth() {
+  const email = document.getElementById('authEmail').value.trim();
   const pass = document.getElementById('authPass').value;
-  const name = document.getElementById('authName').value || email.split('@')[0];
+  const name = document.getElementById('authName').value.trim() || email.split('@')[0];
   if (!email || !pass) { alert('Please fill in all fields.'); return; }
   if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
-  user = { email, name: authMode === 'signup' ? name : (localStorage.getItem('dz_uname') || name), createdAt: Date.now() };
-  localStorage.setItem('dz_user', JSON.stringify(user));
-  localStorage.setItem('dz_uname', user.name);
-  closeModal();
-  updateUserUI();
-  showToast('👋 Welcome, <strong>' + user.name + '</strong>! Happy fake shopping!');
-  gtag('event', authMode === 'signup' ? 'sign_up' : 'login');
-}
-function signOut() {
-  user = null;
-  localStorage.removeItem('dz_user');
-  updateUserUI();
-  showToast('👋 Signed out. Come back for more free shopping!');
-}
-function showLocation() { showToast('📍 <strong>United States</strong> — Free delivery everywhere!'); }
-
-window.addEventListener('click', e => {
-  if (e.target === document.getElementById('authModal')) closeModal();
-});
-</script>
-</body>
-</html>
+  try {
+    let res;
+    if (authMode === 'signup') {
+      res = await sb.auth.signUp({ email, password: pass, options: { data: { name } } });
+    } else {
+      r

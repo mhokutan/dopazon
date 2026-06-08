@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dopazon — Shop Everything for Free</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
@@ -23,7 +24,6 @@
   .search-input{flex:1;border:none;padding:0 10px;font-size:16px;outline:none;height:100%;}
   .search-btn{background:#FF9900;border:none;padding:0 14px;border-radius:0 4px 4px 0;cursor:pointer;height:100%;}
   .search-btn:hover{background:#FA8900;}
-  .search-btn svg{width:20px;height:20px;}
   .header-link{color:#fff;text-decoration:none;font-size:12px;padding:4px 8px;border:1px solid transparent;white-space:nowrap;}
   .header-link:hover{border-color:#FF9900;border-radius:2px;}
   .header-link strong{display:block;font-size:14px;}
@@ -35,32 +35,22 @@
   .nav-link:hover{border-color:#fff;border-radius:2px;}
   .breadcrumb{background:#fff;padding:8px 15px;font-size:13px;color:#555;}
   .breadcrumb a{color:#007185;text-decoration:none;}
-  .breadcrumb a:hover{text-decoration:underline;color:#C7511F;}
   .shop-layout{display:grid;grid-template-columns:230px 1fr;gap:20px;max-width:1500px;margin:15px auto;padding:0 15px;}
-  /* Sidebar */
   .sidebar{background:#fff;border-radius:4px;padding:15px;height:fit-content;position:sticky;top:80px;}
   .sidebar h3{font-size:16px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd;}
   .filter-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #eee;}
   .filter-section h4{font-size:13px;font-weight:700;margin-bottom:8px;}
   .filter-option{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;font-size:13px;}
   .filter-option input{cursor:pointer;accent-color:#FF9900;}
-  .filter-option:hover{color:#C7511F;}
-  .price-range{display:flex;gap:8px;align-items:center;}
-  .price-range input{width:70px;border:1px solid #aaa;border-radius:4px;padding:5px;font-size:13px;}
-  .price-range button{background:#FF9900;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;font-size:13px;font-weight:700;}
-  /* Main content */
   .results-header{background:#fff;padding:10px 15px;border-radius:4px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
   .results-count{font-size:14px;color:#555;}
   .results-count strong{color:#C7511F;}
   .sort-select{border:1px solid #aaa;border-radius:4px;padding:6px 10px;font-size:13px;cursor:pointer;outline:none;}
-  .sort-select:focus{border-color:#FF9900;}
   .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;}
   .product-card{background:#fff;padding:14px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;position:relative;}
   .product-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
   .badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;color:#fff;}
-  .badge-sale{background:#CC0C39;}
-  .badge-prime{background:#00A8E0;}
-  .badge-hot{background:#FF6900;}
+  .badge-sale{background:#CC0C39;}.badge-prime{background:#00A8E0;}.badge-hot{background:#FF6900;}
   .product-img{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:10px;}
   .product-title{font-size:13px;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .stars{color:#FF9900;font-size:13px;margin-bottom:4px;}
@@ -72,17 +62,16 @@
   .add-cart-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;}
   .add-cart-btn:hover{background:#F7CA00;}
   .buy-now-btn{width:100%;background:#FF9900;border:1px solid #FF8F00;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;margin-top:5px;}
-  .buy-now-btn:hover{background:#FA8900;}
-  /* Checkout Panel */
+  /* Checkout panel */
   .checkout-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-start;justify-content:flex-end;}
   .checkout-overlay.active{display:flex;}
-  .checkout-panel{background:#fff;width:420px;height:100vh;overflow-y:auto;padding:20px;position:relative;}
+  .checkout-panel{background:#fff;width:420px;height:100vh;overflow-y:auto;padding:20px;}
   .checkout-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid #FF9900;}
   .checkout-close{background:none;border:none;font-size:24px;cursor:pointer;color:#555;}
   .cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eee;align-items:center;}
   .cart-item-emoji{font-size:40px;}
   .cart-item-info{flex:1;}
-  .cart-item-title{font-size:13px;font-weight:500;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .cart-item-title{font-size:13px;font-weight:500;margin-bottom:4px;}
   .cart-item-price{color:#CC0C39;font-weight:700;}
   .cart-item-remove{background:none;border:none;color:#CC0C39;cursor:pointer;font-size:18px;}
   .order-total{background:#EAEDED;padding:15px;border-radius:4px;margin:15px 0;}
@@ -90,58 +79,41 @@
   .order-row.total{font-weight:700;font-size:18px;padding-top:8px;border-top:1px solid #aaa;margin-top:8px;}
   .place-order-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:14px;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:10px;}
   .place-order-btn:hover{background:#F7CA00;}
-  /* Order confirmation */
   .order-confirm{text-align:center;padding:30px 20px;}
-  .order-confirm .check{font-size:80px;margin-bottom:15px;}
-  .order-confirm h2{color:#067D62;margin-bottom:10px;}
-  .tracking-container{margin-top:20px;text-align:left;}
   .tracking-step{display:flex;gap:12px;margin-bottom:15px;align-items:flex-start;}
   .tracking-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:2px;}
-  .tracking-dot.done{background:#067D62;}
-  .tracking-dot.active{background:#FF9900;animation:pulse 1.5s infinite;}
-  .tracking-dot.pending{background:#ddd;}
+  .tracking-dot.done{background:#067D62;}.tracking-dot.active{background:#FF9900;animation:pulse 1.5s infinite;}.tracking-dot.pending{background:#ddd;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
-  .tracking-info{flex:1;}
-  .tracking-label{font-size:14px;font-weight:700;}
-  .tracking-time{font-size:12px;color:#555;}
   /* Store section */
   .my-store-btn{width:100%;background:#131921;color:#FF9900;border:none;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:15px;}
-  .my-store-btn:hover{background:#232F3E;}
+  .store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:15px;}
+  .store-card{background:#fff;border:1px solid #ddd;border-radius:4px;padding:14px;cursor:pointer;}
+  .store-card:hover{border-color:#FF9900;}
   /* Modal */
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;align-items:center;justify-content:center;}
   .modal-overlay.active{display:flex;}
-  .modal{background:#fff;border-radius:4px;padding:25px;max-width:460px;width:90%;position:relative;}
+  .modal{background:#fff;border-radius:4px;padding:25px;max-width:460px;width:90%;position:relative;max-height:90vh;overflow-y:auto;}
   .modal-close{position:absolute;top:10px;right:14px;font-size:24px;cursor:pointer;border:none;background:none;color:#555;}
   .form-group{margin-bottom:12px;}
   .form-group label{display:block;font-size:13px;font-weight:700;margin-bottom:4px;}
   .form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #aaa;border-radius:4px;padding:8px;font-size:14px;outline:none;font-family:Arial,sans-serif;}
-  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#FF9900;box-shadow:0 0 0 2px rgba(255,153,0,0.3);}
+  .form-group input:focus,.form-group select:focus{border-color:#FF9900;box-shadow:0 0 0 2px rgba(255,153,0,0.3);}
   .form-submit{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:15px;font-weight:500;cursor:pointer;margin-top:8px;}
+  .form-submit:disabled{opacity:0.6;cursor:not-allowed;}
   .trademark-warn{color:#CC0C39;font-size:12px;margin-top:4px;display:none;}
-  /* Toast */
+  .error-msg{color:#CC0C39;font-size:12px;margin-top:6px;display:none;}
   .cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;}
-  /* Confetti */
   .confetti-piece{position:fixed;width:8px;height:8px;top:-10px;z-index:9999;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
   @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
-  /* Community stores */
-  .store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:15px;}
-  .store-card{background:#fff;border:1px solid #ddd;border-radius:4px;padding:14px;cursor:pointer;}
-  .store-card:hover{border-color:#FF9900;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-  .store-icon{font-size:36px;margin-bottom:6px;}
-  .store-name{font-weight:700;font-size:14px;margin-bottom:3px;}
-  .store-tagline{font-size:12px;color:#555;}
-  .store-products{font-size:12px;color:#007185;margin-top:4px;}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid #ddd;border-top-color:#FF9900;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg);}}
   @media(max-width:768px){.shop-layout{grid-template-columns:1fr;}.sidebar{display:none;}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header id="header">
-  <a href="index.html" class="logo">
-    <div class="logo-text">dopa<span>zon</span></div>
-    <div class="logo-sub">.com</div>
-  </a>
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
   <div class="deliver"><span>📍 Deliver to</span><strong>United States</strong></div>
   <div class="search-bar">
     <select class="search-select" id="catFilter">
@@ -154,45 +126,29 @@
       <option value="pets">Pets</option>
       <option value="food">Food</option>
     </select>
-    <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput">
-    <button class="search-btn" onclick="doSearch()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </button>
+    <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="#" class="header-link" id="accountBtn" onclick="handleAccClick(event)">
-    <span id="acctGreet">Hello, sign in</span>
-    <strong>Account ▾</strong>
-  </a>
+  <a href="#" class="header-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
-  <a href="#" class="cart-link" onclick="openCheckout(event)">
-    <span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount" style="position:absolute;top:-4px;right:-4px;">0</span></span>
-    <strong>Cart</strong>
-  </a>
+  <a href="#" class="cart-link" onclick="openCheckout(event)"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
-<!-- NAV -->
 <nav id="navbar">
   <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="#" class="nav-link" onclick="filterCat('',event)">DopePrime</a>
   <a href="#" class="nav-link" onclick="filterCat('fashion',event)">Fashion</a>
   <a href="#" class="nav-link" onclick="filterCat('electronics',event)">Electronics</a>
-  <a href="#" class="nav-link" onclick="filterCat('home',event)">Home &amp; Kitchen</a>
+  <a href="#" class="nav-link" onclick="filterCat('home',event)">Home</a>
   <a href="#" class="nav-link" onclick="filterCat('sports',event)">Sports</a>
   <a href="#" class="nav-link" onclick="filterCat('beauty',event)">Beauty</a>
-  <a href="#" class="nav-link" onclick="filterCat('pets',event)">Pets</a>
   <a href="confessions.html" class="nav-link">Confession Cart</a>
 </nav>
 
-<!-- BREADCRUMB -->
-<div class="breadcrumb">
-  <a href="index.html">Dopazon</a> &rsaquo; <span id="breadcrumbCat">All Departments</span>
-</div>
+<div class="breadcrumb"><a href="index.html">Dopazon</a> › <span id="breadcrumbCat">All Departments</span></div>
 
-<!-- SHOP LAYOUT -->
 <div class="shop-layout">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h3>🛍️ Department</h3>
     <div class="filter-section">
@@ -200,33 +156,18 @@
       <div class="filter-option"><input type="radio" name="cat" value="fashion" onchange="filterCat('fashion')"> 👗 Fashion</div>
       <div class="filter-option"><input type="radio" name="cat" value="electronics" onchange="filterCat('electronics')"> 📱 Electronics</div>
       <div class="filter-option"><input type="radio" name="cat" value="beauty" onchange="filterCat('beauty')"> 💄 Beauty</div>
-      <div class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home &amp; Kitchen</div>
+      <div class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home</div>
       <div class="filter-option"><input type="radio" name="cat" value="sports" onchange="filterCat('sports')"> 🏃 Sports</div>
       <div class="filter-option"><input type="radio" name="cat" value="pets" onchange="filterCat('pets')"> 🐾 Pets</div>
-      <div class="filter-option"><input type="radio" name="cat" value="food" onchange="filterCat('food')"> 🍔 Food</div>
     </div>
     <div class="filter-section">
-      <h4>⭐ Avg. Customer Review</h4>
-      <div class="filter-option"><input type="checkbox"> ★★★★★ &amp; Up</div>
-      <div class="filter-option"><input type="checkbox"> ★★★★ &amp; Up</div>
-      <div class="filter-option"><input type="checkbox"> ★★★ &amp; Up</div>
-    </div>
-    <div class="filter-section">
-      <h4>🚀 DopePrime Eligible</h4>
-      <div class="filter-option"><input type="checkbox"> DopePrime (Always Free)</div>
-    </div>
-    <div class="filter-section">
-      <h4>💰 Price (Always $0)</h4>
-      <div style="background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;text-align:center;font-size:14px;color:#067D62;font-weight:700;">
-        Every item is FREE<br><span style="font-size:11px;font-weight:400;color:#555;">No credit card needed</span>
-      </div>
+      <h4>💰 Price</h4>
+      <div style="background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;text-align:center;font-size:14px;color:#067D62;font-weight:700;">Every item is FREE<br><span style="font-size:11px;font-weight:400;color:#555;">No credit card needed</span></div>
     </div>
     <button class="my-store-btn" onclick="openStoreModal()">🏪 Open My Store</button>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main>
-    <!-- Results header -->
     <div class="results-header">
       <div class="results-count"><strong id="resultCount">0</strong> results for <strong id="resultQuery">"everything free"</strong></div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -234,20 +175,17 @@
         <select class="sort-select" id="sortSelect" onchange="renderProducts()">
           <option value="featured">Featured</option>
           <option value="rating">Avg. Customer Review</option>
-          <option value="price">Price (Always $0)</option>
           <option value="newest">Newest Arrivals</option>
         </select>
       </div>
     </div>
-
-    <!-- Product Grid -->
     <div class="product-grid" id="productGrid"></div>
 
     <!-- Community Stores -->
     <div style="background:#fff;border-radius:4px;padding:20px;margin-top:20px;">
       <h3 style="font-size:18px;margin-bottom:5px;">🏪 Community Stores</h3>
-      <p style="font-size:13px;color:#555;margin-bottom:10px;">Fake stores created by Dopazon users. Open yours too!</p>
-      <div class="store-grid" id="storeGrid"></div>
+      <p style="font-size:13px;color:#555;margin-bottom:10px;">Real stores opened by Dopazon users.</p>
+      <div class="store-grid" id="storeGrid"><div style="font-size:13px;color:#777;"><span class="spinner"></span> Loading stores...</div></div>
     </div>
   </main>
 </div>
@@ -255,10 +193,7 @@
 <!-- CHECKOUT PANEL -->
 <div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckoutIfBg(event)">
   <div class="checkout-panel">
-    <div class="checkout-header">
-      <h2 style="font-size:20px;">🛒 Your Cart</h2>
-      <button class="checkout-close" onclick="closeCheckout()">×</button>
-    </div>
+    <div class="checkout-header"><h2 style="font-size:20px;">🛒 Your Cart</h2><button class="checkout-close" onclick="closeCheckout()">×</button></div>
     <div id="checkoutContent"></div>
   </div>
 </div>
@@ -267,418 +202,315 @@
 <div class="modal-overlay" id="authModal">
   <div class="modal">
     <button class="modal-close" onclick="closeAuth()">×</button>
-    <h2 id="authTitle">Sign in</h2>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="authEmail" placeholder="you@example.com">
-    </div>
-    <div class="form-group" id="nameGroup" style="display:none">
-      <label>Name</label>
-      <input type="text" id="authName" placeholder="First name">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="authPass" placeholder="At least 6 characters">
-    </div>
-    <button class="form-submit" onclick="submitAuth()">Sign in</button>
-    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">
-      New to Dopazon? <a href="#" onclick="toggleAuth()" style="color:#007185;">Create account</a>
-    </div>
+    <h2 id="authTitle" style="margin-bottom:15px;">Sign in to Dopazon</h2>
+    <div class="form-group"><label>Email</label><input type="email" id="authEmail" placeholder="you@example.com"></div>
+    <div class="form-group" id="nameGroup" style="display:none"><label>Name</label><input type="text" id="authName" placeholder="First name"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="authPass" placeholder="At least 6 characters"></div>
+    <div class="error-msg" id="authError" style="display:none;"></div>
+    <button class="form-submit" id="authSubmitBtn" onclick="submitAuth()">Sign in</button>
+    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Create account</a></div>
   </div>
 </div>
 
 <!-- STORE MODAL -->
 <div class="modal-overlay" id="storeModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeStore()">×</button>
-    <h2>🏪 Open Your Dopazon Store</h2>
-    <p style="font-size:13px;color:#555;margin-bottom:15px;">Create your own fake store. List whatever you dream of selling.</p>
-    <div class="form-group">
-      <label>Store Name</label>
-      <input type="text" id="storeName" placeholder="e.g. TechDreams, LuxuryWishes..." oninput="checkTrademark(this)">
-      <div class="trademark-warn" id="trademarkWarn">⚠️ Cannot contain trademarked brand names (Nike, Apple, Amazon...)</div>
-    </div>
-    <div class="form-group">
-      <label>Store Tagline</label>
-      <input type="text" id="storeTagline" placeholder="e.g. Luxury for zero dollars">
-    </div>
-    <div class="form-group">
-      <label>Store Icon (emoji)</label>
-      <input type="text" id="storeIcon" placeholder="🏪" maxlength="2" style="font-size:24px;text-align:center;width:60px;">
-    </div>
-    <div class="form-group">
-      <label>First Product Name</label>
-      <input type="text" id="prodName" placeholder="e.g. UltraLux Watch Pro" oninput="checkTrademark(this)">
-      <div class="trademark-warn" id="trademarkWarn2">⚠️ No trademarked names allowed</div>
-    </div>
-    <div class="form-group">
-      <label>Product Category</label>
-      <select id="prodCat">
-        <option value="fashion">Fashion</option>
-        <option value="electronics">Electronics</option>
-        <option value="beauty">Beauty</option>
-        <option value="home">Home</option>
-        <option value="sports">Sports</option>
-        <option value="pets">Pets</option>
-        <option value="food">Food</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Fake Price ($)</label>
-      <input type="number" id="prodPrice" placeholder="299" min="1">
-    </div>
-    <div class="form-group">
-      <label>Product Emoji</label>
-      <input type="text" id="prodEmoji" placeholder="⌚" maxlength="2" style="font-size:24px;text-align:center;width:60px;">
-    </div>
-    <button class="form-submit" onclick="submitStore()">Open My Store 🚀</button>
+    <button class="modal-close" onclick="closeStoreModal()">×</button>
+    <h2 style="margin-bottom:5px;">🏪 Open Your Store</h2>
+    <p style="font-size:13px;color:#555;margin-bottom:15px;">List your dream products. Everything is free here.</p>
+    <div class="form-group"><label>Store Name</label><input type="text" id="storeName" placeholder="e.g. TechDreams, LuxuryWishes..." oninput="checkTM(this,'tmWarn1')"><div class="trademark-warn" id="tmWarn1">⚠️ No trademarked brand names</div></div>
+    <div class="form-group"><label>Tagline</label><input type="text" id="storeTagline" placeholder="e.g. Luxury for zero dollars"></div>
+    <div class="form-group"><label>Store Icon (emoji)</label><input type="text" id="storeIcon" placeholder="🏪" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
+    <div class="form-group"><label>First Product Name</label><input type="text" id="prodName" placeholder="e.g. UltraLux Watch Pro" oninput="checkTM(this,'tmWarn2')"><div class="trademark-warn" id="tmWarn2">⚠️ No trademarked names</div></div>
+    <div class="form-group"><label>Category</label><select id="prodCat"><option value="fashion">Fashion</option><option value="electronics">Electronics</option><option value="beauty">Beauty</option><option value="home">Home</option><option value="sports">Sports</option><option value="pets">Pets</option><option value="food">Food</option></select></div>
+    <div class="form-group"><label>Fake Price ($)</label><input type="number" id="prodPrice" placeholder="299" min="1"></div>
+    <div class="form-group"><label>Product Emoji</label><input type="text" id="prodEmoji" placeholder="⌚" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
+    <div class="error-msg" id="storeError"></div>
+    <button class="form-submit" id="storeSubmitBtn" onclick="submitStore()">Open My Store 🚀</button>
   </div>
 </div>
 
-<!-- TOAST -->
-<div class="cart-toast" id="cartToast">Added to cart!</div>
+<div class="cart-toast" id="cartToast"></div>
 
 <script>
-const TRADEMARKS = ['nike','apple','samsung','amazon','google','microsoft','sony','disney','netflix','adidas','gucci','prada','chanel','louis vuitton','hermes','rolex','tesla','walmart','target','ebay','paypal','visa','mastercard','coca cola','pepsi','mcdonalds','starbucks','ikea','zara','hm','h&m','lululemon','peloton','doordash','uber','lyft','instagram','facebook','twitter','tiktok','youtube','spotify'];
+const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+const TRADEMARKS = ['nike','apple','samsung','amazon','google','microsoft','sony','disney','netflix','adidas','gucci','prada','chanel','louis vuitton','hermes','rolex','tesla','walmart','zara','lululemon','peloton'];
 const EMOJIS = {fashion:'👗',electronics:'📱',beauty:'💄',home:'🏠',sports:'🏃',pets:'🐾',food:'🍔'};
 
-let PRODUCTS = [
-  {id:1,emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,cat:'fashion',stars:4.8,reviews:12847,store:'SpeedShop'},
-  {id:2,emoji:'📱',title:'Aplix ProMax Ultra — 6.9" OLED, Triple Camera System',price:1299,cat:'electronics',stars:4.7,reviews:8934,store:'TechVault'},
-  {id:3,emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging',price:68,cat:'beauty',stars:4.9,reviews:23156,store:'GlowLab'},
-  {id:4,emoji:'☕',title:'BrewMaster Pro Coffee Machine — 12-Cup, Built-in Grinder',price:249,cat:'home',stars:4.6,reviews:5432,store:'HomeZen'},
-  {id:5,emoji:'🎧',title:'SoundWave Elite Wireless — 40hr Battery, ANC',price:349,cat:'electronics',stars:4.8,reviews:18923,store:'TechVault'},
-  {id:6,emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free Formula',price:89,cat:'pets',stars:4.9,reviews:31024,store:'PetParadise'},
-  {id:7,emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lbs per Hand',price:429,cat:'sports',stars:4.7,reviews:7823,store:'FitWorld'},
-  {id:8,emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 LED Colors',price:45,cat:'home',stars:4.5,reviews:9234,store:'HomeZen'},
-  {id:9,emoji:'👜',title:'LuxCraft Structured Tote — Pebbled Leather, Gold Hardware',price:395,cat:'fashion',stars:4.6,reviews:4123,store:'LuxBoutique'},
-  {id:10,emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games',price:199,cat:'electronics',stars:4.8,reviews:15678,store:'TechVault'},
-  {id:11,emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,cat:'beauty',stars:4.7,reviews:11234,store:'GlowLab'},
-  {id:12,emoji:'🛋️',title:'NapCloud Bean Bag — Memory Foam, Velvet Cover',price:299,cat:'home',stars:4.5,reviews:6789,store:'HomeZen'},
-  {id:13,emoji:'🌸',title:'SakuraBloom Perfume — Cherry Blossom & Amber',price:120,cat:'beauty',stars:4.8,reviews:9872,store:'GlowLab'},
-  {id:14,emoji:'🧳',title:'Voyager Carbon Carry-On — TSA Lock, Expandable',price:279,cat:'fashion',stars:4.7,reviews:7341,store:'LuxBoutique'},
-  {id:15,emoji:'🎵',title:'RhythmBox Smart Speaker — 360° Sound, Voice Control',price:159,cat:'electronics',stars:4.6,reviews:12034,store:'TechVault'},
-  {id:16,emoji:'🧘',title:'CloudCore Yoga Mat — 6mm Cushion, Non-Slip Surface',price:79,cat:'sports',stars:4.9,reviews:18502,store:'FitWorld'},
-  {id:17,emoji:'🐱',title:'KittyLux Interactive Cat Tower — 5 Levels, Scratching Post',price:149,cat:'pets',stars:4.8,reviews:8741,store:'PetParadise'},
-  {id:18,emoji:'🍕',title:'FlameCraft Outdoor Pizza Oven — Reaches 900°F',price:399,cat:'food',stars:4.7,reviews:5234,store:'HomeZen'},
+const SEED_PRODUCTS = [
+  {id:'s1',emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,category:'fashion',stars:4.8,reviews:12847,store_name:'SpeedShop'},
+  {id:'s2',emoji:'📱',title:'Aplix ProMax Ultra — 6.9" OLED, Triple Camera',price:1299,category:'electronics',stars:4.7,reviews:8934,store_name:'TechVault'},
+  {id:'s3',emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging',price:68,category:'beauty',stars:4.9,reviews:23156,store_name:'GlowLab'},
+  {id:'s4',emoji:'☕',title:'BrewMaster Pro Coffee Machine — 12-Cup, Built-in Grinder',price:249,category:'home',stars:4.6,reviews:5432,store_name:'HomeZen'},
+  {id:'s5',emoji:'🎧',title:'SoundWave Elite Wireless — 40hr Battery, ANC',price:349,category:'electronics',stars:4.8,reviews:18923,store_name:'TechVault'},
+  {id:'s6',emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free Formula',price:89,category:'pets',stars:4.9,reviews:31024,store_name:'PetParadise'},
+  {id:'s7',emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lbs',price:429,category:'sports',stars:4.7,reviews:7823,store_name:'FitWorld'},
+  {id:'s8',emoji:'🌿',title:'ZenMist Essential Oil Diffuser — 7 LED Colors',price:45,category:'home',stars:4.5,reviews:9234,store_name:'HomeZen'},
+  {id:'s9',emoji:'👜',title:'LuxCraft Structured Tote — Pebbled Leather',price:395,category:'fashion',stars:4.6,reviews:4123,store_name:'LuxBoutique'},
+  {id:'s10',emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Games',price:199,category:'electronics',stars:4.8,reviews:15678,store_name:'TechVault'},
+  {id:'s11',emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,category:'beauty',stars:4.7,reviews:11234,store_name:'GlowLab'},
+  {id:'s12',emoji:'🛋️',title:'NapCloud Bean Bag — Memory Foam, Velvet',price:299,category:'home',stars:4.5,reviews:6789,store_name:'HomeZen'},
 ];
 
-let userStores = JSON.parse(localStorage.getItem('dz_stores') || '[]');
 let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
-let user = JSON.parse(localStorage.getItem('dz_user') || 'null');
-let currentCat = '';
+let currentUser = null;
 let authMode = 'login';
+let currentCat = '';
+let dbProducts = [];
+let dbStores = [];
 let orderPlaced = false;
+let storeSubmitting = false;
+let authSubmitting = false;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(location.search);
-  currentCat = params.get('cat') || params.get('q') || '';
+  currentCat = params.get('cat') || '';
   if (params.get('q')) document.getElementById('searchInput').value = params.get('q');
   updateCartCount();
+  const { data: { session } } = await sb.auth.getSession();
+  currentUser = session?.user || null;
   updateUserUI();
   renderProducts();
-  renderStores();
-  // sync radio
-  document.querySelectorAll('input[name="cat"]').forEach(r => {
-    if (r.value === currentCat) r.checked = true;
-  });
+  await loadDBData();
 });
 
-function updateCartCount() {
-  document.getElementById('cartCount').textContent = cart.length;
-}
+sb.auth.onAuthStateChange((_e, session) => {
+  currentUser = session?.user || null;
+  updateUserUI();
+});
 
+function updateCartCount() { document.getElementById('cartCount').textContent = cart.length; }
 function updateUserUI() {
-  document.getElementById('acctGreet').textContent = user ? 'Hello, ' + user.name : 'Hello, sign in';
+  const name = currentUser?.user_metadata?.name || currentUser?.email?.split('@')[0];
+  document.getElementById('acctGreet').textContent = currentUser ? 'Hello, ' + name : 'Hello, sign in';
+}
+function handleAcctClick(e) { if (!currentUser) { e.preventDefault(); openAuth('login'); } }
+
+async function loadDBData() {
+  const [storesRes, productsRes] = await Promise.all([
+    sb.from('stores').select('*').order('created_at', { ascending: false }).limit(20),
+    sb.from('products').select('*, stores(name)').order('created_at', { ascending: false }).limit(50)
+  ]);
+  dbStores = storesRes.data || [];
+  dbProducts = (productsRes.data || []).map(p => ({...p, store_name: p.stores?.name || 'Community Store', emoji: p.emoji || EMOJIS[p.category] || '📦'}));
+  renderProducts();
+  renderStores();
 }
 
 function filterCat(cat, e) {
   if (e) e.preventDefault();
   currentCat = cat;
-  document.getElementById('catFilter').value = cat;
   document.getElementById('breadcrumbCat').textContent = cat ? cat.charAt(0).toUpperCase()+cat.slice(1) : 'All Departments';
-  document.querySelectorAll('input[name="cat"]').forEach(r => r.checked = (r.value === cat));
+  document.querySelectorAll('input[name="cat"]').forEach(r => r.checked = r.value === cat);
   renderProducts();
 }
 
 function doSearch() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
   currentCat = '';
-  renderProducts(q);
+  renderProducts(document.getElementById('searchInput').value.toLowerCase());
 }
 
 function renderProducts(searchQ) {
-  let items = [...PRODUCTS, ...userStores.flatMap(s => s.products.map(p => ({...p, store: s.name})))];
-  if (currentCat) items = items.filter(p => p.cat === currentCat);
-  if (searchQ) items = items.filter(p => p.title.toLowerCase().includes(searchQ) || p.cat.includes(searchQ));
+  const allProducts = [...SEED_PRODUCTS, ...dbProducts];
+  let items = currentCat ? allProducts.filter(p => p.category === currentCat) : allProducts;
+  if (searchQ) items = items.filter(p => p.title.toLowerCase().includes(searchQ));
   const sort = document.getElementById('sortSelect').value;
-  if (sort === 'rating') items.sort((a,b) => b.stars - a.stars);
-  if (sort === 'newest') items.sort(() => Math.random()-0.5);
+  if (sort === 'rating') items.sort((a,b) => (b.stars||4) - (a.stars||4));
   document.getElementById('resultCount').textContent = items.length;
-  document.getElementById('resultQuery').textContent = searchQ ? `"${searchQ}"` : currentCat ? currentCat : 'everything free';
+  document.getElementById('resultQuery').textContent = searchQ ? `"${searchQ}"` : currentCat || 'everything free';
   document.getElementById('productGrid').innerHTML = items.map((p,i) => `
     <div class="product-card">
-      ${i % 5 === 0 ? '<div class="badge badge-sale">SALE</div>' : i % 3 === 0 ? '<div class="badge badge-hot">HOT</div>' : '<div class="badge badge-prime">DopePrime</div>'}
-      <div class="product-img">${p.emoji || EMOJIS[p.cat] || '📦'}</div>
-      <div class="product-title">${p.title}</div>
-      <div style="display:flex;gap:4px;align-items:center;margin-bottom:3px;">
-        <span class="stars">${'★'.repeat(Math.floor(p.stars))}${'☆'.repeat(5-Math.floor(p.stars))}</span>
-        <span class="review-count">(${(p.reviews||Math.floor(Math.random()*5000+500)).toLocaleString()})</span>
-      </div>
+      ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">DopePrime</div>'}
+      <div class="product-img">${p.emoji||EMOJIS[p.category]||'📦'}</div>
+      <div class="product-title">${escHtml(p.title)}</div>
+      <div class="stars">${'★'.repeat(Math.floor(p.stars||4.5))}${'☆'.repeat(5-Math.floor(p.stars||4.5))}</div>
+      <div class="review-count">(${(p.reviews||Math.floor(Math.random()*5000+100)).toLocaleString()} reviews)</div>
       <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
       <div class="price-free">FREE</div>
-      <div class="price-saved">Save $${p.price.toLocaleString()}.00 (100%)</div>
-      <div class="prime-badge">✓ DopePrime · Free Fake Delivery</div>
-      ${p.store ? `<div style="font-size:11px;color:#555;margin-bottom:6px;">Sold by <strong>${p.store}</strong></div>` : ''}
-      <button class="add-cart-btn" onclick="addToCart(${JSON.stringify(p).replace(/"/g,'&quot;')})">Add to Cart</button>
-      <button class="buy-now-btn" onclick="addToCart(${JSON.stringify(p).replace(/"/g,'&quot;')});openCheckout()">Buy Now</button>
-    </div>
-  `).join('');
+      <div class="price-saved">Save $${p.price.toLocaleString()} (100%)</div>
+      <div class="prime-badge">✓ DopePrime · Free Delivery</div>
+      ${p.store_name?`<div style="font-size:11px;color:#555;margin-bottom:6px;">Sold by <strong>${escHtml(p.store_name)}</strong></div>`:''}
+      <a href="product.html?id=${p.id}" style="display:block;color:#007185;font-size:12px;margin-bottom:6px;">See full details →</a>
+      <button class="add-cart-btn" onclick="addToCart(${i})">Add to Cart</button>
+      <button class="buy-now-btn" onclick="addToCart(${i});openCheckout()">Buy Now</button>
+    </div>`).join('');
+  window._renderedProducts = items;
 }
 
-function renderStores() {
-  const defaultStores = [
-    {name:'TechVault',icon:'💻',tagline:'Dream gadgets, zero dollars',products:[]},
-    {name:'LuxBoutique',icon:'👑',tagline:'Fashion fantasies made real(ish)',products:[]},
-    {name:'GlowLab',icon:'✨',tagline:'Beauty without the bankruptcy',products:[]},
-    {name:'FitWorld',icon:'🏋️',tagline:'Get fit for free',products:[]},
-    {name:'PetParadise',icon:'🐾',tagline:'Spoil your pets — for nothing',products:[]},
-  ];
-  const all = [...defaultStores, ...userStores];
-  document.getElementById('storeGrid').innerHTML = all.map(s => `
-    <div class="store-card">
-      <div class="store-icon">${s.icon}</div>
-      <div class="store-name">${s.name}</div>
-      <div class="store-tagline">${s.tagline}</div>
-      <div class="store-products">${s.products.length} products listed</div>
-    </div>
-  `).join('');
-}
-
-function addToCart(p) {
+function addToCart(idx) {
+  const p = window._renderedProducts[idx];
   cart.push({...p, addedAt: Date.now()});
   localStorage.setItem('dz_cart', JSON.stringify(cart));
   updateCartCount();
   showToast('✅ Added to cart — <strong>$0 charged</strong>');
   launchConfetti();
-  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:p.title,value:0});
 }
 
-function openCheckout(e) {
-  if (e) e.preventDefault();
-  orderPlaced = false;
-  renderCheckout();
-  document.getElementById('checkoutOverlay').classList.add('active');
+function renderStores() {
+  const defaultStores = [
+    {name:'TechVault',icon:'💻',tagline:'Dream gadgets, zero dollars'},
+    {name:'LuxBoutique',icon:'👑',tagline:'Fashion fantasies made real(ish)'},
+    {name:'GlowLab',icon:'✨',tagline:'Beauty without the bankruptcy'},
+  ];
+  const all = [...defaultStores, ...dbStores.map(s => ({name:s.name, icon:s.icon||'🏪', tagline:s.tagline}))];
+  document.getElementById('storeGrid').innerHTML = all.map(s => `
+    <div class="store-card">
+      <div style="font-size:36px;margin-bottom:6px;">${s.icon}</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:3px;">${escHtml(s.name)}</div>
+      <div style="font-size:12px;color:#555;">${escHtml(s.tagline)}</div>
+    </div>`).join('');
 }
+
+// ===== CHECKOUT =====
+function openCheckout(e) { if(e)e.preventDefault(); orderPlaced=false; renderCheckout(); document.getElementById('checkoutOverlay').classList.add('active'); }
 function closeCheckout() { document.getElementById('checkoutOverlay').classList.remove('active'); }
-function closeCheckoutIfBg(e) { if (e.target === document.getElementById('checkoutOverlay')) closeCheckout(); }
+function closeCheckoutIfBg(e) { if(e.target===document.getElementById('checkoutOverlay'))closeCheckout(); }
 
 function renderCheckout() {
   const panel = document.getElementById('checkoutContent');
   if (orderPlaced) return;
-  if (cart.length === 0) {
-    panel.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:60px;margin-bottom:15px;">🛒</div><p style="color:#555;">Your cart is empty.<br>Go add some free stuff!</p><a href="#" onclick="closeCheckout()" style="color:#007185;">Continue Shopping</a></div>`;
-    return;
-  }
-  const total = cart.reduce((s,p) => s + p.price, 0);
+  if (cart.length === 0) { panel.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:60px;">🛒</div><p style="color:#555;margin-top:10px;">Cart is empty. Go add some free stuff!</p><a href="#" onclick="closeCheckout()" style="color:#007185;">Continue Shopping</a></div>`; return; }
+  const total = cart.reduce((s,p)=>s+p.price,0);
   panel.innerHTML = `
-    <div id="cartItems">${cart.map((p,i) => `
-      <div class="cart-item">
-        <div class="cart-item-emoji">${p.emoji || '📦'}</div>
-        <div class="cart-item-info">
-          <div class="cart-item-title">${p.title}</div>
-          <div class="cart-item-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:12px;">$${p.price}</span></div>
-          <div class="prime-badge" style="font-size:11px;">✓ DopePrime Eligible</div>
-        </div>
-        <button class="cart-item-remove" onclick="removeFromCart(${i})">🗑</button>
-      </div>
-    `).join('')}</div>
+    ${cart.map((p,i)=>`<div class="cart-item"><div class="cart-item-emoji">${p.emoji||'📦'}</div><div class="cart-item-info"><div class="cart-item-title">${escHtml(p.title)}</div><div class="cart-item-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:12px;">$${p.price}</span></div></div><button class="cart-item-remove" onclick="removeCart(${i})">🗑</button></div>`).join('')}
     <div class="order-total">
-      <div class="order-row"><span>Items (${cart.length}):</span><span style="text-decoration:line-through;color:#aaa;">$${total.toLocaleString()}.00</span></div>
-      <div class="order-row"><span>DopePrime Savings:</span><span style="color:#067D62;">-$${total.toLocaleString()}.00</span></div>
+      <div class="order-row"><span>Items (${cart.length}):</span><span style="text-decoration:line-through;color:#aaa;">$${total.toLocaleString()}</span></div>
+      <div class="order-row"><span>DopePrime Savings:</span><span style="color:#067D62;">-$${total.toLocaleString()}</span></div>
       <div class="order-row"><span>Shipping:</span><span style="color:#067D62;">FREE</span></div>
-      <div class="order-row total"><span>Order Total:</span><span style="color:#CC0C39;">$0.00</span></div>
+      <div class="order-row total"><span>Total:</span><span style="color:#CC0C39;">$0.00</span></div>
     </div>
     <button class="place-order-btn" onclick="placeOrder()">🛍️ Place Your Free Order</button>
-    <button onclick="clearCart()" style="width:100%;background:none;border:none;color:#CC0C39;cursor:pointer;font-size:13px;padding:8px;">Clear Cart</button>
-  `;
+    <button onclick="clearCart()" style="width:100%;background:none;border:none;color:#CC0C39;cursor:pointer;font-size:13px;padding:8px;">Clear Cart</button>`;
 }
 
-function removeFromCart(i) {
-  cart.splice(i, 1);
-  localStorage.setItem('dz_cart', JSON.stringify(cart));
-  updateCartCount();
-  renderCheckout();
-}
-
-function clearCart() {
-  cart = [];
-  localStorage.setItem('dz_cart', JSON.stringify(cart));
-  updateCartCount();
-  renderCheckout();
-}
+function removeCart(i) { cart.splice(i,1); localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); renderCheckout(); }
+function clearCart() { cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); renderCheckout(); }
 
 function placeOrder() {
-  if (!user) { closeCheckout(); openAuth('login'); return; }
-  const now = new Date();
-  const eta = new Date(now.getTime() + 30 * 60000);
-  const etaStr = eta.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-  const savedAmt = cart.reduce((s,p)=>s+p.price,0);
-  const panel = document.getElementById('checkoutContent');
-  orderPlaced = true;
-  panel.innerHTML = `
+  if (!currentUser) { closeCheckout(); openAuth('login'); return; }
+  const saved = cart.reduce((s,p)=>s+p.price,0);
+  const eta = new Date(Date.now()+30*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('checkoutContent').innerHTML = `
     <div class="order-confirm">
-      <div class="check">🎉</div>
-      <h2>Order Confirmed!</h2>
-      <p style="color:#555;margin-bottom:5px;">Your completely free order has been placed.</p>
-      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;">
-        <strong style="color:#067D62;">You just saved $${savedAmt.toLocaleString()}.00!</strong><br>
-        <span style="font-size:12px;color:#555;">Added to your lifetime Dopazon savings</span>
+      <div style="font-size:80px;">🎉</div>
+      <h2 style="color:#067D62;margin-bottom:8px;">Order Confirmed!</h2>
+      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;"><strong style="color:#067D62;">You saved $${saved.toLocaleString()}!</strong></div>
+      <div style="text-align:left;background:#f9f9f9;border-radius:4px;padding:15px;margin-top:10px;">
+        <h3 style="font-size:15px;margin-bottom:12px;">📍 Live Tracking</h3>
+        <div class="tracking-step"><div class="tracking-dot done"></div><div><div style="font-weight:700;font-size:14px;">Order Confirmed</div><div style="font-size:12px;color:#555;">${new Date().toLocaleTimeString()}</div></div></div>
+        <div class="tracking-step"><div class="tracking-dot active"></div><div><div style="font-weight:700;font-size:14px;">Preparing 📦</div><div style="font-size:12px;color:#555;">At warehouse</div></div></div>
+        <div class="tracking-step"><div class="tracking-dot pending"></div><div><div style="font-weight:700;font-size:14px;">Out for Delivery 🚚</div><div style="font-size:12px;color:#555;">ETA ${eta}</div></div></div>
+        <div class="tracking-step"><div class="tracking-dot pending"></div><div><div style="font-weight:700;font-size:14px;">Delivered! 🏠</div></div></div>
+        <div style="margin-top:10px;background:#131921;color:#FF9900;border-radius:4px;padding:10px;font-size:13px;text-align:center;font-weight:700;">🚗 Driver: Alex K. · ⭐ 4.98 · On the way</div>
       </div>
-      <div class="tracking-container" style="text-align:left;background:#f9f9f9;border-radius:4px;padding:15px;">
-        <h3 style="font-size:15px;margin-bottom:12px;">📍 Live Delivery Tracking</h3>
-        <div class="tracking-step">
-          <div class="tracking-dot done"></div>
-          <div class="tracking-info"><div class="tracking-label">Order Confirmed</div><div class="tracking-time">${now.toLocaleTimeString()}</div></div>
-        </div>
-        <div class="tracking-step">
-          <div class="tracking-dot active"></div>
-          <div class="tracking-info"><div class="tracking-label">Preparing Your Order 📦</div><div class="tracking-time">At the warehouse now</div></div>
-        </div>
-        <div class="tracking-step">
-          <div class="tracking-dot pending"></div>
-          <div class="tracking-info"><div class="tracking-label">Out for Delivery 🚚</div><div class="tracking-time">ETA ${etaStr}</div></div>
-        </div>
-        <div class="tracking-step">
-          <div class="tracking-dot pending"></div>
-          <div class="tracking-info"><div class="tracking-label">Delivered! 🏠</div><div class="tracking-time">At your door</div></div>
-        </div>
-        <div style="margin-top:12px;background:#131921;color:#FF9900;border-radius:4px;padding:10px;font-size:13px;text-align:center;font-weight:700;">
-          🚗 Driver: Alex K. · ⭐ 4.98 · 2 min away
-        </div>
-      </div>
-      <button onclick="shareConfession(${savedAmt})" style="width:100%;background:#232F3E;color:#fff;border:none;border-radius:4px;padding:12px;font-size:14px;cursor:pointer;margin-top:15px;">💬 Share to Confession Cart</button>
-      <button onclick="startNewCart()" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px;">Shop More Free Stuff</button>
-    </div>
-  `;
-  cart = [];
-  localStorage.setItem('dz_cart', JSON.stringify(cart));
-  updateCartCount();
-  launchConfetti();
-  animateTracking();
-  if (typeof gtag !== 'undefined') gtag('event','purchase',{value:0,currency:'USD'});
+      <button onclick="shareConf(${saved})" style="width:100%;background:#232F3E;color:#fff;border:none;border-radius:4px;padding:12px;font-size:14px;cursor:pointer;margin-top:15px;">💬 Share to Confession Cart</button>
+      <button onclick="orderPlaced=false;clearCart();closeCheckout();" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px;">Shop More</button>
+    </div>`;
+  orderPlaced=true; cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); launchConfetti();
+  gtag('event','purchase',{value:0,currency:'USD'});
 }
 
-function animateTracking() {
-  setTimeout(() => {
-    const dots = document.querySelectorAll('.tracking-dot.pending');
-    if (dots[0]) { dots[0].classList.remove('pending'); dots[0].classList.add('active'); }
-  }, 4000);
-  setTimeout(() => {
-    const dots = document.querySelectorAll('.tracking-dot');
-    dots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
-  }, 10000);
-}
-
-function startNewCart() {
-  orderPlaced = false;
-  closeCheckout();
-}
-
-function shareConfession(amount) {
-  localStorage.setItem('dz_pending_confession', JSON.stringify({amount, ts: Date.now()}));
-  window.location = 'confessions.html';
-}
-
-// ===== STORE MODAL =====
-function openStoreModal() {
-  if (!user) { openAuth('login'); return; }
-  document.getElementById('storeModal').classList.add('active');
-}
-function closeStore() { document.getElementById('storeModal').classList.remove('active'); }
-
-function checkTrademark(input) {
-  const val = input.value.toLowerCase();
-  const hit = TRADEMARKS.some(t => val.includes(t));
-  const warn = input.id === 'storeName' ? 'trademarkWarn' : 'trademarkWarn2';
-  document.getElementById(warn).style.display = hit ? 'block' : 'none';
-  return !hit;
-}
-
-function submitStore() {
-  const name = document.getElementById('storeName').value.trim();
-  const tagline = document.getElementById('storeTagline').value.trim();
-  const icon = document.getElementById('storeIcon').value || '🏪';
-  const prodName = document.getElementById('prodName').value.trim();
-  const prodCat = document.getElementById('prodCat').value;
-  const prodPrice = parseInt(document.getElementById('prodPrice').value) || 99;
-  const prodEmoji = document.getElementById('prodEmoji').value || EMOJIS[prodCat];
-  if (!name || !prodName) { alert('Please fill in store name and first product.'); return; }
-  if (!checkTrademark(document.getElementById('storeName')) || !checkTrademark(document.getElementById('prodName'))) {
-    alert('Please remove trademarked brand names.'); return;
-  }
-  const store = {
-    name, tagline: tagline || 'Free everything, always', icon,
-    products: [{
-      id: Date.now(), title: prodName, cat: prodCat,
-      price: prodPrice, emoji: prodEmoji, stars: 4.5,
-      reviews: Math.floor(Math.random() * 500 + 50), store: name
-    }]
-  };
-  userStores.push(store);
-  localStorage.setItem('dz_stores', JSON.stringify(userStores));
-  closeStore();
-  renderStores();
-  renderProducts();
-  showToast('🎉 <strong>' + name + '</strong> is now open for fake business!');
-  launchConfetti();
-}
+function shareConf(amount) { localStorage.setItem('dz_pending_confession',JSON.stringify({amount,ts:Date.now()})); window.location='confessions.html'; }
 
 // ===== AUTH =====
 function openAuth(mode) {
-  authMode = mode;
+  authMode=mode;
   document.getElementById('authModal').classList.add('active');
-  document.getElementById('authTitle').textContent = mode === 'login' ? 'Sign in' : 'Create account';
-  document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
+  document.getElementById('authTitle').textContent = mode==='login'?'Sign in to Dopazon':'Create your account';
+  document.getElementById('authSubmitBtn').textContent = mode==='login'?'Sign in':'Create account';
+  document.getElementById('nameGroup').style.display = mode==='signup'?'block':'none';
+  document.getElementById('authError').style.display='none';
 }
 function closeAuth() { document.getElementById('authModal').classList.remove('active'); }
-function toggleAuth() { openAuth(authMode === 'login' ? 'signup' : 'login'); }
-function handleAccClick(e) { if (!user) { e.preventDefault(); openAuth('login'); } }
-function submitAuth() {
-  const email = document.getElementById('authEmail').value;
-  const pass = document.getElementById('authPass').value;
-  if (!email || !pass || pass.length < 6) { alert('Please fill all fields (password min 6 chars).'); return; }
-  const name = document.getElementById('authName').value || email.split('@')[0];
-  user = { email, name, createdAt: Date.now() };
-  localStorage.setItem('dz_user', JSON.stringify(user));
-  closeAuth();
-  updateUserUI();
-  showToast('👋 Welcome, <strong>' + user.name + '</strong>!');
-}
+function toggleAuthMode() { openAuth(authMode==='login'?'signup':'login'); }
 
-function showToast(msg) {
-  const t = document.getElementById('cartToast');
-  t.innerHTML = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
-}
-
-function launchConfetti() {
-  const colors = ['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62','#fff'];
-  for (let i = 0; i < 30; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti-piece';
-    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 2000);
+async function submitAuth() {
+  if (authSubmitting) return;
+  const email=document.getElementById('authEmail').value.trim();
+  const pass=document.getElementById('authPass').value;
+  const name=document.getElementById('authName').value.trim();
+  const errEl=document.getElementById('authError');
+  errEl.style.display='none';
+  if (!email||!pass){errEl.textContent='Please fill all fields.';errEl.style.display='block';return;}
+  if (pass.length<6){errEl.textContent='Password must be at least 6 characters.';errEl.style.display='block';return;}
+  authSubmitting=true;
+  const btn=document.getElementById('authSubmitBtn');
+  btn.disabled=true; btn.textContent='Please wait...';
+  try {
+    let res;
+    if (authMode==='signup') {
+      res = await sb.auth.signUp({email,password:pass,options:{data:{name:name||email.split('@')[0]}}});
+    } else {
+      res = await sb.auth.signInWithPassword({email,password:pass});
+    }
+    if (res.error) throw res.error;
+    closeAuth();
+    const uname = res.data?.user?.user_metadata?.name || email.split('@')[0];
+    showToast(`👋 Welcome${authMode==='signup'?' to Dopazon':' back'}, <strong>${uname}</strong>!`);
+    gtag('event', authMode==='signup'?'sign_up':'login');
+  } catch(err) {
+    errEl.textContent = err.message || 'Authentication failed. Please try again.';
+    errEl.style.display='block';
+  } finally {
+    authSubmitting=false; btn.disabled=false;
+    btn.textContent=authMode==='login'?'Sign in':'Create account';
   }
 }
 
-window.addEventListener('click', e => {
-  if (e.target === document.getElementById('authModal')) closeAuth();
-  if (e.target === document.getElementById('storeModal')) closeStore();
-});
+// ===== STORE =====
+function openStoreModal() { if(!currentUser){openAuth('login');return;} document.getElementById('storeModal').classList.add('active'); }
+function closeStoreModal() { document.getElementById('storeModal').classList.remove('active'); }
+
+function checkTM(input, warnId) {
+  const val=input.value.toLowerCase();
+  const hit=TRADEMARKS.some(t=>val.includes(t));
+  document.getElementById(warnId).style.display=hit?'block':'none';
+  return !hit;
+}
+
+async function submitStore() {
+  if (storeSubmitting) return;
+  const name=document.getElementById('storeName').value.trim();
+  const tagline=document.getElementById('storeTagline').value.trim();
+  const icon=document.getElementById('storeIcon').value||'🏪';
+  const prodName=document.getElementById('prodName').value.trim();
+  const prodCat=document.getElementById('prodCat').value;
+  const prodPrice=parseInt(document.getElementById('prodPrice').value)||99;
+  const prodEmoji=document.getElementById('prodEmoji').value||EMOJIS[prodCat]||'📦';
+  const errEl=document.getElementById('storeError');
+  errEl.style.display='none';
+  if (!name||!prodName){errEl.textContent='Please fill store name and first product.';errEl.style.display='block';return;}
+  if (!checkTM(document.getElementById('storeName'),'tmWarn1')||!checkTM(document.getElementById('prodName'),'tmWarn2')){errEl.textContent='Please remove trademarked names.';errEl.style.display='block';return;}
+
+  storeSubmitting=true;
+  const btn=document.getElementById('storeSubmitBtn');
+  btn.disabled=true; btn.textContent='Opening store...';
+  try {
+    const {data:storeData,error:storeErr}=await sb.from('stores').insert([{user_id:currentUser.id,name,tagline:tagline||'Free everything, always',icon}]).select().single();
+    if(storeErr)throw storeErr;
+    const {error:prodErr}=await sb.from('products').insert([{store_id:storeData.id,user_id:currentUser.id,title:prodName,price:prodPrice,category:prodCat,emoji:prodEmoji,stars:4.5,reviews:0}]);
+    if(prodErr)throw prodErr;
+    closeStoreModal();
+    await loadDBData();
+    showToast(`🎉 <strong>${name}</strong> is now open for fake business!`);
+    launchConfetti();
+  } catch(err) {
+    errEl.textContent=err.message||'Could not create store. Try again.';
+    errEl.style.display='block';
+  } finally {
+    storeSubmitting=false; btn.disabled=false; btn.textContent='Open My Store 🚀';
+  }
+}
+
+function showToast(msg){const t=document.getElementById('cartToast');t.innerHTML=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function launchConfetti(){const colors=['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62'];for(let i=0;i<30;i++){const c=document.createElement('div');c.className='confetti-piece';c.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;document.body.appendChild(c);setTimeout(()=>c.remove(),2000);}}
+window.addEventListener('click',e=>{if(e.target===document.getElementById('authModal'))closeAuth();if(e.target===document.getElementById('storeModal'))closeStoreModal();});
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

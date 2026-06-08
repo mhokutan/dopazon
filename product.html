@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Product Detail</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
+  #header{background:#131921;display:flex;align-items:center;padding:8px 12px;gap:10px;position:sticky;top:0;z-index:100;}
+  .logo{color:#fff;text-decoration:none;display:flex;flex-direction:column;padding:4px 8px;border:1px solid transparent;}
+  .logo:hover{border-color:#FF9900;border-radius:2px;}
+  .logo-text{font-size:26px;font-weight:700;letter-spacing:-1px;}
+  .logo-text span{color:#FF9900;}
+  .logo-sub{font-size:9px;color:#ccc;}
+  .search-bar{flex:1;display:flex;height:40px;}
+  .search-select{background:#F3F3F3;border:none;padding:0 8px;font-size:12px;color:#555;border-radius:4px 0 0 4px;cursor:pointer;height:100%;}
+  .search-input{flex:1;border:none;padding:0 10px;font-size:16px;outline:none;height:100%;}
+  .search-btn{background:#FF9900;border:none;padding:0 14px;border-radius:0 4px 4px 0;cursor:pointer;height:100%;}
+  .header-link{color:#fff;text-decoration:none;font-size:12px;padding:4px 8px;border:1px solid transparent;white-space:nowrap;}
+  .header-link:hover{border-color:#FF9900;border-radius:2px;}
+  .header-link strong{display:block;font-size:14px;}
+  .cart-link{color:#fff;text-decoration:none;display:flex;align-items:center;gap:4px;padding:4px 8px;border:1px solid transparent;font-weight:700;font-size:14px;}
+  .cart-link:hover{border-color:#FF9900;border-radius:2px;}
+  .cart-count{background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:0 5px;border-radius:2px;}
+  #navbar{background:#232F3E;display:flex;align-items:center;padding:0 12px;overflow-x:auto;}
+  .nav-link{color:#fff;text-decoration:none;font-size:13px;padding:9px 10px;white-space:nowrap;border:1px solid transparent;}
+  .nav-link:hover{border-color:#fff;border-radius:2px;}
+  .breadcrumb{background:#fff;padding:8px 15px;font-size:13px;color:#555;border-bottom:1px solid #eee;}
+  .breadcrumb a{color:#007185;text-decoration:none;}
+  .breadcrumb a:hover{text-decoration:underline;}
+  /* Product Layout */
+  .product-main{max-width:1200px;margin:15px auto;padding:0 15px;display:grid;grid-template-columns:1fr 1fr 280px;gap:20px;}
+  /* Left: Images */
+  .product-images{background:#fff;border-radius:4px;padding:20px;display:flex;flex-direction:column;align-items:center;}
+  .main-img{font-size:160px;text-align:center;padding:20px 0;line-height:1;}
+  .img-thumbnails{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center;}
+  .thumb{width:50px;height:50px;border:2px solid #ddd;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;}
+  .thumb.active{border-color:#FF9900;}
+  .thumb:hover{border-color:#FF9900;}
+  /* Center: Info */
+  .product-info{background:#fff;border-radius:4px;padding:20px;}
+  .product-badge-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .info-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;color:#fff;}
+  .badge-prime{background:#00A8E0;}.badge-hot{background:#FF6900;}.badge-new{background:#067D62;}
+  .product-title{font-size:20px;font-weight:400;line-height:1.4;margin-bottom:10px;color:#0F1111;}
+  .rating-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #eee;}
+  .stars-big{color:#FF9900;font-size:18px;}
+  .rating-num{color:#007185;font-size:14px;cursor:pointer;}
+  .rating-num:hover{text-decoration:underline;color:#C7511F;}
+  .review-count-big{color:#007185;font-size:14px;cursor:pointer;}
+  .sold-by{font-size:13px;color:#555;margin-bottom:12px;}
+  .sold-by a{color:#007185;}
+  .price-section{border:1px solid #eee;border-radius:4px;padding:15px;margin-bottom:15px;background:#FAFAFA;}
+  .price-label{font-size:13px;color:#555;margin-bottom:4px;}
+  .price-was{font-size:14px;color:#565959;text-decoration:line-through;}
+  .price-free-big{font-size:36px;font-weight:700;color:#CC0C39;margin:4px 0;}
+  .price-save{color:#CC0C39;font-size:14px;font-weight:700;}
+  .price-note{font-size:12px;color:#555;margin-top:6px;}
+  .prime-row{display:flex;align-items:center;gap:6px;color:#00A8E0;font-weight:700;font-size:14px;margin-bottom:12px;}
+  .delivery-info{background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;font-size:13px;margin-bottom:12px;}
+  .delivery-info strong{color:#067D62;}
+  /* Features */
+  .features-section{margin-bottom:15px;}
+  .features-section h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+  .feature-item{display:flex;gap:8px;margin-bottom:6px;font-size:13px;align-items:flex-start;}
+  .feature-check{color:#067D62;font-weight:700;flex-shrink:0;}
+  /* Specs */
+  .specs-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
+  .specs-table tr:nth-child(even){background:#EAEDED;}
+  .specs-table td{padding:8px 10px;border-bottom:1px solid #ddd;}
+  .specs-table td:first-child{font-weight:700;width:40%;color:#555;}
+  /* Reviews */
+  .reviews-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
+  .review-summary{display:flex;gap:20px;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #eee;}
+  .rating-big-num{font-size:50px;font-weight:700;color:#0F1111;line-height:1;}
+  .rating-bars{flex:1;}
+  .rating-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;color:#007185;cursor:pointer;}
+  .rating-bar-row:hover{text-decoration:underline;}
+  .bar-track{flex:1;height:10px;background:#eee;border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;background:#FF9900;border-radius:4px;}
+  .review-card{padding:15px 0;border-bottom:1px solid #eee;}
+  .review-card:last-child{border:none;}
+  .reviewer-name{font-weight:700;font-size:14px;margin-bottom:4px;}
+  .review-stars{color:#FF9900;font-size:13px;margin-bottom:4px;}
+  .review-title{font-weight:700;font-size:14px;margin-bottom:6px;}
+  .review-body{font-size:13px;color:#333;line-height:1.5;}
+  .review-date{font-size:12px;color:#777;margin-top:6px;}
+  .helpful-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:#555;}
+  .helpful-btn{border:1px solid #ddd;background:#fff;border-radius:4px;padding:3px 10px;cursor:pointer;font-size:12px;}
+  .helpful-btn:hover{background:#eee;}
+  /* Right: Buy Box */
+  .buy-box{background:#fff;border:1px solid #ddd;border-radius:8px;padding:20px;height:fit-content;position:sticky;top:80px;}
+  .buy-box-price{font-size:28px;font-weight:700;color:#CC0C39;margin-bottom:4px;}
+  .buy-box-was{font-size:13px;color:#565959;text-decoration:line-through;margin-bottom:4px;}
+  .buy-box-save{color:#CC0C39;font-size:13px;font-weight:700;margin-bottom:8px;}
+  .buy-box-prime{color:#00A8E0;font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+  .buy-box-delivery{font-size:13px;margin-bottom:12px;line-height:1.5;}
+  .buy-box-delivery strong{color:#067D62;}
+  .in-stock{color:#067D62;font-size:14px;font-weight:700;margin-bottom:12px;}
+  .qty-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .qty-select{border:1px solid #aaa;border-radius:4px;padding:6px;font-size:13px;cursor:pointer;}
+  .add-cart-big{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:10px;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:8px;}
+  .add-cart-big:hover{background:#F7CA00;}
+  .buy-now-big{width:100%;background:#FF9900;border:1px solid #FF8F00;border-radius:20px;padding:10px;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:12px;}
+  .buy-now-big:hover{background:#FA8900;}
+  .buy-box-divider{border-top:1px solid #eee;margin:12px 0;}
+  .buy-box-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
+  .buy-box-label{color:#555;}
+  .buy-box-val{color:#0F1111;}
+  .share-row{display:flex;gap:8px;margin-top:12px;}
+  .share-small-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer;flex:1;}
+  .share-small-btn:hover{background:#eee;}
+  /* Toast */
+  .cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;}
+  .confetti-piece{position:fixed;width:8px;height:8px;top:-10px;z-index:9999;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+  /* Related */
+  .related-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
+  .related-card{border:1px solid #eee;border-radius:4px;padding:10px;cursor:pointer;text-align:center;}
+  .related-card:hover{border-color:#FF9900;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+  .related-emoji{font-size:50px;margin-bottom:6px;}
+  .related-title{font-size:12px;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .related-price{color:#CC0C39;font-weight:700;font-size:13px;}
+  @media(max-width:900px){.product-main{grid-template-columns:1fr;}.buy-box{position:static;}}
+  @media(max-width:600px){.product-main{grid-template-columns:1fr;}.product-images,.product-info{border-radius:0;}}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')window.location='shop.html?q='+encodeURIComponent(this.value)">
+    <button class="search-btn" onclick="window.location='shop.html'"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="index.html" class="header-link"><span>Hello, visitor</span><strong>Account ▾</strong></a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
+  <a href="#" class="nav-link" style="color:#FF9900;">🎁 Always Free</a>
+</nav>
+
+<div class="breadcrumb" id="breadcrumb">
+  <a href="index.html">Dopazon</a> › <a href="shop.html">All Departments</a> › <span id="breadCat">Products</span> › <span id="breadName">Loading...</span>
+</div>
+
+<div class="product-main">
+  <!-- Images -->
+  <div class="product-images">
+    <div class="main-img" id="mainEmoji">📦</div>
+    <div class="img-thumbnails" id="thumbs"></div>
+  </div>
+
+  <!-- Info -->
+  <div class="product-info">
+    <div class="product-badge-row">
+      <span class="info-badge badge-prime">✓ DopePrime</span>
+      <span class="info-badge badge-hot" id="badgeExtra">BESTSELLER</span>
+      <span class="info-badge badge-new">100% FREE</span>
+    </div>
+    <h1 class="product-title" id="productTitle">Loading product...</h1>
+    <div class="rating-row">
+      <span class="stars-big" id="starsDisplay">★★★★★</span>
+      <span class="rating-num" id="ratingNum" onclick="scrollToReviews()">4.8</span>
+      <span style="color:#ddd;">|</span>
+      <span class="review-count-big" onclick="scrollToReviews()" id="reviewCountDisplay">0 ratings</span>
+      <span style="color:#ddd;">|</span>
+      <span style="font-size:13px;color:#007185;cursor:pointer;">23 answered questions</span>
+    </div>
+    <div class="sold-by">Sold by <a href="shop.html" id="storeName">Dopazon Store</a> · Ships from Dopazon Fulfillment Center (Fake)</div>
+
+    <div class="price-section">
+      <div class="price-label">Price:</div>
+      <div class="price-was" id="priceWas">$0.00</div>
+      <div class="price-free-big">FREE</div>
+      <div class="price-save" id="priceSave">You save: $0 (100%)</div>
+      <div class="price-note">No credit card needed. No charge. Ever. This is Dopazon.</div>
+    </div>
+
+    <div class="prime-row">✓ DopePrime — FREE fake delivery by <strong style="color:#0F1111;" id="deliveryDate">Tomorrow</strong></div>
+
+    <div class="delivery-info">
+      📍 Deliver to <strong>United States</strong><br>
+      <strong>FREE Fake Delivery</strong> — Arrives between <span id="delivWindow">tomorrow and the day after</span><br>
+      <span style="color:#555;">No real shipping involved. Everything is made up.</span>
+    </div>
+
+    <div class="features-section">
+      <h4>About this item</h4>
+      <div id="featuresList"></div>
+    </div>
+
+    <div style="margin-top:15px;">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:10px;">Technical Specifications</h4>
+      <table class="specs-table" id="specsTable"></table>
+    </div>
+
+    <div style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Would you actually buy this for real?</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="vote('yes')" id="voteYes" style="background:#E7F4E8;border:1px solid #067D62;color:#067D62;border-radius:4px;padding:7px 18px;cursor:pointer;font-size:13px;">👍 Yes, definitely</button>
+        <button onclick="vote('no')" id="voteNo" style="background:#FFEEEE;border:1px solid #CC0C39;color:#CC0C39;border-radius:4px;padding:7px 18px;cursor:pointer;font-size:13px;">👎 No way</button>
+        <button onclick="vote('maybe')" id="voteMaybe" style="background:#FFF8EE;border:1px solid #FF9900;color:#C7511F;border-radius:4px;padding:7px 18px;cursor:pointer;font-size:13px;">🤔 Maybe someday</button>
+      </div>
+      <div id="voteResult" style="margin-top:8px;font-size:13px;color:#555;display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Buy Box -->
+  <div class="buy-box">
+    <div class="buy-box-was" id="bbWas">Was: $0</div>
+    <div class="buy-box-price">FREE</div>
+    <div class="buy-box-save" id="bbSave">Save $0 (100%)</div>
+    <div class="buy-box-prime">✓ DopePrime eligible</div>
+    <div class="buy-box-delivery">
+      <strong>FREE Fake Delivery</strong> — <span id="bbDelivery">Tomorrow</span><br>
+      <span style="color:#555;font-size:12px;">In stock (unlimited — it's all pretend)</span>
+    </div>
+    <div class="in-stock">✓ In Stock — Fake Fulfillment Center</div>
+    <div class="qty-row">
+      <label style="font-size:13px;">Qty:</label>
+      <select class="qty-select" id="qtySelect">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option><option>99</option>
+      </select>
+    </div>
+    <button class="add-cart-big" onclick="addToCart()">Add to Cart</button>
+    <button class="buy-now-big" onclick="addToCart();window.location='shop.html'">Buy Now</button>
+    <div class="buy-box-divider"></div>
+    <div class="buy-box-row"><span class="buy-box-label">Ships from</span><span class="buy-box-val">Dopazon (Fake)</span></div>
+    <div class="buy-box-row"><span class="buy-box-label">Sold by</span><span class="buy-box-val" id="bbSeller">Dopazon Store</span></div>
+    <div class="buy-box-row"><span class="buy-box-label">Returns</span><span class="buy-box-val" style="color:#067D62;">Keep everything — always</span></div>
+    <div class="buy-box-row"><span class="buy-box-label">Payment</span><span class="buy-box-val" style="color:#067D62;">$0.00 — completely free</span></div>
+    <div class="buy-box-divider"></div>
+    <div class="share-row">
+      <button class="share-small-btn" onclick="shareProduct()">↗ Share</button>
+      <button class="share-small-btn" onclick="addToWishlist()">♡ Wishlist</button>
+      <button class="share-small-btn" onclick="window.location='confessions.html'">💬 Confess</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reviews -->
+<div style="max-width:1200px;margin:0 auto;padding:0 15px;">
+  <div class="reviews-section" id="reviewsSection">
+    <h2 style="font-size:20px;margin-bottom:15px;">Customer Reviews</h2>
+    <div class="review-summary">
+      <div style="text-align:center;">
+        <div class="rating-big-num" id="bigRatingNum">4.8</div>
+        <div style="color:#FF9900;font-size:20px;">★★★★★</div>
+        <div style="font-size:12px;color:#555;">out of 5</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-bar-row"><span>5 ★</span><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><span style="color:#555;">72%</span></div>
+        <div class="rating-bar-row"><span>4 ★</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span style="color:#555;">18%</span></div>
+        <div class="rating-bar-row"><span>3 ★</span><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div><span style="color:#555;">6%</span></div>
+        <div class="rating-bar-row"><span>2 ★</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span style="color:#555;">2%</span></div>
+        <div class="rating-bar-row"><span>1 ★</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span style="color:#555;">2%</span></div>
+      </div>
+    </div>
+    <div id="reviewsList"></div>
+  </div>
+
+  <!-- Related Products -->
+  <div class="related-section">
+    <h2 style="font-size:18px;">Customers also viewed</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+  </div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script>
+const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const ALL_PRODUCTS = [
+  {id:'s1',emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box, Breathable Mesh Upper',price:189,category:'fashion',stars:4.8,reviews:12847,store:'SpeedShop',
+    desc:'The UltraRun Pro combines cutting-edge foam technology with a wide toe box for natural foot movement. Designed for serious runners and casual wearers alike.',
+    features:['Responsive foam midsole for energy return on every step','Wide toe box allows natural toe splay','Breathable engineered mesh keeps feet cool','Rubber outsole provides excellent traction','Available in 8 colorways','Machine washable'],
+    specs:[['Brand','SpeedShop'],['Material','Engineered Mesh + Synthetic'],['Sole','Rubber'],['Closure','Lace-up'],['Weight','8.5 oz per shoe'],['Country','Made in Imagination'],['Warranty','Lifetime (everything is free)']]},
+  {id:'s2',emoji:'📱',title:'Aplix ProMax Ultra — 6.9" OLED Display, Triple Camera System, 5G Ready',price:1299,category:'electronics',stars:4.7,reviews:8934,store:'TechVault',
+    desc:'The most powerful smartphone that has never existed. Features an impossible battery life, a camera that does everything, and a screen so bright it can be seen from space.',
+    features:['6.9" ProMotion OLED — 120Hz adaptive refresh','200MP triple camera system with AI enhancement','72-hour battery life on a single charge','Titanium aerospace-grade frame','Satellite connectivity included','Self-repairing screen technology'],
+    specs:[['Display','6.9" OLED, 120Hz'],['Camera','200MP + 50MP + 12MP'],['Battery','7,500 mAh'],['Processor','DopaMind Ultra Chip'],['Storage','1TB + unlimited cloud'],['5G','Yes (and 6G, and 7G']]},
+  {id:'s3',emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging, Dermatologist Tested',price:68,category:'beauty',stars:4.9,reviews:23156,store:'GlowLab',
+    desc:'Our most concentrated Vitamin C formula (20% stable L-Ascorbic Acid) combined with Hyaluronic Acid and Vitamin E to target dullness, uneven tone, and fine lines.',
+    features:['20% stable L-Ascorbic Acid — highest concentration','Hyaluronic Acid for 24-hour hydration','Vitamin E for antioxidant protection','Lightweight, fast-absorbing formula','Dermatologist tested and approved','Cruelty-free and vegan formula'],
+    specs:[['Skin Type','All skin types'],['Key Ingredient','20% Vitamin C (L-AA)'],['Volume','1 fl oz / 30ml'],['Texture','Lightweight serum'],['Scent','Fragrance-free'],['Tested','Dermatologist approved']]},
+  {id:'s4',emoji:'☕',title:'BrewMaster Pro Coffee Machine — 12-Cup, Built-in Grinder, Smart Connect',price:249,category:'home',stars:4.6,reviews:5432,store:'HomeZen',
+    desc:'The BrewMaster Pro grinds fresh beans and brews a perfect pot every time. Smart scheduling, temperature control, and self-cleaning make mornings easier.',
+    features:['Built-in conical burr grinder — 5 grind settings','12-cup thermal carafe keeps coffee hot for 4 hours','Smart scheduling via app — wake up to fresh coffee','Precise brew temperature control (195–205°F)','Self-cleaning cycle with one button','Compatible with ground coffee too'],
+    specs:[['Capacity','12 cups / 60 fl oz'],['Grinder','Conical burr, 5 settings'],['Carafe','Thermal stainless steel'],['Control','App + manual'],['Dimensions','14" H × 8" W × 12" D'],['Warranty','2 years (or forever, it\'s free)']]},
+  {id:'s5',emoji:'🎧',title:'SoundWave Elite Wireless Headphones — 40hr Battery, Active Noise Cancellation',price:349,category:'electronics',stars:4.8,reviews:18923,store:'TechVault',
+    desc:'Studio-quality sound meets all-day comfort. The SoundWave Elite features 40mm dynamic drivers, industry-leading ANC, and a 40-hour battery that keeps the music going.',
+    features:['40-hour battery life with ANC on','Industry-leading active noise cancellation','40mm dynamic drivers for studio-quality audio','Auto-pause when headphones are removed','Multipoint connection — 2 devices simultaneously','Foldable design with premium carry case'],
+    specs:[['Driver Size','40mm dynamic'],['Battery','40 hours ANC on / 60 hours off'],['Bluetooth','5.3, multipoint'],['ANC Levels','3 (Light, Full, Transparency)'],['Weight','254g'],['Charging','USB-C, 10 min = 3 hours']]},
+  {id:'s6',emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free, Real Chicken & Sweet Potato',price:89,category:'pets',stars:4.9,reviews:31024,store:'PetParadise',
+    desc:'Made with real chicken as the #1 ingredient. Our grain-free formula supports healthy digestion, a shiny coat, and strong muscles for dogs of all sizes.',
+    features:['Real chicken is the #1 ingredient','Grain-free for sensitive stomachs','Added Omega-3 & 6 for skin and coat health','No artificial colors, flavors, or preservatives','Supports healthy digestion with prebiotics','Suitable for all life stages'],
+    specs:[['Main Protein','Real chicken'],['Formula','Grain-free'],['Size','15 lb bag'],['Life Stage','All stages'],['Guaranteed Analysis','Min. 30% protein, 15% fat'],['Calories','360 kcal/cup']]},
+  {id:'s7',emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5 to 52.5 lbs per Hand, Space-Saving Design',price:429,category:'sports',stars:4.7,reviews:7823,store:'FitWorld',
+    desc:'Replace 15 sets of dumbbells with one. The FlexCore system adjusts from 5 to 52.5 lbs in 2.5-lb increments with a simple twist of the handle.',
+    features:['Replaces 15 pairs of dumbbells (5–52.5 lbs)','Adjusts in 2.5-lb increments in seconds','Durable plastic tray stores all weight plates','Ergonomic handle with contoured grip','Safe locking mechanism prevents weight from slipping','2-year warranty on all components'],
+    specs:[['Weight Range','5–52.5 lbs per dumbbell'],['Increments','2.5 lbs'],['Material','Steel plates, ABS housing'],['Length','17" at maximum weight'],['Tray Dimensions','24" × 8" × 9"'],['Sold As','Pair of 2 dumbbells']]},
+];
+
+let currentProduct = null;
+let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
+let votes = JSON.parse(localStorage.getItem('dz_votes') || '{}');
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('cartCount').textContent = cart.length;
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id') || 's1';
+
+  // Try to load from Supabase first (for user-created products)
+  let product = null;
+  if (!id.startsWith('s')) {
+    const { data } = await sb.from('products').select('*, stores(name)').eq('id', id).single();
+    if (data) {
+      product = { ...data, store: data.stores?.name || 'Community Store', reviews: data.reviews || 100 };
+      product = enrichProduct(product);
+    }
+  }
+  if (!product) {
+    product = ALL_PRODUCTS.find(p => p.id === id) || ALL_PRODUCTS[0];
+  }
+  currentProduct = product;
+  renderProduct(product);
+});
+
+function enrichProduct(p) {
+  const catFeatures = {
+    fashion: ['Premium quality materials','Comfortable fit for all-day wear','Easy care instructions','Multiple sizes available','Stylish design that never goes out of fashion'],
+    electronics: ['Latest technology inside','Long battery life','Easy to set up and use','Compatible with all major platforms','1-year manufacturer warranty'],
+    beauty: ['Dermatologist tested formula','Cruelty-free and vegan','Suitable for sensitive skin','Long-lasting results','No harmful chemicals'],
+    home: ['Easy assembly','Premium build quality','Space-efficient design','Easy to clean','Ideal for modern homes'],
+    sports: ['Professional-grade equipment','Durable for intense use','Ergonomic design reduces fatigue','Suitable for all fitness levels','Quick setup'],
+    pets: ['Vet-approved formula','Natural ingredients only','Loved by pets worldwide','Easy portion control','Supports long-term health'],
+    food: ['Restaurant-quality results at home','Easy to use','Fast preparation','Family-friendly recipes included','Premium materials'],
+  };
+  const catSpecs = {
+    fashion: [['Brand',p.store||'Community'],['Category',p.category||'Fashion'],['Price','FREE'],['Sold by',p.store||'Dopazon']],
+    electronics: [['Brand',p.store||'Community'],['Category','Electronics'],['Warranty','Free forever'],['Sold by',p.store||'Dopazon']],
+    beauty: [['Brand',p.store||'Community'],['Type','Beauty'],['Cruelty-free','Yes'],['Sold by',p.store||'Dopazon']],
+    default: [['Brand',p.store||'Community'],['Category',p.category||'Other'],['Price','FREE'],['Sold by',p.store||'Dopazon']],
+  };
+  return {
+    ...p,
+    features: p.features || catFeatures[p.category] || catFeatures.default,
+    specs: p.specs || catSpecs[p.category] || catSpecs.default,
+    desc: p.desc || `${p.title} — available exclusively on Dopazon for the low price of absolutely nothing. Add to cart and experience the full dopamine rush of online shopping, completely free.`,
+  };
+}
+
+function renderProduct(p) {
+  document.title = `Dopazon — ${p.title}`;
+  document.getElementById('mainEmoji').textContent = p.emoji || '📦';
+  document.getElementById('productTitle').textContent = p.title;
+  document.getElementById('breadCat').textContent = p.category?.charAt(0).toUpperCase() + p.category?.slice(1) || 'Products';
+  document.getElementById('breadName').textContent = p.title.slice(0, 40) + (p.title.length > 40 ? '...' : '');
+  document.getElementById('storeName').textContent = p.store || 'Dopazon Store';
+  document.getElementById('bbSeller').textContent = p.store || 'Dopazon Store';
+  document.getElementById('starsDisplay').textContent = '★'.repeat(Math.floor(p.stars||4.5)) + '☆'.repeat(5-Math.floor(p.stars||4.5));
+  document.getElementById('ratingNum').textContent = (p.stars||4.5).toFixed(1);
+  document.getElementById('bigRatingNum').textContent = (p.stars||4.5).toFixed(1);
+  document.getElementById('reviewCountDisplay').textContent = (p.reviews||0).toLocaleString() + ' ratings';
+  document.getElementById('priceWas').textContent = 'Was: $' + p.price.toLocaleString() + '.00';
+  document.getElementById('priceSave').textContent = 'You save: $' + p.price.toLocaleString() + '.00 (100%)';
+  document.getElementById('bbWas').textContent = 'Was: $' + p.price.toLocaleString();
+  document.getElementById('bbSave').textContent = 'Save $' + p.price.toLocaleString() + ' (100%)';
+
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+  const dayAfter = new Date(); dayAfter.setDate(dayAfter.getDate()+2);
+  const fmt = d => d.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('deliveryDate').textContent = fmt(tomorrow);
+  document.getElementById('bbDelivery').textContent = fmt(tomorrow);
+  document.getElementById('delivWindow').textContent = fmt(tomorrow) + ' and ' + fmt(dayAfter);
+
+  // Thumbnails (show same emoji in different "angles")
+  const angles = [p.emoji, p.emoji, p.emoji, p.emoji];
+  document.getElementById('thumbs').innerHTML = angles.map((e,i) => `<div class="thumb ${i===0?'active':''}" onclick="selectThumb(this,'${e}')">${e}</div>`).join('');
+
+  // Features
+  const enriched = enrichProduct(p);
+  document.getElementById('featuresList').innerHTML = (enriched.features||[]).map(f =>
+    `<div class="feature-item"><span class="feature-check">›</span><span>${f}</span></div>`).join('');
+
+  // Specs
+  document.getElementById('specsTable').innerHTML = (enriched.specs||[]).map(([k,v]) =>
+    `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+
+  // Reviews
+  generateReviews(p);
+  renderRelated(p);
+}
+
+function generateReviews(p) {
+  const reviewTemplates = [
+    {name:'Sarah M.',stars:5,title:'Absolutely love this!',body:`Got this as a treat for myself and I couldn't be happier. The quality exceeded my expectations for the price (which was $0, lol). Would definitely add to cart again.`,days:3},
+    {name:'TechEnthusiast99',stars:5,title:'Best purchase I never made',body:`Adding this to my Dopazon cart was the most satisfying thing I did all week. 10/10 would fake-buy again. The dopamine hit is real even if the purchase isn't.`,days:7},
+    {name:'BudgetBoss2024',stars:4,title:'Great product, great price',body:`Exactly as described. Arrived in my fake cart instantly. No shipping delays, no hidden fees. Just pure, unadulterated pretend shopping. Love it.`,days:12},
+    {name:'ShoppingTherapy',stars:5,title:`I come here when I'm stressed`,body:`Whenever I feel the urge to impulse-buy on a real site, I come to Dopazon instead. The checkout process is satisfying and my wallet is intact. Life-changing.`,days:18},
+    {name:'MinimalistMike',stars:4,title:'Scratches the itch without the guilt',body:`I've been trying to spend less money but still enjoy the thrill of shopping. This is the perfect solution. My saved $${p.price} thanks Dopazon.`,days:25},
+    {name:'Anonymous Reviewer',stars:5,title:'Would buy for real if I could afford it',body:`I mean, who are we kidding. At $${p.price} this is worth every penny in real life. On Dopazon it costs $0 which is even better. Highly recommend.`,days:30},
+  ];
+  document.getElementById('reviewsList').innerHTML = reviewTemplates.map(r => `
+    <div class="review-card">
+      <div class="reviewer-name">${r.name}</div>
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)} <strong>Verified Fake Purchase</strong></div>
+      <div class="review-title">${r.title}</div>
+      <div class="review-body">${r.body}</div>
+      <div class="review-date">Reviewed ${r.days} days ago</div>
+      <div class="helpful-row">Was this helpful? <button class="helpful-btn" onclick="this.textContent='✓ Yes ('+((parseInt(this.textContent.match(/\d+/)?.[0]||0))+1)+')'">Yes (${Math.floor(Math.random()*50+5)})</button> <button class="helpful-btn">No (${Math.floor(Math.random()*5)})</button></div>
+    </div>`).join('');
+}
+
+function renderRelated(current) {
+  const related = ALL_PRODUCTS.filter(p => p.id !== current.id && (p.category === current.category || Math.random() > 0.5)).slice(0, 6);
+  document.getElementById('relatedGrid').innerHTML = related.map(p => `
+    <div class="related-card" onclick="window.location='product.html?id=${p.id}'">
+      <div class="related-emoji">${p.emoji}</div>
+      <div class="related-title">${p.title}</div>
+      <div class="related-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:11px;">$${p.price}</span></div>
+    </div>`).join('');
+}
+
+function selectThumb(el, emoji) {
+  document.getElementById('mainEmoji').textContent = emoji;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function addToCart() {
+  if (!currentProduct) return;
+  const qty = parseInt(document.getElementById('qtySelect').value);
+  for (let i = 0; i < qty; i++) cart.push({...currentProduct, addedAt: Date.now()});
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  document.getElementById('cartCount').textContent = cart.length;
+  showToast(`✅ ${qty > 1 ? qty + '× ' : ''}Added to cart — <strong>$0 charged</strong>`);
+  launchConfetti();
+  gtag('event','add_to_cart',{item_name: currentProduct.title, value: 0});
+}
+
+function vote(type) {
+  const key = 'vote_' + (currentProduct?.id || 'x');
+  votes[key] = type;
+  localStorage.setItem('dz_votes', JSON.stringify(votes));
+  const msgs = {yes: '👍 Noted! You\'d buy this in real life too.', no: '👎 Smart move keeping your money.', maybe: '🤔 Fair enough — keeping it on the wishlist.'};
+  document.getElementById('voteResult').textContent = msgs[type];
+  document.getElementById('voteResult').style.display = 'block';
+  ['voteYes','voteNo','voteMaybe'].forEach(id => document.getElementById(id).style.opacity = '0.6');
+}
+
+function shareProduct() {
+  const text = `Check out "${currentProduct?.title}" on Dopazon — available for FREE! dopazon.com`;
+  navigator.clipboard?.writeText(text).then(() => showToast('📋 Copied link! Paste to share.'));
+}
+
+function addToWishlist() {
+  const wl = JSON.parse(localStorage.getItem('dz_wishlist')||'[]');
+  wl.push(currentProduct?.id);
+  localStorage.setItem('dz_wishlist', JSON.stringify(wl));
+  showToast('♡ Added to wishlist!');
+}
+
+function scrollToReviews() {
+  document.getElementById('reviewsSection').scrollIntoView({behavior:'smooth'});
+}
+
+function showToast(msg) {
+  const t = document.getElementById('cartToast');
+  t.innerHTML = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display='none', 2500);
+}
+
+function launchConfetti() {
+  const colors = ['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62'];
+  for (let i=0;i<30;i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),2000);
+  }
+}
+</script>
+</body>
+</html>
