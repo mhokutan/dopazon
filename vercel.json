@@ -1,6 +1,7 @@
 {
+  "outputDirectory": ".",
+  "buildCommand": null,
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
     { "source": "/shop", "destination": "/shop.html" },
     { "source": "/confessions", "destination": "/confessions.html" },
     { "source": "/drops", "destination": "/drops.html" }
