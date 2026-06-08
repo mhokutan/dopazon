@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confession Cart — Dopazon</title>
+<meta name="description" content="Anonymous confessions from people who almost spent money. The internet's most relatable feed.">
+<meta property="og:title" content="Confession Cart — I almost spent $2,400 on a standing desk">
+<meta property="og:description" content="Anonymous shopping confessions. Funny. Relatable. Free. From Dopazon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09090b;--bg2:#111113;--bg3:#1a1a1e;--bg4:#222226;
+  --text:#f4f0eb;--text2:#9d9a95;--text3:#5a5855;
+  --accent:#f97316;--green:#10b981;--red:#ef4444;--purple:#a855f7;--blue:#3b82f6;
+  --border:#232327;--r:14px;--rs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* NAV */
+.topnav{background:rgba(9,9,11,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:0;height:52px;padding:0 20px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.8px;text-decoration:none;color:var(--text)}
+.logo em{color:var(--accent);font-style:normal}
+.nav-sep{font-size:14px;color:var(--text3);margin:0 10px}
+.nav-page{font-size:14px;color:var(--text2);font-weight:500}
+.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.nav-btn.primary:hover{background:#fb923c}
+
+/* HERO */
+.hero{padding:40px 20px 28px;border-bottom:1px solid var(--border);max-width:680px;margin:0 auto}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.25);color:var(--purple);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:10px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:14px;color:var(--text2);line-height:1.65;max-width:480px;margin-bottom:20px}
+.hero-stats{display:flex;gap:16px;flex-wrap:wrap}
+.hstat{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.hstat strong{color:var(--text2);font-weight:600}
+
+/* CONFESS BUTTON */
+.confess-strip{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:12px;position:sticky;top:52px;z-index:90}
+.confess-btn{display:flex;align-items:center;gap:8px;padding:10px 24px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;letter-spacing:-0.3px}
+.confess-btn:hover{background:#fb923c;transform:translateY(-1px)}
+.confess-hint{font-size:12px;color:var(--text3)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:1fr 300px;gap:20px;max-width:980px;margin:0 auto;padding:20px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* FEED */
+.feed-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.feed-header h2{font-size:16px;font-weight:700}
+.sort-tabs{display:flex;gap:6px}
+.sort-tab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .15s}
+.sort-tab.active{background:var(--bg3);color:var(--text);border-color:var(--text3)}
+
+/* CONFESSION CARD */
+.conf-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px;transition:border-color .2s;position:relative}
+.conf-card:hover{border-color:rgba(255,255,255,0.1)}
+.conf-card.new-card{border-color:rgba(249,115,22,0.3);animation:cardIn .4s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.conf-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.conf-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:700}
+.conf-meta{flex:1;min-width:0}
+.conf-username{font-size:13px;font-weight:600;color:var(--text2)}
+.conf-time{font-size:11px;color:var(--text3)}
+.conf-category{margin-left:auto;font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;flex-shrink:0}
+.cat-fashion{background:rgba(236,72,153,0.1);color:#ec4899;border:1px solid rgba(236,72,153,0.2)}
+.cat-electronics{background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
+.cat-beauty{background:rgba(168,85,247,0.1);color:#c084fc;border:1px solid rgba(168,85,247,0.2)}
+.cat-home{background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.2)}
+.cat-sports{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.2)}
+.cat-food{background:rgba(249,115,22,0.1);color:#fb923c;border:1px solid rgba(249,115,22,0.2)}
+.cat-other{background:rgba(107,114,128,0.1);color:#9ca3af;border:1px solid rgba(107,114,128,0.2)}
+
+.conf-amount{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--accent);margin-bottom:4px}
+.conf-label{font-size:12px;color:var(--text3);margin-bottom:12px}
+.conf-text{font-size:14px;line-height:1.7;color:var(--text);margin-bottom:14px}
+.conf-text em{color:var(--accent);font-style:normal;font-weight:500}
+.conf-saved{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:var(--green);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.conf-actions{display:flex;align-items:center;gap:10px}
+.action-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.action-btn:hover{border-color:var(--text3);color:var(--text)}
+.action-btn.liked{border-color:rgba(239,68,68,0.4);color:#ef4444;background:rgba(239,68,68,0.06)}
+.action-btn.relatable-on{border-color:rgba(249,115,22,0.4);color:var(--accent);background:rgba(249,115,22,0.06)}
+.share-btn{margin-left:auto;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal-bg.on{display:flex}
+.modal{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:540px;border-top:1px solid var(--border);padding:24px 22px 36px;animation:sup .4s cubic-bezier(0.22,1,0.36,1);max-height:90vh;overflow-y:auto}
+@keyframes sup{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mhandle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px}
+.modal h2{font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-0.5px}
+.modal p.msub{font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.5}
+.anon-note{display:flex;align-items:center;gap:8px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:var(--rs);padding:10px 14px;margin-bottom:20px;font-size:12px;color:var(--green)}
+.form-field{margin-bottom:16px}
+.form-field label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px}
+.form-field input,.form-field select,.form-field textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:rgba(249,115,22,0.45)}
+.form-field select option{background:var(--bg3)}
+.form-field textarea{height:100px;resize:none;line-height:1.6}
+.char-count{font-size:11px;color:var(--text3);text-align:right;margin-top:4px}
+.amount-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mood-row{display:flex;gap:8px;flex-wrap:wrap}
+.mood-opt{padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:13px;cursor:pointer;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all .15s}
+.mood-opt.on{border-color:var(--accent);color:var(--accent);background:rgba(249,115,22,0.08)}
+.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--rs);color:#fff;font-size:15px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;margin-top:8px;transition:all .2s;letter-spacing:-0.3px}
+.submit-btn:hover{background:#fb923c}
+.preview-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:14px;margin-bottom:16px;display:none}
+.preview-box.show{display:block}
+.preview-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.side-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.side-card h3{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
+.leaderboard-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.lb-rank{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--text3);width:20px;flex-shrink:0}
+.lb-rank.top{color:var(--accent2)}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-size:13px;font-weight:500;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-amount{font-size:11px;color:var(--green);font-weight:600}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:6px}
+.tag-pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s}
+.tag-pill:hover{border-color:var(--accent);color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini-stat{background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center}
+.mini-stat .val{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.mini-stat .lbl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:0.4px}
+
+/* LOAD MORE */
+.load-more{text-align:center;padding:20px 0 40px}
+.load-btn{padding:10px 28px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--text2);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.load-btn:hover{border-color:var(--text2);color:var(--text)}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:500;z-index:1000;transition:transform .3s cubic-bezier(0.22,1,0.36,1);white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,0.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* SHARE CARD (for copy) */
+.share-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;max-width:400px;margin:16px auto 0}
+.share-preview .sp-amount{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-1px}
+.share-preview .sp-text{font-size:13px;color:var(--text2);margin:6px 0 12px;line-height:1.5}
+.share-preview .sp-footer{font-size:11px;color:var(--text3)}
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D7NNBGKNB3');
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="/" class="logo">dopa<em>zon</em></a>
+  <span class="nav-sep">/</span>
+  <span class="nav-page">Confession Cart</span>
+  <div class="nav-right">
+    <a href="/shop" class="nav-btn">← Shop</a>
+    <button class="nav-btn primary" onclick="openModal()">Confess 🤫</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pill">🤫 100% anonymous · no accounts needed</div>
+  <h1>Things people almost<br><span>spent money on.</span></h1>
+  <p>The most relatable feed on the internet. Anonymous confessions from real people who felt the urge, survived it, and lived to tell the tale.</p>
+  <div class="hero-stats">
+    <div class="hstat">🤫 <strong id="totalConf">0</strong> confessions</div>
+    <div class="hstat">💚 <strong id="totalSaved">$0</strong> collectively saved</div>
+    <div class="hstat">❤️ <strong id="totalLikes">0</strong> "same" reactions</div>
+  </div>
+</div>
+
+<!-- CONFESS STRIP -->
+<div class="confess-strip">
+  <button class="confess-btn" onclick="openModal()">🤫 Confess Anonymously</button>
+  <span class="confess-hint">It's free. It's anonymous. It's cathartic.</span>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- FEED -->
+  <div>
+    <div class="feed-header">
+      <h2>Recent Confessions</h2>
+      <div class="sort-tabs">
+        <button class="sort-tab active" onclick="sortFeed(this,'recent')">Recent</button>
+        <button class="sort-tab" onclick="sortFeed(this,'top')">Top</button>
+        <button class="sort-tab" onclick="sortFeed(this,'saved')">Most Saved</button>
+      </div>
+    </div>
+    <div id="confFeed"></div>
+    <div class="load-more"><button class="load-btn" onclick="loadMore()">Load more confessions</button></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="side-card">
+      <h3>💰 Biggest Saves</h3>
+      <div id="leaderboard"></div>
+    </div>
+    <div class="side-card">
+      <h3>📊 Community Stats</h3>
+      <div class="stats-grid">
+        <div class="mini-stat"><div class="val green" id="sTotal" style="color:var(--green)">$0</div><div class="lbl">Total Saved</div></div>
+        <div class="mini-stat"><div class="val" id="sCount" style="color:var(--accent)">0</div><div class="lbl">Confessions</div></div>
+        <div class="mini-stat"><div class="val" id="sAvg" style="color:var(--purple)">$0</div><div class="lbl">Avg. Save</div></div>
+        <div class="mini-stat"><div class="val" id="sLikes" style="color:#ec4899">0</div><div class="lbl">Reactions</div></div>
+      </div>
+    </div>
+    <div class="side-card">
+      <h3>🏷️ Browse by Category</h3>
+      <div class="tag-cloud">
+        <span class="tag-pill" onclick="filterByTag('all')">All</span>
+        <span class="tag-pill" onclick="filterByTag('electronics')">📱 Electronics</span>
+        <span class="tag-pill" onclick="filterByTag('fashion')">👗 Fashion</span>
+        <span class="tag-pill" onclick="filterByTag('home')">🏠 Home</span>
+        <span class="tag-pill" onclick="filterByTag('beauty')">💄 Beauty</span>
+        <span class="tag-pill" onclick="filterByTag('food')">🍔 Food</span>
+        <span class="tag-pill" onclick="filterByTag('sports')">🏃 Sports</span>
+      </div>
+    </div>
+    <div class="side-card" style="background:rgba(249,115,22,0.05);border-color:rgba(249,115,22,0.2)">
+      <div style="font-size:22px;margin-bottom:8px">🤫</div>
+      <h3 style="color:var(--accent);font-size:14px;margin-bottom:8px;text-transform:none;letter-spacing:0">Your turn.</h3>
+      <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:12px">Had a close call with your wallet? Share it anonymously. No account. No judgment. Just vibes.</p>
+      <button onclick="openModal()" style="width:100%;padding:9px;background:var(--accent);border:none;border-radius:var(--rs);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Confess Now →</button>
+    </div>
+  </aside>
+
+</div>
+
+<!-- CONFESSION MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="mhandle"></div>
+    <h2>Make a Confession 🤫</h2>
+    <p class="msub">Tell the world what you almost bought. No name attached. Ever.</p>
+    <div class="anon-note">🔒 Fully anonymous — no account, no IP logged, no judgment.</div>
+
+    <div class="form-field">
+      <label>What did you almost buy?</label>
+      <input type="text" id="fItem" placeholder="e.g. A $2,400 standing desk I've been researching for 8 months" maxlength="100" oninput="updatePreview()">
+    </div>
+
+    <div class="amount-row">
+      <div class="form-field">
+        <label>Amount you saved ($)</label>
+        <input type="number" id="fAmount" placeholder="2400" min="1" max="999999" oninput="updatePreview()">
+      </div>
+      <div class="form-field">
+        <label>Category</label>
+        <select id="fCat" onchange="updatePreview()">
+          <option value="electronics">📱 Electronics</option>
+          <option value="fashion">👗 Fashion</option>
+          <option value="home">🏠 Home</option>
+          <option value="beauty">💄 Beauty</option>
+          <option value="sports">🏃 Sports</option>
+          <option value="food">🍔 Food</option>
+          <option value="other">✨ Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Your confession <span style="color:var(--text3)">(the story)</span></label>
+      <textarea id="fText" placeholder="It was 1:47am. I had 6 browser tabs open. I told myself it was an investment..." maxlength="280" oninput="updatePreview();countChars()"></textarea>
+      <div class="char-count"><span id="charCount">0</span>/280</div>
+    </div>
+
+    <div class="form-field">
+      <label>How do you feel now?</label>
+      <div class="mood-row" id="moodRow">
+        <button class="mood-opt on" onclick="selectMood(this,'😌 Relieved')">😌 Relieved</button>
+        <button class="mood-opt" onclick="selectMood(this,'😂 Laughing')">😂 Laughing</button>
+        <button class="mood-opt" onclick="selectMood(this,'😤 Still tempted')">😤 Still tempted</button>
+        <button class="mood-opt" onclick="selectMood(this,'🥲 A little sad')">🥲 A little sad</button>
+        <button class="mood-opt" onclick="selectMood(this,'💪 Proud')">💪 Proud</button>
+      </div>
+    </div>
+
+    <div class="preview-box" id="previewBox">
+      <div class="preview-label">Preview</div>
+      <div id="previewContent"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitConfession()">🤫 Post Anonymously</button>
+    <div style="text-align:center;margin-top:12px">
+      <button onclick="closeModal()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── SEED DATA ──
+const seedConfessions = [
+  {id:1,item:'Sonex NX-900 headphones + "audiophile" amp setup',amount:1840,cat:'electronics',text:'I spent 3 hours reading forums comparing DACs. I don\'t even know what a DAC is. I just kept adding things. The cart hit <em>$1,840</em> before I caught myself. Came to Dopazon, fake-checked out, felt weirdly fine.',mood:'😌 Relieved',likes:2841,relatable:1203,time:'2h ago',avatar:'🎧',color:'#3b82f6'},
+  {id:2,item:'An entire outdoor kitchen setup',amount:6200,cat:'home',text:'It started with a grill. Then I needed a side burner. Then a mini fridge. Then a pergola. Four hours later I had <em>$6,200</em> in my cart and no backyard. I live in an apartment.',mood:'😂 Laughing',likes:4102,relatable:2891,time:'4h ago',avatar:'🏠',color:'#10b981'},
+  {id:3,item:'Skin cycling routine + 14 serums',amount:380,cat:'beauty',text:'I watched one TikTok. One. Suddenly I needed a <em>14-step routine</em> and $380 worth of products. My current routine is water. I closed the tab. Dopazon let me fake-buy all 14 and I felt fine.',mood:'😂 Laughing',likes:3477,relatable:2104,time:'5h ago',avatar:'💆',color:'#a855f7'},
+  {id:4,item:'A rowing machine + yoga mat + resistance bands',amount:2100,cat:'sports',text:'New year energy hit at 11pm on a Tuesday. Told myself <em>this time is different</em>. Had a full home gym in my cart. $2,100. The membership I currently have has been unused for 6 months.',mood:'🥲 A little sad',likes:5901,relatable:4230,time:'6h ago',avatar:'🏋️',color:'#f59e0b'},
+  {id:5,item:'Japanese knife set + carbon steel wok + cookbook collection',amount:740,cat:'home',text:'I watched a 12-minute YouTube video about knife sharpening. Next thing I know it\'s midnight and I\'m comparing <em>$400 Japanese knives</em>. I eat cereal for dinner most nights.',mood:'😌 Relieved',likes:2200,relatable:1890,time:'8h ago',avatar:'🔪',color:'#10b981'},
+  {id:6,item:'Ultra-wide curved monitor 49"',amount:1299,cat:'electronics',text:'My perfectly good 27" monitor suddenly felt like a potato chip after I saw the <em>49" ultra-wide</em>. I configured the full setup. Standing desk, monitor arm, RGB lighting. $2,200 total. I play Solitaire.',mood:'😂 Laughing',likes:6784,relatable:4910,time:'10h ago',avatar:'🖥️',color:'#3b82f6'},
+  {id:7,item:'Cashmere loungewear set (full wardrobe)',amount:890,cat:'fashion',text:'I convinced myself that owning <em>$890 of cashmere</em> would make me a calmer person. Like the softness would rewire my nervous system. I added 6 colors. I almost clicked purchase.',mood:'💪 Proud',likes:1893,relatable:1401,time:'12h ago',avatar:'🧥',color:'#ec4899'},
+  {id:8,item:'Instant Pot + air fryer + dehydrator + sous vide',amount:520,cat:'home',text:'I don\'t cook. I have never cooked. I will not cook. But I spent <em>45 minutes</em> reading air fryer reviews at 2am and almost dropped $520 on appliances that would 100% collect dust.',mood:'😌 Relieved',likes:3341,relatable:2780,time:'14h ago',avatar:'🍳',color:'#f97316'},
+  {id:9,item:'Designer crossbody bag (seen on Instagram)',amount:495,cat:'fashion',text:'An ad found me. I was just scrolling. Next thing I know I\'m on the brand site, in checkout, card in hand, for a <em>$495 bag</em> I cannot afford and don\'t need. Closed. Came here. Bought the fake one.',mood:'💪 Proud',likes:2670,relatable:2100,time:'16h ago',avatar:'👜',color:'#ec4899'},
+  {id:10,item:'Mechanical keyboard + custom keycaps + wrist rest',amount:340,cat:'electronics',text:'The rabbit hole started at <em>$80</em>. Then I needed custom keycaps. Then a proper wrist rest. Then a desk mat. Four hours of research. $340 deep in a hobby I don\'t have yet.',mood:'😤 Still tempted',likes:4201,relatable:3100,time:'1d ago',avatar:'⌨️',color:'#3b82f6'},
+];
+
+let confessions = JSON.parse(localStorage.getItem('dz_confessions') || 'null') || [...seedConfessions];
+let selectedMood = '😌 Relieved';
+let currentFilter = 'all';
+let currentSort = 'recent';
+let visibleCount = 8;
+
+// ── RENDER ──
+function getCatClass(cat){return 'cat-'+cat;}
+
+function timeAgo(ts){
+  if(!ts) return 'just now';
+  const diff = Date.now()-ts;
+  if(diff<60000) return 'just now';
+  if(diff<3600000) return Math.floor(diff/60000)+'m ago';
+  if(diff<86400000) return Math.floor(diff/3600000)+'h ago';
+  return Math.floor(diff/86400000)+'d ago';
+}
+
+function renderCard(c){
+  const catLabel = c.cat.charAt(0).toUpperCase()+c.cat.slice(1);
+  const liked = (JSON.parse(localStorage.getItem('dz_liked')||'[]')).includes(c.id);
+  const related = (JSON.parse(localStorage.getItem('dz_related')||'[]')).includes(c.id);
+  return `<div class="conf-card${c.isNew?' new-card':''}" id="card${c.id}">
+    <div class="conf-header">
+      <div class="conf-avatar" style="background:${c.color}22;color:${c.color}">${c.avatar||'🤫'}</div>
+      <div class="conf-meta">
+        <div class="conf-username">Anonymous</div>
+        <div class="conf-time">${c.ts?timeAgo(c.ts):c.time||'recently'}</div>
+      </div>
+      <span class="conf-category ${getCatClass(c.cat)}">${catLabel}</span>
+    </div>
+    <div class="conf-amount">$${Number(c.amount).toLocaleString()}</div>
+    <div class="conf-label">almost spent on: ${c.item}</div>
+    <div class="conf-text">${c.text}</div>
+    <div class="conf-saved">✓ Saved $${Number(c.amount).toLocaleString()} · ${c.mood}</div>
+    <div class="conf-actions">
+      <button class="action-btn${liked?' liked':''}" onclick="toggleLike(${c.id},this)">
+        ${liked?'❤️':'🤍'} <span class="lcount">${c.likes}</span>
+      </button>
+      <button class="action-btn${related?' relatable-on':''}" onclick="toggleRelatable(${c.id},this)">
+        😅 <span class="rcount">${c.relatable}</span> same
+      </button>
+      <button class="share-btn" onclick="shareCard(${c.id})">↗ Share</button>
+    </div>
+  </div>`;
+}
+
+function getFeed(){
+  let feed = [...confessions];
+  if(currentFilter !== 'all') feed = feed.filter(c=>c.cat===currentFilter);
+  if(currentSort==='top') feed.sort((a,b)=>b.likes-a.likes);
+  else if(currentSort==='saved') feed.sort((a,b)=>b.amount-a.amount);
+  else feed.sort((a,b)=>(b.ts||0)-(a.ts||0));
+  return feed;
+}
+
+function renderFeed(){
+  const feed = getFeed().slice(0,visibleCount);
+  document.getElementById('confFeed').innerHTML = feed.map(renderCard).join('');
+  updateStats();
+}
+
+function updateStats(){
+  const all = confessions;
+  const totalSaved = all.reduce((a,b)=>a+b.amount,0);
+  const totalLikes = all.reduce((a,b)=>a+b.likes+b.relatable,0);
+  document.getElementById('totalConf').textContent = all.length.toLocaleString();
+  document.getElementById('totalSaved').textContent = totalSaved>=1000000?'$'+(totalSaved/1000000).toFixed(1)+'M':totalSaved>=1000?'$'+(totalSaved/1000).toFixed(0)+'K':'$'+totalSaved.toLocaleString();
+  document.getElementById('totalLikes').textContent = totalLikes.toLocaleString();
+  document.getElementById('sTotal').textContent = totalSaved>=1000000?'$'+(totalSaved/1000000).toFixed(1)+'M':totalSaved>=1000?'$'+(totalSaved/1000).toFixed(0)+'K':'$'+totalSaved;
+  document.getElementById('sCount').textContent = all.length;
+  document.getElementById('sAvg').textContent = all.length?'$'+Math.floor(totalSaved/all.length).toLocaleString():'$0';
+  document.getElementById('sLikes').textContent = totalLikes>=1000?Math.floor(totalLikes/1000)+'K':totalLikes;
+  renderLeaderboard();
+}
+
+function renderLeaderboard(){
+  const top = [...confessions].sort((a,b)=>b.amount-a.amount).slice(0,5);
+  document.getElementById('leaderboard').innerHTML = top.map((c,i)=>`
+    <div class="leaderboard-row">
+      <div class="lb-rank${i<3?' top':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)}</div>
+      <div class="lb-info">
+        <div class="lb-name">${c.item.substring(0,30)}${c.item.length>30?'...':''}</div>
+        <div class="lb-amount">Saved $${Number(c.amount).toLocaleString()}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── INTERACTIONS ──
+function toggleLike(id, btn){
+  const liked = JSON.parse(localStorage.getItem('dz_liked')||'[]');
+  const c = confessions.find(x=>x.id===id);
+  if(!c) return;
+  if(liked.includes(id)){
+    liked.splice(liked.indexOf(id),1);
+    c.likes = Math.max(0,c.likes-1);
+    btn.classList.remove('liked');
+    btn.querySelector('.lcount').textContent = c.likes;
+    btn.innerHTML = `🤍 <span class="lcount">${c.likes}</span>`;
+  } else {
+    liked.push(id);
+    c.likes++;
+    btn.classList.add('liked');
+    btn.innerHTML = `❤️ <span class="lcount">${c.likes}</span>`;
+  }
+  localStorage.setItem('dz_liked', JSON.stringify(liked));
+  localStorage.setItem('dz_confessions', JSON.stringify(confessions));
+  updateStats();
+}
+
+function toggleRelatable(id, btn){
+  const related = JSON.parse(localStorage.getItem('dz_related')||'[]');
+  const c = confessions.find(x=>x.id===id);
+  if(!c) return;
+  if(related.includes(id)){
+    related.splice(related.indexOf(id),1);
+    c.relatable = Math.max(0,c.relatable-1);
+    btn.classList.remove('relatable-on');
+    btn.innerHTML = `😅 <span class="rcount">${c.relatable}</span> same`;
+  } else {
+    related.push(id);
+    c.relatable++;
+    btn.classList.add('relatable-on');
+    btn.innerHTML = `😅 <span class="rcount">${c.relatable}</span> same`;
+  }
+  localStorage.setItem('dz_related', JSON.stringify(related));
+  localStorage.setItem('dz_confessions', JSON.stringify(confessions));
+  updateStats();
+}
+
+function shareCard(id){
+  const c = confessions.find(x=>x.id===id);
+  if(!c) return;
+  const text = `I almost spent $${c.amount.toLocaleString()} on ${c.item}. Came to Dopazon instead. Saved my wallet. 🛒 dopazon.com/confessions`;
+  navigator.clipboard.writeText(text).then(()=>showToast('📋 Copied! Share it anywhere.')).catch(()=>showToast('↗ Share: '+text.substring(0,60)+'...'));
+}
+
+function sortFeed(btn, sort){
+  document.querySelectorAll('.sort-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  currentSort = sort;
+  visibleCount = 8;
+  renderFeed();
+}
+
+function filterByTag(tag){
+  currentFilter = tag;
+  document.querySelectorAll('.tag-pill').forEach(p=>p.style.color='');
+  renderFeed();
+}
+
+function loadMore(){
+  visibleCount += 6;
+  renderFeed();
+}
+
+// ── MODAL ──
+function openModal(){document.getElementById('modalBg').classList.add('on');}
+function closeModal(){document.getElementById('modalBg').classList.remove('on');}
+
+document.getElementById('modalBg').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+function selectMood(btn, mood){
+  document.querySelectorAll('.mood-opt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  selectedMood = mood;
+  updatePreview();
+}
+
+function countChars(){
+  const v = document.getElementById('fText').value.length;
+  document.getElementById('charCount').textContent = v;
+}
+
+function updatePreview(){
+  const item = document.getElementById('fItem').value.trim();
+  const amount = document.getElementById('fAmount').value;
+  const text = document.getElementById('fText').value.trim();
+  const box = document.getElementById('previewBox');
+  const content = document.getElementById('previewContent');
+  if(!item && !text){box.classList.remove('show');return;}
+  box.classList.add('show');
+  content.innerHTML = `
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-0.5px">${amount?'$'+Number(amount).toLocaleString():''}</div>
+    ${item?`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">almost spent on: ${item}</div>`:''}
+    ${text?`<div style="font-size:13px;color:var(--text2);line-height:1.6">${text}</div>`:''}
+    <div style="margin-top:10px;font-size:11px;color:var(--green)">${selectedMood}</div>`;
+}
+
+function submitConfession(){
+  const item = document.getElementById('fItem').value.trim();
+  const amount = parseFloat(document.getElementById('fAmount').value);
+  const text = document.getElementById('fText').value.trim();
+  const cat = document.getElementById('fCat').value;
+  if(!item){showToast('⚠️ What did you almost buy?');return;}
+  if(!amount||amount<=0){showToast('⚠️ Add the amount you saved.');return;}
+  if(!text||text.length<20){showToast('⚠️ Tell us the story (min 20 chars).');return;}
+  const avatars = ['🛍️','💸','😅','🛒','💳','🤑','😬','💀','🙈','🫠'];
+  const colors = ['#f97316','#3b82f6','#a855f7','#10b981','#ec4899','#f59e0b'];
+  const conf = {
+    id: Date.now(),
+    item, amount, cat, text,
+    mood: selectedMood,
+    likes: 0, relatable: 0,
+    ts: Date.now(),
+    isNew: true,
+    avatar: avatars[Math.floor(Math.random()*avatars.length)],
+    color: colors[Math.floor(Math.random()*colors.length)],
+  };
+  confessions.unshift(conf);
+  localStorage.setItem('dz_confessions', JSON.stringify(confessions));
+  closeModal();
+  currentSort = 'recent';
+  visibleCount = 8;
+  document.querySelectorAll('.sort-tab').forEach((t,i)=>{t.classList.toggle('active',i===0)});
+  document.getElementById('fItem').value='';
+  document.getElementById('fAmount').value='';
+  document.getElementById('fText').value='';
+  document.getElementById('charCount').textContent='0';
+  document.getElementById('previewBox').classList.remove('show');
+  renderFeed();
+  showToast('🤫 Confession posted anonymously! ');
+  setTimeout(()=>{
+    const card = document.getElementById('card'+conf.id);
+    if(card) card.scrollIntoView({behavior:'smooth',block:'center'});
+  },300);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── INIT ──
+renderFeed();
+setInterval(()=>{
+  if(Math.random()<0.15){
+    const c = confessions[Math.floor(Math.random()*Math.min(confessions.length,10))];
+    if(c){c.likes+=Math.floor(Math.random()*3+1);localStorage.setItem('dz_confessions',JSON.stringify(confessions));updateStats();}
+  }
+},4000);
+</script>
+</body>
+</html>

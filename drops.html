@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Drops — Dopazon</title>
+<meta name="description" content="5 absurd products every day. Add to cart. Spend nothing. Come back tomorrow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09090b;--bg2:#111113;--bg3:#1a1a1e;--bg4:#222226;
+  --text:#f4f0eb;--text2:#9d9a95;--text3:#5a5855;
+  --accent:#f97316;--accent2:#fbbf24;--green:#10b981;--purple:#a855f7;--red:#ef4444;
+  --border:#232327;--r:14px;--rs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* NAV */
+.topnav{background:rgba(9,9,11,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:52px;padding:0 20px;gap:0}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.8px;text-decoration:none;color:var(--text);flex-shrink:0}
+.logo em{color:var(--accent);font-style:normal}
+.nav-sep{font-size:14px;color:var(--text3);margin:0 10px;flex-shrink:0}
+.nav-page{font-size:14px;color:var(--text2);font-weight:500}
+.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav-link{padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--text2);text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+.nav-link:hover{border-color:var(--accent);color:var(--accent)}
+.cart-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--accent);border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.cart-pill:hover{background:#fb923c}
+
+/* HERO */
+.hero{padding:36px 20px 28px;border-bottom:1px solid var(--border);max-width:820px;margin:0 auto;text-align:center}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:var(--accent2);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:0.4px}
+.fire-anim{animation:fireShake .6s infinite alternate}
+@keyframes fireShake{0%{transform:rotate(-5deg) scale(1)}100%{transform:rotate(5deg) scale(1.1)}}
+.hero h1{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-1.2px;line-height:1.1;margin-bottom:10px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:14px;color:var(--text2);line-height:1.65;max-width:460px;margin:0 auto 22px}
+
+/* COUNTDOWN */
+.countdown-wrap{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 22px;margin-bottom:24px}
+.cd-label{font-size:12px;color:var(--text3);font-weight:500;margin-right:4px}
+.cd-blocks{display:flex;gap:8px}
+.cd-block{text-align:center}
+.cd-num{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-1px;min-width:38px;display:block;color:var(--accent)}
+.cd-unit{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
+.cd-sep{font-size:20px;font-weight:700;color:var(--text3);align-self:flex-start;margin-top:4px}
+
+/* STREAK */
+.streak-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px}
+.streak-flame{font-size:18px}
+.streak-text{font-size:13px;font-weight:600}
+.streak-days{display:flex;gap:5px}
+.sday{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--bg3)}
+.sday.done{background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.3);color:var(--accent)}
+.sday.today{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;box-shadow:0 0 12px rgba(249,115,22,0.4)}
+
+/* TODAY'S DROP SECTION */
+.drops-wrap{max-width:820px;margin:0 auto;padding:20px}
+.drops-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.drops-hdr h2{font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
+.drops-date{font-size:12px;color:var(--text3)}
+.drop-number{background:var(--accent);color:#fff;font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* DROP CARDS */
+.drop-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.drop-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .22s;position:relative}
+.drop-card:hover{border-color:rgba(249,115,22,0.3)}
+.drop-card.carted{border-color:var(--green)}
+.drop-card.revealed{animation:revealCard .5s ease}
+@keyframes revealCard{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.drop-inner{display:flex;gap:0}
+.drop-emoji-col{width:120px;min-height:130px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:56px;flex-shrink:0;position:relative}
+.drop-rank{position:absolute;top:8px;left:8px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;color:var(--text2)}
+.drop-rank.hot{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.3);color:var(--accent)}
+.drop-body{flex:1;padding:16px 16px 14px;display:flex;flex-direction:column}
+.drop-tags{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.dtag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px}
+.dtag.absurd{background:rgba(168,85,247,0.1);color:#c084fc;border:1px solid rgba(168,85,247,0.2)}
+.dtag.viral{background:rgba(249,115,22,0.1);color:var(--accent);border:1px solid rgba(249,115,22,0.2)}
+.dtag.limited{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.dtag.staff{background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.2)}
+.drop-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:-0.4px;margin-bottom:4px}
+.drop-why{font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:12px;flex:1}
+.drop-why em{color:var(--text);font-style:normal;font-weight:500}
+.drop-footer{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.drop-price{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.drop-saved{font-size:12px;color:var(--green);font-weight:600}
+.drop-add-btn{padding:9px 20px;border-radius:var(--rs);border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;letter-spacing:-0.2px}
+.drop-add-btn.add{background:var(--accent);color:#fff}
+.drop-add-btn.add:hover{background:#fb923c;transform:scale(1.03)}
+.drop-add-btn.done{background:rgba(16,185,129,0.12);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+.drop-reactions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.react-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;gap:4px}
+.react-btn:hover{border-color:var(--text3);color:var(--text)}
+.react-btn.on{border-color:rgba(249,115,22,0.4);color:var(--accent);background:rgba(249,115,22,0.06)}
+.drop-progress{height:3px;background:var(--bg3);position:relative;overflow:hidden}
+.drop-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s ease}
+
+/* VOTES BAR */
+.vote-bar{padding:10px 16px;border-top:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;gap:10px}
+.vote-q{font-size:12px;color:var(--text2);flex:1}
+.vote-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border);font-size:11px;font-weight:600;cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .15s;color:var(--text2)}
+.vote-btn:hover{border-color:var(--text3);color:var(--text)}
+.vote-btn.yes-on{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);color:var(--green)}
+.vote-btn.no-on{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--red)}
+.vote-result{font-size:11px;color:var(--text3);display:none}
+.vote-result.show{display:block}
+
+/* ARCHIVE */
+.archive-section{border-top:1px solid var(--border);padding:24px 20px 60px;max-width:820px;margin:0 auto}
+.arch-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.arch-hdr h2{font-size:16px;font-weight:700}
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.arch-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;opacity:0.7}
+.arch-card:hover{opacity:1;border-color:rgba(255,255,255,0.1)}
+.arch-date{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.arch-emojis{font-size:22px;margin-bottom:8px;display:flex;gap:4px}
+.arch-label{font-size:12px;color:var(--text2);font-weight:500}
+.arch-winner{font-size:11px;color:var(--accent);margin-top:3px}
+
+/* NOTIFY */
+.notify-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:28px;text-align:center}
+.notify-section h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.notify-section p{font-size:13px;color:var(--text2);margin-bottom:14px}
+.notify-row{display:flex;gap:8px;max-width:360px;margin:0 auto}
+.notify-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:9px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif}
+.notify-input:focus{outline:none;border-color:rgba(249,115,22,0.4)}
+.notify-btn{padding:9px 18px;background:var(--accent);border:none;border-radius:var(--rs);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s}
+.notify-btn:hover{background:#fb923c}
+
+/* MINI CART OVERLAY */
+.cart-overlay{position:fixed;bottom:20px;right:20px;z-index:200;display:none}
+.cart-overlay.show{display:block}
+.cart-bubble{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:0 8px 28px rgba(0,0,0,0.5);min-width:220px}
+.cart-bubble h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.cart-bubble h4 button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px}
+.cart-item-mini{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:13px}
+.cart-total-mini{border-top:1px solid var(--border);padding-top:8px;margin-top:4px;display:flex;justify-content:space-between;font-size:13px;font-weight:600}
+.cart-ck-btn{width:100%;margin-top:10px;padding:9px;background:var(--accent);border:none;border-radius:var(--rs);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s}
+.cart-ck-btn:hover{background:#fb923c}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:500;z-index:1000;transition:transform .3s cubic-bezier(0.22,1,0.36,1);white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,0.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* CONFETTI */
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:confettiFall 2.5s ease-in forwards;pointer-events:none;z-index:9999}
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D7NNBGKNB3');
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="/" class="logo">dopa<em>zon</em></a>
+  <span class="nav-sep">/</span>
+  <span class="nav-page">Daily Drops ⚡</span>
+  <div class="nav-right">
+    <a href="/confessions" class="nav-link">Confessions</a>
+    <a href="/shop" class="nav-link">Shop</a>
+    <button class="cart-pill" id="cartPill" onclick="toggleCartOverlay()">🛒 Cart <span id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pill"><span class="fire-anim">🔥</span> 5 new drops every day at midnight</div>
+  <h1>Today's most<br><span>absurd finds.</span></h1>
+  <p>Products you'd never actually buy but absolutely need to add to cart. New drops every day at midnight. Miss a day, miss a drop.</p>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-wrap">
+    <span class="cd-label">Next drop in</span>
+    <div class="cd-blocks">
+      <div class="cd-block"><span class="cd-num" id="cdH">00</span><span class="cd-unit">hrs</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block"><span class="cd-num" id="cdM">00</span><span class="cd-unit">min</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block"><span class="cd-num" id="cdS">00</span><span class="cd-unit">sec</span></div>
+    </div>
+  </div>
+
+  <!-- STREAK -->
+  <div class="streak-bar">
+    <span class="streak-flame">🔥</span>
+    <span class="streak-text" id="streakText">3-day streak</span>
+  </div>
+  <div class="streak-days" id="streakDays"></div>
+</div>
+
+<!-- DROPS -->
+<div class="drops-wrap">
+  <div class="drops-hdr">
+    <h2>⚡ Today's Drops <span id="dropsDate" style="font-size:13px;color:var(--text3);font-weight:400;font-family:'DM Sans',sans-serif"></span></h2>
+    <span class="drops-date" id="cartedCount">0 of 5 carted</span>
+  </div>
+  <div class="drop-grid" id="dropGrid"></div>
+
+  <!-- NOTIFY -->
+  <div class="notify-section">
+    <h3>🔔 Never miss a drop</h3>
+    <p>Get tomorrow's drops delivered to your inbox. No spam, just 5 absurd products at midnight.</p>
+    <div class="notify-row">
+      <input class="notify-input" type="email" id="notifyEmail" placeholder="you@email.com">
+      <button class="notify-btn" onclick="subscribeNotify()">Notify Me</button>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHIVE -->
+<div class="archive-section">
+  <div class="arch-hdr">
+    <h2>📅 Past Drops</h2>
+    <span style="font-size:12px;color:var(--text3)">All archived drops</span>
+  </div>
+  <div class="arch-grid" id="archiveGrid"></div>
+</div>
+
+<!-- MINI CART -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-bubble">
+    <h4>Drop Cart 🛒 <button onclick="toggleCartOverlay()">×</button></h4>
+    <div id="cartItems"></div>
+    <div class="cart-total-mini"><span>Total (fake)</span><span id="cartTotal">$0</span></div>
+    <button class="cart-ck-btn" onclick="fakeCheckout()">Fake Checkout →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── TODAY'S DROPS DATA ──
+// Seeded deterministically by date so "today" is always same 5 products
+const ALL_DROPS = [
+  {id:1,emoji:'🌮',name:'Taco Sleeping Bag',why:'Zip yourself in and become the taco. The filling is <em>you</em>. Comes in beef, veggie, and "what even is this" flavor. 4.9 stars from people with no regrets.',price:89,tags:['absurd','viral'],vote:'Would you actually sleep in this?'},
+  {id:2,emoji:'🦆',name:'Giant Rubber Duck (Bath)',why:'3 feet tall. Fills your entire bathtub. Your neighbors will hear about it. Your guests will have questions. <em>You will have answers.</em>',price:149,tags:['absurd'],vote:'Would you display this in your home?'},
+  {id:3,emoji:'🧠',name:'Brain-Shaped Jello Mold',why:'Serve a wobbly, anatomically-accurate brain at your next dinner party. Pairs well with <em>existential dread</em> and Chianti.',price:18,tags:['absurd','staff'],vote:'Would you actually make this?'},
+  {id:4,emoji:'🐈',name:'Cat Burrito Blanket Set',why:'Wrap your cat like a burrito. They will tolerate it for exactly <em>3 seconds</em> before becoming your enemy. Worth every penny.',price:34,tags:['viral'],vote:'Does your pet deserve this?'},
+  {id:5,emoji:'🧃',name:'Adult-Size Capri Sun Bag',why:'A full-size tote bag that looks exactly like a Capri Sun pouch. Carry your laptop in it. Carry your lunch. Carry <em>your entire identity crisis</em>.',price:42,tags:['absurd','viral'],vote:'Would you carry this to work?'},
+  {id:6,emoji:'🪑',name:'"Invisible" Chair (Clear Acrylic)',why:'It looks like nothing is there. Guests will think you\'re hovering. You\'re not. You\'re just <em>extremely cool</em>. Requires assembly and confidence.',price:299,tags:['absurd','limited'],vote:'Would this go in your living room?'},
+  {id:7,emoji:'🎺',name:'USB Desktop Mini-Trumpet',why:'Connects to your computer. Plays a fanfare every time you complete a task. Your coworkers will love you. <em>They will not love you.</em>',price:27,tags:['viral','staff'],vote:'Would you install this at work?'},
+  {id:8,emoji:'🦖',name:'Life-Size Inflatable T-Rex Costume',why:'You\'ve seen the videos. You know what this does to people. Now <em>you</em> can be the thing that happens to people.',price:79,tags:['viral'],vote:'Would you wear this in public?'},
+  {id:9,emoji:'🧲',name:'Magnetic Fidget Desk Sculpture',why:'300 rare earth magnets. Infinite configurations. <em>Zero work will be done</em> on the day this arrives. Your boss will also play with it.',price:189,tags:['absurd','staff'],vote:'Would you buy this for your desk?'},
+  {id:10,emoji:'🫖',name:'Self-Stirring Smart Mug',why:'Stirs itself. Knows your preferred speed. Connects to WiFi. <em>Judges you silently</em> when you add too much sugar. Free app included.',price:68,tags:['viral','limited'],vote:'Is this too lazy even for you?'},
+  {id:11,emoji:'🌵',name:'Cactus Pool Float (6ft)',why:'A six-foot inflatable cactus you can float on. Pointy on the outside, <em>surprisingly comfortable</em> on the inside. Pool parties will never be the same.',price:55,tags:['absurd','viral'],vote:'Summer essential or unnecessary?'},
+  {id:12,emoji:'🐻',name:'Weighted Stuffed Bear (Adult)',why:'15 lbs of comfort disguised as a stuffed bear. <em>No judgment</em>. You\'ve had a hard week. The bear understands. The bear is always here.',price:120,tags:['staff'],vote:'Would you sleep with this bear?'},
+  {id:13,emoji:'🎭',name:'Full-Face Avocado Helmet',why:'Not DOT certified but very much <em>vibe certified</em>. Wear it to brunch. Wear it to the grocery store. Wear it nowhere because you\'re better than this.',price:64,tags:['absurd','limited'],vote:'Fashion forward or fashion backward?'},
+  {id:14,emoji:'🕹️',name:'Retro Arcade Cocktail Table',why:'Full-size cocktail-style arcade cabinet. 10,000 games pre-loaded. <em>Your living room will never be the same.</em> Your partner will have opinions.',price:899,tags:['viral','limited'],vote:'Would this go in your home?'},
+  {id:15,emoji:'🌈',name:'Rainbow Pickle Jar Night Light',why:'A glowing pickle jar. In rainbow colors. Plugs into the wall. <em>No further explanation available or necessary.</em>',price:22,tags:['absurd','staff'],vote:'Does the world need this?'},
+];
+
+const ARCHIVE_DATA = [
+  {date:'Yesterday',emojis:['🐙','🪁','🫧','🧸','🎪'],winner:'Giant Inflatable Octopus Chair'},
+  {date:'2 days ago',emojis:['🦩','🎠','🌊','🍄','🪬'],winner:'Flamingo Sprinkler System'},
+  {date:'3 days ago',emojis:['🐡','🧊','🌶️','🎋','🦋'],winner:'LED Butterfly Night Light'},
+  {date:'4 days ago',emojis:['🥁','🌺','🪀','🎃','🐚'],winner:'Desktop Mini Drum Kit'},
+  {date:'5 days ago',emojis:['🦊','🌙','🍭','🎯','🪄'],winner:'Holographic Moon Lamp'},
+  {date:'6 days ago',emojis:['🐘','🎆','🪸','🧶','🌻'],winner:'Elephant Watering Can'},
+];
+
+// pick today's 5 based on date
+function getTodaysDrops(){
+  const d = new Date();
+  const seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+  const picks = [];
+  let s = seed;
+  const used = new Set();
+  while(picks.length < 5){
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const idx = Math.abs(s) % ALL_DROPS.length;
+    if(!used.has(idx)){used.add(idx);picks.push({...ALL_DROPS[idx]});}
+  }
+  return picks;
+}
+
+const todayDrops = getTodaysDrops();
+let dropCart = JSON.parse(localStorage.getItem('dz_drop_cart')||'[]');
+let streak = parseInt(localStorage.getItem('dz_streak')||'3');
+let votes = JSON.parse(localStorage.getItem('dz_drop_votes')||'{}');
+let reactions = JSON.parse(localStorage.getItem('dz_drop_reactions')||'{}');
+
+// ── COUNTDOWN ──
+function updateCountdown(){
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24,0,0,0);
+  let diff = Math.floor((midnight - now)/1000);
+  const h = Math.floor(diff/3600);
+  diff %= 3600;
+  const m = Math.floor(diff/60);
+  const s = diff % 60;
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// ── STREAK ──
+function renderStreak(){
+  document.getElementById('streakText').textContent = streak+'-day streak';
+  const days = ['M','T','W','T','F','S','S'];
+  const today = new Date().getDay();
+  const wrap = document.getElementById('streakDays');
+  wrap.innerHTML = days.map((d,i)=>{
+    const isDone = i < streak && i < today;
+    const isToday = i === (today===0?6:today-1);
+    return `<div class="sday${isDone?' done':''}${isToday?' today':''}">${isToday?'🔥':d}</div>`;
+  }).join('');
+}
+
+// ── DROPS DATE ──
+function setDate(){
+  const d = new Date();
+  const opts = {weekday:'long',month:'long',day:'numeric'};
+  document.getElementById('dropsDate').textContent = d.toLocaleDateString('en-US',opts);
+}
+
+// ── RENDER DROPS ──
+function isCarted(id){return dropCart.some(x=>x.id===id);}
+
+function getReacts(id){
+  return reactions[id] || {fire:Math.floor(Math.random()*800+100),need:Math.floor(Math.random()*600+50)};
+}
+
+function renderDrops(){
+  const grid = document.getElementById('dropGrid');
+  grid.innerHTML = todayDrops.map((drop,idx)=>{
+    const carted = isCarted(drop.id);
+    const r = getReacts(drop.id);
+    const v = votes[drop.id];
+    const tagHtml = drop.tags.map(t=>`<span class="dtag ${t}">${t==='absurd'?'🤪 Absurd':t==='viral'?'🔥 Viral':t==='limited'?'⚡ Limited':t==='staff'?'⭐ Staff Pick':t}</span>`).join('');
+    const progress = Math.floor(Math.random()*60+20);
+    return `<div class="drop-card${carted?' carted':' revealed'}" id="dc${drop.id}" style="animation-delay:${idx*0.08}s">
+      <div class="drop-inner">
+        <div class="drop-emoji-col">
+          <div class="drop-rank${idx===0?' hot':''}">DROP ${idx+1}</div>
+          ${drop.emoji}
+        </div>
+        <div class="drop-body">
+          <div class="drop-tags">${tagHtml}</div>
+          <div class="drop-name">${drop.name}</div>
+          <div class="drop-why">${drop.why}</div>
+          <div class="drop-footer">
+            <div>
+              <div class="drop-price">$${drop.price}</div>
+              <div class="drop-saved" id="saved${drop.id}">$0 saved</div>
+            </div>
+            <button class="drop-add-btn${carted?' done':' add'}" id="dadd${drop.id}" onclick="cartDrop(${drop.id})">
+              ${carted?'✓ Carted':'Add to Cart'}
+            </button>
+            <div class="drop-reactions">
+              <button class="react-btn${reactions[drop.id]?.firedBy?' on':''}" onclick="reactDrop(${drop.id},'fire',this)">🔥 <span id="rf${drop.id}">${r.fire}</span></button>
+              <button class="react-btn${reactions[drop.id]?.needBy?' on':''}" onclick="reactDrop(${drop.id},'need',this)">🤌 <span id="rn${drop.id}">${r.need}</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drop-progress"><div class="drop-progress-fill" style="width:${progress}%"></div></div>
+      <div class="vote-bar">
+        <span class="vote-q">${drop.vote}</span>
+        <button class="vote-btn${v==='yes'?' yes-on':''}" onclick="voteDrop(${drop.id},'yes',this,${idx})">👍 Yes</button>
+        <button class="vote-btn${v==='no'?' no-on':''}" onclick="voteDrop(${drop.id},'no',this,${idx})">👎 No</button>
+        <span class="vote-result${v?' show':''}" id="vr${drop.id}">${v?'Voted!':''}</span>
+      </div>
+    </div>`;
+  }).join('');
+  updateSavedAmounts();
+  updateCartedCount();
+}
+
+function updateSavedAmounts(){
+  todayDrops.forEach(d=>{
+    const el = document.getElementById('saved'+d.id);
+    if(el) el.textContent = isCarted(d.id) ? `$${d.price} saved` : `$0 saved`;
+    const card = document.getElementById('dc'+d.id);
+    if(card){
+      if(isCarted(d.id)) card.classList.add('carted');
+      else card.classList.remove('carted');
+    }
+  });
+}
+
+function updateCartedCount(){
+  const n = dropCart.length;
+  document.getElementById('cartedCount').textContent = `${n} of 5 carted`;
+  document.getElementById('cartCount').textContent = n;
+  if(n===5) showAllCartedBanner();
+}
+
+// ── ACTIONS ──
+function cartDrop(id){
+  const drop = todayDrops.find(x=>x.id===id);
+  if(!drop) return;
+  const btn = document.getElementById('dadd'+id);
+  if(isCarted(id)){
+    dropCart = dropCart.filter(x=>x.id!==id);
+    if(btn){btn.textContent='Add to Cart';btn.className='drop-add-btn add';}
+  } else {
+    dropCart.push(drop);
+    if(btn){btn.textContent='✓ Carted';btn.className='drop-add-btn done';}
+    spawnConfetti();
+    showToast('🛒 '+drop.emoji+' '+drop.name+' carted! $'+drop.price+' saved.');
+    // Update streak
+    streak = Math.min(streak+1, 7);
+    localStorage.setItem('dz_streak', streak);
+    renderStreak();
+  }
+  localStorage.setItem('dz_drop_cart', JSON.stringify(dropCart));
+  updateSavedAmounts();
+  updateCartedCount();
+  renderCartOverlay();
+}
+
+function reactDrop(id, type, btn){
+  if(!reactions[id]) reactions[id]={fire:getReacts(id).fire,need:getReacts(id).need};
+  const r = reactions[id];
+  if(type==='fire'){
+    if(r.firedBy){r.fire--;r.firedBy=false;btn.classList.remove('on');}
+    else{r.fire++;r.firedBy=true;btn.classList.add('on');}
+    document.getElementById('rf'+id).textContent=r.fire;
+  } else {
+    if(r.needBy){r.need--;r.needBy=false;btn.classList.remove('on');}
+    else{r.need++;r.needBy=true;btn.classList.add('on');}
+    document.getElementById('rn'+id).textContent=r.need;
+  }
+  localStorage.setItem('dz_drop_reactions', JSON.stringify(reactions));
+}
+
+function voteDrop(id, val, btn, idx){
+  if(votes[id]) return;
+  votes[id] = val;
+  localStorage.setItem('dz_drop_votes', JSON.stringify(votes));
+  const card = document.getElementById('dc'+id);
+  card.querySelectorAll('.vote-btn').forEach(b=>{
+    b.classList.remove('yes-on','no-on');
+    if(b.textContent.includes('Yes')&&val==='yes') b.classList.add('yes-on');
+    if(b.textContent.includes('No')&&val==='no') b.classList.add('no-on');
+  });
+  const vr = document.getElementById('vr'+id);
+  const yesCount = Math.floor(Math.random()*80+20);
+  const noCount = Math.floor(Math.random()*40+10);
+  vr.textContent = val==='yes'?`${yesCount}% said yes!`:`${noCount}% said no 😂`;
+  vr.classList.add('show');
+  showToast(val==='yes'?'👍 Voted yes — you\'re not alone.':'👎 Voted no — same honestly.');
+}
+
+// ── CART OVERLAY ──
+function toggleCartOverlay(){
+  const el = document.getElementById('cartOverlay');
+  el.classList.toggle('show');
+  renderCartOverlay();
+}
+
+function renderCartOverlay(){
+  const items = document.getElementById('cartItems');
+  const total = document.getElementById('cartTotal');
+  if(dropCart.length===0){
+    items.innerHTML='<div style="font-size:13px;color:var(--text3);text-align:center;padding:8px 0">Nothing carted yet</div>';
+    total.textContent='$0';
+    return;
+  }
+  items.innerHTML = dropCart.map(i=>`<div class="cart-item-mini"><span>${i.emoji}</span><span style="flex:1;font-size:12px">${i.name}</span><span style="font-weight:600;font-family:\'Syne\',sans-serif">$${i.price}</span></div>`).join('');
+  total.textContent = '$'+dropCart.reduce((a,b)=>a+b.price,0).toLocaleString();
+}
+
+function fakeCheckout(){
+  const total = dropCart.reduce((a,b)=>a+b.price,0);
+  showToast('🎉 $'+total+' saved! Order confirmed. Nothing shipped. 😌');
+  spawnConfetti();
+  dropCart=[];
+  localStorage.setItem('dz_drop_cart','[]');
+  renderDrops();
+  renderCartOverlay();
+  document.getElementById('cartOverlay').classList.remove('show');
+}
+
+// ── ALL CARTED BANNER ──
+function showAllCartedBanner(){
+  showToast('🔥 All 5 drops carted! Streak extended. Come back tomorrow!');
+  spawnConfetti();
+  spawnConfetti();
+}
+
+// ── ARCHIVE ──
+function renderArchive(){
+  document.getElementById('archiveGrid').innerHTML = ARCHIVE_DATA.map(a=>`
+    <div class="arch-card">
+      <div class="arch-date">${a.date}</div>
+      <div class="arch-emojis">${a.emojis.map(e=>`<span>${e}</span>`).join('')}</div>
+      <div class="arch-label">5 drops</div>
+      <div class="arch-winner">🏆 ${a.winner}</div>
+    </div>`).join('');
+}
+
+// ── NOTIFY ──
+function subscribeNotify(){
+  const email = document.getElementById('notifyEmail').value.trim();
+  if(!email||!email.includes('@')){showToast('⚠️ Enter a valid email.');return;}
+  const subs = JSON.parse(localStorage.getItem('dz_notify_subs')||'[]');
+  if(subs.includes(email)){showToast('Already subscribed!');return;}
+  subs.push(email);
+  localStorage.setItem('dz_notify_subs', JSON.stringify(subs));
+  document.getElementById('notifyEmail').value='';
+  showToast('🔔 Subscribed! You\'ll get drops at midnight.');
+}
+
+// ── CONFETTI ──
+function spawnConfetti(){
+  const colors=['#f97316','#fbbf24','#10b981','#3b82f6','#a855f7','#ec4899'];
+  for(let i=0;i<22;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${2+Math.random()}s;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3500);
+  }
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── INIT ──
+renderStreak();
+setDate();
+renderDrops();
+renderArchive();
+renderCartOverlay();
+
+// Simulate live reactions ticking up
+setInterval(()=>{
+  todayDrops.forEach(d=>{
+    if(Math.random()<0.2){
+      const r=getReacts(d.id);
+      if(!reactions[d.id]) reactions[d.id]={...r};
+      reactions[d.id].fire+=Math.floor(Math.random()*2);
+      const el=document.getElementById('rf'+d.id);
+      if(el) el.textContent=reactions[d.id].fire;
+    }
+  });
+},3500);
+</script>
+</body>
+</html>
