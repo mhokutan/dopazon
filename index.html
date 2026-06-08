@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon.com: Satisfy the Urge. Keep the Money.</title>
+<link rel="stylesheet" href="shared.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D7NNBGKNB3');
+</script>
+<style>
+  /* ===== NAV EXTRAS ===== */
+  .nav-all{font-weight:700;display:flex;align-items:center;gap:4px;}
+
+  /* ===== ALERT BANNER ===== */
+  .alert-banner{background:#232F3E;color:#FF9900;text-align:center;padding:8px;font-size:13px;font-weight:700;}
+  .alert-banner span{color:#fff;font-weight:400;}
+
+  /* ===== HERO CAROUSEL ===== */
+  .hero{position:relative;overflow:hidden;}
+  .hero-slides{display:flex;transition:transform 0.5s ease;}
+  .hero-slide{min-width:100%;height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .slide-bg{position:absolute;inset:0;}
+  .slide-content{position:relative;z-index:2;text-align:center;padding:20px;}
+  .slide-tag{background:#FF9900;color:#0F1111;font-size:12px;font-weight:700;padding:3px 10px;border-radius:2px;display:inline-block;margin-bottom:10px;}
+  .slide-title{font-size:42px;font-weight:700;color:#fff;text-shadow:1px 1px 4px rgba(0,0,0,0.5);margin-bottom:8px;}
+  .slide-sub{font-size:18px;color:#eee;margin-bottom:20px;}
+  .slide-btn{background:#FF9900;color:#0F1111;padding:12px 28px;border:none;border-radius:4px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
+  .slide-btn:hover{background:#FA8900;}
+  .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:none;width:45px;height:100px;cursor:pointer;z-index:10;font-size:24px;display:flex;align-items:center;justify-content:center;}
+  .hero-arrow:hover{background:#fff;}
+  .hero-prev{left:0;border-radius:0 4px 4px 0;}
+  .hero-next{right:0;border-radius:4px 0 0 4px;}
+
+  /* ===== MAIN ===== */
+  .main{max-width:1500px;margin:0 auto;padding:15px;}
+  .section-title{font-size:21px;font-weight:700;margin-bottom:12px;color:#0F1111;}
+
+  /* ===== CATEGORY CARDS ===== */
+  .category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;margin-bottom:25px;}
+  .cat-card{background:#fff;padding:16px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;text-decoration:none;color:#0F1111;}
+  .cat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
+  .cat-card h3{font-size:15px;font-weight:700;margin-bottom:10px;}
+  .cat-card-img{width:100%;height:140px;object-fit:cover;border-radius:2px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:10px;}
+  .cat-see-more{color:#007185;font-size:13px;}
+
+  /* ===== PRODUCT ROW ===== */
+  .product-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;margin-bottom:25px;}
+  .product-card{background:#fff;padding:14px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;position:relative;}
+  .product-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
+  .product-badge{position:absolute;top:10px;left:10px;background:#CC0C39;color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:2px;}
+  .product-badge.prime{background:#00A8E0;}
+  .product-badge.hot{background:#FF6900;}
+  .product-img{width:100%;height:180px;object-fit:contain;display:flex;align-items:center;justify-content:center;font-size:70px;margin-bottom:10px;}
+  .product-title{font-size:13px;color:#0F1111;margin-bottom:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .stars{color:#FF9900;font-size:13px;display:flex;align-items:center;gap:4px;margin-bottom:4px;}
+  .review-count{color:#007185;font-size:12px;}
+  .price-block{margin-bottom:8px;}
+  .price-original{text-decoration:line-through;color:#565959;font-size:12px;}
+  .price-free{color:#CC0C39;font-weight:700;font-size:20px;}
+  .price-saved{color:#CC0C39;font-size:12px;}
+  .prime-badge{display:flex;align-items:center;gap:4px;font-size:12px;color:#00A8E0;font-weight:700;margin-bottom:8px;}
+  .add-cart-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:7px;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.2s;}
+  .add-cart-btn:hover{background:#F7CA00;}
+  .buy-now-btn{width:100%;background:#FF9900;border:1px solid #FF8F00;border-radius:20px;padding:7px;font-size:13px;font-weight:500;cursor:pointer;margin-top:6px;}
+  .buy-now-btn:hover{background:#FA8900;}
+
+  /* ===== DEALS ===== */
+  .deals-header{display:flex;align-items:center;gap:15px;margin-bottom:12px;}
+  .deals-timer{background:#0F1111;color:#fff;padding:4px 10px;border-radius:4px;font-size:13px;font-weight:700;}
+  .deals-timer span{color:#FF9900;font-size:16px;}
+
+  /* ===== STATS BAR ===== */
+  .stats-bar{background:#131921;color:#ccc;display:flex;justify-content:center;gap:40px;padding:15px;text-align:center;margin-bottom:20px;border-radius:4px;}
+  .stat-item strong{display:block;font-size:22px;color:#FF9900;font-weight:700;}
+  .stat-item span{font-size:12px;}
+
+  /* ===== FOOTER ===== */
+  #footer{margin-top:30px;}
+  .footer-top{background:#37475A;color:#fff;padding:14px;text-align:center;font-size:13px;cursor:pointer;}
+  .footer-top:hover{background:#485769;}
+  .footer-mid{background:#232F3E;color:#ddd;padding:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;}
+  .footer-col h4{color:#fff;font-size:14px;margin-bottom:12px;}
+  .footer-col a{display:block;color:#ddd;text-decoration:none;font-size:13px;margin-bottom:6px;}
+  .footer-col a:hover{color:#FF9900;text-decoration:underline;}
+  .footer-bot{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;}
+  .footer-logo{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
+  .footer-logo span{color:#FF9900;}
+
+  /* ===== AUTH MODAL EXTRAS ===== */
+  .modal h2{font-size:20px;margin-bottom:15px;}
+  .auth-switch{text-align:center;margin-top:12px;font-size:13px;color:#555;}
+  .auth-switch a{color:#007185;cursor:pointer;}
+
+  /* ===== USER DROPDOWN ===== */
+  .user-menu{position:relative;}
+  .user-dropdown{display:none;position:absolute;top:100%;right:0;background:#fff;border:1px solid #ddd;border-radius:4px;min-width:220px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:150;padding:15px;}
+  .user-menu:hover .user-dropdown{display:block;}
+  .user-dropdown a{display:block;color:#0F1111;text-decoration:none;font-size:13px;padding:5px 0;border-bottom:1px solid #eee;}
+  .user-dropdown a:last-child{border:none;}
+  .user-dropdown a:hover{color:#C7511F;}
+
+  /* ===== LOCATION BANNER ===== */
+  .location-banner{background:#DFF0EA;border:1px solid #067D62;padding:8px 15px;font-size:13px;color:#0F1111;display:flex;align-items:center;gap:8px;}
+  .location-banner strong{color:#067D62;}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="header">
+  <!-- Logo -->
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+
+  <!-- Deliver to -->
+  <div class="deliver" onclick="showLocation()">
+    <span>📍 Deliver to</span>
+    <strong>United States</strong>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <select class="search-select">
+      <option>All</option>
+      <option>Fashion</option>
+      <option>Electronics</option>
+      <option>Beauty</option>
+      <option>Home</option>
+      <option>Sports</option>
+      <option>Pets</option>
+      <option>Food</option>
+    </select>
+    <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()">
+      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#0F1111" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Account -->
+  <div class="user-menu">
+    <a href="#" class="header-link" id="accountBtn" onclick="handleAccountClick(event)">
+      <span id="accountGreet">Hello, sign in</span>
+      <strong>Account &amp; Lists ▾</strong>
+    </a>
+    <div class="user-dropdown" id="userDropdown">
+      <div style="text-align:center;margin-bottom:10px;" id="dropdownContent">
+        <button onclick="openModal('login')" style="background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:8px 40px;font-size:14px;cursor:pointer;width:100%;margin-bottom:8px;">Sign in</button>
+        <div style="font-size:12px;color:#555;">New customer? <a href="#" onclick="openModal('signup')" style="color:#007185;">Start here.</a></div>
+      </div>
+      <a href="#">Your Account</a>
+      <a href="#">Your Orders</a>
+      <a href="#">Your Wish List</a>
+      <a href="confessions.html">Confession Cart</a>
+      <a href="#" id="signoutLink" style="display:none" onclick="signOut()">Sign Out</a>
+    </div>
+  </div>
+
+  <!-- Returns -->
+  <a href="confessions.html" class="header-link">
+    <span>Returns</span>
+    <strong>&amp; Confessions</strong>
+  </a>
+
+  <!-- Cart -->
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">
+      🛒
+      <span class="cart-count" id="cartCount" style="position:absolute;top:-5px;right:-5px;">0</span>
+    </span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<!-- ===== NAV BAR ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-link nav-all">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">DopePrime</a>
+  <a href="shop.html" class="nav-link">Fashion</a>
+  <a href="shop.html" class="nav-link">Electronics</a>
+  <a href="shop.html" class="nav-link">Home &amp; Kitchen</a>
+  <a href="shop.html" class="nav-link">Sports</a>
+  <a href="shop.html" class="nav-link">Beauty</a>
+  <a href="shop.html" class="nav-link">Pets</a>
+  <a href="shop.html" class="nav-link">Best Sellers</a>
+  <a href="confessions.html" class="nav-link">Confession Cart</a>
+  <a href="#" class="nav-link" style="color:#FF9900;">🎁 Free Everything</a>
+</nav>
+
+<!-- ===== ALERT BANNER ===== -->
+<div class="alert-banner">
+  🚀 <span>DopePrime: Unlimited fake shopping, unlimited dopamine — </span>Always FREE
+</div>
+
+<!-- ===== HERO CAROUSEL ===== -->
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <!-- Slide 1 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#131921 0%,#1a2a3a 50%,#0d1b2a 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">DOPEPRIME DAY</div>
+        <div class="slide-title">Shop Everything.<br>Pay Nothing.</div>
+        <div class="slide-sub">The full Amazon experience — 100% free, 100% satisfying</div>
+        <a href="shop.html" class="slide-btn">Start Shopping Free →</a>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b69 50%,#0d1b2a 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">TODAY'S DROPS</div>
+        <div class="slide-title">⚡ Lightning Deals</div>
+        <div class="slide-sub">5 absurd items. 0 dollars. Gone at midnight.</div>
+        <a href="drops.html" class="slide-btn">See Today's Drops →</a>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#0a2e1a 0%,#1a4d2a 50%,#0d2a1b 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">CONFESSION CART</div>
+        <div class="slide-title">💬 $0 Spent Today</div>
+        <div class="slide-sub">Tell the world what you almost bought. Feel better instantly.</div>
+        <a href="confessions.html" class="slide-btn">Confess &amp; Heal →</a>
+      </div>
+    </div>
+  </div>
+  <button class="hero-arrow hero-prev" onclick="slideHero(-1)">❮</button>
+  <button class="hero-arrow hero-next" onclick="slideHero(1)">❯</button>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><strong id="statSaved">$0</strong><span>Saved Today by Community</span></div>
+    <div class="stat-item"><strong id="statImpulses">0</strong><span>Impulses Avoided</span></div>
+    <div class="stat-item"><strong id="statOnline">0</strong><span>Fake Shopping Right Now</span></div>
+    <div class="stat-item"><strong id="statOrders">0</strong><span>Fake Orders Today</span></div>
+  </div>
+
+  <!-- Categories -->
+  <h2 class="section-title">Shop by Category</h2>
+  <div class="category-grid">
+    <a href="shop.html?cat=fashion" class="cat-card">
+      <div class="cat-card-img">👗</div>
+      <h3>Fashion</h3>
+      <div class="cat-see-more">See all looks →</div>
+    </a>
+    <a href="shop.html?cat=electronics" class="cat-card">
+      <div class="cat-card-img">📱</div>
+      <h3>Electronics</h3>
+      <div class="cat-see-more">See all gadgets →</div>
+    </a>
+    <a href="shop.html?cat=beauty" class="cat-card">
+      <div class="cat-card-img">💄</div>
+      <h3>Beauty</h3>
+      <div class="cat-see-more">See all beauty →</div>
+    </a>
+    <a href="shop.html?cat=home" class="cat-card">
+      <div class="cat-card-img">🏠</div>
+      <h3>Home &amp; Kitchen</h3>
+      <div class="cat-see-more">See all home →</div>
+    </a>
+    <a href="shop.html?cat=sports" class="cat-card">
+      <div class="cat-card-img">🏃</div>
+      <h3>Sports</h3>
+      <div class="cat-see-more">See all sports →</div>
+    </a>
+    <a href="shop.html?cat=pets" class="cat-card">
+      <div class="cat-card-img">🐾</div>
+      <h3>Pets</h3>
+      <div class="cat-see-more">See all pets →</div>
+    </a>
+    <a href="shop.html?cat=food" class="cat-card">
+      <div class="cat-card-img">🍔</div>
+      <h3>Food Delivery</h3>
+      <div class="cat-see-more">See all food →</div>
+    </a>
+    <a href="drops.html" class="cat-card">
+      <div class="cat-card-img">⚡</div>
+      <h3>Daily Drops</h3>
+      <div class="cat-see-more">See today's drops →</div>
+    </a>
+  </div>
+
+  <!-- Best Sellers -->
+  <div class="deals-header">
+    <h2 class="section-title" style="margin:0">Best Sellers — $0 Each</h2>
+    <div class="deals-timer">Ends in: <span id="dealTimer">23:59:59</span></div>
+  </div>
+  <div class="product-row" id="bestSellers"></div>
+
+  <!-- Featured Section: Confession Cart teaser -->
+  <div style="background:#fff;border-radius:4px;padding:25px;margin-bottom:25px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
+    <div style="font-size:80px;">💬</div>
+    <div style="flex:1;">
+      <div style="font-size:11px;color:#CC0C39;font-weight:700;margin-bottom:4px;">COMMUNITY FEATURE</div>
+      <h2 style="font-size:22px;margin-bottom:8px;">Confession Cart</h2>
+      <p style="color:#555;font-size:14px;margin-bottom:14px;">Share what you almost bought. Read others' close calls. Collectively save millions every day.</p>
+      <a href="confessions.html" style="background:#FFD814;border:1px solid #FCD200;padding:9px 22px;border-radius:4px;font-size:14px;font-weight:500;text-decoration:none;color:#0F1111;display:inline-block;">Read Confessions</a>
+    </div>
+    <div style="background:#EAEDED;padding:15px;border-radius:4px;min-width:200px;">
+      <div style="font-size:13px;color:#555;margin-bottom:8px;">Community saved today:</div>
+      <div style="font-size:32px;font-weight:700;color:#067D62;" id="confSaved">$0</div>
+      <div style="font-size:12px;color:#aaa;">and counting...</div>
+    </div>
+  </div>
+
+  <!-- New Arrivals -->
+  <h2 class="section-title">New Arrivals — Recommended for You</h2>
+  <div class="product-row" id="newArrivals"></div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-mid">
+    <div class="footer-col">
+      <h4>Get to Know Us</h4>
+      <a href="#">About Dopazon</a>
+      <a href="#">The Science of Dopamine</a>
+      <a href="#">Press</a>
+      <a href="#">Investor Relations</a>
+      <a href="#">Dopazon Cares</a>
+    </div>
+    <div class="footer-col">
+      <h4>Make Money With Us</h4>
+      <a href="shop.html">Open Your Store</a>
+      <a href="#">Dopazon Affiliates</a>
+      <a href="#">Advertise Your Products</a>
+      <a href="#">Self-Publish</a>
+    </div>
+    <div class="footer-col">
+      <h4>Dopazon Payment Products</h4>
+      <a href="#">DopaPay (Always Free)</a>
+      <a href="#">DopaPrime Benefits</a>
+      <a href="#">No Credit Card Required</a>
+      <a href="#">Never a Charge</a>
+    </div>
+    <div class="footer-col">
+      <h4>Let Us Help You</h4>
+      <a href="#">Your Account</a>
+      <a href="#">Your Orders</a>
+      <a href="#">Shipping &amp; Delivery ($0)</a>
+      <a href="#">Returns (Keep Everything)</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <div class="footer-logo">dopa<span>zon</span></div>
+    <div>Conditions of Use &nbsp;|&nbsp; Privacy Notice &nbsp;|&nbsp; Consumer Health Data Privacy Disclosure</div>
+    <div style="margin-top:6px;">© 2024-2025 Dopazon.com, Inc. or its affiliates. This is a <strong>simulated shopping experience</strong>. No real purchases are made.</div>
+    <div style="margin-top:4px;color:#777;font-size:11px;">Satisfy the urge. Keep the money. Always.</div>
+  </div>
+</footer>
+
+<!-- ===== TOAST ===== -->
+<div class="cart-toast" id="cartToast">
+  ✅ Added to cart — <strong>$0 charged</strong>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Sign in</h2>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="you@example.com">
+    </div>
+    <div class="form-group" id="nameGroup" style="display:none">
+      <label>Your Name</label>
+      <input type="text" id="authName" placeholder="First name">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="At least 6 characters">
+    </div>
+    <button class="form-submit" id="authSubmit" onclick="submitAuth()">Sign in</button>
+    <div class="auth-switch" id="authSwitch">
+      New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+// ===== PRODUCTS DATA =====
+const PRODUCTS = [
+  {id:1,emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,cat:'fashion',stars:4.8,reviews:12847},
+  {id:2,emoji:'📱',title:'Aplix ProMax Ultra — 6.9" Display, Triple Camera System',price:1299,cat:'electronics',stars:4.7,reviews:8934},
+  {id:3,emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging Formula',price:68,cat:'beauty',stars:4.9,reviews:23156},
+  {id:4,emoji:'☕',title:'BrewMaster Pro Coffee Maker — 12-Cup, Built-in Grinder',price:249,cat:'home',stars:4.6,reviews:5432},
+  {id:5,emoji:'🎧',title:'SoundWave Elite Wireless Headphones — 40hr Battery',price:349,cat:'electronics',stars:4.8,reviews:18923},
+  {id:6,emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free, Real Protein',price:89,cat:'pets',stars:4.9,reviews:31024},
+  {id:7,emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lb per Hand',price:429,cat:'sports',stars:4.7,reviews:7823},
+  {id:8,emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 Color LED',price:45,cat:'home',stars:4.5,reviews:9234},
+  {id:9,emoji:'👜',title:'LuxCraft Structured Tote Bag — Pebbled Leather, Gold Hardware',price:395,cat:'fashion',stars:4.6,reviews:4123},
+  {id:10,emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games',price:199,cat:'electronics',stars:4.8,reviews:15678},
+  {id:11,emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,cat:'beauty',stars:4.7,reviews:11234},
+  {id:12,emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover',price:299,cat:'home',stars:4.5,reviews:6789},
+];
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
+let user = null;
+let authMode = 'login';
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCartCount();
+  const { data: { session } } = await sb.auth.getSession();
+  user = session?.user ? { name: session.user.user_metadata?.name || session.user.email.split('@')[0], email: session.user.email, id: session.user.id } : null;
+  updateUserUI();
+  renderBestSellers();
+  renderNewArrivals();
+  startStats();
+  startDealTimer();
+  startHeroAuto();
+});
+
+
+function updateUserUI() {
+  const btn = document.getElementById('accountGreet');
+  const signout = document.getElementById('signoutLink');
+  if (user) {
+    btn.textContent = 'Hello, ' + user.name;
+    signout.style.display = 'block';
+  } else {
+    btn.textContent = 'Hello, sign in';
+    signout.style.display = 'none';
+  }
+}
+
+function renderBestSellers() {
+  const el = document.getElementById('bestSellers');
+  const items = PRODUCTS.slice(0, 6);
+  el.innerHTML = items.map(p => productCard(p, true)).join('');
+}
+
+function renderNewArrivals() {
+  const el = document.getElementById('newArrivals');
+  const items = [...PRODUCTS].sort(() => Math.random() - 0.5).slice(0, 6);
+  el.innerHTML = items.map(p => productCard(p, false)).join('');
+}
+
+function productCard(p, isSale) {
+  const stars = '★'.repeat(Math.floor(p.stars)) + (p.stars % 1 >= 0.5 ? '½' : '');
+  return `
+  <div class="product-card" onclick="goToProduct(${p.id})">
+    ${isSale ? '<div class="product-badge">SALE</div>' : '<div class="product-badge prime">DopePrime</div>'}
+    <div class="product-img">${p.emoji}</div>
+    <div class="product-title">${p.title}</div>
+    <div class="stars">${'★★★★★'.slice(0,Math.floor(p.stars)).split('').map(s=>`<span>${s}</span>`).join('')} <span class="review-count">(${p.reviews.toLocaleString()})</span></div>
+    <div class="price-block">
+      <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
+      <div class="price-free">FREE</div>
+      <div class="price-saved">You save: $${p.price.toLocaleString()}.00 (100%)</div>
+    </div>
+    <div class="prime-badge">✓ DopePrime — Free Fake Delivery</div>
+    <button class="add-cart-btn" onclick="addToCart(event,${p.id})">Add to Cart</button>
+    <button class="buy-now-btn" onclick="buyNow(event,${p.id})">Buy Now</button>
+  </div>`;
+}
+
+function addToCart(e, id) {
+  e.stopPropagation();
+  const p = PRODUCTS.find(x => x.id === id);
+  cart.push({...p, addedAt: Date.now()});
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast('✅ Added to cart — <strong>$0 charged</strong>');
+  launchConfetti();
+  gtag('event', 'add_to_cart', {item_id: id, item_name: p.title, value: 0});
+}
+
+function buyNow(e, id) {
+  e.stopPropagation();
+  addToCart(e, id);
+  setTimeout(() => window.location = 'shop.html', 800);
+}
+
+function goToProduct(id) {
+  window.location = 'product.html?id=s' + id;
+}
+
+
+// ===== STATS =====
+function startStats() {
+  let saved = 847293, impulses = 14203, online = 2847, orders = 31024;
+  function tick() {
+    saved += Math.floor(Math.random() * 500);
+    impulses += Math.floor(Math.random() * 3);
+    online += (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 5);
+    orders += Math.floor(Math.random() * 2);
+    document.getElementById('statSaved').textContent = '$' + saved.toLocaleString();
+    document.getElementById('statImpulses').textContent = impulses.toLocaleString();
+    document.getElementById('statOnline').textContent = Math.max(2500, online).toLocaleString();
+    document.getElementById('statOrders').textContent = orders.toLocaleString();
+    document.getElementById('confSaved').textContent = '$' + saved.toLocaleString();
+  }
+  tick();
+  setInterval(tick, 2000);
+}
+
+// ===== TIMER =====
+function startDealTimer() {
+  function tick() {
+    const now = new Date();
+    const midnight = new Date(); midnight.setHours(24,0,0,0);
+    const diff = midnight - now;
+    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    const s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+    document.getElementById('dealTimer').textContent = `${h}:${m}:${s}`;
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ===== HERO CAROUSEL =====
+let slide = 0;
+function slideHero(dir) {
+  const slides = document.querySelectorAll('.hero-slide');
+  slide = (slide + dir + slides.length) % slides.length;
+  document.getElementById('heroSlides').style.transform = `translateX(-${slide * 100}%)`;
+}
+function startHeroAuto() { setInterval(() => slideHero(1), 5000); }
+
+// ===== SEARCH =====
+function goSearch() {
+  const q = document.getElementById('searchInput').value;
+  if (q) window.location = 'shop.html?q=' + encodeURIComponent(q);
+}
+
+// ===== AUTH =====
+function openModal(mode) {
+  authMode = mode;
+  document.getElementById('authModal').classList.add('active');
+  document.getElementById('modalTitle').textContent = mode === 'login' ? 'Sign in' : 'Create account';
+  document.getElementById('authSubmit').textContent = mode === 'login' ? 'Sign in' : 'Create your Dopazon account';
+  document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
+  document.getElementById('authSwitch').innerHTML = mode === 'login' ?
+    'New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>' :
+    'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>';
+}
+function closeModal() { document.getElementById('authModal').classList.remove('active'); }
+function toggleAuthMode() { openModal(authMode === 'login' ? 'signup' : 'login'); }
+function handleAccountClick(e) {
+  if (user) e.preventDefault();
+}
+async function submitAuth() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value;
+  const name = document.getElementById('authName').value.trim() || email.split('@')[0];
+  if (!email || !pass) { alert('Please fill in all fields.'); return; }
+  if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+  try {
+    let res;
+    if (authMode === 'signup') {
+      res = await sb.auth.signUp({ email, password: pass, options: { data: { name } } });
+    } else {
+      r

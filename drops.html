@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Daily Drops ⚡ Today's 5 Free Items</title>
+<link rel="stylesheet" href="shared.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+<style>
+  /* Hero */
+  .drops-hero{background:linear-gradient(135deg,#1a0a2e,#2d1b69,#131921);color:#fff;padding:30px 20px;text-align:center;}
+  .drops-hero h1{font-size:38px;font-weight:700;margin-bottom:6px;}
+  .drops-hero h1 span{color:#FF9900;}
+  .drops-hero p{color:#ccc;font-size:15px;margin-bottom:20px;}
+  /* Timer bar */
+  .timer-bar{background:#CC0C39;color:#fff;text-align:center;padding:10px;font-size:16px;font-weight:700;display:flex;justify-content:center;align-items:center;gap:12px;}
+  .timer-box{background:#0F1111;padding:6px 14px;border-radius:4px;font-size:24px;font-weight:700;font-family:monospace;min-width:55px;text-align:center;}
+  .timer-sep{font-size:24px;}
+  /* Streak */
+  .streak-bar{background:#fff;border-bottom:2px solid #FF9900;padding:10px 20px;display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap;}
+  .streak-info{font-size:14px;font-weight:700;}
+  .streak-days{display:flex;gap:6px;}
+  .streak-day{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:11px;}
+  .streak-day.done{background:#FF9900;border-color:#FF9900;color:#0F1111;font-weight:700;}
+  .streak-day.today{background:#232F3E;border-color:#232F3E;color:#fff;font-weight:700;}
+  /* Main */
+  .drops-main{max-width:1200px;margin:20px auto;padding:0 15px;display:grid;grid-template-columns:1fr 280px;gap:20px;}
+  /* Drop cards */
+  .drop-card{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:16px;display:grid;grid-template-columns:200px 1fr;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+  .drop-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
+  .drop-card.winner{border:3px solid #FF9900;}
+  .drop-img{background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:90px;padding:20px;}
+  .drop-info{padding:20px;}
+  .drop-badges{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+  .drop-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;}
+  .drop-badge.lightning{background:#CC0C39;color:#fff;}
+  .drop-badge.prime{background:#00A8E0;color:#fff;}
+  .drop-badge.winner-badge{background:#FF9900;color:#0F1111;}
+  .drop-title{font-size:18px;font-weight:700;margin-bottom:6px;line-height:1.3;}
+  .drop-desc{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5;}
+  .drop-price-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+  .drop-original{font-size:14px;color:#565959;text-decoration:line-through;}
+  .drop-free{font-size:28px;font-weight:700;color:#CC0C39;}
+  .drop-savings{font-size:13px;color:#CC0C39;}
+  .drop-prime{color:#00A8E0;font-size:13px;font-weight:700;}
+  /* Progress bar */
+  .drop-progress-label{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:4px;}
+  .drop-progress{height:8px;background:#eee;border-radius:4px;overflow:hidden;margin-bottom:12px;}
+  .drop-progress-fill{height:100%;background:#CC0C39;border-radius:4px;transition:width 0.3s;}
+  /* Reactions row */
+  .drop-reactions{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+  .react-btn{background:#f5f5f5;border:1px solid #ddd;border-radius:20px;padding:5px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;}
+  .react-btn:hover{border-color:#FF9900;background:#FFF8EE;}
+  .react-btn.active{background:#FFF8EE;border-color:#FF9900;}
+  /* Vote bar */
+  .vote-bar{display:flex;gap:8px;align-items:center;margin-bottom:14px;}
+  .vote-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:6px 14px;font-size:13px;cursor:pointer;}
+  .vote-btn:hover{background:#eee;}
+  .vote-btn.yes{border-color:#067D62;color:#067D62;background:#E7F4E8;}
+  .vote-btn.no{border-color:#CC0C39;color:#CC0C39;background:#FFEEEE;}
+  .vote-result{font-size:12px;color:#555;}
+  /* CTA buttons */
+  .drop-add-btn{background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;margin-right:8px;}
+  .drop-add-btn:hover{background:#F7CA00;}
+  .drop-detail-btn{background:none;border:1px solid #aaa;border-radius:4px;padding:10px 16px;font-size:13px;cursor:pointer;color:#007185;}
+  .drop-detail-btn:hover{border-color:#007185;}
+  /* Archive */
+  .archive-section{background:#fff;border-radius:4px;padding:20px;margin-top:5px;}
+  .archive-title{font-size:16px;font-weight:700;margin-bottom:12px;}
+  .archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+  .archive-card{border:1px solid #ddd;border-radius:4px;padding:10px;text-align:center;}
+  .archive-emoji{font-size:40px;margin-bottom:6px;}
+  .archive-day{font-size:11px;color:#777;margin-bottom:3px;}
+  .archive-winner{font-size:12px;font-weight:700;color:#0F1111;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .archive-amount{color:#CC0C39;font-size:12px;font-weight:700;}
+  /* Sidebar */
+  .sidebar-widget{background:#fff;border-radius:4px;padding:15px;margin-bottom:15px;}
+  .sidebar-widget h3{font-size:14px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #eee;}
+  .notify-form{display:flex;flex-direction:column;gap:8px;}
+  .notify-input{border:1px solid #aaa;border-radius:4px;padding:8px;font-size:13px;outline:none;}
+  .notify-input:focus{border-color:#FF9900;}
+  .notify-btn{background:#FF9900;border:none;border-radius:4px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
+  .notify-btn:hover{background:#FA8900;}
+  .prev-winner{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:13px;}
+  .prev-winner:last-child{border:none;}
+  @media(max-width:900px){.drops-main{grid-template-columns:1fr;}.drop-card{grid-template-columns:1fr;}.drop-img{height:180px;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+  <a href="index.html" class="header-link"><span>Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="header-link"><span>Browse</span><strong>All Items</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link" style="background:#131921;color:#FF9900;">⚡ Today's Drops</a>
+  <a href="shop.html" class="nav-link">DopePrime</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
+  <a href="#" class="nav-link" style="color:#FF9900;">🎁 Always Free</a>
+</nav>
+
+<!-- HERO -->
+<div class="drops-hero">
+  <div style="font-size:13px;color:#FF9900;font-weight:700;margin-bottom:8px;">⚡ DAILY DROPS</div>
+  <h1>Today's <span>5 Free Drops</span></h1>
+  <p>Every day, 5 absurd items you can add to cart — for absolutely nothing.<br>Gone at midnight. New drops tomorrow.</p>
+</div>
+
+<!-- TIMER -->
+<div class="timer-bar">
+  <span>🕐 Drops end in:</span>
+  <div class="timer-box" id="timerH">--</div>
+  <div class="timer-sep">:</div>
+  <div class="timer-box" id="timerM">--</div>
+  <div class="timer-sep">:</div>
+  <div class="timer-box" id="timerS">--</div>
+  <span style="font-size:14px;color:#ffcdd2;">· New drops every midnight</span>
+</div>
+
+<!-- STREAK -->
+<div class="streak-bar">
+  <span>🔥 Your streak:</span>
+  <div class="streak-info" id="streakCount">0 days</div>
+  <div class="streak-days" id="streakDays"></div>
+  <span style="font-size:13px;color:#555;">Check in daily to grow your streak!</span>
+</div>
+
+<!-- MAIN -->
+<div class="drops-main">
+  <div>
+    <div id="dropCards"></div>
+    <!-- Archive -->
+    <div class="archive-section">
+      <div class="archive-title">📅 Previous Drops — Past Winners</div>
+      <div class="archive-grid" id="archiveGrid"></div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="sidebar-widget" style="background:#CC0C39;color:#fff;">
+      <h3 style="color:#fff;border-color:rgba(255,255,255,0.3);">⚡ Don't Miss Tomorrow</h3>
+      <p style="font-size:13px;color:#ffcdd2;margin-bottom:12px;">Get notified when new drops go live. It's free. Everything is.</p>
+      <div class="notify-form">
+        <input class="notify-input" type="email" id="notifyEmail" placeholder="your@email.com">
+        <button class="notify-btn" onclick="subscribeNotify()" style="background:#FFD814;color:#0F1111;">Notify Me 🔔</button>
+      </div>
+    </div>
+    <div class="sidebar-widget">
+      <h3>🏆 This Week's Top Drops</h3>
+      <div id="topDrops"></div>
+    </div>
+    <div class="sidebar-widget">
+      <h3>📊 Drop Stats</h3>
+      <div style="font-size:13px;">
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Today's drops</span><strong>5</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Carts added</span><strong id="totalCarts">0</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Total saved</span><strong id="totalSaved" style="color:#CC0C39;">$0</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;"><span>Streaks active</span><strong>2,847</strong></div>
+      </div>
+    </div>
+    <div class="sidebar-widget" style="background:#131921;color:#fff;">
+      <h3 style="color:#FF9900;border-color:#333;">Want More?</h3>
+      <p style="font-size:13px;color:#ccc;margin-bottom:10px;">Browse 18+ items across all categories. All free, always.</p>
+      <a href="shop.html" style="display:block;background:#FF9900;color:#0F1111;text-align:center;padding:10px;border-radius:4px;font-weight:700;text-decoration:none;font-size:14px;">Browse All Free Items →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- TOAST -->
+<div class="cart-toast" id="cartToast">Done!</div>
+
+<script src="shared.js"></script>
+<script>
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
+const ALL_DROPS = [
+  {id:101,emoji:'🦆',title:'RubberDux Quantum Bath Duck — Measures Water Pressure',desc:'A rubber duck with 7 sensors that measures bath water quantum properties. Scientists say it\'s pointless. We say it\'s essential.',price:89,cat:'home'},
+  {id:102,emoji:'🧢',title:'AirMax Vent Baseball Cap — Built-in USB-C Fan',desc:'A cap with a tiny USB-C powered fan in the brim. Keeps you cool. Makes you look like a spaceship. Worth it.',price:129,cat:'fashion'},
+  {id:103,emoji:'☕',title:'QuantumBrewX Smart Mug — Maintains Exactly 68.5°F',desc:'AI-powered mug with 47 temperature presets. App-connected. Subscription optional. The coffee is the same.',price:219,cat:'home'},
+  {id:104,emoji:'🪑',title:'AirSit ErgoChair Pro — Posture-Correcting Hover Mode',desc:'Patent-pending hover mode does not make it float. But the lumbar support is genuinely nice. We apologize for the name.',price:445,cat:'home'},
+  {id:105,emoji:'🔭',title:'StarGaze AI Telescope — Finds Stars, Names Stars After You',desc:'Automatically discovers celestial bodies and names them after you. IAU does not recognize these names. We still do.',price:379,cat:'electronics'},
+  {id:106,emoji:'🎒',title:'Stealth Carry Anti-Gravity Backpack — Feels Like Nothing',desc:'Distributed weight system makes the 30-liter pack feel like nothing. We mean it weighs 4 lbs empty. Still though.',price:289,cat:'fashion'},
+  {id:107,emoji:'🧴',title:'OxyFlux Night Recovery Serum — Oxygenates Your Dreams',desc:'Applied before sleep. Contains oxygen molecules (air). 92 ingredients. Dermatologists are skeptical. Your skin will be soft.',price:168,cat:'beauty'},
+  {id:108,emoji:'🎮',title:'HandCramp 5 Pro Controller — Vibrates in 512 Patterns',desc:'512 haptic patterns. Your fingers will feel every texture, breeze, and emotional beat of your game. 12-hour battery.',price:199,cat:'electronics'},
+  {id:109,emoji:'🌡️',title:'FrostByte Smart Sock — Cools Feet to Optimal 67°F',desc:'Battery-powered cooling filaments keep socks at "peak cognitive temperature." The science is disputed. The socks are real.',price:95,cat:'fashion'},
+  {id:110,emoji:'🐾',title:'PawTalk Pet Translator — 200-Word Vocabulary Module',desc:'Clips to collar. Analyzes vocalizations. Translates to one of 200 phrases. Accuracy: "better than guessing." Probably.',price:149,cat:'pets'},
+  {id:111,emoji:'🍳',title:'AeroFry AirDon 9000 — 0.3-Second Preheat',desc:'Preheats in 0.3 seconds. Cooks in 8 minutes. App-connected. Voice-controlled. Your food tastes the same. But faster.',price:339,cat:'home'},
+  {id:112,emoji:'📚',title:'KnowledgeCube Speed-Reading Lamp — Beams Text Into Eyes',desc:'Strobing lamp syncs with text. Not medically approved. Optometrists frown. Users report "probably reading faster."',price:255,cat:'electronics'},
+  {id:113,emoji:'🧲',title:'HydroSpin Water Bottle — Vortex Infusion Technology',desc:'Magnetic vortex agitator spins water "26 times per second to align molecular structure." The water is the same. The bottle is cool.',price:79,cat:'sports'},
+  {id:114,emoji:'🎵',title:'BoneShield Titanium Earbuds — Bypasses Eardrums',desc:'Bone conduction technology lets you hear clearly while keeping ears open. Also you look like you\'re from 2047.',price:199,cat:'electronics'},
+  {id:115,emoji:'🌿',title:'CarbonZero Smart Plant Pot — Absorbs Your Carbon Guilt',desc:'Monitors soil, light, CO2. Sends plant mood updates. Vibrates when plant is "happy." Plant may still die.',price:119,cat:'home'},
+];
+
+let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
+let reactions = JSON.parse(localStorage.getItem('dz_drop_reactions') || '{}');
+let votes = JSON.parse(localStorage.getItem('dz_drop_votes') || '{}');
+let streak = parseInt(localStorage.getItem('dz_streak') || '0');
+let lastDrop = localStorage.getItem('dz_last_drop');
+let totalCarts = parseInt(localStorage.getItem('dz_drop_carts') || '3847');
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  checkStreak();
+  renderDrops();
+  renderArchive();
+  renderTopDrops();
+  startTimer();
+  updateStats();
+});
+
+function getTodayDrops() {
+  const day = new Date().getDay();
+  const seed = new Date().toDateString();
+  let hash = 0;
+  for (let c of seed) hash = (hash * 31 + c.charCodeAt(0)) % ALL_DROPS.length;
+  const drops = [];
+  for (let i = 0; i < 5; i++) drops.push(ALL_DROPS[(hash + i * 3) % ALL_DROPS.length]);
+  return drops;
+}
+
+function renderDrops() {
+  const drops = getTodayDrops();
+  document.getElementById('dropCards').innerHTML = drops.map((d,i) => dropCard(d, i)).join('');
+}
+
+function dropCard(d, idx) {
+  const progress = 40 + (d.id % 40);
+  const viewers = 500 + (d.id * 17 % 800);
+  const fireCount = reactions['fire_'+d.id] || (120 + d.id % 200);
+  const needCount = reactions['need_'+d.id] || (80 + d.id % 150);
+  const yesVotes = votes['yes_'+d.id] || (60 + d.id % 30);
+  const noVotes = votes['no_'+d.id] || (40 - d.id % 20);
+  const isFirst = idx === 0;
+  return `
+  <div class="drop-card ${isFirst?'winner':''}" id="drop_${d.id}">
+    <div class="drop-img">${d.emoji}</div>
+    <div class="drop-info">
+      <div class="drop-badges">
+        <div class="drop-badge lightning">⚡ Lightning Drop</div>
+        <div class="drop-badge prime">DopePrime</div>
+        ${isFirst?'<div class="drop-badge winner-badge">🏆 Today\'s Top Drop</div>':''}
+      </div>
+      <div class="drop-title">${d.title}</div>
+      <div class="drop-desc">${d.desc}</div>
+      <div class="drop-price-row">
+        <span class="drop-original">Was: $${d.price.toLocaleString()}.00</span>
+        <span class="drop-free">FREE</span>
+        <span class="drop-savings">Save $${d.price.toLocaleString()} (100%)</span>
+      </div>
+      <div class="drop-prime">✓ DopePrime · Fake Delivery by 8pm</div>
+      <div style="font-size:12px;color:#CC0C39;margin:8px 0;font-weight:700;">🔥 ${viewers.toLocaleString()} people viewing this right now</div>
+      <div class="drop-progress-label">
+        <span style="color:#CC0C39;font-weight:700;">Flying out of (fake) stock</span>
+        <span>${progress}% grabbed</span>
+      </div>
+      <div class="drop-progress"><div class="drop-progress-fill" style="width:${progress}%"></div></div>
+      <div class="drop-reactions">
+        <button class="react-btn ${reactions['fire_'+d.id]?'active':''}" onclick="reactDrop(${d.id},'fire',this)">🔥 <span id="fire_${d.id}">${fireCount}</span></button>
+        <button class="react-btn ${reactions['need_'+d.id]?'active':''}" onclick="reactDrop(${d.id},'need',this)">🤌 Need it — <span id="need_${d.id}">${needCount}</span></button>
+      </div>
+      <div class="vote-bar">
+        <span style="font-size:13px;font-weight:700;">Would you actually buy this?</span>
+        <button class="vote-btn ${votes['yes_'+d.id]?'yes':''}" onclick="vote(${d.id},'yes',this)">👍 Yes <span id="yes_${d.id}">${yesVotes}</span></button>
+        <button class="vote-btn ${votes['no_'+d.id]?'no':''}" onclick="vote(${d.id},'no',this)">👎 No <span id="no_${d.id}">${noVotes}</span></button>
+      </div>
+      <div>
+        <button class="drop-add-btn" onclick="addDropToCart(${JSON.stringify(d).replace(/"/g,'&quot;')})">Add to Cart — $0</button>
+        <button class="drop-detail-btn" onclick="showDesc(${d.id})">See more details</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function addDropToCart(d) {
+  cart.push({...d, addedAt: Date.now()});
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  totalCarts++;
+  localStorage.setItem('dz_drop_carts', totalCarts);
+  updateCartCount();
+  updateStats();
+  showToast('⚡ Added <strong>' + d.title.slice(0,30) + '...</strong> to cart — $0!');
+  launchConfetti();
+  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:d.title,value:0,item_list_name:'daily_drops'});
+}
+
+function reactDrop(id, type, btn) {
+  const key = type+'_'+id;
+  const el = document.getElementById(key);
+  let count = parseInt(el.textContent);
+  if (reactions[key]) {
+    reactions[key] = false; count--;
+    btn.classList.remove('active');
+  } else {
+    reactions[key] = true; count++;
+    btn.classList.add('active');
+  }
+  el.textContent = count;
+  localStorage.setItem('dz_drop_reactions', JSON.stringify(reactions));
+}
+
+function vote(id, type, btn) {
+  const otherType = type === 'yes' ? 'no' : 'yes';
+  const key = type+'_'+id;
+  const otherKey = otherType+'_'+id;
+  const el = document.getElementById(key);
+  const otherEl = document.getElementById(otherKey);
+  if (votes[key]) {
+    votes[key] = false;
+    el.parentElement.classList.remove(type);
+    el.textContent = parseInt(el.textContent)-1;
+  } else {
+    if (votes[otherKey]) { votes[otherKey]=false; otherEl.parentElement.classList.remove(otherType); otherEl.textContent=parseInt(otherEl.textContent)-1; }
+    votes[key] = true;
+    btn.classList.add(type);
+    el.textContent = parseInt(el.textContent)+1;
+  }
+  localStorage.setItem('dz_drop_votes', JSON.stringify(votes));
+}
+
+function showDesc(id) {
+  const d = ALL_DROPS.find(x => x.id === id);
+  if (d) alert(d.title + '\n\n' + d.desc + '\n\nPrice: $0.00 (FREE)\nDopePrime delivery by 8pm (fake)');
+}
+
+function renderArchive() {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  document.getElementById('archiveGrid').innerHTML = Array.from({length:6},(_,i) => {
+    const d = new Date(today); d.setDate(d.getDate() - (i+1));
+    const drop = ALL_DROPS[(d.getDate() * 7) % ALL_DROPS.length];
+    return `
+    <div class="archive-card">
+      <div class="archive-emoji">${drop.emoji}</div>
+      <div class="archive-day">${days[d.getDay()]} · ${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+      <div class="archive-winner">${drop.title}</div>
+      <div class="archive-amount">$${drop.price} value · FREE</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTopDrops() {
+  const top = [...ALL_DROPS].sort((a,b)=>b.price-a.price).slice(0,4);
+  document.getElementById('topDrops').innerHTML = top.map(d => `
+    <div class="prev-winner">
+      <span style="font-size:28px;">${d.emoji}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;">${d.title.slice(0,35)}...</div>
+        <div style="font-size:12px;color:#CC0C39;font-weight:700;">$${d.price} → FREE</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function startTimer() {
+  function tick() {
+    const now = new Date();
+    const midnight = new Date(); midnight.setHours(24,0,0,0);
+    const diff = midnight - now;
+    document.getElementById('timerH').textContent = String(Math.floor(diff/3600000)).padStart(2,'0');
+    document.getElementById('timerM').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    document.getElementById('timerS').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  tick(); setInterval(tick,1000);
+}
+
+function checkStreak() {
+  const today = new Date().toDateString();
+  if (lastDrop !== today) {
+    streak++;
+    localStorage.setItem('dz_streak', streak);
+    localStorage.setItem('dz_last_drop', today);
+  }
+  document.getElementById('streakCount').textContent = streak + ' days 🔥';
+  const days = document.getElementById('streakDays');
+  days.innerHTML = Array.from({length:7},(_,i) => {
+    const done = i < Math.min(streak,7);
+    const isToday = i === Math.min(streak-1,6);
+    return `<div class="streak-day ${done?'done':''} ${isToday?'today':''}">${done?'✓':i+1}</div>`;
+  }).join('');
+}
+
+function updateStats() {
+  document.getElementById('totalCarts').textContent = totalCarts.toLocaleString();
+  const saved = getTodayDrops().reduce((s,d)=>s+d.price,0) * Math.floor(totalCarts/5);
+  document.getElementById('totalSaved').textContent = '$'+saved.toLocaleString();
+}
+
+function subscribeNotify() {
+  const email = document.getElementById('notifyEmail').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  localStorage.setItem('dz_notify_email', email);
+  showToast('🔔 You\'re subscribed! We\'ll email when drops go live.');
+  document.getElementById('notifyEmail').value = '';
+}
+
+function updateCartCount() {
+  document.getElementById('cartCount').textContent = cart.length;
+}
+
+</script>
+</body>
+</html>
