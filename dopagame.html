@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaGame — 10,000+ Games for Free | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#10002b,#5a189a);padding:50px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#c77dff;color:#10002b;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
+  .genre-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .genre-chip{background:#fff;border:2px solid #ddd;border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;}
+  .genre-chip:hover,.genre-chip.active{background:#5a189a;color:#fff;border-color:#5a189a;}
+  .games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:30px;}
+  .game-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:transform 0.2s;}
+  .game-card:hover{transform:translateY(-3px);}
+  .game-cover{height:150px;display:flex;align-items:center;justify-content:center;font-size:70px;}
+  .game-info{padding:14px;}
+  .game-title{font-size:14px;font-weight:700;margin-bottom:3px;}
+  .game-genre{display:inline-block;background:#ede7f6;color:#5a189a;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;}
+  .game-meta{font-size:12px;color:#777;margin-bottom:6px;}
+  .game-rating{color:#FF9900;font-size:12px;margin-bottom:6px;}
+  .game-price{text-decoration:line-through;color:#aaa;font-size:12px;}
+  .game-free{color:#5a189a;font-weight:700;font-size:18px;margin-bottom:8px;}
+  .play-btn{width:100%;background:#5a189a;color:#fff;border:none;border-radius:6px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
+  .play-btn:hover{background:#c77dff;color:#10002b;}
+  .featured-banner{background:linear-gradient(135deg,#10002b,#3c096c);border-radius:12px;padding:24px;margin-bottom:25px;display:flex;align-items:center;gap:24px;color:#fff;flex-wrap:wrap;}
+  .featured-banner .big-emoji{font-size:80px;}
+  .featured-banner h3{font-size:22px;font-weight:700;margin-bottom:4px;}
+  .featured-banner p{font-size:14px;opacity:0.85;margin-bottom:12px;}
+  .featured-banner button{background:#c77dff;color:#10002b;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">🎮</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaGame</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopagym.html" class="nav-link">💪 DopaGym</a>
+  <a href="dopagame.html" class="nav-link" style="color:#FF9900;">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>🎮 DopaGame</h1>
+  <p>10,000+ AAA games. Instant play. No downloads. No subscriptions. Always free.</p>
+  <button class="svc-hero-btn" onclick="showToast('🎮 Game Pass activated! 10,000+ titles unlocked. Cost: $0.00');launchConfetti();">Play Everything — Free</button>
+</div>
+
+<div class="main">
+  <div class="featured-banner">
+    <div class="big-emoji">🏆</div>
+    <div>
+      <h3>Game of the Month: DopaQuest XII</h3>
+      <p>200+ hours of epic open-world adventure. 4K graphics. Co-op for 32 players. Normally $79.99.</p>
+      <button onclick="playGame('DopaQuest XII')">Play Now — Free</button>
+    </div>
+    <div style="margin-left:auto;text-align:center;">
+      <div style="font-size:36px;font-weight:800;color:#c77dff;">$0</div>
+      <div style="font-size:12px;opacity:0.7;">instead of $79.99</div>
+    </div>
+  </div>
+
+  <div class="genre-bar">
+    <div class="genre-chip active">All</div>
+    <div class="genre-chip">⚔️ RPG</div>
+    <div class="genre-chip">🔫 Action</div>
+    <div class="genre-chip">🧩 Puzzle</div>
+    <div class="genre-chip">🏎️ Racing</div>
+    <div class="genre-chip">⚽ Sports</div>
+    <div class="genre-chip">🧟 Horror</div>
+    <div class="genre-chip">🚀 Sci-Fi</div>
+  </div>
+
+  <h2 class="section-title">🔥 Trending Now</h2>
+  <div class="games-grid" id="trendGrid"></div>
+
+  <h2 class="section-title">⭐ All-Time Classics</h2>
+  <div class="games-grid" id="classicGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">game</span></div>
+    <div>© 2025 DopaGame by Dopazon. No real games will be downloaded. No real charges.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const BG_COLORS = ['#f3e5f5','#e8eaf6','#e3f2fd','#e8f5e9','#fff3e0','#fce4ec','#e0f7fa','#f9fbe7'];
+const TRENDING = [
+  {emoji:'⚔️',title:'EpicDopa: Shadow Realm',genre:'RPG',meta:'Open world · 150h gameplay',rating:'4.9',price:69},
+  {emoji:'🔫',title:'DopaOps: Zero Hour',genre:'Action',meta:'Battle royale · 100 players',rating:'4.8',price:59},
+  {emoji:'🏎️',title:'TurboZone Racing 2025',genre:'Racing',meta:'200+ cars · Online multiplayer',rating:'4.7',price:49},
+  {emoji:'🧩',title:'MindBend: The Puzzle Tower',genre:'Puzzle',meta:'500 levels · Mind-bending',rating:'4.9',price:24},
+  {emoji:'🚀',title:'StarDopa: Galaxy Command',genre:'Sci-Fi',meta:'Space exploration · Co-op 8p',rating:'4.8',price:79},
+  {emoji:'⚽',title:'DopaLeague Football 2025',genre:'Sports',meta:'All leagues · Ultimate mode',rating:'4.7',price:69},
+];
+const CLASSICS = [
+  {emoji:'🧟',title:'DeadDopa: Last Resort',genre:'Horror',meta:'Survival horror · Co-op 4p',rating:'4.9',price:39},
+  {emoji:'🏰',title:'Kingdom of Dopazon',genre:'RPG',meta:'Strategy + RPG · 200h',rating:'4.8',price:49},
+  {emoji:'🌊',title:'OceanDopa: Deep Dive',genre:'Adventure',meta:'Underwater open world',rating:'4.7',price:44},
+  {emoji:'🥊',title:'DopaFight Championship',genre:'Action',meta:'100 fighters · Online PvP',rating:'4.8',price:59},
+  {emoji:'🧠',title:'BrainDopa: IQ Showdown',genre:'Puzzle',meta:'Trivia + puzzles · 2M players',rating:'4.9',price:19},
+  {emoji:'🌍',title:'DopaWorld Civilization VII',genre:'Strategy',meta:'Build empires · 4X strategy',rating:'4.8',price:69},
+];
+
+function renderGames(arr, id) {
+  document.getElementById(id).innerHTML = arr.map((g,i) => `
+    <div class="game-card">
+      <div class="game-cover" style="background:${BG_COLORS[i%BG_COLORS.length]}">${g.emoji}</div>
+      <div class="game-info">
+        <div class="game-title">${g.title}</div>
+        <span class="game-genre">${g.genre}</span>
+        <div class="game-meta">${g.meta}</div>
+        <div class="game-rating">★★★★★ ${g.rating}</div>
+        <div class="game-price">Was: $${g.price}.99</div>
+        <div class="game-free">FREE</div>
+        <button class="play-btn" onclick="playGame('${g.title}')">Play Now</button>
+      </div>
+    </div>`).join('');
+}
+
+function playGame(title) {
+  showToast(`🎮 <strong>${title}</strong> launching... DRM bypassed. Cost: $0.00`);
+  launchConfetti();
+}
+renderGames(TRENDING, 'trendGrid');
+renderGames(CLASSICS, 'classicGrid');
+updateCartCount();
+</script>
+</body>
+</html>

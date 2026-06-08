@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaPet — Spoil Your Pet for Free | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#7b2d8b,#c77dff);padding:50px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#fff;color:#7b2d8b;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
+  .pet-tabs{display:flex;gap:10px;margin-bottom:20px;}
+  .pet-tab{background:#fff;border:2px solid #ddd;border-radius:20px;padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;}
+  .pet-tab:hover,.pet-tab.active{background:#7b2d8b;color:#fff;border-color:#7b2d8b;}
+  .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-bottom:30px;}
+  .item-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:transform 0.2s;}
+  .item-card:hover{transform:translateY(-3px);}
+  .item-emoji{font-size:60px;height:120px;display:flex;align-items:center;justify-content:center;background:#f9f0ff;}
+  .item-info{padding:14px;}
+  .item-name{font-size:13px;font-weight:700;margin-bottom:3px;line-height:1.4;}
+  .item-sub{font-size:11px;color:#777;margin-bottom:6px;}
+  .item-stars{color:#FF9900;font-size:12px;margin-bottom:6px;}
+  .item-price{text-decoration:line-through;color:#aaa;font-size:12px;}
+  .item-free{color:#7b2d8b;font-weight:700;font-size:20px;margin-bottom:8px;}
+  .add-btn{width:100%;background:#7b2d8b;color:#fff;border:none;border-radius:6px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
+  .add-btn:hover{background:#c77dff;color:#fff;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">🐾</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaPet</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopapet.html" class="nav-link" style="color:#FF9900;">🐾 DopaPet</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>🐾 DopaPet</h1>
+  <p>Premium food, toys & accessories for your furry family. All spoiling, zero spending.</p>
+  <button class="svc-hero-btn" onclick="showToast('🐾 Your pet is going to love this! Order placed. Cost: $0.00');launchConfetti();">Shop for Pets — Free</button>
+</div>
+
+<div class="main">
+  <div class="pet-tabs">
+    <div class="pet-tab active">🐕 Dogs</div>
+    <div class="pet-tab">🐈 Cats</div>
+    <div class="pet-tab">🐠 Fish</div>
+    <div class="pet-tab">🐹 Small Pets</div>
+    <div class="pet-tab">🦜 Birds</div>
+  </div>
+
+  <h2 class="section-title">⭐ Best Sellers for Pets</h2>
+  <div class="items-grid" id="topGrid"></div>
+
+  <h2 class="section-title">🧸 Toys & Accessories</h2>
+  <div class="items-grid" id="toysGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">pet</span></div>
+    <div>© 2025 DopaPet by Dopazon. No real pet products. No real charges. Real pets deserve real love though.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const TOP_PETS = [
+  {emoji:'🥩',name:'OrigenDopa Raw-Inspired Dry Food',sub:'25 lb · Grain-free · 85% protein',stars:'4.9',price:89},
+  {emoji:'🐟',name:'Wild Salmon Dog Food — Premium',sub:'12 cans · Omega-3 rich',stars:'4.8',price:54},
+  {emoji:'🍗',name:'Freeze-Dried Chicken Treats',sub:'6oz · Single ingredient',stars:'4.9',price:22},
+  {emoji:'🥕',name:'Organic Puppy Starter Kit',sub:'30-day supply · Vet approved',stars:'4.7',price:65},
+  {emoji:'🐱',name:'Royal Canin Cat Indoor Ultra',sub:'7 lb · Hairball control',stars:'4.8',price:48},
+  {emoji:'🐠',name:'Tropical Fish Flake Premium Mix',sub:'3.5oz · All tropical species',stars:'4.6',price:18},
+];
+const TOYS = [
+  {emoji:'🎾',name:'ChewDopa Indestructible Ball',sub:'XL · Natural rubber',stars:'4.9',price:24},
+  {emoji:'🪄',name:'AutoLaser Cat Entertainer',sub:'360° rotation · USB rechargeable',stars:'4.8',price:39},
+  {emoji:'🏠',name:'PawPalace Luxury Dog Bed',sub:'XL · Memory foam · Washable',stars:'4.9',price:119},
+  {emoji:'🎣',name:'Interactive Feather Wand',sub:'3 attachments · Telescoping',stars:'4.7',price:16},
+  {emoji:'🐿️',name:'Crinkle Squeaky Plush Set',sub:'5 pieces · Ultra-durable',stars:'4.8',price:28},
+  {emoji:'🌊',name:'Foldable Dog Swimming Pool',sub:'55" · Non-slip · BPA-free',stars:'4.7',price:45},
+];
+
+function renderPets(arr, id) {
+  document.getElementById(id).innerHTML = arr.map(p => `
+    <div class="item-card">
+      <div class="item-emoji">${p.emoji}</div>
+      <div class="item-info">
+        <div class="item-name">${p.name}</div>
+        <div class="item-sub">${p.sub}</div>
+        <div class="item-stars">★★★★★ ${p.stars}</div>
+        <div class="item-price">Was: $${p.price}.00</div>
+        <div class="item-free">FREE</div>
+        <button class="add-btn" onclick="addPet('${p.name}')">Add to Cart</button>
+      </div>
+    </div>`).join('');
+}
+
+function addPet(name) {
+  showToast(`🐾 <strong>${name}</strong> added! Your pet will be thrilled. Cost: $0.00`);
+  launchConfetti();
+}
+renderPets(TOP_PETS, 'topGrid');
+renderPets(TOYS, 'toysGrid');
+updateCartCount();
+</script>
+</body>
+</html>

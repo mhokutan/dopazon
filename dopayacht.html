@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaYacht — Charter a Yacht for $0 | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#023e8a,#0096c7);padding:60px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#fff;color:#023e8a;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
+  .yacht-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:30px;}
+  .yacht-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);transition:transform 0.2s;}
+  .yacht-card:hover{transform:translateY(-4px);}
+  .yacht-img{font-size:80px;height:160px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#caf0f8,#90e0ef);}
+  .yacht-info{padding:18px;}
+  .yacht-name{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .yacht-sub{font-size:13px;color:#555;margin-bottom:10px;}
+  .yacht-specs{display:flex;gap:14px;font-size:12px;color:#777;margin-bottom:12px;flex-wrap:wrap;}
+  .spec{display:flex;align-items:center;gap:4px;}
+  .yacht-price{text-decoration:line-through;color:#aaa;font-size:13px;}
+  .yacht-free{font-size:24px;font-weight:800;color:#023e8a;margin-bottom:10px;}
+  .charter-btn{width:100%;background:#023e8a;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;}
+  .charter-btn:hover{background:#0077b6;}
+  .badge{display:inline-block;background:#FF9900;color:#0F1111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">⛵</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaYacht</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link" style="color:#FF9900;">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>⛵ DopaYacht</h1>
+  <p>Charter a private superyacht anywhere in the world. Full crew included. Cost: $0.00.</p>
+  <button class="svc-hero-btn" onclick="showToast('⚓ Captain on standby. Crew of 12 ready. Departure: whenever you want. Cost: $0.00');launchConfetti();">Charter Now — Free</button>
+</div>
+
+<div class="main">
+  <h2 class="section-title">⚓ Available Yachts</h2>
+  <div class="yacht-grid" id="yachtGrid"></div>
+
+  <h2 class="section-title">🌊 Popular Destinations</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:30px;" id="destGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">yacht</span></div>
+    <div>© 2025 DopaYacht by Dopazon. No real yachts. No real ocean. No real charges.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const YACHTS = [
+  {emoji:'⛵',name:'Serenity 85',sub:'Classic sailing yacht, Amalfi Coast ready',len:'85ft',guests:10,crew:5,price:18000,badge:'POPULAR'},
+  {emoji:'🛥️',name:'VelaDopa 120',sub:'Motor superyacht, Mediterranean charter',len:'120ft',guests:14,crew:8,price:42000,badge:''},
+  {emoji:'🚢',name:'DopaGrand 200',sub:'Full superyacht, helicopter pad included',len:'200ft',guests:22,crew:18,price:120000,badge:'LUXURY'},
+  {emoji:'⛵',name:'CaribeWave 60',sub:'Caribbean catamaran, snorkeling trips',len:'60ft',guests:8,crew:3,price:9500,badge:''},
+  {emoji:'🛥️',name:'AzureDream 95',sub:'French Riviera, Cannes Film Festival vibes',len:'95ft',guests:12,crew:6,price:28000,badge:'HOT'},
+  {emoji:'🚢',name:'PacificKing 180',sub:'Pacific crossing, full dive gear onboard',len:'180ft',guests:18,crew:14,price:95000,badge:'ELITE'},
+];
+
+const DESTS = ['🇮🇹 Amalfi Coast','🇫🇷 French Riviera','🇬🇷 Greek Islands','🇭🇷 Croatia','🇲🇻 Maldives','🇧🇸 Bahamas','🇲🇨 Monaco','🇹🇷 Turkish Riviera'];
+
+document.getElementById('yachtGrid').innerHTML = YACHTS.map(y => `
+  <div class="yacht-card">
+    <div class="yacht-img">${y.emoji}</div>
+    <div class="yacht-info">
+      <div class="yacht-name">${y.name}${y.badge?`<span class="badge">${y.badge}</span>`:''}</div>
+      <div class="yacht-sub">${y.sub}</div>
+      <div class="yacht-specs">
+        <span class="spec">📏 ${y.len}</span>
+        <span class="spec">👥 ${y.guests} guests</span>
+        <span class="spec">⚓ Crew of ${y.crew}</span>
+      </div>
+      <div class="yacht-price">Charter: $${y.price.toLocaleString()}/week</div>
+      <div class="yacht-free">FREE / week 🎉</div>
+      <button class="charter-btn" onclick="charterYacht('${y.name}')">Charter ${y.name}</button>
+    </div>
+  </div>`).join('');
+
+document.getElementById('destGrid').innerHTML = DESTS.map(d => `
+  <div style="background:#fff;border-radius:8px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:14px;font-weight:600;" onclick="showToast('⚓ Course set for ${d}! Bon voyage — $0.00');">
+    ${d}
+  </div>`).join('');
+
+function charterYacht(name) {
+  showToast(`⛵ <strong>${name}</strong> chartered! Captain briefing at 09:00. Total: $0.00`);
+  launchConfetti();
+}
+updateCartCount();
+</script>
+</body>
+</html>

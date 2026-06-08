@@ -4,31 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dopazon — Product Detail</title>
+<link rel="stylesheet" href="shared.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
-  #header{background:#131921;display:flex;align-items:center;padding:8px 12px;gap:10px;position:sticky;top:0;z-index:100;}
-  .logo{color:#fff;text-decoration:none;display:flex;flex-direction:column;padding:4px 8px;border:1px solid transparent;}
-  .logo:hover{border-color:#FF9900;border-radius:2px;}
-  .logo-text{font-size:26px;font-weight:700;letter-spacing:-1px;}
-  .logo-text span{color:#FF9900;}
-  .logo-sub{font-size:9px;color:#ccc;}
-  .search-bar{flex:1;display:flex;height:40px;}
-  .search-select{background:#F3F3F3;border:none;padding:0 8px;font-size:12px;color:#555;border-radius:4px 0 0 4px;cursor:pointer;height:100%;}
-  .search-input{flex:1;border:none;padding:0 10px;font-size:16px;outline:none;height:100%;}
-  .search-btn{background:#FF9900;border:none;padding:0 14px;border-radius:0 4px 4px 0;cursor:pointer;height:100%;}
-  .header-link{color:#fff;text-decoration:none;font-size:12px;padding:4px 8px;border:1px solid transparent;white-space:nowrap;}
-  .header-link:hover{border-color:#FF9900;border-radius:2px;}
-  .header-link strong{display:block;font-size:14px;}
-  .cart-link{color:#fff;text-decoration:none;display:flex;align-items:center;gap:4px;padding:4px 8px;border:1px solid transparent;font-weight:700;font-size:14px;}
-  .cart-link:hover{border-color:#FF9900;border-radius:2px;}
-  .cart-count{background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:0 5px;border-radius:2px;}
-  #navbar{background:#232F3E;display:flex;align-items:center;padding:0 12px;overflow-x:auto;}
-  .nav-link{color:#fff;text-decoration:none;font-size:13px;padding:9px 10px;white-space:nowrap;border:1px solid transparent;}
-  .nav-link:hover{border-color:#fff;border-radius:2px;}
   .breadcrumb{background:#fff;padding:8px 15px;font-size:13px;color:#555;border-bottom:1px solid #eee;}
   .breadcrumb a{color:#007185;text-decoration:none;}
   .breadcrumb a:hover{text-decoration:underline;}
@@ -114,10 +94,6 @@
   .share-row{display:flex;gap:8px;margin-top:12px;}
   .share-small-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer;flex:1;}
   .share-small-btn:hover{background:#eee;}
-  /* Toast */
-  .cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;}
-  .confetti-piece{position:fixed;width:8px;height:8px;top:-10px;z-index:9999;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
-  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
   /* Related */
   .related-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
   .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
@@ -281,9 +257,8 @@
 
 <div class="cart-toast" id="cartToast"></div>
 
+<script src="shared.js"></script>
 <script>
-const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -312,6 +287,26 @@ const ALL_PRODUCTS = [
     desc:'Made with real chicken as the #1 ingredient. Our grain-free formula supports healthy digestion, a shiny coat, and strong muscles for dogs of all sizes.',
     features:['Real chicken is the #1 ingredient','Grain-free for sensitive stomachs','Added Omega-3 & 6 for skin and coat health','No artificial colors, flavors, or preservatives','Supports healthy digestion with prebiotics','Suitable for all life stages'],
     specs:[['Main Protein','Real chicken'],['Formula','Grain-free'],['Size','15 lb bag'],['Life Stage','All stages'],['Guaranteed Analysis','Min. 30% protein, 15% fat'],['Calories','360 kcal/cup']]},
+  {id:'s8',emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 Color LED, 500ml Tank',price:45,category:'home',stars:4.5,reviews:9234,store:'HomeZen',
+    desc:'Transform your space with the ZenMist diffuser. Using ultrasonic technology, it converts water and essential oils into a fine, cool mist that fills your room with your favorite scents.',
+    features:['500ml water tank — runs up to 10 hours','7 LED color options with brightness control','Ultra-quiet operation — perfect for bedroom','Auto shut-off when water runs low','Compatible with all essential oils','4 timer settings: 1h, 3h, 6h, continuous'],
+    specs:[['Capacity','500ml'],['Run Time','Up to 10 hours'],['LED','7 colors'],['Noise Level','<30dB'],['Power','12W'],['Material','BPA-free plastic']]},
+  {id:'s9',emoji:'👜',title:'LuxCraft Structured Tote Bag — Pebbled Leather, Gold Hardware',price:395,category:'fashion',stars:4.6,reviews:4123,store:'LuxBoutique',
+    desc:'Handcrafted from premium pebbled leather, the LuxCraft Tote features a structured silhouette, gold-tone hardware, and a spacious interior designed for the modern professional.',
+    features:['Premium pebbled leather exterior','Gold-tone magnetic snap closure','Interior zip pocket + 2 slip pockets','Removable crossbody strap included','Dust bag included','Fits 13" laptop'],
+    specs:[['Material','Genuine pebbled leather'],['Hardware','Gold-tone zinc alloy'],['Dimensions','14"W × 11"H × 5"D'],['Interior','Fabric-lined with pockets'],['Strap Drop','10" handles / 22" crossbody'],['Closure','Magnetic snap']]},
+  {id:'s10',emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games, HD Screen',price:199,category:'electronics',stars:4.8,reviews:15678,store:'TechVault',
+    desc:'The VortexPlay packs over 10,000 retro and indie games into a sleek handheld form factor. With a 5" IPS display and 8-hour battery, it\'s the ultimate gaming companion.',
+    features:['10,000+ pre-loaded games across 20+ systems','5" IPS display — 720p full lamination','8-hour battery life','Dual speakers with 3D surround sound','Wi-Fi for multiplayer + online leaderboards','USB-C charging'],
+    specs:[['Display','5" IPS 720p'],['Storage','256GB built-in'],['Battery','8 hours'],['Connectivity','Wi-Fi, Bluetooth 5.0, USB-C'],['Weight','320g'],['Systems','NES, SNES, GBA, PS1, and more']]},
+  {id:'s11',emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested, 0.5% Retinol Complex',price:85,category:'beauty',stars:4.7,reviews:11234,store:'GlowLab',
+    desc:'Formulated with a 0.5% encapsulated retinol complex and niacinamide, DermaClear smooths fine lines, fades dark spots, and improves skin texture — clinically proven in 8 weeks.',
+    features:['0.5% encapsulated retinol for gradual, gentle release','Niacinamide (5%) fades dark spots and evens tone','Peptide complex for firmness and elasticity','Non-comedogenic — safe for acne-prone skin','Dermatologist tested and approved','Fragrance-free, paraben-free'],
+    specs:[['Retinol %','0.5% encapsulated'],['Niacinamide','5%'],['Size','1.7 fl oz / 50ml'],['Texture','Rich cream'],['Skin Type','All types incl. sensitive'],['Tested','8-week clinical study']]},
+  {id:'s12',emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover, XL',price:299,category:'home',stars:4.5,reviews:6789,store:'HomeZen',
+    desc:'Sink into the NapCloud — filled with premium shredded memory foam that conforms to your body. The ultra-soft velvet cover is removable and machine washable.',
+    features:['Premium shredded memory foam fill','Ultra-soft velvet cover — removable & washable','XL size fits adults comfortably','Durable double-stitched zipper closure','Refillable — add more foam over time','Available in 8 colors'],
+    specs:[['Fill','Shredded memory foam'],['Cover','100% polyester velvet'],['Size','XL — 6ft diameter when flat'],['Weight','18 lbs'],['Washing','Machine wash cold, tumble dry low'],['Zipper','Heavy-duty YKK']]},
   {id:'s7',emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5 to 52.5 lbs per Hand, Space-Saving Design',price:429,category:'sports',stars:4.7,reviews:7823,store:'FitWorld',
     desc:'Replace 15 sets of dumbbells with one. The FlexCore system adjusts from 5 to 52.5 lbs in 2.5-lb increments with a simple twist of the handle.',
     features:['Replaces 15 pairs of dumbbells (5–52.5 lbs)','Adjusts in 2.5-lb increments in seconds','Durable plastic tray stores all weight plates','Ergonomic handle with contoured grip','Safe locking mechanism prevents weight from slipping','2-year warranty on all components'],
@@ -482,21 +477,6 @@ function scrollToReviews() {
   document.getElementById('reviewsSection').scrollIntoView({behavior:'smooth'});
 }
 
-function showToast(msg) {
-  const t = document.getElementById('cartToast');
-  t.innerHTML = msg; t.style.display = 'block';
-  setTimeout(() => t.style.display='none', 2500);
-}
-
-function launchConfetti() {
-  const colors = ['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62'];
-  for (let i=0;i<30;i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti-piece';
-    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;
-    document.body.appendChild(c); setTimeout(()=>c.remove(),2000);
-  }
-}
 </script>
 </body>
 </html>
