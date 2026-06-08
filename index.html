@@ -3,172 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dopazon — Satisfy the urge. Keep the money.</title>
-<meta name="description" content="The dopamine of online shopping, without spending a cent. Browse, cart, checkout — all fake. All satisfying.">
-<meta property="og:title" content="Dopazon — Satisfy the urge. Keep the money.">
-<meta property="og:description" content="$0 spent. Full dopamine hit. The internet's first impulse-control shopping site.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#09090b;--bg2:#111113;--bg3:#1a1a1e;
-  --text:#f4f0eb;--text2:#9d9a95;--text3:#5a5855;
-  --accent:#f97316;--green:#10b981;--blue:#3b82f6;--purple:#a855f7;
-  --border:#232327;--r:14px;--rs:8px;
-}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Syne',sans-serif}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.8px}
-.nav-logo em{color:var(--accent);font-style:normal}
-.nav-cta{padding:8px 20px;background:var(--accent);border:none;border-radius:20px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
-.nav-cta:hover{background:#fb923c;transform:scale(1.03)}
-
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;pointer-events:none}
-.orb1{position:absolute;top:-100px;left:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,0.08) 0%,transparent 70%)}
-.orb2{position:absolute;bottom:-150px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,0.06) 0%,transparent 70%)}
-.orb3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,0.03) 0%,transparent 60%)}
-.hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:var(--accent);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:22px;letter-spacing:0.3px}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.4s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.hero h1{font-size:clamp(36px,7vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:22px;max-width:800px}
-.hero h1 .line2{color:var(--accent)}
-.hero h1 .line3{color:var(--text2)}
-.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--text2);line-height:1.65;max-width:520px;margin:0 auto 36px;font-weight:300}
-.hero-sub strong{color:var(--text);font-weight:500}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
-.btn-primary{padding:14px 32px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;letter-spacing:-0.3px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:#fb923c;transform:translateY(-2px)}
-.btn-ghost{padding:14px 28px;background:none;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-ghost:hover{border-color:var(--text2);color:var(--text)}
-
-/* LIVE COUNTER STRIP */
-.counter-strip{display:flex;gap:0;justify-content:center;flex-wrap:wrap;width:100%;max-width:640px;margin:0 auto;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.ctr-item{flex:1;min-width:140px;padding:16px 20px;text-align:center;border-right:1px solid var(--border)}
-.ctr-item:last-child{border-right:none}
-.ctr-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
-.ctr-val.green{color:var(--green)}
-.ctr-val.orange{color:var(--accent)}
-.ctr-val.purple{color:var(--purple)}
-.ctr-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;font-weight:500}
-
-/* SECTION BASE */
-section{padding:80px 24px}
-.section-inner{max-width:960px;margin:0 auto}
-.section-tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px}
-.section-title{font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:14px}
-.section-sub{font-size:16px;color:var(--text2);line-height:1.65;max-width:520px;font-weight:300}
-
-/* PROBLEM SECTION */
-.problem-section{background:var(--bg)}
-.problem-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:40px}
-.prob-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px}
-.prob-icon{font-size:28px;margin-bottom:12px}
-.prob-card h3{font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
-.prob-card p{font-size:13px;color:var(--text2);line-height:1.6}
-.prob-card .stat{font-size:22px;font-weight:800;font-family:'Syne',sans-serif;color:var(--accent);margin-top:12px}
-.prob-card .stat-sub{font-size:11px;color:var(--text3);margin-top:2px}
-
-/* HOW IT WORKS */
-.how-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.steps-flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0;margin-top:44px;position:relative}
-.step-item{padding:0 20px 0 0;position:relative}
-.step-item:last-child{padding-right:0}
-.step-num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-.step-icon-wrap{width:48px;height:48px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
-.step-item h3{font-size:15px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
-.step-item p{font-size:13px;color:var(--text2);line-height:1.55}
-.step-arrow{position:absolute;right:-8px;top:48px;color:var(--text3);font-size:18px}
-
-/* DOPAMINE LOOP VISUAL */
-.loop-section{background:var(--bg)}
-.loop-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:40px;max-width:640px}
-.loop-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;gap:14px;align-items:flex-start}
-.loop-card.active-loop{border-color:rgba(249,115,22,0.3);background:rgba(249,115,22,0.04)}
-.loop-emoji{font-size:26px;flex-shrink:0}
-.loop-card h4{font-size:14px;font-weight:600;margin-bottom:4px}
-.loop-card p{font-size:12px;color:var(--text2);line-height:1.5}
-.loop-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;display:inline-block}
-.loop-badge.real{background:rgba(239,68,68,0.12);color:#ef4444;border:1px solid rgba(239,68,68,0.25)}
-.loop-badge.sim{background:rgba(16,185,129,0.12);color:var(--green);border:1px solid rgba(16,185,129,0.25)}
-
-/* FEATURES */
-.features-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:40px}
-.feat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:20px}
-.feat-icon{font-size:28px;margin-bottom:14px}
-.feat-card h3{font-size:15px;font-weight:700;margin-bottom:7px;letter-spacing:-0.3px}
-.feat-card p{font-size:13px;color:var(--text2);line-height:1.6}
-.feat-tag{display:inline-block;margin-top:12px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;background:rgba(249,115,22,0.1);color:var(--accent);border:1px solid rgba(249,115,22,0.2)}
-
-/* WHO IT'S FOR */
-.who-section{background:var(--bg)}
-.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:40px}
-.aud-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
-.aud-emoji{font-size:26px;margin-bottom:10px}
-.aud-card h3{font-size:14px;font-weight:700;margin-bottom:6px}
-.aud-card p{font-size:12px;color:var(--text2);line-height:1.5}
-
-/* CONFESSION PREVIEW */
-.confession-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.confessions-preview{display:flex;flex-direction:column;gap:10px;margin-top:32px;max-width:580px}
-.conf-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
-.conf-card p{font-size:14px;line-height:1.6;margin-bottom:10px}
-.conf-card p strong{color:var(--green)}
-.conf-footer{display:flex;align-items:center;justify-content:space-between}
-.conf-meta{font-size:11px;color:var(--text3)}
-.conf-likes{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
-.conf-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-right:6px;background:rgba(249,115,22,0.1);color:var(--accent);border:1px solid rgba(249,115,22,0.15)}
-
-/* DAILY DROP PREVIEW */
-.drop-section{background:var(--bg)}
-.drop-cards{display:flex;gap:12px;margin-top:32px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.drop-cards::-webkit-scrollbar{display:none}
-.drop-card{flex-shrink:0;width:170px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
-.drop-emoji{font-size:40px;margin-bottom:10px}
-.drop-name{font-size:13px;font-weight:600;margin-bottom:4px;line-height:1.3}
-.drop-why{font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.4}
-.drop-price{font-size:16px;font-weight:800;font-family:'Syne',sans-serif;color:var(--accent);margin-bottom:8px}
-.drop-add{width:100%;padding:7px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);border-radius:var(--rs);color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
-.drop-add:hover{background:var(--accent);color:#fff}
-.drop-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:8px;background:rgba(251,191,36,0.1);color:var(--accent2);border:1px solid rgba(251,191,36,0.2)}
-
-/* PRICING */
-.pricing-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.price-card{background:var(--bg3);border:2px solid var(--accent);border-radius:20px;padding:36px;max-width:380px;text-align:center}
-.price-badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:0.3px}
-.price-amount{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;letter-spacing:-2px;margin-bottom:6px}
-.price-sub{font-size:14px;color:var(--text2);margin-bottom:28px}
-.price-features{text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.pf-row{display:flex;align-items:center;gap:10px;font-size:14px}
-.pf-row span:first-child{color:var(--green);font-size:16px;flex-shrink:0}
-
-/* FINAL CTA */
-.cta-section{background:var(--bg);text-align:center;padding:100px 24px}
-.cta-section h2{font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
-.cta-section p{font-size:16px;color:var(--text2);margin-bottom:36px;line-height:1.6;max-width:440px;margin-left:auto;margin-right:auto}
-
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center}
-footer p{font-size:12px;color:var(--text3);line-height:1.7}
-footer a{color:var(--text3);text-decoration:none}
-footer strong{color:var(--text2)}
-
-/* DIVIDER */
-.sep{height:1px;background:var(--border);max-width:960px;margin:0 auto}
-
-/* SCROLL FADE */
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
-</style>
-<!-- Google Analytics -->
+<title>Dopazon.com: Satisfy the Urge. Keep the Money.</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -176,410 +11,640 @@ footer strong{color:var(--text2)}
   gtag('js', new Date());
   gtag('config', 'G-D7NNBGKNB3');
 </script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Arial, sans-serif; background:#EAEDED; color:#0F1111; }
+
+  /* ===== HEADER ===== */
+  #header { background:#131921; display:flex; align-items:center; padding:8px 12px; gap:10px; position:sticky; top:0; z-index:100; }
+  .logo { color:#fff; text-decoration:none; display:flex; flex-direction:column; padding:4px 8px; border:1px solid transparent; }
+  .logo:hover { border-color:#FF9900; border-radius:2px; }
+  .logo-text { font-size:26px; font-weight:700; letter-spacing:-1px; }
+  .logo-text span { color:#FF9900; }
+  .logo-sub { font-size:9px; color:#ccc; letter-spacing:0.5px; }
+  .deliver { color:#ccc; font-size:11px; padding:4px 8px; border:1px solid transparent; cursor:pointer; white-space:nowrap; }
+  .deliver:hover { border-color:#FF9900; border-radius:2px; }
+  .deliver strong { display:block; color:#fff; font-size:13px; }
+  .search-bar { flex:1; display:flex; height:40px; }
+  .search-select { background:#F3F3F3; border:none; padding:0 8px; font-size:12px; color:#555; border-radius:4px 0 0 4px; cursor:pointer; height:100%; }
+  .search-input { flex:1; border:none; padding:0 10px; font-size:16px; outline:none; height:100%; }
+  .search-btn { background:#FF9900; border:none; padding:0 14px; border-radius:0 4px 4px 0; cursor:pointer; height:100%; }
+  .search-btn:hover { background:#FA8900; }
+  .search-btn svg { width:20px; height:20px; fill:#0F1111; }
+  .header-link { color:#fff; text-decoration:none; font-size:12px; padding:4px 8px; border:1px solid transparent; white-space:nowrap; }
+  .header-link:hover { border-color:#FF9900; border-radius:2px; }
+  .header-link strong { display:block; font-size:14px; }
+  .cart-link { color:#fff; text-decoration:none; display:flex; align-items:center; gap:4px; padding:4px 8px; border:1px solid transparent; font-weight:700; font-size:14px; }
+  .cart-link:hover { border-color:#FF9900; border-radius:2px; }
+  .cart-count { background:#FF9900; color:#0F1111; font-weight:700; font-size:13px; padding:0 5px; border-radius:2px; }
+
+  /* ===== NAV BAR ===== */
+  #navbar { background:#232F3E; display:flex; align-items:center; padding:0 12px; overflow-x:auto; }
+  .nav-link { color:#fff; text-decoration:none; font-size:13px; padding:9px 10px; white-space:nowrap; border:1px solid transparent; }
+  .nav-link:hover { border-color:#fff; border-radius:2px; }
+  .nav-all { font-weight:700; display:flex; align-items:center; gap:4px; }
+
+  /* ===== ALERT BANNER ===== */
+  .alert-banner { background:#232F3E; color:#FF9900; text-align:center; padding:8px; font-size:13px; font-weight:700; }
+  .alert-banner span { color:#fff; font-weight:400; }
+
+  /* ===== HERO CAROUSEL ===== */
+  .hero { position:relative; overflow:hidden; }
+  .hero-slides { display:flex; transition:transform 0.5s ease; }
+  .hero-slide { min-width:100%; height:400px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .slide-bg { position:absolute; inset:0; }
+  .slide-content { position:relative; z-index:2; text-align:center; padding:20px; }
+  .slide-tag { background:#FF9900; color:#0F1111; font-size:12px; font-weight:700; padding:3px 10px; border-radius:2px; display:inline-block; margin-bottom:10px; }
+  .slide-title { font-size:42px; font-weight:700; color:#fff; text-shadow:1px 1px 4px rgba(0,0,0,0.5); margin-bottom:8px; }
+  .slide-sub { font-size:18px; color:#eee; margin-bottom:20px; }
+  .slide-btn { background:#FF9900; color:#0F1111; padding:12px 28px; border:none; border-radius:4px; font-size:15px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; }
+  .slide-btn:hover { background:#FA8900; }
+  .hero-arrow { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.9); border:none; width:45px; height:100px; cursor:pointer; z-index:10; font-size:24px; display:flex; align-items:center; justify-content:center; }
+  .hero-arrow:hover { background:#fff; }
+  .hero-prev { left:0; border-radius:0 4px 4px 0; }
+  .hero-next { right:0; border-radius:4px 0 0 4px; }
+
+  /* ===== MAIN LAYOUT ===== */
+  .main { max-width:1500px; margin:0 auto; padding:15px; }
+
+  /* ===== CATEGORY CARDS ===== */
+  .section-title { font-size:21px; font-weight:700; margin-bottom:12px; color:#0F1111; }
+  .category-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; margin-bottom:25px; }
+  .cat-card { background:#fff; padding:16px; border-radius:4px; cursor:pointer; transition:box-shadow 0.2s; text-decoration:none; color:#0F1111; }
+  .cat-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.15); }
+  .cat-card h3 { font-size:15px; font-weight:700; margin-bottom:10px; }
+  .cat-card-img { width:100%; height:140px; object-fit:cover; border-radius:2px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:60px; margin-bottom:10px; }
+  .cat-see-more { color:#007185; font-size:13px; }
+
+  /* ===== PRODUCT ROW ===== */
+  .product-row { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:15px; margin-bottom:25px; }
+  .product-card { background:#fff; padding:14px; border-radius:4px; cursor:pointer; transition:box-shadow 0.2s; position:relative; }
+  .product-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.15); }
+  .product-badge { position:absolute; top:10px; left:10px; background:#CC0C39; color:#fff; font-size:11px; font-weight:700; padding:2px 6px; border-radius:2px; }
+  .product-badge.prime { background:#00A8E0; }
+  .product-badge.hot { background:#FF6900; }
+  .product-img { width:100%; height:180px; object-fit:contain; display:flex; align-items:center; justify-content:center; font-size:70px; margin-bottom:10px; }
+  .product-title { font-size:13px; color:#0F1111; margin-bottom:4px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .stars { color:#FF9900; font-size:13px; display:flex; align-items:center; gap:4px; margin-bottom:4px; }
+  .review-count { color:#007185; font-size:12px; }
+  .price-block { margin-bottom:8px; }
+  .price-original { text-decoration:line-through; color:#565959; font-size:12px; }
+  .price-free { color:#CC0C39; font-weight:700; font-size:20px; }
+  .price-saved { color:#CC0C39; font-size:12px; }
+  .prime-badge { display:flex; align-items:center; gap:4px; font-size:12px; color:#00A8E0; font-weight:700; margin-bottom:8px; }
+  .add-cart-btn { width:100%; background:#FFD814; border:1px solid #FCD200; border-radius:20px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; transition:background 0.2s; }
+  .add-cart-btn:hover { background:#F7CA00; }
+  .buy-now-btn { width:100%; background:#FF9900; border:1px solid #FF8F00; border-radius:20px; padding:7px; font-size:13px; font-weight:500; cursor:pointer; margin-top:6px; }
+  .buy-now-btn:hover { background:#FA8900; }
+
+  /* ===== DEALS SECTION ===== */
+  .deals-header { display:flex; align-items:center; gap:15px; margin-bottom:12px; }
+  .deals-timer { background:#0F1111; color:#fff; padding:4px 10px; border-radius:4px; font-size:13px; font-weight:700; }
+  .deals-timer span { color:#FF9900; font-size:16px; }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar { background:#131921; color:#ccc; display:flex; justify-content:center; gap:40px; padding:15px; text-align:center; margin-bottom:20px; border-radius:4px; }
+  .stat-item strong { display:block; font-size:22px; color:#FF9900; font-weight:700; }
+  .stat-item span { font-size:12px; }
+
+  /* ===== FOOTER ===== */
+  #footer { margin-top:30px; }
+  .footer-top { background:#37475A; color:#fff; padding:14px; text-align:center; font-size:13px; cursor:pointer; }
+  .footer-top:hover { background:#485769; }
+  .footer-mid { background:#232F3E; color:#ddd; padding:30px; display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:20px; }
+  .footer-col h4 { color:#fff; font-size:14px; margin-bottom:12px; }
+  .footer-col a { display:block; color:#ddd; text-decoration:none; font-size:13px; margin-bottom:6px; }
+  .footer-col a:hover { color:#FF9900; text-decoration:underline; }
+  .footer-bot { background:#131921; color:#aaa; text-align:center; padding:15px; font-size:12px; }
+  .footer-logo { font-size:22px; font-weight:700; color:#fff; margin-bottom:8px; }
+  .footer-logo span { color:#FF9900; }
+
+  /* ===== CART TOAST ===== */
+  .cart-toast { position:fixed; bottom:20px; right:20px; background:#131921; color:#fff; padding:12px 20px; border-radius:4px; z-index:999; display:none; border-left:4px solid #FF9900; animation:slideIn 0.3s ease; }
+  @keyframes slideIn { from { transform:translateX(100px); opacity:0; } to { transform:translateX(0); opacity:1; } }
+
+  /* ===== CONFETTI ===== */
+  .confetti-piece { position:fixed; width:8px; height:8px; top:-10px; z-index:9999; border-radius:2px; animation:confettiFall 1.5s ease-in forwards; }
+  @keyframes confettiFall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
+
+  /* ===== MODAL ===== */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; }
+  .modal-overlay.active { display:flex; }
+  .modal { background:#fff; border-radius:4px; padding:30px; max-width:500px; width:90%; position:relative; }
+  .modal-close { position:absolute; top:10px; right:14px; font-size:24px; cursor:pointer; color:#555; border:none; background:none; }
+  .modal h2 { font-size:20px; margin-bottom:15px; }
+  .form-group { margin-bottom:12px; }
+  .form-group label { display:block; font-size:13px; font-weight:700; margin-bottom:4px; }
+  .form-group input { width:100%; border:1px solid #aaa; border-radius:4px; padding:8px; font-size:14px; outline:none; }
+  .form-group input:focus { border-color:#FF9900; box-shadow:0 0 0 2px rgba(255,153,0,0.3); }
+  .form-submit { width:100%; background:#FFD814; border:1px solid #FCD200; border-radius:4px; padding:10px; font-size:15px; font-weight:500; cursor:pointer; margin-top:8px; }
+  .form-submit:hover { background:#F7CA00; }
+  .auth-switch { text-align:center; margin-top:12px; font-size:13px; color:#555; }
+  .auth-switch a { color:#007185; cursor:pointer; }
+
+  /* ===== USER DROPDOWN ===== */
+  .user-menu { position:relative; }
+  .user-dropdown { display:none; position:absolute; top:100%; right:0; background:#fff; border:1px solid #ddd; border-radius:4px; min-width:220px; box-shadow:0 4px 16px rgba(0,0,0,0.2); z-index:150; padding:15px; }
+  .user-menu:hover .user-dropdown { display:block; }
+  .user-dropdown a { display:block; color:#0F1111; text-decoration:none; font-size:13px; padding:5px 0; border-bottom:1px solid #eee; }
+  .user-dropdown a:last-child { border:none; }
+  .user-dropdown a:hover { color:#C7511F; }
+
+  /* ===== LOCATION BANNER ===== */
+  .location-banner { background:#DFF0EA; border:1px solid #067D62; padding:8px 15px; font-size:13px; color:#0F1111; display:flex; align-items:center; gap:8px; }
+  .location-banner strong { color:#067D62; }
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">dopa<em>zon</em></div>
-  <a href="/shop" class="nav-cta">Start Shopping Free →</a>
+<!-- ===== HEADER ===== -->
+<header id="header">
+  <!-- Logo -->
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+
+  <!-- Deliver to -->
+  <div class="deliver" onclick="showLocation()">
+    <span>📍 Deliver to</span>
+    <strong>United States</strong>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <select class="search-select">
+      <option>All</option>
+      <option>Fashion</option>
+      <option>Electronics</option>
+      <option>Beauty</option>
+      <option>Home</option>
+      <option>Sports</option>
+      <option>Pets</option>
+      <option>Food</option>
+    </select>
+    <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()">
+      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#0F1111" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Account -->
+  <div class="user-menu">
+    <a href="#" class="header-link" id="accountBtn" onclick="handleAccountClick(event)">
+      <span id="accountGreet">Hello, sign in</span>
+      <strong>Account &amp; Lists ▾</strong>
+    </a>
+    <div class="user-dropdown" id="userDropdown">
+      <div style="text-align:center;margin-bottom:10px;" id="dropdownContent">
+        <button onclick="openModal('login')" style="background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:8px 40px;font-size:14px;cursor:pointer;width:100%;margin-bottom:8px;">Sign in</button>
+        <div style="font-size:12px;color:#555;">New customer? <a href="#" onclick="openModal('signup')" style="color:#007185;">Start here.</a></div>
+      </div>
+      <a href="#">Your Account</a>
+      <a href="#">Your Orders</a>
+      <a href="#">Your Wish List</a>
+      <a href="confessions.html">Confession Cart</a>
+      <a href="#" id="signoutLink" style="display:none" onclick="signOut()">Sign Out</a>
+    </div>
+  </div>
+
+  <!-- Returns -->
+  <a href="confessions.html" class="header-link">
+    <span>Returns</span>
+    <strong>&amp; Confessions</strong>
+  </a>
+
+  <!-- Cart -->
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">
+      🛒
+      <span class="cart-count" id="cartCount" style="position:absolute;top:-5px;right:-5px;">0</span>
+    </span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<!-- ===== NAV BAR ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-link nav-all">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">DopePrime</a>
+  <a href="shop.html" class="nav-link">Fashion</a>
+  <a href="shop.html" class="nav-link">Electronics</a>
+  <a href="shop.html" class="nav-link">Home &amp; Kitchen</a>
+  <a href="shop.html" class="nav-link">Sports</a>
+  <a href="shop.html" class="nav-link">Beauty</a>
+  <a href="shop.html" class="nav-link">Pets</a>
+  <a href="shop.html" class="nav-link">Best Sellers</a>
+  <a href="confessions.html" class="nav-link">Confession Cart</a>
+  <a href="#" class="nav-link" style="color:#FF9900;">🎁 Free Everything</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"><div class="orb1"></div><div class="orb2"></div><div class="orb3"></div></div>
+<!-- ===== ALERT BANNER ===== -->
+<div class="alert-banner">
+  🚀 <span>DopePrime: Unlimited fake shopping, unlimited dopamine — </span>Always FREE
+</div>
 
-  <div class="hero-pill"><span class="live-dot"></span> <span id="heroLive">2,847 people shopping right now</span></div>
-
-  <h1>
-    Satisfy the urge.<br>
-    <span class="line2">Keep the money.</span>
-  </h1>
-
-  <p class="hero-sub">
-    The <strong>full dopamine rush</strong> of online shopping —
-    browse, add to cart, fake-checkout, track your "delivery" —
-    without spending a single dollar.
-  </p>
-
-  <div class="hero-actions">
-    <a href="/shop" class="btn-primary">🛒 Start Shopping Free</a>
-    <a href="#how" class="btn-ghost">See how it works ↓</a>
-  </div>
-
-  <!-- LIVE COUNTERS -->
-  <div class="counter-strip">
-    <div class="ctr-item">
-      <div class="ctr-val green" id="ctrSaved">$0</div>
-      <div class="ctr-label">Saved Today</div>
-    </div>
-    <div class="ctr-item">
-      <div class="ctr-val orange" id="ctrImpulse">0</div>
-      <div class="ctr-label">Impulses Avoided</div>
-    </div>
-    <div class="ctr-item">
-      <div class="ctr-val purple" id="ctrShopping">2,847</div>
-      <div class="ctr-label">Shopping Now</div>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section class="problem-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">The problem</div>
-    <h2 class="section-title">Shopping addiction is real.<br>And expensive.</h2>
-    <p class="section-sub">The average American makes 3 impulse purchases per week. Most regret them within 24 hours. Dopazon breaks the cycle.</p>
-    <div class="problem-cards">
-      <div class="prob-card">
-        <div class="prob-icon">💸</div>
-        <h3>Impulse spending costs real money</h3>
-        <p>Americans spend an average of $314/month on impulse buys — items they didn't plan to purchase and often don't need.</p>
-        <div class="stat">$314</div>
-        <div class="stat-sub">avg. monthly impulse spend (USA)</div>
+<!-- ===== HERO CAROUSEL ===== -->
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <!-- Slide 1 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#131921 0%,#1a2a3a 50%,#0d1b2a 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">DOPEPRIME DAY</div>
+        <div class="slide-title">Shop Everything.<br>Pay Nothing.</div>
+        <div class="slide-sub">The full Amazon experience — 100% free, 100% satisfying</div>
+        <a href="shop.html" class="slide-btn">Start Shopping Free →</a>
       </div>
-      <div class="prob-card">
-        <div class="prob-icon">🧠</div>
-        <h3>Your brain can't tell the difference</h3>
-        <p>The dopamine spike from browsing and "buying" activates the same reward pathways whether money changes hands or not.</p>
-        <div class="stat">Same</div>
-        <div class="stat-sub">dopamine response, zero dollars spent</div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b69 50%,#0d1b2a 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">TODAY'S DROPS</div>
+        <div class="slide-title">⚡ Lightning Deals</div>
+        <div class="slide-sub">5 absurd items. 0 dollars. Gone at midnight.</div>
+        <a href="drops.html" class="slide-btn">See Today's Drops →</a>
       </div>
-      <div class="prob-card">
-        <div class="prob-icon">📦</div>
-        <h3>The whole loop drives the hit</h3>
-        <p>It's not just the purchase. Finding, adding to cart, checking out, tracking delivery — every step releases dopamine.</p>
-        <div class="stat">5 steps</div>
-        <div class="stat-sub">in the dopamine shopping loop</div>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon">😔</div>
-        <h3>Regret follows fast</h3>
-        <p>72% of impulse buyers report remorse within 24 hours. The dopamine crash hits harder than the initial high.</p>
-        <div class="stat">72%</div>
-        <div class="stat-sub">feel buyer's remorse within a day</div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <div class="slide-bg" style="background:linear-gradient(135deg,#0a2e1a 0%,#1a4d2a 50%,#0d2a1b 100%);"></div>
+      <div class="slide-content">
+        <div class="slide-tag">CONFESSION CART</div>
+        <div class="slide-title">💬 $0 Spent Today</div>
+        <div class="slide-sub">Tell the world what you almost bought. Feel better instantly.</div>
+        <a href="confessions.html" class="slide-btn">Confess &amp; Heal →</a>
       </div>
     </div>
   </div>
-</section>
+  <button class="hero-arrow hero-prev" onclick="slideHero(-1)">❮</button>
+  <button class="hero-arrow hero-next" onclick="slideHero(1)">❯</button>
+</div>
 
-<!-- HOW IT WORKS -->
-<section class="how-section fade-in" id="how">
-  <div class="section-inner">
-    <div class="section-tag">How it works</div>
-    <h2 class="section-title">Every step of the loop.<br>None of the cost.</h2>
-    <p class="section-sub">We simulate the complete dopamine shopping experience — from discovery to delivery — so the urge is satisfied without the regret.</p>
-    <div class="steps-flow">
-      <div class="step-item">
-        <div class="step-num">Step 01</div>
-        <div class="step-icon-wrap">🔍</div>
-        <h3>Browse</h3>
-        <p>Explore thousands of products across every category. The thrill of discovery, no algorithm manipulating you.</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">Step 02</div>
-        <div class="step-icon-wrap">🛒</div>
-        <h3>Add to Cart</h3>
-        <p>Fill your cart with anything you want. No budget. No guilt. Stack it as high as you like.</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">Step 03</div>
-        <div class="step-icon-wrap">💳</div>
-        <h3>Fake Checkout</h3>
-        <p>Go through the full checkout flow. Address, payment, order confirmation. $0.00 charged.</p>
-        <div class="step-arrow">→</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">Step 04</div>
-        <div class="step-icon-wrap">📍</div>
-        <h3>Track Delivery</h3>
-        <p>Watch your "courier" live on the map. ETA countdown. The full anticipation hit.</p>
-      </div>
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><strong id="statSaved">$0</strong><span>Saved Today by Community</span></div>
+    <div class="stat-item"><strong id="statImpulses">0</strong><span>Impulses Avoided</span></div>
+    <div class="stat-item"><strong id="statOnline">0</strong><span>Fake Shopping Right Now</span></div>
+    <div class="stat-item"><strong id="statOrders">0</strong><span>Fake Orders Today</span></div>
+  </div>
+
+  <!-- Categories -->
+  <h2 class="section-title">Shop by Category</h2>
+  <div class="category-grid">
+    <a href="shop.html?cat=fashion" class="cat-card">
+      <div class="cat-card-img">👗</div>
+      <h3>Fashion</h3>
+      <div class="cat-see-more">See all looks →</div>
+    </a>
+    <a href="shop.html?cat=electronics" class="cat-card">
+      <div class="cat-card-img">📱</div>
+      <h3>Electronics</h3>
+      <div class="cat-see-more">See all gadgets →</div>
+    </a>
+    <a href="shop.html?cat=beauty" class="cat-card">
+      <div class="cat-card-img">💄</div>
+      <h3>Beauty</h3>
+      <div class="cat-see-more">See all beauty →</div>
+    </a>
+    <a href="shop.html?cat=home" class="cat-card">
+      <div class="cat-card-img">🏠</div>
+      <h3>Home &amp; Kitchen</h3>
+      <div class="cat-see-more">See all home →</div>
+    </a>
+    <a href="shop.html?cat=sports" class="cat-card">
+      <div class="cat-card-img">🏃</div>
+      <h3>Sports</h3>
+      <div class="cat-see-more">See all sports →</div>
+    </a>
+    <a href="shop.html?cat=pets" class="cat-card">
+      <div class="cat-card-img">🐾</div>
+      <h3>Pets</h3>
+      <div class="cat-see-more">See all pets →</div>
+    </a>
+    <a href="shop.html?cat=food" class="cat-card">
+      <div class="cat-card-img">🍔</div>
+      <h3>Food Delivery</h3>
+      <div class="cat-see-more">See all food →</div>
+    </a>
+    <a href="drops.html" class="cat-card">
+      <div class="cat-card-img">⚡</div>
+      <h3>Daily Drops</h3>
+      <div class="cat-see-more">See today's drops →</div>
+    </a>
+  </div>
+
+  <!-- Best Sellers -->
+  <div class="deals-header">
+    <h2 class="section-title" style="margin:0">Best Sellers — $0 Each</h2>
+    <div class="deals-timer">Ends in: <span id="dealTimer">23:59:59</span></div>
+  </div>
+  <div class="product-row" id="bestSellers"></div>
+
+  <!-- Featured Section: Confession Cart teaser -->
+  <div style="background:#fff;border-radius:4px;padding:25px;margin-bottom:25px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
+    <div style="font-size:80px;">💬</div>
+    <div style="flex:1;">
+      <div style="font-size:11px;color:#CC0C39;font-weight:700;margin-bottom:4px;">COMMUNITY FEATURE</div>
+      <h2 style="font-size:22px;margin-bottom:8px;">Confession Cart</h2>
+      <p style="color:#555;font-size:14px;margin-bottom:14px;">Share what you almost bought. Read others' close calls. Collectively save millions every day.</p>
+      <a href="confessions.html" style="background:#FFD814;border:1px solid #FCD200;padding:9px 22px;border-radius:4px;font-size:14px;font-weight:500;text-decoration:none;color:#0F1111;display:inline-block;">Read Confessions</a>
+    </div>
+    <div style="background:#EAEDED;padding:15px;border-radius:4px;min-width:200px;">
+      <div style="font-size:13px;color:#555;margin-bottom:8px;">Community saved today:</div>
+      <div style="font-size:32px;font-weight:700;color:#067D62;" id="confSaved">$0</div>
+      <div style="font-size:12px;color:#aaa;">and counting...</div>
     </div>
   </div>
-</section>
 
-<!-- DOPAMINE LOOP -->
-<section class="loop-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">The science</div>
-    <h2 class="section-title">The complete<br>dopamine loop.</h2>
-    <p class="section-sub">Research shows dopamine releases at every stage of shopping — not just at purchase. Dopazon simulates all of them.</p>
-    <div class="loop-grid">
-      <div class="loop-card active-loop">
-        <div class="loop-emoji">🔎</div>
-        <div>
-          <h4>Discovery</h4>
-          <p>Finding something you want triggers anticipatory dopamine — the brain's "this could be good" response.</p>
-          <span class="loop-badge sim">✓ Simulated</span>
-        </div>
-      </div>
-      <div class="loop-card active-loop">
-        <div class="loop-emoji">🛒</div>
-        <div>
-          <h4>Adding to Cart</h4>
-          <p>The micro-commitment of adding an item releases a small dopamine hit. Your brain registers a "win."</p>
-          <span class="loop-badge sim">✓ Simulated</span>
-        </div>
-      </div>
-      <div class="loop-card active-loop">
-        <div class="loop-emoji">✅</div>
-        <div>
-          <h4>Checkout</h4>
-          <p>Completing a transaction triggers a reward response — regardless of whether real money is involved.</p>
-          <span class="loop-badge sim">✓ Simulated</span>
-        </div>
-      </div>
-      <div class="loop-card active-loop">
-        <div class="loop-emoji">📦</div>
-        <div>
-          <h4>Delivery Tracking</h4>
-          <p>Anticipating arrival maintains elevated dopamine. The waiting game is part of the hit.</p>
-          <span class="loop-badge sim">✓ Simulated</span>
-        </div>
-      </div>
+  <!-- New Arrivals -->
+  <h2 class="section-title">New Arrivals — Recommended for You</h2>
+  <div class="product-row" id="newArrivals"></div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-mid">
+    <div class="footer-col">
+      <h4>Get to Know Us</h4>
+      <a href="#">About Dopazon</a>
+      <a href="#">The Science of Dopamine</a>
+      <a href="#">Press</a>
+      <a href="#">Investor Relations</a>
+      <a href="#">Dopazon Cares</a>
     </div>
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
-      <span style="font-size:12px;color:var(--text3);background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);color:#ef4444;padding:4px 12px;border-radius:10px;font-weight:500">❌ Real money gone — traditional shopping</span>
-      <span style="font-size:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:var(--green);padding:4px 12px;border-radius:10px;font-weight:500">✓ Same dopamine, $0 spent — Dopazon</span>
+    <div class="footer-col">
+      <h4>Make Money With Us</h4>
+      <a href="shop.html">Open Your Store</a>
+      <a href="#">Dopazon Affiliates</a>
+      <a href="#">Advertise Your Products</a>
+      <a href="#">Self-Publish</a>
+    </div>
+    <div class="footer-col">
+      <h4>Dopazon Payment Products</h4>
+      <a href="#">DopaPay (Always Free)</a>
+      <a href="#">DopaPrime Benefits</a>
+      <a href="#">No Credit Card Required</a>
+      <a href="#">Never a Charge</a>
+    </div>
+    <div class="footer-col">
+      <h4>Let Us Help You</h4>
+      <a href="#">Your Account</a>
+      <a href="#">Your Orders</a>
+      <a href="#">Shipping &amp; Delivery ($0)</a>
+      <a href="#">Returns (Keep Everything)</a>
+      <a href="#">Help</a>
     </div>
   </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">Features</div>
-    <h2 class="section-title">Everything you love<br>about online shopping.</h2>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-icon">🏪</div>
-        <h3>Community Stores</h3>
-        <p>Open your own fake store. List imaginary products. Watch other users add them to cart. No inventory, no shipping, no stress.</p>
-        <span class="feat-tag">User Generated</span>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🤫</div>
-        <h3>Confession Cart</h3>
-        <p>Anonymously share what you almost bought. See others' near-misses. Laugh, relate, feel less alone in your shopping urges.</p>
-        <span class="feat-tag">Coming Soon</span>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⚡</div>
-        <h3>Daily Drops</h3>
-        <p>Every day, 5 absurd products you'd never actually buy. Curated chaos. A reason to come back tomorrow.</p>
-        <span class="feat-tag">Coming Soon</span>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">📍</div>
-        <h3>Live Delivery Tracking</h3>
-        <p>Real-time courier map. ETA countdown. Step-by-step status updates. The full anticipation hit, zero logistics nightmare.</p>
-        <span class="feat-tag">Live Now</span>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🍔</div>
-        <h3>Food Delivery Simulation</h3>
-        <p>Late-night cravings? Build your dream order from top restaurants. Close the app. Go to sleep. Win.</p>
-        <span class="feat-tag">Live Now</span>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">💰</div>
-        <h3>Money Saved Counter</h3>
-        <p>Every session, see how much you would have spent. Watch the number grow. Feel genuinely good about it.</p>
-        <span class="feat-tag">Live Now</span>
-      </div>
-    </div>
+  <div class="footer-bot">
+    <div class="footer-logo">dopa<span>zon</span></div>
+    <div>Conditions of Use &nbsp;|&nbsp; Privacy Notice &nbsp;|&nbsp; Consumer Health Data Privacy Disclosure</div>
+    <div style="margin-top:6px;">© 2024-2025 Dopazon.com, Inc. or its affiliates. This is a <strong>simulated shopping experience</strong>. No real purchases are made.</div>
+    <div style="margin-top:4px;color:#777;font-size:11px;">Satisfy the urge. Keep the money. Always.</div>
   </div>
-</section>
-
-<!-- WHO IT'S FOR -->
-<section class="who-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">Who it's for</div>
-    <h2 class="section-title">You know who you are.</h2>
-    <p class="section-sub">If any of these sound familiar, Dopazon was built for you.</p>
-    <div class="audience-grid">
-      <div class="aud-card"><div class="aud-emoji">🛍️</div><h3>Impulse Shoppers</h3><p>You open Amazon to "just browse" and wake up with 7 items in your cart at 2am.</p></div>
-      <div class="aud-card"><div class="aud-emoji">🧘</div><h3>Dopamine Detoxers</h3><p>You're trying to break the scroll-and-buy cycle but the urge is real and it needs somewhere to go.</p></div>
-      <div class="aud-card"><div class="aud-emoji">💚</div><h3>No-Buy Challengers</h3><p>You're on a no-buy month or year. You need an outlet that doesn't break the rules.</p></div>
-      <div class="aud-card"><div class="aud-emoji">⚡</div><h3>ADHD Community</h3><p>Novelty-seeking is a feature, not a bug. Dopazon gives the hit without the financial consequences.</p></div>
-      <div class="aud-card"><div class="aud-emoji">🌿</div><h3>Minimalists</h3><p>You believe in owning less but the part of your brain that loves browsing didn't get the memo.</p></div>
-      <div class="aud-card"><div class="aud-emoji">😂</div><h3>People Who Get It</h3><p>Sometimes you just want to add a $3,200 espresso machine to cart and feel something. We get it.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONFESSION PREVIEW -->
-<section class="confession-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">Confession Cart — coming soon</div>
-    <h2 class="section-title">The internet's most<br>relatable feed.</h2>
-    <p class="section-sub">Anonymous confessions from people who almost spent money. Cathartic. Funny. Surprisingly moving.</p>
-    <div class="confessions-preview">
-      <div class="conf-card">
-        <p>Almost dropped <strong>$2,400</strong> on a standing desk I've been "researching" for 8 months. Came to Dopazon, added it to cart, felt fine, closed the tab. Repeat tomorrow probably.</p>
-        <div class="conf-footer">
-          <span class="conf-meta"><span class="conf-tag">Furniture</span>Anonymous · 3 min ago</span>
-          <span class="conf-likes">❤️ 847</span>
-        </div>
-      </div>
-      <div class="conf-card">
-        <p>It was <strong>1:47am</strong> and I had $340 worth of skincare in my cart. I don't even have a skincare routine. I just liked the packaging. Dopazon saved me from myself again.</p>
-        <div class="conf-footer">
-          <span class="conf-meta"><span class="conf-tag">Beauty</span>Anonymous · 11 min ago</span>
-          <span class="conf-likes">❤️ 1,203</span>
-        </div>
-      </div>
-      <div class="conf-card">
-        <p>I spent 45 minutes configuring the perfect <strong>$6,000 camera setup</strong> I will never use. Pressed fake checkout. Felt like a professional photographer for exactly 4 seconds. Worth it.</p>
-        <div class="conf-footer">
-          <span class="conf-meta"><span class="conf-tag">Electronics</span>Anonymous · 28 min ago</span>
-          <span class="conf-likes">❤️ 2,091</span>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:20px">
-      <a href="/shop" class="btn-ghost" style="font-size:14px">Join the waitlist for Confession Cart →</a>
-    </div>
-  </div>
-</section>
-
-<!-- DAILY DROP PREVIEW -->
-<section class="drop-section fade-in">
-  <div class="section-inner">
-    <div class="section-tag">Daily Drops — coming soon</div>
-    <h2 class="section-title">Today's absurd finds.</h2>
-    <p class="section-sub">Five products a day that you'd never actually buy but absolutely need to add to cart. The algorithm-free way to scratch the itch.</p>
-    <div class="drop-cards">
-      <div class="drop-card">
-        <div class="drop-badge">TODAY'S DROP</div>
-        <div class="drop-emoji">🌮</div>
-        <div class="drop-name">Taco Sleeping Bag</div>
-        <div class="drop-why">Become the taco. Sleep the taco.</div>
-        <div class="drop-price">$89</div>
-        <button class="drop-add">Add to Cart</button>
-      </div>
-      <div class="drop-card">
-        <div class="drop-badge">TODAY'S DROP</div>
-        <div class="drop-emoji">🦆</div>
-        <div class="drop-name">Giant Rubber Duck Bath Bomb</div>
-        <div class="drop-why">Dissolves into a smaller duck.</div>
-        <div class="drop-price">$24</div>
-        <button class="drop-add">Add to Cart</button>
-      </div>
-      <div class="drop-card">
-        <div class="drop-badge">TODAY'S DROP</div>
-        <div class="drop-emoji">🧠</div>
-        <div class="drop-name">Brain-Shaped Jello Mold</div>
-        <div class="drop-why">For dinner parties that test friendships.</div>
-        <div class="drop-price">$18</div>
-        <button class="drop-add">Add to Cart</button>
-      </div>
-      <div class="drop-card">
-        <div class="drop-badge">TODAY'S DROP</div>
-        <div class="drop-emoji">🐈</div>
-        <div class="drop-name">Cat Burrito Wrap Blanket</div>
-        <div class="drop-why">Your cat will tolerate this for 3 seconds.</div>
-        <div class="drop-price">$34</div>
-        <button class="drop-add">Add to Cart</button>
-      </div>
-      <div class="drop-card">
-        <div class="drop-badge">TODAY'S DROP</div>
-        <div class="drop-emoji">🧃</div>
-        <div class="drop-name">Capri Sun Adult Tote Bag</div>
-        <div class="drop-why">Nostalgia-core meets functional chaos.</div>
-        <div class="drop-price">$42</div>
-        <button class="drop-add">Add to Cart</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section fade-in">
-  <div class="section-inner" style="display:flex;gap:48px;align-items:center;flex-wrap:wrap">
-    <div style="flex:1;min-width:260px">
-      <div class="section-tag">Pricing</div>
-      <h2 class="section-title">The only honest<br>price tag online.</h2>
-      <p class="section-sub">We charge exactly what your impulse purchases cost you. Which is nothing, because this is Dopazon.</p>
-    </div>
-    <div class="price-card">
-      <div class="price-badge">LIFETIME PLAN</div>
-      <div class="price-amount">$0</div>
-      <div class="price-sub">forever. seriously. no catch.</div>
-      <div class="price-features">
-        <div class="pf-row"><span>✓</span><span>Unlimited fake shopping</span></div>
-        <div class="pf-row"><span>✓</span><span>Full checkout simulation</span></div>
-        <div class="pf-row"><span>✓</span><span>Live delivery tracking</span></div>
-        <div class="pf-row"><span>✓</span><span>Open your own store</span></div>
-        <div class="pf-row"><span>✓</span><span>Confession Cart (soon)</span></div>
-        <div class="pf-row"><span>✓</span><span>Daily Drops (soon)</span></div>
-        <div class="pf-row"><span>✓</span><span>No ads. No upsells. No BS.</span></div>
-      </div>
-      <a href="/shop" class="btn-primary" style="width:100%;justify-content:center">Start Shopping Free →</a>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="cta-section fade-in">
-  <div class="section-tag">Ready?</div>
-  <h2>Your cart is waiting.<br><span style="color:var(--accent)">Your wallet is safe.</span></h2>
-  <p>Join thousands of people who get the hit without the regret. It takes 10 seconds to start and costs exactly nothing.</p>
-  <a href="/shop" class="btn-primary" style="font-size:17px;padding:16px 40px">🛒 Open Dopazon Free</a>
-  <div style="margin-top:18px;font-size:13px;color:var(--text3)">No signup required to browse · No credit card · No catch</div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="nav-logo" style="margin-bottom:10px;font-size:18px">dopa<em style="color:var(--accent);font-style:normal">zon</em></div>
-  <p style="margin-bottom:8px"><strong>Dopazon</strong> — Satisfy the urge. Keep the money.</p>
-  <p>Not affiliated with any real retailer. All products are fictional. All dopamine is real.<br>
-  Built for impulse shoppers, ADHD communities, no-buy challengers, and everyone in between.</p>
-  <p style="margin-top:12px"><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Contact</a></p>
 </footer>
 
+<!-- ===== TOAST ===== -->
+<div class="cart-toast" id="cartToast">
+  ✅ Added to cart — <strong>$0 charged</strong>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Sign in</h2>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="you@example.com">
+    </div>
+    <div class="form-group" id="nameGroup" style="display:none">
+      <label>Your Name</label>
+      <input type="text" id="authName" placeholder="First name">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="At least 6 characters">
+    </div>
+    <button class="form-submit" id="authSubmit" onclick="submitAuth()">Sign in</button>
+    <div class="auth-switch" id="authSwitch">
+      New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>
+    </div>
+  </div>
+</div>
+
 <script>
-// LIVE COUNTERS
-let savedBase = 847293;
-let impulseBase = 14203;
-let shoppingBase = 2847;
+// ===== PRODUCTS DATA =====
+const PRODUCTS = [
+  {id:1,emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,cat:'fashion',stars:4.8,reviews:12847},
+  {id:2,emoji:'📱',title:'Aplix ProMax Ultra — 6.9" Display, Triple Camera System',price:1299,cat:'electronics',stars:4.7,reviews:8934},
+  {id:3,emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging Formula',price:68,cat:'beauty',stars:4.9,reviews:23156},
+  {id:4,emoji:'☕',title:'BrewMaster Pro Coffee Maker — 12-Cup, Built-in Grinder',price:249,cat:'home',stars:4.6,reviews:5432},
+  {id:5,emoji:'🎧',title:'SoundWave Elite Wireless Headphones — 40hr Battery',price:349,cat:'electronics',stars:4.8,reviews:18923},
+  {id:6,emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free, Real Protein',price:89,cat:'pets',stars:4.9,reviews:31024},
+  {id:7,emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lb per Hand',price:429,cat:'sports',stars:4.7,reviews:7823},
+  {id:8,emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 Color LED',price:45,cat:'home',stars:4.5,reviews:9234},
+  {id:9,emoji:'👜',title:'LuxCraft Structured Tote Bag — Pebbled Leather, Gold Hardware',price:395,cat:'fashion',stars:4.6,reviews:4123},
+  {id:10,emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games',price:199,cat:'electronics',stars:4.8,reviews:15678},
+  {id:11,emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,cat:'beauty',stars:4.7,reviews:11234},
+  {id:12,emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover',price:299,cat:'home',stars:4.5,reviews:6789},
+];
 
-function fmt(n){return n>=1000000?'$'+(n/1000000).toFixed(1)+'M':n>=1000?'$'+(n/1000).toFixed(0)+'K':'$'+n.toLocaleString()}
+let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
+let user = JSON.parse(localStorage.getItem('dz_user') || 'null');
+let authMode = 'login';
 
-function updateCounters(){
-  savedBase += Math.floor(Math.random()*180+40);
-  impulseBase += Math.floor(Math.random()*3+1);
-  shoppingBase += Math.floor((Math.random()-0.4)*8);
-  document.getElementById('ctrSaved').textContent = fmt(savedBase);
-  document.getElementById('ctrImpulse').textContent = impulseBase.toLocaleString();
-  document.getElementById('ctrShopping').textContent = shoppingBase.toLocaleString();
-  document.getElementById('heroLive').textContent = shoppingBase.toLocaleString() + ' people shopping right now';
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  updateUserUI();
+  renderBestSellers();
+  renderNewArrivals();
+  startStats();
+  startDealTimer();
+  startHeroAuto();
+});
+
+function updateCartCount() {
+  document.getElementById('cartCount').textContent = cart.length;
 }
 
-setInterval(updateCounters, 2200);
-updateCounters();
+function updateUserUI() {
+  const btn = document.getElementById('accountGreet');
+  const signout = document.getElementById('signoutLink');
+  if (user) {
+    btn.textContent = 'Hello, ' + user.name;
+    signout.style.display = 'block';
+  } else {
+    btn.textContent = 'Hello, sign in';
+    signout.style.display = 'none';
+  }
+}
 
-// SCROLL FADE
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:0.12});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+function renderBestSellers() {
+  const el = document.getElementById('bestSellers');
+  const items = PRODUCTS.slice(0, 6);
+  el.innerHTML = items.map(p => productCard(p, true)).join('');
+}
 
-// DAILY DROP BUTTONS
-document.querySelectorAll('.drop-add').forEach(btn=>{
-  btn.addEventListener('click',function(){
-    this.textContent='✓ Added!';
-    this.style.background='var(--green)';
-    this.style.color='#fff';
-    this.style.borderColor='var(--green)';
-    setTimeout(()=>{
-      this.textContent='Add to Cart';
-      this.style.background='';this.style.color='';this.style.borderColor='';
-    },2000);
-  });
+function renderNewArrivals() {
+  const el = document.getElementById('newArrivals');
+  const items = [...PRODUCTS].sort(() => Math.random() - 0.5).slice(0, 6);
+  el.innerHTML = items.map(p => productCard(p, false)).join('');
+}
+
+function productCard(p, isSale) {
+  const stars = '★'.repeat(Math.floor(p.stars)) + (p.stars % 1 >= 0.5 ? '½' : '');
+  return `
+  <div class="product-card" onclick="goToProduct(${p.id})">
+    ${isSale ? '<div class="product-badge">SALE</div>' : '<div class="product-badge prime">DopePrime</div>'}
+    <div class="product-img">${p.emoji}</div>
+    <div class="product-title">${p.title}</div>
+    <div class="stars">${'★★★★★'.slice(0,Math.floor(p.stars)).split('').map(s=>`<span>${s}</span>`).join('')} <span class="review-count">(${p.reviews.toLocaleString()})</span></div>
+    <div class="price-block">
+      <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
+      <div class="price-free">FREE</div>
+      <div class="price-saved">You save: $${p.price.toLocaleString()}.00 (100%)</div>
+    </div>
+    <div class="prime-badge">✓ DopePrime — Free Fake Delivery</div>
+    <button class="add-cart-btn" onclick="addToCart(event,${p.id})">Add to Cart</button>
+    <button class="buy-now-btn" onclick="buyNow(event,${p.id})">Buy Now</button>
+  </div>`;
+}
+
+function addToCart(e, id) {
+  e.stopPropagation();
+  const p = PRODUCTS.find(x => x.id === id);
+  cart.push({...p, addedAt: Date.now()});
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast('✅ Added to cart — <strong>$0 charged</strong>');
+  launchConfetti();
+  gtag('event', 'add_to_cart', {item_id: id, item_name: p.title, value: 0});
+}
+
+function buyNow(e, id) {
+  e.stopPropagation();
+  addToCart(e, id);
+  setTimeout(() => window.location = 'shop.html', 800);
+}
+
+function goToProduct(id) {
+  window.location = 'shop.html?item=' + id;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('cartToast');
+  t.innerHTML = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2500);
+}
+
+function launchConfetti() {
+  const colors = ['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62','#fff'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2000);
+  }
+}
+
+// ===== STATS =====
+function startStats() {
+  let saved = 847293, impulses = 14203, online = 2847, orders = 31024;
+  function tick() {
+    saved += Math.floor(Math.random() * 500);
+    impulses += Math.floor(Math.random() * 3);
+    online += (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 5);
+    orders += Math.floor(Math.random() * 2);
+    document.getElementById('statSaved').textContent = '$' + saved.toLocaleString();
+    document.getElementById('statImpulses').textContent = impulses.toLocaleString();
+    document.getElementById('statOnline').textContent = Math.max(2500, online).toLocaleString();
+    document.getElementById('statOrders').textContent = orders.toLocaleString();
+    document.getElementById('confSaved').textContent = '$' + saved.toLocaleString();
+  }
+  tick();
+  setInterval(tick, 2000);
+}
+
+// ===== TIMER =====
+function startDealTimer() {
+  function tick() {
+    const now = new Date();
+    const midnight = new Date(); midnight.setHours(24,0,0,0);
+    const diff = midnight - now;
+    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    const s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+    document.getElementById('dealTimer').textContent = `${h}:${m}:${s}`;
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ===== HERO CAROUSEL =====
+let slide = 0;
+function slideHero(dir) {
+  const slides = document.querySelectorAll('.hero-slide');
+  slide = (slide + dir + slides.length) % slides.length;
+  document.getElementById('heroSlides').style.transform = `translateX(-${slide * 100}%)`;
+}
+function startHeroAuto() { setInterval(() => slideHero(1), 5000); }
+
+// ===== SEARCH =====
+function goSearch() {
+  const q = document.getElementById('searchInput').value;
+  if (q) window.location = 'shop.html?q=' + encodeURIComponent(q);
+}
+
+// ===== AUTH =====
+function openModal(mode) {
+  authMode = mode;
+  document.getElementById('authModal').classList.add('active');
+  document.getElementById('modalTitle').textContent = mode === 'login' ? 'Sign in' : 'Create account';
+  document.getElementById('authSubmit').textContent = mode === 'login' ? 'Sign in' : 'Create your Dopazon account';
+  document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
+  document.getElementById('authSwitch').innerHTML = mode === 'login' ?
+    'New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>' :
+    'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>';
+}
+function closeModal() { document.getElementById('authModal').classList.remove('active'); }
+function toggleAuthMode() { openModal(authMode === 'login' ? 'signup' : 'login'); }
+function handleAccountClick(e) {
+  if (user) e.preventDefault();
+}
+function submitAuth() {
+  const email = document.getElementById('authEmail').value;
+  const pass = document.getElementById('authPass').value;
+  const name = document.getElementById('authName').value || email.split('@')[0];
+  if (!email || !pass) { alert('Please fill in all fields.'); return; }
+  if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+  user = { email, name: authMode === 'signup' ? name : (localStorage.getItem('dz_uname') || name), createdAt: Date.now() };
+  localStorage.setItem('dz_user', JSON.stringify(user));
+  localStorage.setItem('dz_uname', user.name);
+  closeModal();
+  updateUserUI();
+  showToast('👋 Welcome, <strong>' + user.name + '</strong>! Happy fake shopping!');
+  gtag('event', authMode === 'signup' ? 'sign_up' : 'login');
+}
+function signOut() {
+  user = null;
+  localStorage.removeItem('dz_user');
+  updateUserUI();
+  showToast('👋 Signed out. Come back for more free shopping!');
+}
+function showLocation() { showToast('📍 <strong>United States</strong> — Free delivery everywhere!'); }
+
+window.addEventListener('click', e => {
+  if (e.target === document.getElementById('authModal')) closeModal();
 });
 </script>
 </body>
