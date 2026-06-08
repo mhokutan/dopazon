@@ -4,30 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dopazon — Daily Drops ⚡ Today's 5 Free Items</title>
+<link rel="stylesheet" href="shared.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
-  #header{background:#131921;display:flex;align-items:center;padding:8px 12px;gap:10px;position:sticky;top:0;z-index:100;}
-  .logo{color:#fff;text-decoration:none;display:flex;flex-direction:column;padding:4px 8px;border:1px solid transparent;}
-  .logo:hover{border-color:#FF9900;border-radius:2px;}
-  .logo-text{font-size:26px;font-weight:700;letter-spacing:-1px;}
-  .logo-text span{color:#FF9900;}
-  .logo-sub{font-size:9px;color:#ccc;}
-  .search-bar{flex:1;display:flex;height:40px;}
-  .search-select{background:#F3F3F3;border:none;padding:0 8px;font-size:12px;color:#555;border-radius:4px 0 0 4px;cursor:pointer;height:100%;}
-  .search-input{flex:1;border:none;padding:0 10px;font-size:16px;outline:none;}
-  .search-btn{background:#FF9900;border:none;padding:0 14px;border-radius:0 4px 4px 0;cursor:pointer;height:100%;}
-  .header-link{color:#fff;text-decoration:none;font-size:12px;padding:4px 8px;border:1px solid transparent;white-space:nowrap;}
-  .header-link:hover{border-color:#FF9900;border-radius:2px;}
-  .header-link strong{display:block;font-size:14px;}
-  .cart-link{color:#fff;text-decoration:none;display:flex;align-items:center;gap:4px;padding:4px 8px;border:1px solid transparent;font-weight:700;font-size:14px;}
-  .cart-link:hover{border-color:#FF9900;border-radius:2px;}
-  .cart-count{background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:0 5px;border-radius:2px;}
-  #navbar{background:#232F3E;display:flex;align-items:center;padding:0 12px;overflow-x:auto;}
-  .nav-link{color:#fff;text-decoration:none;font-size:13px;padding:9px 10px;white-space:nowrap;border:1px solid transparent;}
-  .nav-link:hover{border-color:#fff;border-radius:2px;}
   /* Hero */
   .drops-hero{background:linear-gradient(135deg,#1a0a2e,#2d1b69,#131921);color:#fff;padding:30px 20px;text-align:center;}
   .drops-hero h1{font-size:38px;font-weight:700;margin-bottom:6px;}
@@ -104,11 +84,6 @@
   .notify-btn:hover{background:#FA8900;}
   .prev-winner{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:13px;}
   .prev-winner:last-child{border:none;}
-  /* Toast */
-  .cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;}
-  /* Confetti */
-  .confetti-piece{position:fixed;width:8px;height:8px;top:-10px;z-index:9999;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;}
-  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
   @media(max-width:900px){.drops-main{grid-template-columns:1fr;}.drop-card{grid-template-columns:1fr;}.drop-img{height:180px;}}
 </style>
 </head>
@@ -122,8 +97,8 @@
   </a>
   <div class="search-bar">
     <select class="search-select"><option>All</option></select>
-    <input class="search-input" type="text" placeholder="Search Dopazon">
-    <button class="search-btn">
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()">
       <svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </button>
   </div>
@@ -216,7 +191,10 @@
 <!-- TOAST -->
 <div class="cart-toast" id="cartToast">Done!</div>
 
+<script src="shared.js"></script>
 <script>
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
 const ALL_DROPS = [
   {id:101,emoji:'🦆',title:'RubberDux Quantum Bath Duck — Measures Water Pressure',desc:'A rubber duck with 7 sensors that measures bath water quantum properties. Scientists say it\'s pointless. We say it\'s essential.',price:89,cat:'home'},
   {id:102,emoji:'🧢',title:'AirMax Vent Baseball Cap — Built-in USB-C Fan',desc:'A cap with a tiny USB-C powered fan in the brim. Keeps you cool. Makes you look like a spaceship. Worth it.',price:129,cat:'fashion'},
@@ -441,23 +419,6 @@ function updateCartCount() {
   document.getElementById('cartCount').textContent = cart.length;
 }
 
-function showToast(msg) {
-  const t = document.getElementById('cartToast');
-  t.innerHTML = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display='none', 3000);
-}
-
-function launchConfetti() {
-  const colors = ['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62'];
-  for (let i=0;i<30;i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti-piece';
-    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()}s;`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),2000);
-  }
-}
 </script>
 </body>
 </html>
