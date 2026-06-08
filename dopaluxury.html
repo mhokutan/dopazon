@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaLuxury — Mansions Free of Charge | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#3d0c02,#8b2500);padding:60px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#FFD814;color:#3d0c02;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
+  .house-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-bottom:30px;}
+  .house-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);transition:transform 0.2s;}
+  .house-card:hover{transform:translateY(-4px);}
+  .house-img{font-size:90px;height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5e6d3,#e8c9a0);}
+  .house-info{padding:18px;}
+  .house-name{font-size:17px;font-weight:700;margin-bottom:4px;}
+  .house-loc{font-size:13px;color:#777;margin-bottom:10px;}
+  .house-specs{display:flex;gap:14px;font-size:12px;color:#555;margin-bottom:12px;flex-wrap:wrap;}
+  .house-price{text-decoration:line-through;color:#aaa;font-size:13px;}
+  .house-free{font-size:26px;font-weight:800;color:#8b2500;margin-bottom:10px;}
+  .buy-btn{width:100%;background:#8b2500;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;}
+  .buy-btn:hover{background:#FF9900;color:#0F1111;}
+  .tag{display:inline-block;background:#fdf3cd;color:#856404;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">🏰</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaLuxury</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link" style="color:#FF9900;">🏰 DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>🏰 DopaLuxury</h1>
+  <p>Beverly Hills mansions. Malibu beach houses. Tuscan villas. All yours — all free.</p>
+  <button class="svc-hero-btn" onclick="showToast('🏰 Property deeded to you! Moving truck en route. Total paid: $0.00');launchConfetti();">Browse Estates — Free</button>
+</div>
+
+<div class="main">
+  <h2 class="section-title">🏡 Featured Properties</h2>
+  <div class="house-grid" id="houseGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">luxury</span></div>
+    <div>© 2025 DopaLuxury by Dopazon. No real estate. No real keys. No real charges.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const HOUSES = [
+  {emoji:'🏡',name:'Sunset Boulevard Mega-Mansion',loc:'Beverly Hills, CA',bed:9,bath:12,sqft:18000,pool:true,price:42000000,tag:'ICONIC'},
+  {emoji:'🏖️',name:'Malibu Beachfront Estate',loc:'Malibu, CA',bed:6,bath:8,sqft:9500,pool:true,price:28000000,tag:'OCEANFRONT'},
+  {emoji:'🏰',name:'Tuscan Renaissance Villa',loc:'Florence, Italy',bed:12,bath:10,sqft:22000,pool:true,price:15000000,tag:'HISTORIC'},
+  {emoji:'🌴',name:'Bali Clifftop Retreat',loc:'Uluwatu, Bali',bed:8,bath:8,sqft:12000,pool:true,price:8500000,tag:'TROPICAL'},
+  {emoji:'🗼',name:'Paris Penthouse — Eiffel View',loc:'16th Arr., Paris',bed:5,bath:6,sqft:7200,pool:false,price:22000000,tag:'PARISIAN'},
+  {emoji:'🏔️',name:'Swiss Alpine Chalet',loc:'Verbier, Switzerland',bed:10,bath:9,sqft:14000,pool:false,price:18000000,tag:'SKI-IN/OUT'},
+  {emoji:'🌊',name:'Santorini Cliffside Villa',loc:'Oia, Greece',bed:6,bath:7,sqft:8000,pool:true,price:11000000,tag:'VIEWS'},
+  {emoji:'🏙️',name:'Manhattan Sky Penthouse',loc:'Central Park South, NYC',bed:7,bath:8,sqft:11000,pool:true,price:58000000,tag:'TROPHY'},
+];
+
+document.getElementById('houseGrid').innerHTML = HOUSES.map(h => `
+  <div class="house-card">
+    <div class="house-img">${h.emoji}</div>
+    <div class="house-info">
+      <div class="tag">${h.tag}</div>
+      <div class="house-name">${h.name}</div>
+      <div class="house-loc">📍 ${h.loc}</div>
+      <div class="house-specs">
+        <span>🛏 ${h.bed} bed</span>
+        <span>🚿 ${h.bath} bath</span>
+        <span>📐 ${h.sqft.toLocaleString()} sqft</span>
+        ${h.pool?'<span>🏊 Pool</span>':''}
+      </div>
+      <div class="house-price">List price: $${h.price.toLocaleString()}</div>
+      <div class="house-free">FREE 🎉</div>
+      <button class="buy-btn" onclick="buyHouse('${h.name}')">Buy This Property</button>
+    </div>
+  </div>`).join('');
+
+function buyHouse(name) {
+  showToast(`🔑 Keys to <strong>${name}</strong> are yours! Deed signed. Total: $0.00`);
+  launchConfetti();
+}
+updateCartCount();
+</script>
+</body>
+</html>

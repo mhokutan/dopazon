@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaCar — Ride Anywhere for $0 | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:50px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#FF9900;color:#0F1111;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;color:#0F1111;}
+  .ride-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:30px;}
+  .ride-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);display:flex;gap:0;flex-direction:column;transition:transform 0.2s;}
+  .ride-card:hover{transform:translateY(-3px);}
+  .ride-emoji{font-size:70px;height:130px;display:flex;align-items:center;justify-content:center;background:#f0f4ff;}
+  .ride-info{padding:16px;}
+  .ride-type{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .ride-sub{font-size:13px;color:#555;margin-bottom:8px;}
+  .ride-meta{display:flex;gap:12px;font-size:12px;color:#777;margin-bottom:12px;}
+  .ride-price{text-decoration:line-through;color:#aaa;font-size:13px;}
+  .ride-free{color:#1a1a2e;font-weight:700;font-size:22px;margin-bottom:10px;}
+  .book-btn{width:100%;background:#1a1a2e;color:#fff;border:none;border-radius:6px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;}
+  .book-btn:hover{background:#FF9900;color:#0F1111;}
+  .eta-banner{background:#DFF0EA;border:1px solid #067D62;padding:12px 20px;font-size:14px;color:#0F1111;border-radius:6px;margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">🚗</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaCar</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link" style="color:#FF9900;">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>🚗 DopaCar</h1>
+  <p>Get a ride anywhere on Earth. No surge pricing. No credit card. Totally free.</p>
+  <button class="svc-hero-btn" onclick="showToast('📍 Driver found! 3 min away. Cost: $0.00');launchConfetti();">Book a Ride — Free</button>
+</div>
+
+<div class="main">
+  <div class="eta-banner">📍 Your location detected — <strong>drivers available in your area.</strong> Average wait: 3 minutes. Price: always $0.</div>
+
+  <h2 class="section-title">Choose Your Ride</h2>
+  <div class="ride-grid" id="rideGrid"></div>
+
+  <h2 class="section-title">🏎️ Luxury Fleet</h2>
+  <div class="ride-grid" id="luxuryGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">car</span></div>
+    <div>© 2025 DopaCar by Dopazon. No real rides. No real drivers. No real charges.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const RIDES = [
+  {emoji:'🚗',type:'DopaX',sub:'Affordable everyday rides',eta:'3 min',seats:4,price:12},
+  {emoji:'🚙',type:'DopaXL',sub:'Extra space for groups',eta:'5 min',seats:6,price:22},
+  {emoji:'🛻',type:'DopaComfort',sub:'Newer cars, top drivers',eta:'4 min',seats:4,price:18},
+  {emoji:'🚐',type:'DopaVan',sub:'Perfect for big groups',eta:'7 min',seats:8,price:35},
+];
+const LUXURY = [
+  {emoji:'🏎️',type:'DopaSupercar',sub:'Ferrari / Lamborghini experience',eta:'8 min',seats:2,price:299},
+  {emoji:'🚘',type:'DopaElite',sub:'Mercedes S-Class, full bar',eta:'10 min',seats:4,price:150},
+  {emoji:'🚁',type:'DopaHeli',sub:'Helicopter transfer, city views',eta:'15 min',seats:4,price:1200},
+  {emoji:'🛥️',type:'DopaSpeedboat',sub:'Waterway transfer, VIP only',eta:'20 min',seats:6,price:800},
+];
+
+function renderRides(arr, id) {
+  document.getElementById(id).innerHTML = arr.map(r => `
+    <div class="ride-card">
+      <div class="ride-emoji">${r.emoji}</div>
+      <div class="ride-info">
+        <div class="ride-type">${r.type}</div>
+        <div class="ride-sub">${r.sub}</div>
+        <div class="ride-meta"><span>🕐 ${r.eta}</span><span>👤 ${r.seats} seats</span></div>
+        <div class="ride-price">Est. price: $${r.price}</div>
+        <div class="ride-free">FREE 🎉</div>
+        <button class="book-btn" onclick="bookRide('${r.type}','${r.eta}')">Book ${r.type}</button>
+      </div>
+    </div>`).join('');
+}
+
+function bookRide(type, eta) {
+  showToast(`🚗 <strong>${type}</strong> booked! Driver arriving in ${eta}. Fare: $0.00`);
+  launchConfetti();
+}
+
+renderRides(RIDES, 'rideGrid');
+renderRides(LUXURY, 'luxuryGrid');
+updateCartCount();
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaAir — Fly Free, Land Fake | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#0077b6,#00b4d8);padding:50px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#fff;color:#0077b6;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
+  .search-box{background:#fff;border-radius:10px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,0.1);margin-bottom:25px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
+  .search-box label{font-size:12px;font-weight:700;color:#555;display:block;margin-bottom:4px;}
+  .search-box input,.search-box select{border:1px solid #ddd;border-radius:6px;padding:9px 12px;font-size:14px;width:160px;}
+  .search-box button{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;}
+  .flights-list{display:flex;flex-direction:column;gap:14px;margin-bottom:30px;}
+  .flight-card{background:#fff;border-radius:8px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.08);display:flex;align-items:center;gap:20px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+  .flight-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.13);}
+  .airline-logo{font-size:40px;min-width:60px;text-align:center;}
+  .flight-route{flex:1;}
+  .route-line{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;margin-bottom:4px;}
+  .route-arrow{color:#0077b6;font-size:22px;}
+  .flight-meta{font-size:12px;color:#777;}
+  .flight-class{background:#e8f4fd;color:#0077b6;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;}
+  .flight-price{text-align:right;}
+  .price-was{text-decoration:line-through;color:#aaa;font-size:13px;}
+  .price-free{font-size:26px;font-weight:800;color:#0077b6;}
+  .book-btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;display:block;white-space:nowrap;}
+  .book-btn:hover{background:#005f94;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">✈️</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaAir</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link" style="color:#FF9900;">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>✈️ DopaAir</h1>
+  <p>First class to anywhere on Earth. Every seat upgraded. Every ticket free.</p>
+  <button class="svc-hero-btn" onclick="showToast('✈️ Boarding pass issued! Gate: Dopamine. Seat: 1A. Cost: $0.00');launchConfetti();">Book a Flight — Free</button>
+</div>
+
+<div class="main">
+  <div class="search-box">
+    <div><label>From</label><input type="text" value="New York (JFK)" placeholder="Origin"></div>
+    <div><label>To</label><input type="text" value="Tokyo (NRT)" placeholder="Destination"></div>
+    <div><label>Depart</label><input type="date"></div>
+    <div><label>Return</label><input type="date"></div>
+    <div><label>Class</label><select><option>First Class</option><option>Business</option><option>Economy</option></select></div>
+    <button onclick="showToast('🔍 Searching 847 airlines... all flights are FREE!');launchConfetti();">Search Flights</button>
+  </div>
+
+  <h2 class="section-title">✈️ Available Flights — All $0</h2>
+  <div class="flights-list" id="flightsList"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">air</span></div>
+    <div>© 2025 DopaAir by Dopazon. No real flights. No real boarding passes. No real charges.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const FLIGHTS = [
+  {logo:'🇺🇸',airline:'DopaAirlines',from:'JFK',to:'NRT',dep:'08:00',arr:'11:30+1',dur:'13h 30m',stops:'Nonstop',class:'First Class',was:4200},
+  {logo:'🇬🇧',airline:'BritishDopa',from:'LHR',to:'DXB',dep:'10:15',arr:'19:45',dur:'7h 30m',stops:'Nonstop',class:'Business',was:2800},
+  {logo:'🇫🇷',airline:'Air Dopazon',from:'CDG',to:'SYD',dep:'13:00',arr:'08:20+2',dur:'21h 20m',stops:'1 stop',class:'First Class',was:6500},
+  {logo:'🇦🇪',airline:'EmiratesDopa',from:'DXB',to:'LAX',dep:'02:30',arr:'07:45',dur:'16h 15m',stops:'Nonstop',class:'Business',was:3900},
+  {logo:'🇸🇬',airline:'DopaAsia',from:'SIN',to:'LHR',dep:'23:55',arr:'06:30+1',dur:'13h 35m',stops:'Nonstop',class:'First Class',was:5100},
+  {logo:'🇯🇵',airline:'DopaJapan',from:'NRT',to:'JFK',dep:'17:00',arr:'16:30',dur:'13h 30m',stops:'Nonstop',class:'Economy+',was:1200},
+];
+
+document.getElementById('flightsList').innerHTML = FLIGHTS.map(f => `
+  <div class="flight-card">
+    <div class="airline-logo">${f.logo}</div>
+    <div class="flight-route">
+      <div class="route-line">
+        <span>${f.from}</span>
+        <span class="route-arrow">→</span>
+        <span>${f.to}</span>
+      </div>
+      <div class="flight-meta">${f.dep} – ${f.arr} &nbsp;·&nbsp; ${f.dur} &nbsp;·&nbsp; ${f.stops} &nbsp;·&nbsp; ${f.airline}</div>
+    </div>
+    <div><span class="flight-class">${f.class}</span></div>
+    <div class="flight-price">
+      <div class="price-was">Was: $${f.was.toLocaleString()}</div>
+      <div class="price-free">FREE</div>
+      <button class="book-btn" onclick="bookFlight('${f.from}','${f.to}','${f.airline}')">Book Now</button>
+    </div>
+  </div>`).join('');
+
+function bookFlight(from, to, airline) {
+  showToast(`✈️ <strong>${airline}</strong> ${from}→${to} booked! Boarding pass: $0.00`);
+  launchConfetti();
+}
+updateCartCount();
+</script>
+</body>
+</html>

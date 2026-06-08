@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DopaFood — Fake Delivery in 30 Min | Dopazon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .svc-hero{background:linear-gradient(135deg,#e65c00,#f9d423);padding:50px 20px;text-align:center;color:#fff;}
+  .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
+  .svc-hero p{font-size:18px;opacity:0.9;margin-bottom:20px;}
+  .svc-hero-btn{background:#fff;color:#e65c00;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
+  .main{max-width:1200px;margin:0 auto;padding:20px;}
+  .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;color:#0F1111;}
+  .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:30px;}
+  .item-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:transform 0.2s;}
+  .item-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.14);}
+  .item-emoji{font-size:70px;height:140px;display:flex;align-items:center;justify-content:center;background:#fff8f0;}
+  .item-info{padding:14px;}
+  .item-name{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .item-rest{font-size:12px;color:#777;margin-bottom:6px;}
+  .item-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:#555;margin-bottom:10px;}
+  .item-price{text-decoration:line-through;color:#aaa;font-size:13px;}
+  .item-free{color:#e65c00;font-weight:700;font-size:18px;}
+  .order-btn{width:100%;background:#e65c00;color:#fff;border:none;border-radius:6px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
+  .order-btn:hover{background:#c94e00;}
+  .filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .filter-chip{background:#fff;border:1px solid #ddd;border-radius:20px;padding:6px 16px;font-size:13px;cursor:pointer;}
+  .filter-chip.active,.filter-chip:hover{background:#e65c00;color:#fff;border-color:#e65c00;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">
+    <div class="logo-text">dopa<span>zon</span></div>
+    <div class="logo-sub">.com</div>
+  </a>
+  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+    <span style="font-size:28px;margin-right:10px;">🍔</span>
+    <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaFood</span>
+  </div>
+  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="shop.html" class="cart-link">
+    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <strong>Cart</strong>
+  </a>
+</header>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-link">🏠 Home</a>
+  <a href="dopafood.html" class="nav-link" style="color:#FF9900;">🍔 DopaFood</a>
+  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
+  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+</nav>
+
+<div class="svc-hero">
+  <h1>🍔 DopaFood</h1>
+  <p>Order from 10,000+ restaurants. Delivered in 30 minutes. Costs exactly $0.00.</p>
+  <button class="svc-hero-btn" onclick="showToast('📍 Location detected: Everywhere. Delivering now!');launchConfetti();">Order Now — It's Free</button>
+</div>
+
+<div class="main">
+  <div class="filter-bar">
+    <div class="filter-chip active">All</div>
+    <div class="filter-chip">🍕 Pizza</div>
+    <div class="filter-chip">🍣 Sushi</div>
+    <div class="filter-chip">🍔 Burgers</div>
+    <div class="filter-chip">🥗 Healthy</div>
+    <div class="filter-chip">🌮 Mexican</div>
+    <div class="filter-chip">🍜 Asian</div>
+    <div class="filter-chip">🍰 Desserts</div>
+  </div>
+
+  <h2 class="section-title">🔥 Most Ordered Right Now</h2>
+  <div class="items-grid" id="featuredGrid"></div>
+
+  <h2 class="section-title">⚡ Free Delivery Specials</h2>
+  <div class="items-grid" id="specialsGrid"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<footer id="footer">
+  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">food</span></div>
+    <div>© 2025 DopaFood by Dopazon. No real food will be delivered. No real money will be charged.</div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const FOODS = [
+  {emoji:'🍕',name:'Margherita Supreme Pizza',rest:'PizzaPalace',time:'25 min',rating:'4.9',price:24},
+  {emoji:'🍔',name:'Double Smash Burger + Fries',rest:'BurgerDome',time:'20 min',rating:'4.8',price:18},
+  {emoji:'🍣',name:'Omakase Sushi Set (12 pcs)',rest:'SakuraSushi',time:'35 min',rating:'4.9',price:65},
+  {emoji:'🌮',name:'3x Carne Asada Tacos',rest:'TacoFiesta',time:'22 min',rating:'4.7',price:16},
+  {emoji:'🍜',name:'Tonkotsu Ramen XL Bowl',rest:'RamenKing',time:'30 min',rating:'4.8',price:22},
+  {emoji:'🥗',name:'Quinoa Power Bowl + Avocado',rest:'GreenBowl',time:'18 min',rating:'4.6',price:19},
+  {emoji:'🍗',name:'Nashville Hot Chicken Sandwich',rest:'HotBird',time:'28 min',rating:'4.7',price:17},
+  {emoji:'🍰',name:'NY Cheesecake Slice (Jumbo)',rest:'SweetSins',time:'15 min',rating:'4.9',price:12},
+  {emoji:'🥩',name:'16oz Wagyu Ribeye Steak',rest:'SteakHouse',time:'40 min',rating:'5.0',price:120},
+  {emoji:'🍛',name:'Butter Chicken + Garlic Naan',rest:'SpiceRoute',time:'32 min',rating:'4.8',price:21},
+  {emoji:'🌯',name:'Shawarma Wrap + Hummus',rest:'MedKitchen',time:'20 min',rating:'4.7',price:15},
+  {emoji:'🍦',name:'Gelato Trio + Waffle Cone',rest:'GelatoBar',time:'12 min',rating:'4.9',price:11},
+];
+
+function renderFoods(arr, id) {
+  document.getElementById(id).innerHTML = arr.map(f => `
+    <div class="item-card">
+      <div class="item-emoji">${f.emoji}</div>
+      <div class="item-info">
+        <div class="item-name">${f.name}</div>
+        <div class="item-rest">${f.rest}</div>
+        <div class="item-meta">⭐ ${f.rating} &nbsp;·&nbsp; 🕐 ${f.time} &nbsp;·&nbsp; 🛵 Free delivery</div>
+        <div class="item-price">Was: $${f.price}.00</div>
+        <div class="item-free">FREE</div>
+        <button class="order-btn" onclick="orderFood('${f.name}')">Order Now</button>
+      </div>
+    </div>`).join('');
+}
+
+function orderFood(name) {
+  showToast(`🍔 <strong>${name}</strong> on its way! ETA: 28 min. Total: $0.00`);
+  launchConfetti();
+}
+
+renderFoods(FOODS.slice(0,6), 'featuredGrid');
+renderFoods(FOODS.slice(6), 'specialsGrid');
+updateCartCount();
+</script>
+</body>
+</html>

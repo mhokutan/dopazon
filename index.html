@@ -80,6 +80,16 @@
   .stat-item strong{display:block;font-size:22px;color:#FF9900;font-weight:700;}
   .stat-item span{font-size:12px;}
 
+  /* ===== SERVICES SECTION ===== */
+  .services-section{margin-bottom:30px;}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+  .service-card{border-radius:8px;padding:20px 14px;text-align:center;cursor:pointer;text-decoration:none;color:#fff;transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;}
+  .service-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+  .service-card .svc-emoji{font-size:40px;display:block;margin-bottom:8px;}
+  .service-card .svc-name{font-size:16px;font-weight:700;display:block;margin-bottom:3px;}
+  .service-card .svc-tag{font-size:11px;opacity:0.85;display:block;}
+  .service-card .svc-badge{position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.25);font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;}
+
   /* ===== FOOTER ===== */
   #footer{margin-top:30px;}
   .footer-top{background:#37475A;color:#fff;padding:14px;text-align:center;font-size:13px;cursor:pointer;}
@@ -247,6 +257,71 @@
     <div class="stat-item"><strong id="statImpulses">0</strong><span>Impulses Avoided</span></div>
     <div class="stat-item"><strong id="statOnline">0</strong><span>Fake Shopping Right Now</span></div>
     <div class="stat-item"><strong id="statOrders">0</strong><span>Fake Orders Today</span></div>
+  </div>
+
+  <!-- Services -->
+  <h2 class="section-title">Dopazon Services — All Free, Obviously</h2>
+  <div class="services-section">
+    <div class="services-grid">
+      <a href="dopafood.html" class="service-card" style="background:linear-gradient(135deg,#e65c00,#f9d423);">
+        <span class="svc-badge">NEW</span>
+        <span class="svc-emoji">🍔</span>
+        <span class="svc-name">DopaFood</span>
+        <span class="svc-tag">Fake delivery in 30 min</span>
+      </a>
+      <a href="dopacar.html" class="service-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
+        <span class="svc-badge">HOT</span>
+        <span class="svc-emoji">🚗</span>
+        <span class="svc-name">DopaCar</span>
+        <span class="svc-tag">Ride anywhere for $0</span>
+      </a>
+      <a href="dopaair.html" class="service-card" style="background:linear-gradient(135deg,#0077b6,#00b4d8);">
+        <span class="svc-emoji">✈️</span>
+        <span class="svc-name">DopaAir</span>
+        <span class="svc-tag">Fly free, land fake</span>
+      </a>
+      <a href="dopayacht.html" class="service-card" style="background:linear-gradient(135deg,#023e8a,#0096c7);">
+        <span class="svc-emoji">⛵</span>
+        <span class="svc-name">DopaYacht</span>
+        <span class="svc-tag">Charter a yacht, spend $0</span>
+      </a>
+      <a href="dopaluxury.html" class="service-card" style="background:linear-gradient(135deg,#3d0c02,#8b2500);">
+        <span class="svc-badge">ELITE</span>
+        <span class="svc-emoji">🏰</span>
+        <span class="svc-name">DopaLuxury</span>
+        <span class="svc-tag">Mansions, free of charge</span>
+      </a>
+      <a href="dopahealth.html" class="service-card" style="background:linear-gradient(135deg,#1b4332,#40916c);">
+        <span class="svc-emoji">💊</span>
+        <span class="svc-name">DopaHealth</span>
+        <span class="svc-tag">Fake meds, real placebo</span>
+      </a>
+      <a href="dopamarket.html" class="service-card" style="background:linear-gradient(135deg,#f77f00,#d62828);">
+        <span class="svc-emoji">🛒</span>
+        <span class="svc-name">DopaMarket</span>
+        <span class="svc-tag">Groceries in 30 min</span>
+      </a>
+      <a href="dopapet.html" class="service-card" style="background:linear-gradient(135deg,#7b2d8b,#c77dff);">
+        <span class="svc-emoji">🐾</span>
+        <span class="svc-name">DopaPet</span>
+        <span class="svc-tag">Spoil your pet for free</span>
+      </a>
+      <a href="dopabook.html" class="service-card" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
+        <span class="svc-emoji">📚</span>
+        <span class="svc-name">DopaBook</span>
+        <span class="svc-tag">Every book, $0 forever</span>
+      </a>
+      <a href="dopagym.html" class="service-card" style="background:linear-gradient(135deg,#212529,#495057);">
+        <span class="svc-emoji">💪</span>
+        <span class="svc-name">DopaGym</span>
+        <span class="svc-tag">Fake gains, real dopamine</span>
+      </a>
+      <a href="dopagame.html" class="service-card" style="background:linear-gradient(135deg,#10002b,#5a189a);">
+        <span class="svc-emoji">🎮</span>
+        <span class="svc-name">DopaGame</span>
+        <span class="svc-tag">10,000+ games for free</span>
+      </a>
+    </div>
   </div>
 
   <!-- Categories -->
