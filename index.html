@@ -7,644 +7,534 @@
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D7NNBGKNB3');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
-  /* ===== NAV EXTRAS ===== */
-  .nav-all{font-weight:700;display:flex;align-items:center;gap:4px;}
+/* ===== HERO ===== */
+.hero{position:relative;overflow:hidden;max-height:500px;}
+.hero-slides{display:flex;transition:transform 0.5s ease;}
+.hero-slide{min-width:100%;height:500px;position:relative;overflow:hidden;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.55) 0%,transparent 60%);}
+.hero-content{position:absolute;top:50%;left:60px;transform:translateY(-50%);color:#fff;}
+.hero-content h1{font-size:38px;font-weight:700;margin-bottom:10px;text-shadow:1px 1px 4px rgba(0,0,0,0.6);}
+.hero-content p{font-size:16px;margin-bottom:18px;text-shadow:1px 1px 3px rgba(0,0,0,0.5);}
+.hero-btn{background:#FF9900;color:#0F1111;padding:11px 26px;border:none;border-radius:4px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
+.hero-btn:hover{background:#e88a00;}
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.85);border:none;width:42px;height:90px;cursor:pointer;z-index:10;font-size:22px;display:flex;align-items:center;justify-content:center;}
+.hero-arrow:hover{background:#fff;}
+.hero-prev{left:0;border-radius:0 4px 4px 0;}
+.hero-next{right:0;border-radius:4px 0 0 4px;}
+.hero-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;}
+.hero-dot.active{background:#FF9900;}
 
-  /* ===== ALERT BANNER ===== */
-  .alert-banner{background:#232F3E;color:#FF9900;text-align:center;padding:8px;font-size:13px;font-weight:700;}
-  .alert-banner span{color:#fff;font-weight:400;}
+/* ===== MAIN GRID ===== */
+.main{max-width:1500px;margin:0 auto;padding:12px 15px;}
 
-  /* ===== HERO CAROUSEL ===== */
-  .hero{position:relative;overflow:hidden;}
-  .hero-slides{display:flex;transition:transform 0.5s ease;}
-  .hero-slide{min-width:100%;height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-  .slide-bg{position:absolute;inset:0;}
-  .slide-content{position:relative;z-index:2;text-align:center;padding:20px;}
-  .slide-tag{background:#FF9900;color:#0F1111;font-size:12px;font-weight:700;padding:3px 10px;border-radius:2px;display:inline-block;margin-bottom:10px;}
-  .slide-title{font-size:42px;font-weight:700;color:#fff;text-shadow:1px 1px 4px rgba(0,0,0,0.5);margin-bottom:8px;}
-  .slide-sub{font-size:18px;color:#eee;margin-bottom:20px;}
-  .slide-btn{background:#FF9900;color:#0F1111;padding:12px 28px;border:none;border-radius:4px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
-  .slide-btn:hover{background:#FA8900;}
-  .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:none;width:45px;height:100px;cursor:pointer;z-index:10;font-size:24px;display:flex;align-items:center;justify-content:center;}
-  .hero-arrow:hover{background:#fff;}
-  .hero-prev{left:0;border-radius:0 4px 4px 0;}
-  .hero-next{right:0;border-radius:4px 0 0 4px;}
+/* ===== WIDGET GRID (Amazon-style 4-col) ===== */
+.widget-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px;}
+.widget{background:#fff;border-radius:4px;padding:16px;overflow:hidden;}
+.widget h3{font-size:18px;font-weight:700;margin-bottom:12px;color:#0F1111;}
+.widget-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.widget-img-grid img{width:100%;height:120px;object-fit:cover;border-radius:2px;cursor:pointer;transition:opacity 0.2s;}
+.widget-img-grid img:hover{opacity:0.85;}
+.widget-see-more{color:#007185;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin-top:4px;}
+.widget-see-more:hover{color:#C7511F;text-decoration:underline;}
 
-  /* ===== MAIN ===== */
-  .main{max-width:1500px;margin:0 auto;padding:15px;}
-  .section-title{font-size:21px;font-weight:700;margin-bottom:12px;color:#0F1111;}
+/* ===== DEALS ROW ===== */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.section-header h2{font-size:21px;font-weight:700;color:#0F1111;margin:0;}
+.section-header a{color:#007185;font-size:13px;text-decoration:none;}
+.section-header a:hover{text-decoration:underline;color:#C7511F;}
+.deal-timer{background:#0F1111;color:#FF9900;padding:4px 12px;border-radius:4px;font-size:14px;font-weight:700;}
 
-  /* ===== CATEGORY CARDS ===== */
-  .category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;margin-bottom:25px;}
-  .cat-card{background:#fff;padding:16px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;text-decoration:none;color:#0F1111;}
-  .cat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
-  .cat-card h3{font-size:15px;font-weight:700;margin-bottom:10px;}
-  .cat-card-img{width:100%;height:140px;object-fit:cover;border-radius:2px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:10px;}
-  .cat-see-more{color:#007185;font-size:13px;}
+/* ===== HORIZONTAL SCROLL ROW ===== */
+.hscroll-wrap{position:relative;margin-bottom:20px;}
+.hscroll{display:flex;gap:12px;overflow-x:auto;padding:4px 0 12px;scroll-behavior:smooth;-ms-overflow-style:none;scrollbar-width:none;}
+.hscroll::-webkit-scrollbar{display:none;}
+.hscroll-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.95);border:1px solid #ddd;border-radius:50%;width:36px;height:36px;cursor:pointer;z-index:5;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.hscroll-btn:hover{background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+.hscroll-prev{left:-14px;}
+.hscroll-next{right:-14px;}
 
-  /* ===== PRODUCT ROW ===== */
-  .product-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;margin-bottom:25px;}
-  .product-card{background:#fff;padding:14px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;position:relative;}
-  .product-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
-  .product-badge{position:absolute;top:10px;left:10px;background:#CC0C39;color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:2px;}
-  .product-badge.prime{background:#00A8E0;}
-  .product-badge.hot{background:#FF6900;}
-  .product-img{width:100%;height:180px;object-fit:contain;display:flex;align-items:center;justify-content:center;font-size:70px;margin-bottom:10px;}
-  .product-title{font-size:13px;color:#0F1111;margin-bottom:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .stars{color:#FF9900;font-size:13px;display:flex;align-items:center;gap:4px;margin-bottom:4px;}
-  .review-count{color:#007185;font-size:12px;}
-  .price-block{margin-bottom:8px;}
-  .price-original{text-decoration:line-through;color:#565959;font-size:12px;}
-  .price-free{color:#CC0C39;font-weight:700;font-size:20px;}
-  .price-saved{color:#CC0C39;font-size:12px;}
-  .prime-badge{display:flex;align-items:center;gap:4px;font-size:12px;color:#00A8E0;font-weight:700;margin-bottom:8px;}
-  .add-cart-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:7px;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.2s;}
-  .add-cart-btn:hover{background:#F7CA00;}
-  .buy-now-btn{width:100%;background:#FF9900;border:1px solid #FF8F00;border-radius:20px;padding:7px;font-size:13px;font-weight:500;cursor:pointer;margin-top:6px;}
-  .buy-now-btn:hover{background:#FA8900;}
+/* ===== PRODUCT CARD (horizontal row) ===== */
+.pcard{background:#fff;border-radius:4px;padding:12px;min-width:180px;max-width:180px;cursor:pointer;flex-shrink:0;}
+.pcard:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+.pcard img{width:100%;height:160px;object-fit:cover;border-radius:2px;margin-bottom:8px;}
+.pcard-emoji{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:70px;margin-bottom:8px;background:#f8f8f8;border-radius:2px;}
+.pcard-title{font-size:13px;color:#0F1111;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pcard-stars{color:#FF9900;font-size:12px;margin-bottom:2px;}
+.pcard-reviews{color:#007185;font-size:11px;margin-bottom:4px;}
+.pcard-price-orig{text-decoration:line-through;color:#565959;font-size:11px;}
+.pcard-free{color:#CC0C39;font-weight:700;font-size:18px;}
+.pcard-prime{color:#00A8E0;font-size:11px;font-weight:700;}
 
-  /* ===== DEALS ===== */
-  .deals-header{display:flex;align-items:center;gap:15px;margin-bottom:12px;}
-  .deals-timer{background:#0F1111;color:#fff;padding:4px 10px;border-radius:4px;font-size:13px;font-weight:700;}
-  .deals-timer span{color:#FF9900;font-size:16px;}
+/* ===== BANNER STRIPS ===== */
+.banner-strip{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.banner-card{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;height:200px;}
+.banner-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+.banner-card:hover img{transform:scale(1.02);}
+.banner-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 50%);}
+.banner-text{position:absolute;bottom:16px;left:16px;color:#fff;}
+.banner-text h3{font-size:18px;font-weight:700;margin-bottom:4px;}
+.banner-text a{background:#FF9900;color:#0F1111;padding:6px 14px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;display:inline-block;}
 
-  /* ===== STATS BAR ===== */
-  .stats-bar{background:#131921;color:#ccc;display:flex;justify-content:center;gap:40px;padding:15px;text-align:center;margin-bottom:20px;border-radius:4px;}
-  .stat-item strong{display:block;font-size:22px;color:#FF9900;font-weight:700;}
-  .stat-item span{font-size:12px;}
+/* ===== SERVICES ===== */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
+.service-card{border-radius:8px;padding:16px 12px;text-align:center;cursor:pointer;text-decoration:none;color:#fff;transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;}
+.service-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+.service-card .svc-emoji{font-size:36px;display:block;margin-bottom:6px;}
+.service-card .svc-name{font-size:14px;font-weight:700;display:block;margin-bottom:2px;}
+.service-card .svc-tag{font-size:11px;opacity:0.85;display:block;}
+.service-card .svc-badge{position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.25);font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;}
 
-  /* ===== SERVICES SECTION ===== */
-  .services-section{margin-bottom:30px;}
-  .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
-  .service-card{border-radius:8px;padding:20px 14px;text-align:center;cursor:pointer;text-decoration:none;color:#fff;transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;}
-  .service-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
-  .service-card .svc-emoji{font-size:40px;display:block;margin-bottom:8px;}
-  .service-card .svc-name{font-size:16px;font-weight:700;display:block;margin-bottom:3px;}
-  .service-card .svc-tag{font-size:11px;opacity:0.85;display:block;}
-  .service-card .svc-badge{position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.25);font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;}
+/* ===== CONFESSIONS PANEL ===== */
+.conf-panel{background:#fff;border-radius:4px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.conf-stat{background:#EAEDED;padding:14px 20px;border-radius:4px;text-align:center;min-width:160px;}
+.conf-stat strong{display:block;font-size:30px;font-weight:700;color:#067D62;}
+.conf-stat span{font-size:12px;color:#555;}
 
-  /* ===== FOOTER ===== */
-  #footer{margin-top:30px;}
-  .footer-top{background:#37475A;color:#fff;padding:14px;text-align:center;font-size:13px;cursor:pointer;}
-  .footer-top:hover{background:#485769;}
-  .footer-mid{background:#232F3E;color:#ddd;padding:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;}
-  .footer-col h4{color:#fff;font-size:14px;margin-bottom:12px;}
-  .footer-col a{display:block;color:#ddd;text-decoration:none;font-size:13px;margin-bottom:6px;}
-  .footer-col a:hover{color:#FF9900;text-decoration:underline;}
-  .footer-bot{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;}
-  .footer-logo{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
-  .footer-logo span{color:#FF9900;}
+/* ===== FOOTER ===== */
+#footer{margin-top:24px;}
+.footer-top{background:#37475A;color:#fff;padding:12px;text-align:center;font-size:13px;cursor:pointer;}
+.footer-top:hover{background:#485769;}
+.footer-mid{background:#232F3E;color:#ddd;padding:28px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px;}
+.footer-col h4{color:#fff;font-size:13px;margin-bottom:10px;}
+.footer-col a{display:block;color:#ddd;text-decoration:none;font-size:12px;margin-bottom:5px;}
+.footer-col a:hover{color:#FF9900;}
+.footer-bot{background:#131921;color:#aaa;text-align:center;padding:14px;font-size:12px;}
+.footer-logo{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;}
+.footer-logo span{color:#FF9900;}
 
-  /* ===== AUTH MODAL EXTRAS ===== */
-  .modal h2{font-size:20px;margin-bottom:15px;}
-  .auth-switch{text-align:center;margin-top:12px;font-size:13px;color:#555;}
-  .auth-switch a{color:#007185;cursor:pointer;}
+/* ===== AUTH MODAL ===== */
+.modal h2{font-size:20px;margin-bottom:15px;}
+.user-menu{position:relative;}
+.user-dropdown{display:none;position:absolute;top:100%;right:0;background:#fff;border:1px solid #ddd;border-radius:4px;min-width:220px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:150;padding:15px;}
+.user-menu:hover .user-dropdown{display:block;}
+.user-dropdown a{display:block;color:#0F1111;text-decoration:none;font-size:13px;padding:5px 0;border-bottom:1px solid #eee;}
+.user-dropdown a:last-child{border:none;}
+.user-dropdown a:hover{color:#C7511F;}
 
-  /* ===== USER DROPDOWN ===== */
-  .user-menu{position:relative;}
-  .user-dropdown{display:none;position:absolute;top:100%;right:0;background:#fff;border:1px solid #ddd;border-radius:4px;min-width:220px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:150;padding:15px;}
-  .user-menu:hover .user-dropdown{display:block;}
-  .user-dropdown a{display:block;color:#0F1111;text-decoration:none;font-size:13px;padding:5px 0;border-bottom:1px solid #eee;}
-  .user-dropdown a:last-child{border:none;}
-  .user-dropdown a:hover{color:#C7511F;}
-
-  /* ===== LOCATION BANNER ===== */
-  .location-banner{background:#DFF0EA;border:1px solid #067D62;padding:8px 15px;font-size:13px;color:#0F1111;display:flex;align-items:center;gap:8px;}
-  .location-banner strong{color:#067D62;}
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){.widget-grid{grid-template-columns:repeat(2,1fr);}.banner-strip{grid-template-columns:1fr;}}
+@media(max-width:600px){.widget-grid{grid-template-columns:1fr 1fr;}.hero-content{left:20px;}.hero-content h1{font-size:24px;}.hero-content p{font-size:13px;display:none;}.widget-img-grid img{height:80px;}.banner-card{height:140px;}}
 </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- HEADER -->
 <header id="header">
-  <!-- Logo -->
-  <a href="index.html" class="logo">
-    <div class="logo-text">dopa<span>zon</span></div>
-    <div class="logo-sub">.com</div>
-  </a>
-
-  <!-- Deliver to -->
-  <div class="deliver" onclick="showLocation()">
-    <span>📍 Deliver to</span>
-    <strong>United States</strong>
-  </div>
-
-  <!-- Search Bar -->
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="deliver"><span>📍 Deliver to</span><strong>United States</strong></div>
   <div class="search-bar">
     <select class="search-select">
-      <option>All</option>
-      <option>Fashion</option>
-      <option>Electronics</option>
-      <option>Beauty</option>
-      <option>Home</option>
-      <option>Sports</option>
-      <option>Pets</option>
-      <option>Food</option>
+      <option>All</option><option>Fashion</option><option>Electronics</option>
+      <option>Beauty</option><option>Home</option><option>Sports</option><option>Pets</option><option>Food</option>
     </select>
     <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')goSearch()">
-    <button class="search-btn" onclick="goSearch()">
-      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#0F1111" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
-    </button>
+    <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-
-  <!-- Account -->
   <div class="user-menu">
     <a href="#" class="header-link" id="accountBtn" onclick="handleAccountClick(event)">
-      <span id="accountGreet">Hello, sign in</span>
-      <strong>Account &amp; Lists ▾</strong>
+      <span id="accountGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong>
     </a>
-    <div class="user-dropdown" id="userDropdown">
-      <div style="text-align:center;margin-bottom:10px;" id="dropdownContent">
+    <div class="user-dropdown">
+      <div style="text-align:center;margin-bottom:10px;">
         <button onclick="openModal('login')" style="background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:8px 40px;font-size:14px;cursor:pointer;width:100%;margin-bottom:8px;">Sign in</button>
         <div style="font-size:12px;color:#555;">New customer? <a href="#" onclick="openModal('signup')" style="color:#007185;">Start here.</a></div>
       </div>
-      <a href="#">Your Account</a>
-      <a href="#">Your Orders</a>
-      <a href="#">Your Wish List</a>
+      <a href="#">Your Account</a><a href="#">Your Orders</a><a href="#">Wish List</a>
       <a href="confessions.html">Confession Cart</a>
       <a href="#" id="signoutLink" style="display:none" onclick="signOut()">Sign Out</a>
     </div>
   </div>
-
-  <!-- Returns -->
-  <a href="confessions.html" class="header-link">
-    <span>Returns</span>
-    <strong>&amp; Confessions</strong>
-  </a>
-
-  <!-- Cart -->
-  <a href="shop.html" class="cart-link">
-    <span style="font-size:28px;position:relative;">
-      🛒
-      <span class="cart-count" id="cartCount" style="position:absolute;top:-5px;right:-5px;">0</span>
-    </span>
-    <strong>Cart</strong>
-  </a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
-<!-- ===== NAV BAR ===== -->
+<!-- NAVBAR -->
 <nav id="navbar">
-  <a href="#" class="nav-link nav-all">☰ All</a>
+  <a href="#" class="nav-link" style="font-weight:700;">☰ All</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="shop.html" class="nav-link">DopePrime</a>
-  <a href="shop.html" class="nav-link">Fashion</a>
-  <a href="shop.html" class="nav-link">Electronics</a>
-  <a href="shop.html" class="nav-link">Home &amp; Kitchen</a>
-  <a href="shop.html" class="nav-link">Sports</a>
-  <a href="shop.html" class="nav-link">Beauty</a>
-  <a href="shop.html" class="nav-link">Pets</a>
+  <a href="shop.html?cat=fashion" class="nav-link">Fashion</a>
+  <a href="shop.html?cat=electronics" class="nav-link">Electronics</a>
+  <a href="shop.html?cat=home" class="nav-link">Home &amp; Kitchen</a>
+  <a href="shop.html?cat=sports" class="nav-link">Sports</a>
+  <a href="shop.html?cat=beauty" class="nav-link">Beauty</a>
+  <a href="shop.html?cat=pets" class="nav-link">Pets</a>
   <a href="shop.html" class="nav-link">Best Sellers</a>
   <a href="confessions.html" class="nav-link">Confession Cart</a>
   <a href="#" class="nav-link" style="color:#FF9900;">🎁 Free Everything</a>
 </nav>
 
-<!-- ===== ALERT BANNER ===== -->
-<div class="alert-banner">
-  🚀 <span>DopePrime: Unlimited fake shopping, unlimited dopamine — </span>Always FREE
-</div>
-
-<!-- ===== HERO CAROUSEL ===== -->
+<!-- HERO CAROUSEL -->
 <div class="hero">
   <div class="hero-slides" id="heroSlides">
-    <!-- Slide 1 -->
     <div class="hero-slide">
-      <div class="slide-bg" style="background:linear-gradient(135deg,#131921 0%,#1a2a3a 50%,#0d1b2a 100%);"></div>
-      <div class="slide-content">
-        <div class="slide-tag">DOPEPRIME DAY</div>
-        <div class="slide-title">Shop Everything.<br>Pay Nothing.</div>
-        <div class="slide-sub">The full Amazon experience — 100% free, 100% satisfying</div>
-        <a href="shop.html" class="slide-btn">Start Shopping Free →</a>
+      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1500&q=80" alt="Shop Everything">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Shop Everything.<br>Pay Nothing.</h1>
+        <p>The full shopping experience — 100% free, 100% satisfying</p>
+        <a href="shop.html" class="hero-btn">Start Shopping Free →</a>
       </div>
     </div>
-    <!-- Slide 2 -->
     <div class="hero-slide">
-      <div class="slide-bg" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b69 50%,#0d1b2a 100%);"></div>
-      <div class="slide-content">
-        <div class="slide-tag">TODAY'S DROPS</div>
-        <div class="slide-title">⚡ Lightning Deals</div>
-        <div class="slide-sub">5 absurd items. 0 dollars. Gone at midnight.</div>
-        <a href="drops.html" class="slide-btn">See Today's Drops →</a>
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1500&q=80" alt="Fashion">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>New Season.<br>Zero Dollars.</h1>
+        <p>Top fashion brands — all free, all the time</p>
+        <a href="shop.html?cat=fashion" class="hero-btn">Shop Fashion →</a>
       </div>
     </div>
-    <!-- Slide 3 -->
     <div class="hero-slide">
-      <div class="slide-bg" style="background:linear-gradient(135deg,#0a2e1a 0%,#1a4d2a 50%,#0d2a1b 100%);"></div>
-      <div class="slide-content">
-        <div class="slide-tag">CONFESSION CART</div>
-        <div class="slide-title">💬 $0 Spent Today</div>
-        <div class="slide-sub">Tell the world what you almost bought. Feel better instantly.</div>
-        <a href="confessions.html" class="slide-btn">Confess &amp; Heal →</a>
+      <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1500&q=80" alt="Electronics">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Best Gadgets.<br>Free Forever.</h1>
+        <p>Phones, laptops, headphones — add them all</p>
+        <a href="shop.html?cat=electronics" class="hero-btn">Shop Electronics →</a>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1500&q=80" alt="Sports">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Train Like a Pro.<br>$0 Budget.</h1>
+        <p>Premium sports & fitness gear — fake price, real dopamine</p>
+        <a href="shop.html?cat=sports" class="hero-btn">Shop Sports →</a>
       </div>
     </div>
   </div>
   <button class="hero-arrow hero-prev" onclick="slideHero(-1)">❮</button>
   <button class="hero-arrow hero-next" onclick="slideHero(1)">❯</button>
+  <div class="hero-dots" id="heroDots"></div>
 </div>
 
-<!-- ===== MAIN ===== -->
+<!-- MAIN -->
 <div class="main">
 
-  <!-- Stats Bar -->
-  <div class="stats-bar">
-    <div class="stat-item"><strong id="statSaved">$0</strong><span>Saved Today by Community</span></div>
-    <div class="stat-item"><strong id="statImpulses">0</strong><span>Impulses Avoided</span></div>
-    <div class="stat-item"><strong id="statOnline">0</strong><span>Fake Shopping Right Now</span></div>
-    <div class="stat-item"><strong id="statOrders">0</strong><span>Fake Orders Today</span></div>
-  </div>
-
-  <!-- Services -->
-  <h2 class="section-title">Dopazon Services — All Free, Obviously</h2>
-  <div class="services-section">
-    <div class="services-grid">
-      <a href="dopafood.html" class="service-card" style="background:linear-gradient(135deg,#e65c00,#f9d423);">
-        <span class="svc-badge">NEW</span>
-        <span class="svc-emoji">🍔</span>
-        <span class="svc-name">DopaFood</span>
-        <span class="svc-tag">Fake delivery in 30 min</span>
-      </a>
-      <a href="dopacar.html" class="service-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
-        <span class="svc-badge">HOT</span>
-        <span class="svc-emoji">🚗</span>
-        <span class="svc-name">DopaCar</span>
-        <span class="svc-tag">Ride anywhere for $0</span>
-      </a>
-      <a href="dopaair.html" class="service-card" style="background:linear-gradient(135deg,#0077b6,#00b4d8);">
-        <span class="svc-emoji">✈️</span>
-        <span class="svc-name">DopaAir</span>
-        <span class="svc-tag">Fly free, land fake</span>
-      </a>
-      <a href="dopayacht.html" class="service-card" style="background:linear-gradient(135deg,#023e8a,#0096c7);">
-        <span class="svc-emoji">⛵</span>
-        <span class="svc-name">DopaYacht</span>
-        <span class="svc-tag">Charter a yacht, spend $0</span>
-      </a>
-      <a href="dopaluxury.html" class="service-card" style="background:linear-gradient(135deg,#3d0c02,#8b2500);">
-        <span class="svc-badge">ELITE</span>
-        <span class="svc-emoji">🏰</span>
-        <span class="svc-name">DopaLuxury</span>
-        <span class="svc-tag">Mansions, free of charge</span>
-      </a>
-      <a href="dopahealth.html" class="service-card" style="background:linear-gradient(135deg,#1b4332,#40916c);">
-        <span class="svc-emoji">💊</span>
-        <span class="svc-name">DopaHealth</span>
-        <span class="svc-tag">Fake meds, real placebo</span>
-      </a>
-      <a href="dopamarket.html" class="service-card" style="background:linear-gradient(135deg,#f77f00,#d62828);">
-        <span class="svc-emoji">🛒</span>
-        <span class="svc-name">DopaMarket</span>
-        <span class="svc-tag">Groceries in 30 min</span>
-      </a>
-      <a href="dopapet.html" class="service-card" style="background:linear-gradient(135deg,#7b2d8b,#c77dff);">
-        <span class="svc-emoji">🐾</span>
-        <span class="svc-name">DopaPet</span>
-        <span class="svc-tag">Spoil your pet for free</span>
-      </a>
-      <a href="dopabook.html" class="service-card" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
-        <span class="svc-emoji">📚</span>
-        <span class="svc-name">DopaBook</span>
-        <span class="svc-tag">Every book, $0 forever</span>
-      </a>
-      <a href="dopagym.html" class="service-card" style="background:linear-gradient(135deg,#212529,#495057);">
-        <span class="svc-emoji">💪</span>
-        <span class="svc-name">DopaGym</span>
-        <span class="svc-tag">Fake gains, real dopamine</span>
-      </a>
-      <a href="dopagame.html" class="service-card" style="background:linear-gradient(135deg,#10002b,#5a189a);">
-        <span class="svc-emoji">🎮</span>
-        <span class="svc-name">DopaGame</span>
-        <span class="svc-tag">10,000+ games for free</span>
-      </a>
+  <!-- ROW 1: 4-col category widgets (Amazon style) -->
+  <div class="widget-grid" id="widgetGrid">
+    <div class="widget">
+      <h3>Shop Fashion</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80" onclick="location='shop.html?cat=fashion'" alt="Sneakers">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=80" onclick="location='shop.html?cat=fashion'" alt="Bag">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80" onclick="location='shop.html?cat=fashion'" alt="Watch">
+        <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=300&q=80" onclick="location='shop.html?cat=fashion'" alt="Jacket">
+      </div>
+      <a href="shop.html?cat=fashion" class="widget-see-more">See all fashion →</a>
+    </div>
+    <div class="widget">
+      <h3>Electronics Deals</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80" onclick="location='shop.html?cat=electronics'" alt="Headphones">
+        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" onclick="location='shop.html?cat=electronics'" alt="Laptop">
+        <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829e1?w=300&q=80" onclick="location='shop.html?cat=electronics'" alt="TV">
+        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80" onclick="location='shop.html?cat=electronics'" alt="Keyboard">
+      </div>
+      <a href="shop.html?cat=electronics" class="widget-see-more">See all electronics →</a>
+    </div>
+    <div class="widget">
+      <h3>Home &amp; Kitchen</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300&q=80" onclick="location='shop.html?cat=home'" alt="Coffee">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=80" onclick="location='shop.html?cat=home'" alt="Cookware">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80" onclick="location='shop.html?cat=home'" alt="Bean Bag">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=300&q=80" onclick="location='shop.html?cat=home'" alt="Blanket">
+      </div>
+      <a href="shop.html?cat=home" class="widget-see-more">See all home →</a>
+    </div>
+    <div class="widget">
+      <h3>Beauty &amp; Personal Care</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=300&q=80" onclick="location='shop.html?cat=beauty'" alt="Serum">
+        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&q=80" onclick="location='shop.html?cat=beauty'" alt="Cream">
+        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=300&q=80" onclick="location='shop.html?cat=beauty'" alt="Makeup">
+        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300&q=80" onclick="location='shop.html?cat=beauty'" alt="Moisturizer">
+      </div>
+      <a href="shop.html?cat=beauty" class="widget-see-more">See all beauty →</a>
     </div>
   </div>
 
-  <!-- Categories -->
-  <h2 class="section-title">Shop by Category</h2>
-  <div class="category-grid">
-    <a href="shop.html?cat=fashion" class="cat-card">
-      <div class="cat-card-img">👗</div>
-      <h3>Fashion</h3>
-      <div class="cat-see-more">See all looks →</div>
-    </a>
-    <a href="shop.html?cat=electronics" class="cat-card">
-      <div class="cat-card-img">📱</div>
-      <h3>Electronics</h3>
-      <div class="cat-see-more">See all gadgets →</div>
-    </a>
-    <a href="shop.html?cat=beauty" class="cat-card">
-      <div class="cat-card-img">💄</div>
-      <h3>Beauty</h3>
-      <div class="cat-see-more">See all beauty →</div>
-    </a>
-    <a href="shop.html?cat=home" class="cat-card">
-      <div class="cat-card-img">🏠</div>
-      <h3>Home &amp; Kitchen</h3>
-      <div class="cat-see-more">See all home →</div>
-    </a>
-    <a href="shop.html?cat=sports" class="cat-card">
-      <div class="cat-card-img">🏃</div>
-      <h3>Sports</h3>
-      <div class="cat-see-more">See all sports →</div>
-    </a>
-    <a href="shop.html?cat=pets" class="cat-card">
-      <div class="cat-card-img">🐾</div>
-      <h3>Pets</h3>
-      <div class="cat-see-more">See all pets →</div>
-    </a>
-    <a href="shop.html?cat=food" class="cat-card">
-      <div class="cat-card-img">🍔</div>
-      <h3>Food Delivery</h3>
-      <div class="cat-see-more">See all food →</div>
-    </a>
-    <a href="drops.html" class="cat-card">
-      <div class="cat-card-img">⚡</div>
-      <h3>Daily Drops</h3>
-      <div class="cat-see-more">See today's drops →</div>
-    </a>
+  <!-- ROW 2: Best Sellers horizontal scroll -->
+  <div class="section-header">
+    <h2>Best Sellers <span style="font-size:14px;color:#CC0C39;font-weight:400;margin-left:8px;">Ends in: <strong id="dealTimer">23:59:59</strong></span></h2>
+    <a href="shop.html">See all deals →</a>
+  </div>
+  <div class="hscroll-wrap">
+    <button class="hscroll-btn hscroll-prev" onclick="scroll('bestScroll',-1)">❮</button>
+    <div class="hscroll" id="bestScroll"></div>
+    <button class="hscroll-btn hscroll-next" onclick="scroll('bestScroll',1)">❯</button>
   </div>
 
-  <!-- Best Sellers -->
-  <div class="deals-header">
-    <h2 class="section-title" style="margin:0">Best Sellers — $0 Each</h2>
-    <div class="deals-timer">Ends in: <span id="dealTimer">23:59:59</span></div>
+  <!-- ROW 3: 4-col second batch widgets -->
+  <div class="widget-grid">
+    <div class="widget">
+      <h3>Sports &amp; Outdoors</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&q=80" onclick="location='shop.html?cat=sports'" alt="Dumbbells">
+        <img src="https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=300&q=80" onclick="location='shop.html?cat=sports'" alt="Yoga">
+        <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=300&q=80" onclick="location='shop.html?cat=sports'" alt="Tracker">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=300&q=80" onclick="location='shop.html?cat=sports'" alt="Camping">
+      </div>
+      <a href="shop.html?cat=sports" class="widget-see-more">See all sports →</a>
+    </div>
+    <div class="widget">
+      <h3>Pet Supplies</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&q=80" onclick="location='shop.html?cat=pets'" alt="Dog">
+        <img src="https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=300&q=80" onclick="location='shop.html?cat=pets'" alt="Cat Tower">
+        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=300&q=80" onclick="location='shop.html?cat=pets'" alt="Dog Bed">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=300&q=80" onclick="location='shop.html?cat=pets'" alt="Dog Treats">
+      </div>
+      <a href="shop.html?cat=pets" class="widget-see-more">See all pets →</a>
+    </div>
+    <div class="widget">
+      <h3>Food &amp; Gourmet</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=300&q=80" onclick="location='shop.html?cat=food'" alt="Chocolate">
+        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&q=80" onclick="location='shop.html?cat=food'" alt="Coffee">
+        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&q=80" onclick="location='shop.html?cat=food'" alt="Honey">
+        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=300&q=80" onclick="location='shop.html?cat=food'" alt="Matcha">
+      </div>
+      <a href="shop.html?cat=food" class="widget-see-more">See all food →</a>
+    </div>
+    <div class="widget">
+      <h3>Today's Drops ⚡</h3>
+      <div class="widget-img-grid">
+        <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=300&q=80" onclick="location='drops.html'" alt="Console">
+        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=300&q=80" onclick="location='drops.html'" alt="Camera">
+        <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=300&q=80" onclick="location='drops.html'" alt="Sunglasses">
+        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&q=80" onclick="location='drops.html'" alt="Ring">
+      </div>
+      <a href="drops.html" class="widget-see-more">See today's drops →</a>
+    </div>
   </div>
-  <div class="product-row" id="bestSellers"></div>
 
-  <!-- Featured Section: Confession Cart teaser -->
-  <div style="background:#fff;border-radius:4px;padding:25px;margin-bottom:25px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;">
-    <div style="font-size:80px;">💬</div>
+  <!-- BANNER STRIPS -->
+  <div class="banner-strip">
+    <div class="banner-card" onclick="location='shop.html?cat=fashion'">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80" alt="Fashion Sale">
+      <div class="banner-overlay"></div>
+      <div class="banner-text"><h3>Fashion Picks</h3><a href="shop.html?cat=fashion">Shop now →</a></div>
+    </div>
+    <div class="banner-card" onclick="location='shop.html?cat=electronics'">
+      <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=800&q=80" alt="Tech Deals">
+      <div class="banner-overlay"></div>
+      <div class="banner-text"><h3>Tech Deals</h3><a href="shop.html?cat=electronics">Shop now →</a></div>
+    </div>
+  </div>
+
+  <!-- NEW ARRIVALS horizontal scroll -->
+  <div class="section-header">
+    <h2>New Arrivals — Recommended For You</h2>
+    <a href="shop.html">See more →</a>
+  </div>
+  <div class="hscroll-wrap">
+    <button class="hscroll-btn hscroll-prev" onclick="scroll('newScroll',-1)">❮</button>
+    <div class="hscroll" id="newScroll"></div>
+    <button class="hscroll-btn hscroll-next" onclick="scroll('newScroll',1)">❯</button>
+  </div>
+
+  <!-- DOPAZON SERVICES -->
+  <div class="section-header" style="margin-top:8px;">
+    <h2>Dopazon Services — All Free</h2>
+    <a href="shop.html">See all →</a>
+  </div>
+  <div class="services-grid" style="margin-bottom:20px;">
+    <a href="dopafood.html" class="service-card" style="background:linear-gradient(135deg,#e65c00,#f9d423);"><span class="svc-badge">NEW</span><span class="svc-emoji">🍔</span><span class="svc-name">DopaFood</span><span class="svc-tag">Delivery in 30 min</span></a>
+    <a href="dopacar.html" class="service-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);"><span class="svc-badge">HOT</span><span class="svc-emoji">🚗</span><span class="svc-name">DopaCar</span><span class="svc-tag">Ride for $0</span></a>
+    <a href="dopaair.html" class="service-card" style="background:linear-gradient(135deg,#0077b6,#00b4d8);"><span class="svc-emoji">✈️</span><span class="svc-name">DopaAir</span><span class="svc-tag">Fly free</span></a>
+    <a href="dopayacht.html" class="service-card" style="background:linear-gradient(135deg,#023e8a,#0096c7);"><span class="svc-emoji">⛵</span><span class="svc-name">DopaYacht</span><span class="svc-tag">Charter $0</span></a>
+    <a href="dopaluxury.html" class="service-card" style="background:linear-gradient(135deg,#3d0c02,#8b2500);"><span class="svc-badge">ELITE</span><span class="svc-emoji">🏰</span><span class="svc-name">DopaLuxury</span><span class="svc-tag">Mansions free</span></a>
+    <a href="dopahealth.html" class="service-card" style="background:linear-gradient(135deg,#1b4332,#40916c);"><span class="svc-emoji">💊</span><span class="svc-name">DopaHealth</span><span class="svc-tag">Feel better, $0</span></a>
+    <a href="dopamarket.html" class="service-card" style="background:linear-gradient(135deg,#f77f00,#d62828);"><span class="svc-emoji">🛒</span><span class="svc-name">DopaMarket</span><span class="svc-tag">Groceries free</span></a>
+    <a href="dopapet.html" class="service-card" style="background:linear-gradient(135deg,#7b2d8b,#c77dff);"><span class="svc-emoji">🐾</span><span class="svc-name">DopaPet</span><span class="svc-tag">Spoil your pet</span></a>
+    <a href="dopabook.html" class="service-card" style="background:linear-gradient(135deg,#2d6a4f,#52b788);"><span class="svc-emoji">📚</span><span class="svc-name">DopaBook</span><span class="svc-tag">Every book $0</span></a>
+    <a href="dopagym.html" class="service-card" style="background:linear-gradient(135deg,#212529,#495057);"><span class="svc-emoji">💪</span><span class="svc-name">DopaGym</span><span class="svc-tag">Fake gains</span></a>
+    <a href="dopagame.html" class="service-card" style="background:linear-gradient(135deg,#10002b,#5a189a);"><span class="svc-emoji">🎮</span><span class="svc-name">DopaGame</span><span class="svc-tag">10,000+ games</span></a>
+  </div>
+
+  <!-- CONFESSION PANEL -->
+  <div class="conf-panel">
+    <div style="font-size:70px;">💬</div>
     <div style="flex:1;">
       <div style="font-size:11px;color:#CC0C39;font-weight:700;margin-bottom:4px;">COMMUNITY FEATURE</div>
-      <h2 style="font-size:22px;margin-bottom:8px;">Confession Cart</h2>
-      <p style="color:#555;font-size:14px;margin-bottom:14px;">Share what you almost bought. Read others' close calls. Collectively save millions every day.</p>
-      <a href="confessions.html" style="background:#FFD814;border:1px solid #FCD200;padding:9px 22px;border-radius:4px;font-size:14px;font-weight:500;text-decoration:none;color:#0F1111;display:inline-block;">Read Confessions</a>
+      <h2 style="font-size:20px;margin-bottom:6px;">Confession Cart</h2>
+      <p style="color:#555;font-size:13px;margin-bottom:12px;">Share what you almost bought. Read others' close calls. Collectively save millions every day.</p>
+      <a href="confessions.html" style="background:#FFD814;border:1px solid #FCD200;padding:8px 20px;border-radius:4px;font-size:14px;font-weight:500;text-decoration:none;color:#0F1111;display:inline-block;">Read Confessions</a>
     </div>
-    <div style="background:#EAEDED;padding:15px;border-radius:4px;min-width:200px;">
-      <div style="font-size:13px;color:#555;margin-bottom:8px;">Community saved today:</div>
-      <div style="font-size:32px;font-weight:700;color:#067D62;" id="confSaved">$0</div>
-      <div style="font-size:12px;color:#aaa;">and counting...</div>
-    </div>
+    <div class="conf-stat"><strong id="confSaved">$847,293</strong><span>saved by community today</span></div>
+    <div class="conf-stat"><strong id="statImpulses">14,203</strong><span>impulses avoided</span></div>
   </div>
-
-  <!-- New Arrivals -->
-  <h2 class="section-title">New Arrivals — Recommended for You</h2>
-  <div class="product-row" id="newArrivals"></div>
 
 </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer id="footer">
   <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
   <div class="footer-mid">
-    <div class="footer-col">
-      <h4>Get to Know Us</h4>
-      <a href="#">About Dopazon</a>
-      <a href="#">The Science of Dopamine</a>
-      <a href="#">Press</a>
-      <a href="#">Investor Relations</a>
-      <a href="#">Dopazon Cares</a>
-    </div>
-    <div class="footer-col">
-      <h4>Make Money With Us</h4>
-      <a href="shop.html">Open Your Store</a>
-      <a href="#">Dopazon Affiliates</a>
-      <a href="#">Advertise Your Products</a>
-      <a href="#">Self-Publish</a>
-    </div>
-    <div class="footer-col">
-      <h4>Dopazon Payment Products</h4>
-      <a href="#">DopaPay (Always Free)</a>
-      <a href="#">DopaPrime Benefits</a>
-      <a href="#">No Credit Card Required</a>
-      <a href="#">Never a Charge</a>
-    </div>
-    <div class="footer-col">
-      <h4>Let Us Help You</h4>
-      <a href="#">Your Account</a>
-      <a href="#">Your Orders</a>
-      <a href="#">Shipping &amp; Delivery ($0)</a>
-      <a href="#">Returns (Keep Everything)</a>
-      <a href="#">Help</a>
-    </div>
+    <div class="footer-col"><h4>Get to Know Us</h4><a href="#">About Dopazon</a><a href="#">The Science of Dopamine</a><a href="#">Press</a><a href="#">Dopazon Cares</a></div>
+    <div class="footer-col"><h4>Make Money With Us</h4><a href="shop.html">Open Your Store</a><a href="#">Dopazon Affiliates</a><a href="#">Advertise Products</a></div>
+    <div class="footer-col"><h4>Payment Products</h4><a href="#">DopaPay (Free)</a><a href="#">DopePrime Benefits</a><a href="#">No Credit Card Ever</a></div>
+    <div class="footer-col"><h4>Let Us Help You</h4><a href="#">Your Account</a><a href="#">Your Orders</a><a href="#">Shipping ($0)</a><a href="#">Returns (Keep It)</a><a href="#">Help</a></div>
   </div>
   <div class="footer-bot">
     <div class="footer-logo">dopa<span>zon</span></div>
-    <div>Conditions of Use &nbsp;|&nbsp; Privacy Notice &nbsp;|&nbsp; Consumer Health Data Privacy Disclosure</div>
-    <div style="margin-top:6px;">© 2024-2025 Dopazon.com, Inc. or its affiliates. This is a <strong>simulated shopping experience</strong>. No real purchases are made.</div>
-    <div style="margin-top:4px;color:#777;font-size:11px;">Satisfy the urge. Keep the money. Always.</div>
+    <div>Conditions of Use &nbsp;|&nbsp; Privacy Notice &nbsp;|&nbsp; Consumer Health Data</div>
+    <div style="margin-top:5px;">© 2024-2025 Dopazon.com — A simulated shopping experience. No real purchases made.</div>
   </div>
 </footer>
 
-<!-- ===== TOAST ===== -->
-<div class="cart-toast" id="cartToast">
-  ✅ Added to cart — <strong>$0 charged</strong>
-</div>
+<div class="cart-toast" id="cartToast"></div>
 
-<!-- ===== AUTH MODAL ===== -->
+<!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
     <h2 id="modalTitle">Sign in</h2>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="authEmail" placeholder="you@example.com">
-    </div>
-    <div class="form-group" id="nameGroup" style="display:none">
-      <label>Your Name</label>
-      <input type="text" id="authName" placeholder="First name">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="authPass" placeholder="At least 6 characters">
-    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="authEmail" placeholder="you@example.com"></div>
+    <div class="form-group" id="nameGroup" style="display:none"><label>Your Name</label><input type="text" id="authName" placeholder="First name"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="authPass" placeholder="At least 6 characters"></div>
     <button class="form-submit" id="authSubmit" onclick="submitAuth()">Sign in</button>
-    <div class="auth-switch" id="authSwitch">
-      New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>
-    </div>
+    <div style="text-align:center;margin-top:10px;font-size:13px;" id="authSwitch">New to Dopazon? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Create account</a></div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
-// ===== PRODUCTS DATA =====
 const PRODUCTS = [
-  {id:1,emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,cat:'fashion',stars:4.8,reviews:12847},
-  {id:2,emoji:'📱',title:'Aplix ProMax Ultra — 6.9" Display, Triple Camera System',price:1299,cat:'electronics',stars:4.7,reviews:8934},
-  {id:3,emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging Formula',price:68,cat:'beauty',stars:4.9,reviews:23156},
-  {id:4,emoji:'☕',title:'BrewMaster Pro Coffee Maker — 12-Cup, Built-in Grinder',price:249,cat:'home',stars:4.6,reviews:5432},
-  {id:5,emoji:'🎧',title:'SoundWave Elite Wireless Headphones — 40hr Battery',price:349,cat:'electronics',stars:4.8,reviews:18923},
-  {id:6,emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free, Real Protein',price:89,cat:'pets',stars:4.9,reviews:31024},
-  {id:7,emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lb per Hand',price:429,cat:'sports',stars:4.7,reviews:7823},
-  {id:8,emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 Color LED',price:45,cat:'home',stars:4.5,reviews:9234},
-  {id:9,emoji:'👜',title:'LuxCraft Structured Tote Bag — Pebbled Leather, Gold Hardware',price:395,cat:'fashion',stars:4.6,reviews:4123},
-  {id:10,emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games',price:199,cat:'electronics',stars:4.8,reviews:15678},
-  {id:11,emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,cat:'beauty',stars:4.7,reviews:11234},
-  {id:12,emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover',price:299,cat:'home',stars:4.5,reviews:6789},
+  {id:'s1',img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,cat:'fashion',stars:4.8,reviews:12847},
+  {id:'s2',img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',emoji:'📱',title:'Aplix ProMax Ultra — 6.9" OLED, Triple Camera',price:1299,cat:'electronics',stars:4.7,reviews:8934},
+  {id:'s3',img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&q=80',emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging',price:68,cat:'beauty',stars:4.9,reviews:23156},
+  {id:'s4',img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80',emoji:'☕',title:'BrewMaster Pro Coffee Machine — 12-Cup, Built-in Grinder',price:249,cat:'home',stars:4.6,reviews:5432},
+  {id:'s5',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',emoji:'🎧',title:'SoundWave Elite Wireless — 40hr Battery, ANC',price:349,cat:'electronics',stars:4.8,reviews:18923},
+  {id:'s6',img:'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80',emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free',price:89,cat:'pets',stars:4.9,reviews:31024},
+  {id:'s7',img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5-52.5 lbs',price:429,cat:'sports',stars:4.7,reviews:7823},
+  {id:'s8',img:'https://images.unsplash.com/photo-1601599561213-832382fd07ba?w=400&q=80',emoji:'🌿',title:'ZenMist Essential Oil Diffuser — 7 LED Colors',price:45,cat:'home',stars:4.5,reviews:9234},
+  {id:'s9',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80',emoji:'👜',title:'LuxCraft Structured Tote — Pebbled Leather',price:395,cat:'fashion',stars:4.6,reviews:4123},
+  {id:'s10',img:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80',emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Games',price:199,cat:'electronics',stars:4.8,reviews:15678},
+  {id:'s11',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80',emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,cat:'beauty',stars:4.7,reviews:11234},
+  {id:'s12',img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80',emoji:'🛋️',title:'NapCloud Bean Bag — Memory Foam, Velvet',price:299,cat:'home',stars:4.5,reviews:6789},
 ];
 
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
-let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
-let user = null;
-let authMode = 'login';
+const {createClient}=supabase;
+const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
+let cart=JSON.parse(localStorage.getItem('dz_cart')||'[]');
+let user=null;
+let authMode='login';
 
-// ===== INIT =====
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded',async()=>{
   updateCartCount();
-  const { data: { session } } = await sb.auth.getSession();
-  user = session?.user ? { name: session.user.user_metadata?.name || session.user.email.split('@')[0], email: session.user.email, id: session.user.id } : null;
+  const {data:{session}}=await sb.auth.getSession();
+  user=session?.user?{name:session.user.user_metadata?.name||session.user.email.split('@')[0],email:session.user.email,id:session.user.id}:null;
   updateUserUI();
-  renderBestSellers();
-  renderNewArrivals();
-  startStats();
+  renderRow('bestScroll', PRODUCTS.slice(0,10));
+  renderRow('newScroll', [...PRODUCTS].sort(()=>Math.random()-0.5));
   startDealTimer();
   startHeroAuto();
+  startStats();
 });
 
+function updateCartCount(){document.getElementById('cartCount').textContent=cart.length;}
+function updateUserUI(){
+  const g=document.getElementById('accountGreet');
+  const s=document.getElementById('signoutLink');
+  if(user){g.textContent='Hello, '+user.name;s.style.display='block';}
+  else{g.textContent='Hello, sign in';s.style.display='none';}
+}
 
-function updateUserUI() {
-  const btn = document.getElementById('accountGreet');
-  const signout = document.getElementById('signoutLink');
-  if (user) {
-    btn.textContent = 'Hello, ' + user.name;
-    signout.style.display = 'block';
-  } else {
-    btn.textContent = 'Hello, sign in';
-    signout.style.display = 'none';
+function renderRow(containerId, items){
+  document.getElementById(containerId).innerHTML=items.map(p=>`
+    <div class="pcard" onclick="location='product.html?id=${p.id}'">
+      ${p.img?`<img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.outerHTML='<div class=pcard-emoji>${p.emoji}</div>'">`:`<div class="pcard-emoji">${p.emoji}</div>`}
+      <div class="pcard-title">${p.title}</div>
+      <div class="pcard-stars">${'★'.repeat(Math.floor(p.stars))}${'☆'.repeat(5-Math.floor(p.stars))}</div>
+      <div class="pcard-reviews">(${p.reviews.toLocaleString()})</div>
+      <div class="pcard-price-orig">Was $${p.price.toLocaleString()}</div>
+      <div class="pcard-free">FREE</div>
+      <div class="pcard-prime">✓ DopePrime</div>
+    </div>`).join('');
+}
+
+function scroll(id, dir){
+  document.getElementById(id).scrollBy({left: dir*600, behavior:'smooth'});
+}
+
+// Hero
+let slide=0,heroTimer;
+function slideHero(dir){
+  const slides=document.querySelectorAll('.hero-slide');
+  slide=(slide+dir+slides.length)%slides.length;
+  document.getElementById('heroSlides').style.transform=`translateX(-${slide*100}%)`;
+  document.querySelectorAll('.hero-dot').forEach((d,i)=>d.classList.toggle('active',i===slide));
+  clearInterval(heroTimer); heroTimer=setInterval(()=>slideHero(1),5000);
+}
+function startHeroAuto(){
+  const slides=document.querySelectorAll('.hero-slide');
+  document.getElementById('heroDots').innerHTML=[...slides].map((_,i)=>`<div class="hero-dot${i===0?' active':''}" onclick="slideHero(${i-slide})"></div>`).join('');
+  heroTimer=setInterval(()=>slideHero(1),5000);
+}
+
+// Timer
+function startDealTimer(){
+  function tick(){
+    const now=new Date(),midnight=new Date();midnight.setHours(24,0,0,0);
+    const d=midnight-now;
+    document.getElementById('dealTimer').textContent=
+      String(Math.floor(d/3600000)).padStart(2,'0')+':'+
+      String(Math.floor((d%3600000)/60000)).padStart(2,'0')+':'+
+      String(Math.floor((d%60000)/1000)).padStart(2,'0');
   }
+  tick();setInterval(tick,1000);
 }
 
-function renderBestSellers() {
-  const el = document.getElementById('bestSellers');
-  const items = PRODUCTS.slice(0, 6);
-  el.innerHTML = items.map(p => productCard(p, true)).join('');
-}
-
-function renderNewArrivals() {
-  const el = document.getElementById('newArrivals');
-  const items = [...PRODUCTS].sort(() => Math.random() - 0.5).slice(0, 6);
-  el.innerHTML = items.map(p => productCard(p, false)).join('');
-}
-
-function productCard(p, isSale) {
-  const stars = '★'.repeat(Math.floor(p.stars)) + (p.stars % 1 >= 0.5 ? '½' : '');
-  return `
-  <div class="product-card" onclick="goToProduct(${p.id})">
-    ${isSale ? '<div class="product-badge">SALE</div>' : '<div class="product-badge prime">DopePrime</div>'}
-    <div class="product-img">${p.emoji}</div>
-    <div class="product-title">${p.title}</div>
-    <div class="stars">${'★★★★★'.slice(0,Math.floor(p.stars)).split('').map(s=>`<span>${s}</span>`).join('')} <span class="review-count">(${p.reviews.toLocaleString()})</span></div>
-    <div class="price-block">
-      <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
-      <div class="price-free">FREE</div>
-      <div class="price-saved">You save: $${p.price.toLocaleString()}.00 (100%)</div>
-    </div>
-    <div class="prime-badge">✓ DopePrime — Free Fake Delivery</div>
-    <button class="add-cart-btn" onclick="addToCart(event,${p.id})">Add to Cart</button>
-    <button class="buy-now-btn" onclick="buyNow(event,${p.id})">Buy Now</button>
-  </div>`;
-}
-
-function addToCart(e, id) {
-  e.stopPropagation();
-  const p = PRODUCTS.find(x => x.id === id);
-  cart.push({...p, addedAt: Date.now()});
-  localStorage.setItem('dz_cart', JSON.stringify(cart));
-  updateCartCount();
-  showToast('✅ Added to cart — <strong>$0 charged</strong>');
-  launchConfetti();
-  gtag('event', 'add_to_cart', {item_id: id, item_name: p.title, value: 0});
-}
-
-function buyNow(e, id) {
-  e.stopPropagation();
-  addToCart(e, id);
-  setTimeout(() => window.location = 'shop.html', 800);
-}
-
-function goToProduct(id) {
-  window.location = 'product.html?id=s' + id;
-}
-
-
-// ===== STATS =====
-function startStats() {
-  let saved = 847293, impulses = 14203, online = 2847, orders = 31024;
-  function tick() {
-    saved += Math.floor(Math.random() * 500);
-    impulses += Math.floor(Math.random() * 3);
-    online += (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 5);
-    orders += Math.floor(Math.random() * 2);
-    document.getElementById('statSaved').textContent = '$' + saved.toLocaleString();
-    document.getElementById('statImpulses').textContent = impulses.toLocaleString();
-    document.getElementById('statOnline').textContent = Math.max(2500, online).toLocaleString();
-    document.getElementById('statOrders').textContent = orders.toLocaleString();
-    document.getElementById('confSaved').textContent = '$' + saved.toLocaleString();
+// Stats
+function startStats(){
+  let saved=847293,impulses=14203;
+  function tick(){
+    saved+=Math.floor(Math.random()*300);impulses+=Math.floor(Math.random()*2);
+    document.getElementById('confSaved').textContent='$'+saved.toLocaleString();
+    document.getElementById('statImpulses').textContent=impulses.toLocaleString();
   }
-  tick();
-  setInterval(tick, 2000);
+  setInterval(tick,2500);
 }
 
-// ===== TIMER =====
-function startDealTimer() {
-  function tick() {
-    const now = new Date();
-    const midnight = new Date(); midnight.setHours(24,0,0,0);
-    const diff = midnight - now;
-    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
-    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-    const s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-    document.getElementById('dealTimer').textContent = `${h}:${m}:${s}`;
-  }
-  tick(); setInterval(tick, 1000);
-}
+// Search
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+function handleAccountClick(e){if(user)e.preventDefault();}
 
-// ===== HERO CAROUSEL =====
-let slide = 0;
-function slideHero(dir) {
-  const slides = document.querySelectorAll('.hero-slide');
-  slide = (slide + dir + slides.length) % slides.length;
-  document.getElementById('heroSlides').style.transform = `translateX(-${slide * 100}%)`;
-}
-function startHeroAuto() { setInterval(() => slideHero(1), 5000); }
-
-// ===== SEARCH =====
-function goSearch() {
-  const q = document.getElementById('searchInput').value;
-  if (q) window.location = 'shop.html?q=' + encodeURIComponent(q);
-}
-
-// ===== AUTH =====
-function openModal(mode) {
-  authMode = mode;
+// Auth
+function openModal(mode){
+  authMode=mode;
   document.getElementById('authModal').classList.add('active');
-  document.getElementById('modalTitle').textContent = mode === 'login' ? 'Sign in' : 'Create account';
-  document.getElementById('authSubmit').textContent = mode === 'login' ? 'Sign in' : 'Create your Dopazon account';
-  document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
-  document.getElementById('authSwitch').innerHTML = mode === 'login' ?
-    'New to Dopazon? <a onclick="toggleAuthMode()">Create account</a>' :
-    'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>';
+  document.getElementById('modalTitle').textContent=mode==='login'?'Sign in':'Create account';
+  document.getElementById('authSubmit').textContent=mode==='login'?'Sign in':'Create your Dopazon account';
+  document.getElementById('nameGroup').style.display=mode==='signup'?'block':'none';
+  document.getElementById('authSwitch').innerHTML=mode==='login'?'New to Dopazon? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Create account</a>':'Already have an account? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Sign in</a>';
 }
-function closeModal() { document.getElementById('authModal').classList.remove('active'); }
-function toggleAuthMode() { openModal(authMode === 'login' ? 'signup' : 'login'); }
-function handleAccountClick(e) {
-  if (user) e.preventDefault();
-}
-async function submitAuth() {
-  const email = document.getElementById('authEmail').value.trim();
-  const pass = document.getElementById('authPass').value;
-  const name = document.getElementById('authName').value.trim() || email.split('@')[0];
-  if (!email || !pass) { alert('Please fill in all fields.'); return; }
-  if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
-  try {
+function closeModal(){document.getElementById('authModal').classList.remove('active');}
+function toggleAuthMode(){openModal(authMode==='login'?'signup':'login');}
+async function submitAuth(){
+  const email=document.getElementById('authEmail').value.trim();
+  const pass=document.getElementById('authPass').value;
+  const name=document.getElementById('authName').value.trim()||email.split('@')[0];
+  if(!email||!pass){alert('Please fill in all fields.');return;}
+  if(pass.length<6){alert('Password must be at least 6 characters.');return;}
+  try{
     let res;
-    if (authMode === 'signup') {
-      res = await sb.auth.signUp({ email, password: pass, options: { data: { name } } });
-    } else {
-      r
+    if(authMode==='signup'){res=await sb.auth.signUp({email,password:pass,options:{data:{name}}});}
+    else{res=await sb.auth.signInWithPassword({email,password:pass});}
+    if(res.error)throw res.error;
+    if(authMode==='signup'){alert('Check your email to confirm your account!');}
+    else{user={name,email,id:res.data.user.id};updateUserUI();closeModal();}
+  }catch(err){alert(err.message||'Something went wrong.');}
+}
+async function signOut(){await sb.auth.signOut();user=null;updateUserUI();}
+</script>
+</body>
+</html>
