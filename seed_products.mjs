@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
 // IMPORTANT: Replace with your SERVICE ROLE key from Supabase Settings > API
-const SERVICE_KEY = 'REPLACE_WITH_SERVICE_ROLE_KEY';
+const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDkzMzgyMSwiZXhwIjoyMDk2NTA5ODIxfQ.VVnDz1QFkKhrRUgQPvfsd6v45b7EhXQB_Eo-WNU6FEM';
 
 const sb = createClient(SUPABASE_URL, SERVICE_KEY);
 
