@@ -466,8 +466,14 @@ function vote(type) {
   const key = 'vote_' + (currentProduct?.id || 'x');
   votes[key] = type;
   localStorage.setItem('dz_votes', JSON.stringify(votes));
-  const msgs = {yes: '👍 Noted! You\'d buy this in real life too.', no: '👎 Smart move keeping your money.', maybe: '🤔 Fair enough — keeping it on the wishlist.'};
-  document.getElementById('voteResult').textContent = msgs[type];
+  const kw = AMAZON_SEARCH[currentProduct?.id] || CATEGORY_SEARCH[currentProduct?.category] || 'trending+products';
+  const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
+  const msgs = {
+    yes: `👍 Noted! O zaman <a href="${url}" target="_blank" rel="noopener sponsored" style="color:#FF9900;font-weight:700;">Amazon'da gerçeğini gör →</a>`,
+    no: '👎 Smart move keeping your money.',
+    maybe: '🤔 Fair enough — keeping it on the wishlist.'
+  };
+  document.getElementById('voteResult').innerHTML = msgs[type];
   document.getElementById('voteResult').style.display = 'block';
   ['voteYes','voteNo','voteMaybe'].forEach(id => document.getElementById(id).style.opacity = '0.6');
 }
