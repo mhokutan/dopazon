@@ -1,4 +1,4 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
 // IMPORTANT: Replace with your SERVICE ROLE key from Supabase Settings > API
