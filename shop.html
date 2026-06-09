@@ -337,10 +337,10 @@ function handleAcctClick(e) { if (!currentUser) { e.preventDefault(); openAuth('
 async function loadDBData() {
   const [storesRes, productsRes] = await Promise.all([
     sb.from('stores').select('*').order('created_at', { ascending: false }).limit(20),
-    sb.from('products').select('*, stores(name)').order('created_at', { ascending: false }).limit(1000)
+    sb.from('products').select('*').order('created_at', { ascending: false }).limit(1000)
   ]);
   dbStores = storesRes.data || [];
-  dbProducts = (productsRes.data || []).map(p => ({...p, store_name: p.stores?.name || 'Community Store', emoji: p.emoji || EMOJIS[p.category] || '📦'}));
+  dbProducts = (productsRes.data || []).map(p => ({...p, store_name: p.store_name || 'Dopazon Store', emoji: p.emoji || EMOJIS[p.category] || '📦'}));
   renderProducts();
   renderStores();
 }
