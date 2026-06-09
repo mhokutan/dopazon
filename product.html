@@ -201,12 +201,12 @@
     <!-- Amazon Affiliate Banner -->
     <div id="amazonBanner" style="margin-top:16px;background:linear-gradient(135deg,#FF9900 0%,#FF6600 100%);border-radius:8px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <div>
-        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">🛒 Gerçeğini almak ister misin?</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.85);">Amazon'da bu ürünün benzerlerine bak</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">🛒 Want the real thing?</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.85);">Shop similar items on Amazon</div>
       </div>
       <a id="amazonBannerLink" href="#" target="_blank" rel="noopener sponsored"
          style="background:#fff;color:#FF6600;font-weight:700;font-size:14px;padding:10px 20px;border-radius:20px;text-decoration:none;white-space:nowrap;flex-shrink:0;">
-        Amazon'da Gör →
+        Shop on Amazon →
       </a>
     </div>
   </div>
@@ -242,8 +242,8 @@
       <button class="share-small-btn" onclick="window.location='confessions.html'">💬 Confess</button>
     </div>
     <div class="amazon-upsell" id="amazonUpsell" style="display:none;">
-      <p>Bunu gerçekten almak ister misin?<br>Amazon'da benzer ürünlere bak 👇</p>
-      <a id="amazonLink" href="#" target="_blank" rel="noopener sponsored">🛒 Amazon'da Gör →</a>
+      <p>Want to actually buy something like this?<br>Check similar products on Amazon 👇</p>
+      <a id="amazonLink" href="#" target="_blank" rel="noopener sponsored">🛒 Shop on Amazon →</a>
       <div class="amz-logo">amazon.com — dopazon-20</div>
     </div>
   </div>
@@ -481,7 +481,7 @@ function vote(type) {
   const kw = AMAZON_SEARCH[currentProduct?.id] || CATEGORY_SEARCH[currentProduct?.category] || 'trending+products';
   const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
   const msgs = {
-    yes: `👍 Noted! O zaman <a href="${url}" target="_blank" rel="noopener sponsored" style="color:#FF9900;font-weight:700;">Amazon'da gerçeğini gör →</a>`,
+    yes: `👍 Noted! O zaman <a href="${url}" target="_blank" rel="noopener sponsored" style="color:#FF9900;font-weight:700;">Shop the real thing on Amazon →</a>`,
     no: '👎 Smart move keeping your money.',
     maybe: '🤔 Fair enough — keeping it on the wishlist.'
   };
