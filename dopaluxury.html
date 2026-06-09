@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DopaLuxury — Mansions Free of Charge | Dopazon</title>
+<title>DopaLuxury â€” Mansions Free of Charge | Dopazon</title>
 <link rel="stylesheet" href="shared.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   .svc-hero{background:linear-gradient(135deg,#3d0c02,#8b2500);padding:60px 20px;text-align:center;color:#fff;}
   .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
@@ -35,59 +37,59 @@
     <div class="logo-sub">.com</div>
   </a>
   <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
-    <span style="font-size:28px;margin-right:10px;">🏰</span>
+    <span style="font-size:28px;margin-right:10px;">ðŸ°</span>
     <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaLuxury</span>
   </div>
-  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="index.html" class="header-link"><span>â† Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="cart-link">
-    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <span style="font-size:28px;position:relative;">ðŸ›’<span class="cart-count" id="cartCount">0</span></span>
     <strong>Cart</strong>
   </a>
 </header>
 
 <nav id="navbar">
-  <a href="index.html" class="nav-link">🏠 Home</a>
-  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
-  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
-  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
-  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
-  <a href="dopaluxury.html" class="nav-link" style="color:#FF9900;">🏰 DopaLuxury</a>
-  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
-  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+  <a href="index.html" class="nav-link">ðŸ  Home</a>
+  <a href="dopafood.html" class="nav-link">ðŸ” DopaFood</a>
+  <a href="dopacar.html" class="nav-link">ðŸš— DopaCar</a>
+  <a href="dopaair.html" class="nav-link">âœˆï¸ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">â›µ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link" style="color:#FF9900;">ðŸ° DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">ðŸ›’ DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">ðŸŽ® DopaGame</a>
 </nav>
 
 <div class="svc-hero">
-  <h1>🏰 DopaLuxury</h1>
-  <p>Beverly Hills mansions. Malibu beach houses. Tuscan villas. All yours — all free.</p>
-  <button class="svc-hero-btn" onclick="showToast('🏰 Property deeded to you! Moving truck en route. Total paid: $0.00');launchConfetti();">Browse Estates — Free</button>
+  <h1>ðŸ° DopaLuxury</h1>
+  <p>Beverly Hills mansions. Malibu beach houses. Tuscan villas. All yours â€” all free.</p>
+  <button class="svc-hero-btn" onclick="showToast('ðŸ° Property deeded to you! Moving truck en route. Total paid: $0.00');launchConfetti();">Browse Estates â€” Free</button>
 </div>
 
 <div class="main">
-  <h2 class="section-title">🏡 Featured Properties</h2>
+  <h2 class="section-title">ðŸ¡ Featured Properties</h2>
   <div class="house-grid" id="houseGrid"></div>
 </div>
 
 <div class="cart-toast" id="cartToast"></div>
 
 <footer id="footer">
-  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-top" onclick="scrollTo(0,0)">â†‘ Back to top</div>
   <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
     <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">luxury</span></div>
-    <div>© 2025 DopaLuxury by Dopazon. No real estate. No real keys. No real charges.</div>
+    <div>Â© 2025 DopaLuxury by Dopazon. No real estate. No real keys. No real charges.</div>
   </div>
 </footer>
 
 <script src="shared.js"></script>
 <script>
 const HOUSES = [
-  {emoji:'🏡',name:'Sunset Boulevard Mega-Mansion',loc:'Beverly Hills, CA',bed:9,bath:12,sqft:18000,pool:true,price:42000000,tag:'ICONIC'},
-  {emoji:'🏖️',name:'Malibu Beachfront Estate',loc:'Malibu, CA',bed:6,bath:8,sqft:9500,pool:true,price:28000000,tag:'OCEANFRONT'},
-  {emoji:'🏰',name:'Tuscan Renaissance Villa',loc:'Florence, Italy',bed:12,bath:10,sqft:22000,pool:true,price:15000000,tag:'HISTORIC'},
-  {emoji:'🌴',name:'Bali Clifftop Retreat',loc:'Uluwatu, Bali',bed:8,bath:8,sqft:12000,pool:true,price:8500000,tag:'TROPICAL'},
-  {emoji:'🗼',name:'Paris Penthouse — Eiffel View',loc:'16th Arr., Paris',bed:5,bath:6,sqft:7200,pool:false,price:22000000,tag:'PARISIAN'},
-  {emoji:'🏔️',name:'Swiss Alpine Chalet',loc:'Verbier, Switzerland',bed:10,bath:9,sqft:14000,pool:false,price:18000000,tag:'SKI-IN/OUT'},
-  {emoji:'🌊',name:'Santorini Cliffside Villa',loc:'Oia, Greece',bed:6,bath:7,sqft:8000,pool:true,price:11000000,tag:'VIEWS'},
-  {emoji:'🏙️',name:'Manhattan Sky Penthouse',loc:'Central Park South, NYC',bed:7,bath:8,sqft:11000,pool:true,price:58000000,tag:'TROPHY'},
+  {emoji:'ðŸ¡',name:'Sunset Boulevard Mega-Mansion',loc:'Beverly Hills, CA',bed:9,bath:12,sqft:18000,pool:true,price:42000000,tag:'ICONIC'},
+  {emoji:'ðŸ–ï¸',name:'Malibu Beachfront Estate',loc:'Malibu, CA',bed:6,bath:8,sqft:9500,pool:true,price:28000000,tag:'OCEANFRONT'},
+  {emoji:'ðŸ°',name:'Tuscan Renaissance Villa',loc:'Florence, Italy',bed:12,bath:10,sqft:22000,pool:true,price:15000000,tag:'HISTORIC'},
+  {emoji:'ðŸŒ´',name:'Bali Clifftop Retreat',loc:'Uluwatu, Bali',bed:8,bath:8,sqft:12000,pool:true,price:8500000,tag:'TROPICAL'},
+  {emoji:'ðŸ—¼',name:'Paris Penthouse â€” Eiffel View',loc:'16th Arr., Paris',bed:5,bath:6,sqft:7200,pool:false,price:22000000,tag:'PARISIAN'},
+  {emoji:'ðŸ”ï¸',name:'Swiss Alpine Chalet',loc:'Verbier, Switzerland',bed:10,bath:9,sqft:14000,pool:false,price:18000000,tag:'SKI-IN/OUT'},
+  {emoji:'ðŸŒŠ',name:'Santorini Cliffside Villa',loc:'Oia, Greece',bed:6,bath:7,sqft:8000,pool:true,price:11000000,tag:'VIEWS'},
+  {emoji:'ðŸ™ï¸',name:'Manhattan Sky Penthouse',loc:'Central Park South, NYC',bed:7,bath:8,sqft:11000,pool:true,price:58000000,tag:'TROPHY'},
 ];
 
 document.getElementById('houseGrid').innerHTML = HOUSES.map(h => `
@@ -96,21 +98,21 @@ document.getElementById('houseGrid').innerHTML = HOUSES.map(h => `
     <div class="house-info">
       <div class="tag">${h.tag}</div>
       <div class="house-name">${h.name}</div>
-      <div class="house-loc">📍 ${h.loc}</div>
+      <div class="house-loc">ðŸ“ ${h.loc}</div>
       <div class="house-specs">
-        <span>🛏 ${h.bed} bed</span>
-        <span>🚿 ${h.bath} bath</span>
-        <span>📐 ${h.sqft.toLocaleString()} sqft</span>
-        ${h.pool?'<span>🏊 Pool</span>':''}
+        <span>ðŸ› ${h.bed} bed</span>
+        <span>ðŸš¿ ${h.bath} bath</span>
+        <span>ðŸ“ ${h.sqft.toLocaleString()} sqft</span>
+        ${h.pool?'<span>ðŸŠ Pool</span>':''}
       </div>
       <div class="house-price">List price: $${h.price.toLocaleString()}</div>
-      <div class="house-free">FREE 🎉</div>
+      <div class="house-free">FREE ðŸŽ‰</div>
       <button class="buy-btn" onclick="buyHouse('${h.name}')">Buy This Property</button>
     </div>
   </div>`).join('');
 
 function buyHouse(name) {
-  showToast(`🔑 Keys to <strong>${name}</strong> are yours! Deed signed. Total: $0.00`);
+  showToast(`ðŸ”‘ Keys to <strong>${name}</strong> are yours! Deed signed. Total: $0.00`);
   launchConfetti();
 }
 updateCartCount();

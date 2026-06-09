@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DopaYacht — Charter a Yacht for $0 | Dopazon</title>
+<title>DopaYacht â€” Charter a Yacht for $0 | Dopazon</title>
 <link rel="stylesheet" href="shared.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   .svc-hero{background:linear-gradient(135deg,#023e8a,#0096c7);padding:60px 20px;text-align:center;color:#fff;}
   .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
@@ -36,63 +38,63 @@
     <div class="logo-sub">.com</div>
   </a>
   <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
-    <span style="font-size:28px;margin-right:10px;">⛵</span>
+    <span style="font-size:28px;margin-right:10px;">â›µ</span>
     <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaYacht</span>
   </div>
-  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="index.html" class="header-link"><span>â† Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="cart-link">
-    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <span style="font-size:28px;position:relative;">ðŸ›’<span class="cart-count" id="cartCount">0</span></span>
     <strong>Cart</strong>
   </a>
 </header>
 
 <nav id="navbar">
-  <a href="index.html" class="nav-link">🏠 Home</a>
-  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
-  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
-  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
-  <a href="dopayacht.html" class="nav-link" style="color:#FF9900;">⛵ DopaYacht</a>
-  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
-  <a href="dopamarket.html" class="nav-link">🛒 DopaMarket</a>
-  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+  <a href="index.html" class="nav-link">ðŸ  Home</a>
+  <a href="dopafood.html" class="nav-link">ðŸ” DopaFood</a>
+  <a href="dopacar.html" class="nav-link">ðŸš— DopaCar</a>
+  <a href="dopaair.html" class="nav-link">âœˆï¸ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link" style="color:#FF9900;">â›µ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">ðŸ° DopaLuxury</a>
+  <a href="dopamarket.html" class="nav-link">ðŸ›’ DopaMarket</a>
+  <a href="dopagame.html" class="nav-link">ðŸŽ® DopaGame</a>
 </nav>
 
 <div class="svc-hero">
-  <h1>⛵ DopaYacht</h1>
+  <h1>â›µ DopaYacht</h1>
   <p>Charter a private superyacht anywhere in the world. Full crew included. Cost: $0.00.</p>
-  <button class="svc-hero-btn" onclick="showToast('⚓ Captain on standby. Crew of 12 ready. Departure: whenever you want. Cost: $0.00');launchConfetti();">Charter Now — Free</button>
+  <button class="svc-hero-btn" onclick="showToast('âš“ Captain on standby. Crew of 12 ready. Departure: whenever you want. Cost: $0.00');launchConfetti();">Charter Now â€” Free</button>
 </div>
 
 <div class="main">
-  <h2 class="section-title">⚓ Available Yachts</h2>
+  <h2 class="section-title">âš“ Available Yachts</h2>
   <div class="yacht-grid" id="yachtGrid"></div>
 
-  <h2 class="section-title">🌊 Popular Destinations</h2>
+  <h2 class="section-title">ðŸŒŠ Popular Destinations</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:30px;" id="destGrid"></div>
 </div>
 
 <div class="cart-toast" id="cartToast"></div>
 
 <footer id="footer">
-  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-top" onclick="scrollTo(0,0)">â†‘ Back to top</div>
   <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
     <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">yacht</span></div>
-    <div>© 2025 DopaYacht by Dopazon. No real yachts. No real ocean. No real charges.</div>
+    <div>Â© 2025 DopaYacht by Dopazon. No real yachts. No real ocean. No real charges.</div>
   </div>
 </footer>
 
 <script src="shared.js"></script>
 <script>
 const YACHTS = [
-  {emoji:'⛵',name:'Serenity 85',sub:'Classic sailing yacht, Amalfi Coast ready',len:'85ft',guests:10,crew:5,price:18000,badge:'POPULAR'},
-  {emoji:'🛥️',name:'VelaDopa 120',sub:'Motor superyacht, Mediterranean charter',len:'120ft',guests:14,crew:8,price:42000,badge:''},
-  {emoji:'🚢',name:'DopaGrand 200',sub:'Full superyacht, helicopter pad included',len:'200ft',guests:22,crew:18,price:120000,badge:'LUXURY'},
-  {emoji:'⛵',name:'CaribeWave 60',sub:'Caribbean catamaran, snorkeling trips',len:'60ft',guests:8,crew:3,price:9500,badge:''},
-  {emoji:'🛥️',name:'AzureDream 95',sub:'French Riviera, Cannes Film Festival vibes',len:'95ft',guests:12,crew:6,price:28000,badge:'HOT'},
-  {emoji:'🚢',name:'PacificKing 180',sub:'Pacific crossing, full dive gear onboard',len:'180ft',guests:18,crew:14,price:95000,badge:'ELITE'},
+  {emoji:'â›µ',name:'Serenity 85',sub:'Classic sailing yacht, Amalfi Coast ready',len:'85ft',guests:10,crew:5,price:18000,badge:'POPULAR'},
+  {emoji:'ðŸ›¥ï¸',name:'VelaDopa 120',sub:'Motor superyacht, Mediterranean charter',len:'120ft',guests:14,crew:8,price:42000,badge:''},
+  {emoji:'ðŸš¢',name:'DopaGrand 200',sub:'Full superyacht, helicopter pad included',len:'200ft',guests:22,crew:18,price:120000,badge:'LUXURY'},
+  {emoji:'â›µ',name:'CaribeWave 60',sub:'Caribbean catamaran, snorkeling trips',len:'60ft',guests:8,crew:3,price:9500,badge:''},
+  {emoji:'ðŸ›¥ï¸',name:'AzureDream 95',sub:'French Riviera, Cannes Film Festival vibes',len:'95ft',guests:12,crew:6,price:28000,badge:'HOT'},
+  {emoji:'ðŸš¢',name:'PacificKing 180',sub:'Pacific crossing, full dive gear onboard',len:'180ft',guests:18,crew:14,price:95000,badge:'ELITE'},
 ];
 
-const DESTS = ['🇮🇹 Amalfi Coast','🇫🇷 French Riviera','🇬🇷 Greek Islands','🇭🇷 Croatia','🇲🇻 Maldives','🇧🇸 Bahamas','🇲🇨 Monaco','🇹🇷 Turkish Riviera'];
+const DESTS = ['ðŸ‡®ðŸ‡¹ Amalfi Coast','ðŸ‡«ðŸ‡· French Riviera','ðŸ‡¬ðŸ‡· Greek Islands','ðŸ‡­ðŸ‡· Croatia','ðŸ‡²ðŸ‡» Maldives','ðŸ‡§ðŸ‡¸ Bahamas','ðŸ‡²ðŸ‡¨ Monaco','ðŸ‡¹ðŸ‡· Turkish Riviera'];
 
 document.getElementById('yachtGrid').innerHTML = YACHTS.map(y => `
   <div class="yacht-card">
@@ -101,23 +103,23 @@ document.getElementById('yachtGrid').innerHTML = YACHTS.map(y => `
       <div class="yacht-name">${y.name}${y.badge?`<span class="badge">${y.badge}</span>`:''}</div>
       <div class="yacht-sub">${y.sub}</div>
       <div class="yacht-specs">
-        <span class="spec">📏 ${y.len}</span>
-        <span class="spec">👥 ${y.guests} guests</span>
-        <span class="spec">⚓ Crew of ${y.crew}</span>
+        <span class="spec">ðŸ“ ${y.len}</span>
+        <span class="spec">ðŸ‘¥ ${y.guests} guests</span>
+        <span class="spec">âš“ Crew of ${y.crew}</span>
       </div>
       <div class="yacht-price">Charter: $${y.price.toLocaleString()}/week</div>
-      <div class="yacht-free">FREE / week 🎉</div>
+      <div class="yacht-free">FREE / week ðŸŽ‰</div>
       <button class="charter-btn" onclick="charterYacht('${y.name}')">Charter ${y.name}</button>
     </div>
   </div>`).join('');
 
 document.getElementById('destGrid').innerHTML = DESTS.map(d => `
-  <div style="background:#fff;border-radius:8px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:14px;font-weight:600;" onclick="showToast('⚓ Course set for ${d}! Bon voyage — $0.00');">
+  <div style="background:#fff;border-radius:8px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);font-size:14px;font-weight:600;" onclick="showToast('âš“ Course set for ${d}! Bon voyage â€” $0.00');">
     ${d}
   </div>`).join('');
 
 function charterYacht(name) {
-  showToast(`⛵ <strong>${name}</strong> chartered! Captain briefing at 09:00. Total: $0.00`);
+  showToast(`â›µ <strong>${name}</strong> chartered! Captain briefing at 09:00. Total: $0.00`);
   launchConfetti();
 }
 updateCartCount();

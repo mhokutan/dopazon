@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DopaBook — Every Book, $0 Forever | Dopazon</title>
+<title>DopaBook â€” Every Book, $0 Forever | Dopazon</title>
 <link rel="stylesheet" href="shared.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   .svc-hero{background:linear-gradient(135deg,#2d6a4f,#52b788);padding:50px 20px;text-align:center;color:#fff;}
   .svc-hero h1{font-size:48px;font-weight:800;margin-bottom:8px;}
@@ -35,48 +37,48 @@
     <div class="logo-sub">.com</div>
   </a>
   <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
-    <span style="font-size:28px;margin-right:10px;">📚</span>
+    <span style="font-size:28px;margin-right:10px;">ðŸ“š</span>
     <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaBook</span>
   </div>
-  <a href="index.html" class="header-link"><span>← Back to</span><strong>Dopazon</strong></a>
+  <a href="index.html" class="header-link"><span>â† Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="cart-link">
-    <span style="font-size:28px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
+    <span style="font-size:28px;position:relative;">ðŸ›’<span class="cart-count" id="cartCount">0</span></span>
     <strong>Cart</strong>
   </a>
 </header>
 
 <nav id="navbar">
-  <a href="index.html" class="nav-link">🏠 Home</a>
-  <a href="dopafood.html" class="nav-link">🍔 DopaFood</a>
-  <a href="dopacar.html" class="nav-link">🚗 DopaCar</a>
-  <a href="dopaair.html" class="nav-link">✈️ DopaAir</a>
-  <a href="dopayacht.html" class="nav-link">⛵ DopaYacht</a>
-  <a href="dopaluxury.html" class="nav-link">🏰 DopaLuxury</a>
-  <a href="dopabook.html" class="nav-link" style="color:#FF9900;">📚 DopaBook</a>
-  <a href="dopagame.html" class="nav-link">🎮 DopaGame</a>
+  <a href="index.html" class="nav-link">ðŸ  Home</a>
+  <a href="dopafood.html" class="nav-link">ðŸ” DopaFood</a>
+  <a href="dopacar.html" class="nav-link">ðŸš— DopaCar</a>
+  <a href="dopaair.html" class="nav-link">âœˆï¸ DopaAir</a>
+  <a href="dopayacht.html" class="nav-link">â›µ DopaYacht</a>
+  <a href="dopaluxury.html" class="nav-link">ðŸ° DopaLuxury</a>
+  <a href="dopabook.html" class="nav-link" style="color:#FF9900;">ðŸ“š DopaBook</a>
+  <a href="dopagame.html" class="nav-link">ðŸŽ® DopaGame</a>
 </nav>
 
 <div class="svc-hero">
-  <h1>📚 DopaBook</h1>
+  <h1>ðŸ“š DopaBook</h1>
   <p>Every book ever written. Instant download. Read on any device. Always $0.</p>
-  <button class="svc-hero-btn" onclick="showToast('📖 Your entire library is ready to read. Cost: $0.00');launchConfetti();">Start Reading — Free</button>
+  <button class="svc-hero-btn" onclick="showToast('ðŸ“– Your entire library is ready to read. Cost: $0.00');launchConfetti();">Start Reading â€” Free</button>
 </div>
 
 <div class="main">
-  <h2 class="section-title">📈 Bestsellers This Week</h2>
+  <h2 class="section-title">ðŸ“ˆ Bestsellers This Week</h2>
   <div class="books-grid" id="bestGrid"></div>
 
-  <h2 class="section-title">🎯 Recommended For You</h2>
+  <h2 class="section-title">ðŸŽ¯ Recommended For You</h2>
   <div class="books-grid" id="recGrid"></div>
 </div>
 
 <div class="cart-toast" id="cartToast"></div>
 
 <footer id="footer">
-  <div class="footer-top" onclick="scrollTo(0,0)">↑ Back to top</div>
+  <div class="footer-top" onclick="scrollTo(0,0)">â†‘ Back to top</div>
   <div class="footer-bot" style="background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;">
     <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;">dopa<span style="color:#FF9900;">book</span></div>
-    <div>© 2025 DopaBook by Dopazon. Fictional book service. No real downloads. No real charges.</div>
+    <div>Â© 2025 DopaBook by Dopazon. Fictional book service. No real downloads. No real charges.</div>
   </div>
 </footer>
 
@@ -84,22 +86,22 @@
 <script>
 const COVERS = ['#ffeaa7','#dfe6e9','#fab1a0','#81ecec','#a29bfe','#fd79a8','#55efc4','#fdcb6e'];
 const BOOKS = [
-  {emoji:'🧠',title:'Atomic Dopamine',author:'James Clue',genre:'Self-Help',stars:'4.9',price:18},
-  {emoji:'🚀',title:'The Infinite Mindset',author:'Simon Sinek Jr.',genre:'Business',stars:'4.8',price:24},
-  {emoji:'💰',title:'Rich Dad, Free Dad',author:'Robert Dopaski',genre:'Finance',stars:'4.7',price:16},
-  {emoji:'🌍',title:'Sapiens: A Brief Satire',author:'Yuval Dopa Harari',genre:'History',stars:'4.9',price:22},
-  {emoji:'🕵️',title:'Gone in 30 Seconds',author:'Gillian Dopan',genre:'Thriller',stars:'4.8',price:15},
-  {emoji:'🧪',title:'The Dopamine Code',author:'Dr. A. Receptors',genre:'Science',stars:'4.7',price:28},
-  {emoji:'❤️',title:'Love in the Time of Free Shipping',author:'G.G. Márquez',genre:'Fiction',stars:'4.9',price:14},
-  {emoji:'🏋️',title:'Can\'t Hurt Me (Wallet)',author:'David Goggins-Free',genre:'Memoir',stars:'4.8',price:20},
+  {emoji:'ðŸ§ ',title:'Atomic Dopamine',author:'James Clue',genre:'Self-Help',stars:'4.9',price:18},
+  {emoji:'ðŸš€',title:'The Infinite Mindset',author:'Simon Sinek Jr.',genre:'Business',stars:'4.8',price:24},
+  {emoji:'ðŸ’°',title:'Rich Dad, Free Dad',author:'Robert Dopaski',genre:'Finance',stars:'4.7',price:16},
+  {emoji:'ðŸŒ',title:'Sapiens: A Brief Satire',author:'Yuval Dopa Harari',genre:'History',stars:'4.9',price:22},
+  {emoji:'ðŸ•µï¸',title:'Gone in 30 Seconds',author:'Gillian Dopan',genre:'Thriller',stars:'4.8',price:15},
+  {emoji:'ðŸ§ª',title:'The Dopamine Code',author:'Dr. A. Receptors',genre:'Science',stars:'4.7',price:28},
+  {emoji:'â¤ï¸',title:'Love in the Time of Free Shipping',author:'G.G. MÃ¡rquez',genre:'Fiction',stars:'4.9',price:14},
+  {emoji:'ðŸ‹ï¸',title:'Can\'t Hurt Me (Wallet)',author:'David Goggins-Free',genre:'Memoir',stars:'4.8',price:20},
 ];
 const RECS = [
-  {emoji:'🌙',title:'The Midnight Shopper',author:'Donna Tartt-Free',genre:'Mystery',stars:'4.7',price:17},
-  {emoji:'🤖',title:'AI & the Art of Fake Commerce',author:'Elon Dopalon',genre:'Tech',stars:'4.8',price:32},
-  {emoji:'🍕',title:'Salt Fat Acid Heat Bill',author:'Samin Nosrat-Zero',genre:'Cooking',stars:'4.9',price:35},
-  {emoji:'🎨',title:'Steal Like a Shopper',author:'Austin Cleon-Free',genre:'Creativity',stars:'4.8',price:16},
-  {emoji:'🌿',title:'The Subtle Art of Not Paying',author:'Mark Manson-Dopa',genre:'Self-Help',stars:'4.9',price:18},
-  {emoji:'🏄',title:'Into the Free Wild',author:'Jon Krakauer-Dopa',genre:'Adventure',stars:'4.7',price:15},
+  {emoji:'ðŸŒ™',title:'The Midnight Shopper',author:'Donna Tartt-Free',genre:'Mystery',stars:'4.7',price:17},
+  {emoji:'ðŸ¤–',title:'AI & the Art of Fake Commerce',author:'Elon Dopalon',genre:'Tech',stars:'4.8',price:32},
+  {emoji:'ðŸ•',title:'Salt Fat Acid Heat Bill',author:'Samin Nosrat-Zero',genre:'Cooking',stars:'4.9',price:35},
+  {emoji:'ðŸŽ¨',title:'Steal Like a Shopper',author:'Austin Cleon-Free',genre:'Creativity',stars:'4.8',price:16},
+  {emoji:'ðŸŒ¿',title:'The Subtle Art of Not Paying',author:'Mark Manson-Dopa',genre:'Self-Help',stars:'4.9',price:18},
+  {emoji:'ðŸ„',title:'Into the Free Wild',author:'Jon Krakauer-Dopa',genre:'Adventure',stars:'4.7',price:15},
 ];
 
 function renderBooks(arr, id) {
@@ -110,7 +112,7 @@ function renderBooks(arr, id) {
         <div class="book-title">${b.title}</div>
         <div class="book-author">by ${b.author}</div>
         <span class="book-genre">${b.genre}</span>
-        <div class="book-stars">★★★★★ ${b.stars}</div>
+        <div class="book-stars">â˜…â˜…â˜…â˜…â˜… ${b.stars}</div>
         <div class="book-price">Was: $${b.price}.00</div>
         <div class="book-free">FREE</div>
         <button class="read-btn" onclick="readBook('${b.title}')">Read Now</button>
@@ -119,7 +121,7 @@ function renderBooks(arr, id) {
 }
 
 function readBook(title) {
-  showToast(`📖 <strong>${title}</strong> opened! Reading mode activated. Cost: $0.00`);
+  showToast(`ðŸ“– <strong>${title}</strong> opened! Reading mode activated. Cost: $0.00`);
   launchConfetti();
 }
 renderBooks(BOOKS, 'bestGrid');
