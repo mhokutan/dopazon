@@ -221,14 +221,18 @@ function generateProducts(count = 1000) {
       const spec = rand(tmpl.s);
       const price = rand(tmpl.p);
       const title = `${brand} ${tmpl.t} — ${spec}`;
-      const imgIdx = (i + products.length) % imgs.length;
+      const globalIdx = products.length;
+      // Use category-specific Unsplash for first N, then unique picsum for the rest
+      const img = globalIdx < imgs.length
+        ? imgs[globalIdx % imgs.length]
+        : `https://picsum.photos/seed/dopazon-${globalIdx}/400/300`;
 
       products.push({
         title,
         category,
         price,
         emoji: tmpl.e,
-        img: imgs[imgIdx],
+        img,
         stars: randFloat(4.1, 4.9),
         reviews: randInt(500, 75000),
         store_name: rand(stores),
@@ -242,7 +246,10 @@ function generateProducts(count = 1000) {
 }
 
 async function main() {
-  console.log('Generating 1000 products...');
+  console.log('Deleting existing products...');
+  const { error: delErr } = await sb.from('products').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  if (delErr) { console.error('Delete error:', delErr.message); process.exit(1); }
+  console.log('Deleted. Generating 1000 products...');
   const products = generateProducts(1000);
   console.log(`Generated ${products.length} products. Inserting in batches...`);
 
