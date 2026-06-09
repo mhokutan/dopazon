@@ -94,6 +94,11 @@
   .share-row{display:flex;gap:8px;margin-top:12px;}
   .share-small-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer;flex:1;}
   .share-small-btn:hover{background:#eee;}
+  .amazon-upsell{margin-top:14px;padding:12px;background:#FFFBF2;border:1px solid #FF9900;border-radius:6px;text-align:center;}
+  .amazon-upsell p{font-size:11px;color:#666;margin-bottom:8px;line-height:1.4;}
+  .amazon-upsell a{display:block;background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:9px 12px;border-radius:20px;text-decoration:none;transition:background 0.2s;}
+  .amazon-upsell a:hover{background:#e88a00;}
+  .amazon-upsell .amz-logo{font-size:11px;color:#888;margin-top:6px;}
   /* Related */
   .related-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
   .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
@@ -224,6 +229,11 @@
       <button class="share-small-btn" onclick="addToWishlist()">♡ Wishlist</button>
       <button class="share-small-btn" onclick="window.location='confessions.html'">💬 Confess</button>
     </div>
+    <div class="amazon-upsell" id="amazonUpsell" style="display:none;">
+      <p>Bunu gerçekten almak ister misin?<br>Amazon'da benzer ürünlere bak 👇</p>
+      <a id="amazonLink" href="#" target="_blank" rel="noopener sponsored">🛒 Amazon'da Gör →</a>
+      <div class="amz-logo">amazon.com — dopazon-20</div>
+    </div>
   </div>
 </div>
 
@@ -336,6 +346,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   currentProduct = product;
   renderProduct(product);
+  renderAmazonUpsell(product);
 });
 
 function enrichProduct(p) {
@@ -475,6 +486,38 @@ function addToWishlist() {
 
 function scrollToReviews() {
   document.getElementById('reviewsSection').scrollIntoView({behavior:'smooth'});
+}
+
+const AMAZON_TAG = 'dopazon-20';
+const AMAZON_SEARCH = {
+  s1:  'running+shoes',
+  s2:  'smartphone+android+2024',
+  s3:  'vitamin+c+serum+face',
+  s4:  'coffee+maker+with+grinder',
+  s5:  'noise+cancelling+wireless+headphones',
+  s6:  'grain+free+dog+food+chicken',
+  s7:  'adjustable+dumbbells+set',
+  s8:  'essential+oil+diffuser+ultrasonic',
+  s9:  'leather+tote+bag+women',
+  s10: 'retro+handheld+game+console',
+  s11: 'retinol+night+cream+anti+aging',
+  s12: 'memory+foam+bean+bag+chair',
+};
+const CATEGORY_SEARCH = {
+  fashion:     'trending+fashion+2024',
+  electronics: 'best+electronics+gadgets',
+  beauty:      'skincare+bestsellers',
+  home:        'home+decor+essentials',
+  sports:      'home+gym+equipment',
+  pets:        'premium+pet+supplies',
+  food:        'kitchen+appliances',
+};
+
+function renderAmazonUpsell(p) {
+  const kw = AMAZON_SEARCH[p.id] || CATEGORY_SEARCH[p.category] || 'trending+products';
+  const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
+  document.getElementById('amazonLink').href = url;
+  document.getElementById('amazonUpsell').style.display = 'block';
 }
 
 </script>
