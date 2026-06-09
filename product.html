@@ -16,9 +16,11 @@
   .product-main{max-width:1200px;margin:15px auto;padding:0 15px;display:grid;grid-template-columns:1fr 1fr 280px;gap:20px;}
   /* Left: Images */
   .product-images{background:#fff;border-radius:4px;padding:20px;display:flex;flex-direction:column;align-items:center;}
-  .main-img{font-size:160px;text-align:center;padding:20px 0;line-height:1;}
+  .main-img{font-size:160px;text-align:center;padding:20px 0;line-height:1;min-height:300px;display:flex;align-items:center;justify-content:center;}
+  .main-img img{width:100%;max-height:380px;object-fit:contain;border-radius:4px;}
   .img-thumbnails{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center;}
-  .thumb{width:50px;height:50px;border:2px solid #ddd;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;}
+  .thumb{width:60px;height:60px;border:2px solid #ddd;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;}
+  .thumb img{width:100%;height:100%;object-fit:cover;}
   .thumb.active{border-color:#FF9900;}
   .thumb:hover{border-color:#FF9900;}
   /* Center: Info */
@@ -347,9 +349,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Try to load from Supabase first (for user-created products)
   let product = null;
   if (!id.startsWith('s')) {
-    const { data } = await sb.from('products').select('*, stores(name)').eq('id', id).single();
+    const { data } = await sb.from('products').select('*').eq('id', id).single();
     if (data) {
-      product = { ...data, store: data.stores?.name || 'Community Store', reviews: data.reviews || 100 };
+      product = { ...data, store: data.store_name || 'Dopazon Store', reviews: data.reviews || 100 };
       product = enrichProduct(product);
     }
   }
@@ -387,7 +389,12 @@ function enrichProduct(p) {
 
 function renderProduct(p) {
   document.title = `Dopazon — ${p.title}`;
-  document.getElementById('mainEmoji').textContent = p.emoji || '📦';
+  const mainImgEl = document.getElementById('mainEmoji');
+  if (p.img) {
+    mainImgEl.innerHTML = `<img src="${p.img}" alt="${p.title}" onerror="this.parentElement.textContent='${p.emoji||'📦'}'">`;
+  } else {
+    mainImgEl.textContent = p.emoji || '📦';
+  }
   document.getElementById('productTitle').textContent = p.title;
   document.getElementById('breadCat').textContent = p.category?.charAt(0).toUpperCase() + p.category?.slice(1) || 'Products';
   document.getElementById('breadName').textContent = p.title.slice(0, 40) + (p.title.length > 40 ? '...' : '');
@@ -409,9 +416,18 @@ function renderProduct(p) {
   document.getElementById('bbDelivery').textContent = fmt(tomorrow);
   document.getElementById('delivWindow').textContent = fmt(tomorrow) + ' and ' + fmt(dayAfter);
 
-  // Thumbnails (show same emoji in different "angles")
-  const angles = [p.emoji, p.emoji, p.emoji, p.emoji];
-  document.getElementById('thumbs').innerHTML = angles.map((e,i) => `<div class="thumb ${i===0?'active':''}" onclick="selectThumb(this,'${e}')">${e}</div>`).join('');
+  // Thumbnails
+  if (p.img) {
+    const thumbUrls = [p.img, p.img+'&crop=entropy', p.img+'&crop=faces', p.img+'&crop=center'];
+    document.getElementById('thumbs').innerHTML = thumbUrls.map((url,i) =>
+      `<div class="thumb ${i===0?'active':''}" onclick="selectThumbImg(this,'${url}')"><img src="${url}" onerror="this.parentElement.textContent='${p.emoji||'📦'}'"></div>`
+    ).join('');
+  } else {
+    const angles = [p.emoji, p.emoji, p.emoji, p.emoji];
+    document.getElementById('thumbs').innerHTML = angles.map((e,i) =>
+      `<div class="thumb ${i===0?'active':''}" onclick="selectThumb(this,'${e}')">${e}</div>`
+    ).join('');
+  }
 
   // Features
   const enriched = enrichProduct(p);
@@ -424,7 +440,7 @@ function renderProduct(p) {
 
   // Reviews
   generateReviews(p);
-  renderRelated(p);
+  renderRelated(p); // async, fires and forgets
 }
 
 function generateReviews(p) {
@@ -447,11 +463,28 @@ function generateReviews(p) {
     </div>`).join('');
 }
 
-function renderRelated(current) {
-  const related = ALL_PRODUCTS.filter(p => p.id !== current.id && (p.category === current.category || Math.random() > 0.5)).slice(0, 6);
+async function renderRelated(current) {
+  // Fetch from Supabase first, fallback to ALL_PRODUCTS
+  let related = [];
+  try {
+    const { data } = await sb.from('products').select('*')
+      .eq('category', current.category)
+      .neq('id', current.id)
+      .limit(12);
+    if (data && data.length > 0) {
+      related = data.sort(() => Math.random() - 0.5).slice(0, 6);
+    }
+  } catch(e) {}
+  // Supplement with hardcoded if needed
+  if (related.length < 6) {
+    const extra = ALL_PRODUCTS.filter(p => p.id !== current.id && p.category === current.category).slice(0, 6 - related.length);
+    related = [...related, ...extra];
+  }
   document.getElementById('relatedGrid').innerHTML = related.map(p => `
     <div class="related-card" onclick="window.location='product.html?id=${p.id}'">
-      <div class="related-emoji">${p.emoji}</div>
+      ${p.img
+        ? `<img src="${p.img}" alt="${p.title||''}" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:6px;" onerror="this.style.display='none'">`
+        : `<div class="related-emoji">${p.emoji||'📦'}</div>`}
       <div class="related-title">${p.title}</div>
       <div class="related-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:11px;">$${p.price}</span></div>
     </div>`).join('');
@@ -459,6 +492,11 @@ function renderRelated(current) {
 
 function selectThumb(el, emoji) {
   document.getElementById('mainEmoji').textContent = emoji;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectThumbImg(el, url) {
+  document.getElementById('mainEmoji').innerHTML = `<img src="${url}" alt="product">`;
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
