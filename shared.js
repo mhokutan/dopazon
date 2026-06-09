@@ -152,11 +152,23 @@ async function dzSubmitFeedback(){
     const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
     if(_dzTab==='feedback'){
       const msg=document.getElementById('dz-fb-msg').value.trim();
-      if(!msg){btn.textContent='Send →';btn.disabled=false;return;}
+      if(!msg){
+        btn.textContent='Send →';btn.disabled=false;
+        document.getElementById('dz-fb-msg').style.borderColor='#CC0C39';
+        document.getElementById('dz-fb-msg').placeholder='Please write something first!';
+        return;
+      }
+      document.getElementById('dz-fb-msg').style.borderColor='';
       await sb.from('feedback').insert({message:msg,page:location.pathname,rating:_dzStar||null});
     } else {
       const name=document.getElementById('dz-sg-name').value.trim();
-      if(!name){btn.textContent='Send →';btn.disabled=false;return;}
+      if(!name){
+        btn.textContent='Send →';btn.disabled=false;
+        document.getElementById('dz-sg-name').style.borderColor='#CC0C39';
+        document.getElementById('dz-sg-name').placeholder='Product name is required!';
+        return;
+      }
+      document.getElementById('dz-sg-name').style.borderColor='';
       const cat=document.getElementById('dz-sg-cat').value;
       const reason=document.getElementById('dz-sg-reason').value.trim();
       await sb.from('suggestions').insert({product_name:name,category:cat||null,reason:reason||null});
