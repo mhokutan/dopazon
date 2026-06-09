@@ -4,5 +4,8 @@
   "description": "Satisfy the urge. Keep the money.",
   "scripts": {
     "build": "echo 'Static site - no build needed'"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.108.0"
   }
 }
