@@ -76,14 +76,27 @@
   <div class="deliver"><span>📍 Deliver to</span><strong>United States</strong></div>
   <div class="search-bar">
     <select class="search-select" id="catFilter">
-      <option value="">All</option>
+      <option value="">All Departments</option>
       <option value="fashion">Fashion</option>
       <option value="electronics">Electronics</option>
       <option value="beauty">Beauty</option>
-      <option value="home">Home</option>
-      <option value="sports">Sports</option>
-      <option value="pets">Pets</option>
-      <option value="food">Food</option>
+      <option value="home">Home & Kitchen</option>
+      <option value="kitchen">Kitchen & Dining</option>
+      <option value="sports">Sports & Outdoors</option>
+      <option value="pets">Pet Supplies</option>
+      <option value="food">Grocery & Food</option>
+      <option value="health">Health & Household</option>
+      <option value="toys">Toys & Games</option>
+      <option value="gaming">Video Games</option>
+      <option value="baby">Baby</option>
+      <option value="books">Books & Media</option>
+      <option value="tools">Tools & DIY</option>
+      <option value="automotive">Automotive</option>
+      <option value="garden">Garden & Outdoor</option>
+      <option value="office">Office Products</option>
+      <option value="travel">Luggage & Travel</option>
+      <option value="music">Musical Instruments</option>
+      <option value="art">Arts & Crafts</option>
     </select>
     <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')doSearch()">
     <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
@@ -96,13 +109,18 @@
 <nav id="navbar">
   <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
-  <a href="#" class="nav-link" onclick="filterCat('',event)">DopePrime</a>
   <a href="#" class="nav-link" onclick="filterCat('fashion',event)">Fashion</a>
   <a href="#" class="nav-link" onclick="filterCat('electronics',event)">Electronics</a>
   <a href="#" class="nav-link" onclick="filterCat('home',event)">Home</a>
   <a href="#" class="nav-link" onclick="filterCat('sports',event)">Sports</a>
   <a href="#" class="nav-link" onclick="filterCat('beauty',event)">Beauty</a>
-  <a href="confessions.html" class="nav-link">Confession Cart</a>
+  <a href="#" class="nav-link" onclick="filterCat('toys',event)">Toys</a>
+  <a href="#" class="nav-link" onclick="filterCat('gaming',event)">Gaming</a>
+  <a href="#" class="nav-link" onclick="filterCat('health',event)">Health</a>
+  <a href="#" class="nav-link" onclick="filterCat('automotive',event)">Automotive</a>
+  <a href="#" class="nav-link" onclick="filterCat('garden',event)">Garden</a>
+  <a href="#" class="nav-link" onclick="filterCat('books',event)">Books</a>
+  <a href="confessions.html" class="nav-link">Confessions</a>
 </nav>
 
 <div class="breadcrumb"><a href="index.html">Dopazon</a> › <span id="breadcrumbCat">All Departments</span></div>
@@ -115,9 +133,23 @@
       <div class="filter-option"><input type="radio" name="cat" value="fashion" onchange="filterCat('fashion')"> 👗 Fashion</div>
       <div class="filter-option"><input type="radio" name="cat" value="electronics" onchange="filterCat('electronics')"> 📱 Electronics</div>
       <div class="filter-option"><input type="radio" name="cat" value="beauty" onchange="filterCat('beauty')"> 💄 Beauty</div>
-      <div class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home</div>
-      <div class="filter-option"><input type="radio" name="cat" value="sports" onchange="filterCat('sports')"> 🏃 Sports</div>
-      <div class="filter-option"><input type="radio" name="cat" value="pets" onchange="filterCat('pets')"> 🐾 Pets</div>
+      <div class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home & Kitchen</div>
+      <div class="filter-option"><input type="radio" name="cat" value="kitchen" onchange="filterCat('kitchen')"> 🍳 Kitchen & Dining</div>
+      <div class="filter-option"><input type="radio" name="cat" value="sports" onchange="filterCat('sports')"> 🏃 Sports & Outdoors</div>
+      <div class="filter-option"><input type="radio" name="cat" value="pets" onchange="filterCat('pets')"> 🐾 Pet Supplies</div>
+      <div class="filter-option"><input type="radio" name="cat" value="food" onchange="filterCat('food')"> 🛒 Grocery & Food</div>
+      <div class="filter-option"><input type="radio" name="cat" value="health" onchange="filterCat('health')"> 💊 Health & Household</div>
+      <div class="filter-option"><input type="radio" name="cat" value="toys" onchange="filterCat('toys')"> 🧸 Toys & Games</div>
+      <div class="filter-option"><input type="radio" name="cat" value="gaming" onchange="filterCat('gaming')"> 🎮 Video Games</div>
+      <div class="filter-option"><input type="radio" name="cat" value="baby" onchange="filterCat('baby')"> 👶 Baby</div>
+      <div class="filter-option"><input type="radio" name="cat" value="books" onchange="filterCat('books')"> 📚 Books & Media</div>
+      <div class="filter-option"><input type="radio" name="cat" value="tools" onchange="filterCat('tools')"> 🔧 Tools & DIY</div>
+      <div class="filter-option"><input type="radio" name="cat" value="automotive" onchange="filterCat('automotive')"> 🚗 Automotive</div>
+      <div class="filter-option"><input type="radio" name="cat" value="garden" onchange="filterCat('garden')"> 🌱 Garden & Outdoor</div>
+      <div class="filter-option"><input type="radio" name="cat" value="office" onchange="filterCat('office')"> 🖊️ Office Products</div>
+      <div class="filter-option"><input type="radio" name="cat" value="travel" onchange="filterCat('travel')"> 🧳 Luggage & Travel</div>
+      <div class="filter-option"><input type="radio" name="cat" value="music" onchange="filterCat('music')"> 🎸 Musical Instruments</div>
+      <div class="filter-option"><input type="radio" name="cat" value="art" onchange="filterCat('art')"> 🎨 Arts & Crafts</div>
     </div>
     <div class="filter-section">
       <h4>💰 Price</h4>
@@ -197,7 +229,7 @@ const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const TRADEMARKS = ['nike','apple','samsung','amazon','google','microsoft','sony','disney','netflix','adidas','gucci','prada','chanel','louis vuitton','hermes','rolex','tesla','walmart','zara','lululemon','peloton'];
-const EMOJIS = {fashion:'👗',electronics:'📱',beauty:'💄',home:'🏠',sports:'🏃',pets:'🐾',food:'🍔'};
+const EMOJIS = {fashion:'👗',electronics:'📱',beauty:'💄',home:'🏠',kitchen:'🍳',sports:'🏃',pets:'🐾',food:'🛒',health:'💊',toys:'🧸',gaming:'🎮',baby:'👶',books:'📚',tools:'🔧',automotive:'🚗',garden:'🌱',office:'🖊️',travel:'🧳',music:'🎸',art:'🎨'};
 
 const SEED_PRODUCTS = [
   // Fashion
