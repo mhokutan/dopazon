@@ -30,7 +30,10 @@
   .drop-card{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:16px;display:grid;grid-template-columns:200px 1fr;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
   .drop-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
   .drop-card.winner{border:3px solid #FF9900;}
-  .drop-img{background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:90px;padding:20px;}
+  .drop-img{background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:90px;padding:0;overflow:hidden;}
+  .drop-img img{width:100%;height:100%;min-height:200px;object-fit:cover;}
+  .archive-emoji img{width:100%;height:70px;object-fit:cover;border-radius:4px;}
+  .prev-winner-img{width:40px;height:40px;object-fit:cover;border-radius:4px;flex-shrink:0;}
   .drop-info{padding:20px;}
   .drop-badges{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
   .drop-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;}
@@ -196,21 +199,21 @@
 function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
 
 const ALL_DROPS = [
-  {id:101,emoji:'🦆',title:'RubberDux Quantum Bath Duck — Measures Water Pressure',desc:'A rubber duck with 7 sensors that measures bath water quantum properties. Scientists say it\'s pointless. We say it\'s essential.',price:89,cat:'home'},
-  {id:102,emoji:'🧢',title:'AirMax Vent Baseball Cap — Built-in USB-C Fan',desc:'A cap with a tiny USB-C powered fan in the brim. Keeps you cool. Makes you look like a spaceship. Worth it.',price:129,cat:'fashion'},
-  {id:103,emoji:'☕',title:'QuantumBrewX Smart Mug — Maintains Exactly 68.5°F',desc:'AI-powered mug with 47 temperature presets. App-connected. Subscription optional. The coffee is the same.',price:219,cat:'home'},
-  {id:104,emoji:'🪑',title:'AirSit ErgoChair Pro — Posture-Correcting Hover Mode',desc:'Patent-pending hover mode does not make it float. But the lumbar support is genuinely nice. We apologize for the name.',price:445,cat:'home'},
-  {id:105,emoji:'🔭',title:'StarGaze AI Telescope — Finds Stars, Names Stars After You',desc:'Automatically discovers celestial bodies and names them after you. IAU does not recognize these names. We still do.',price:379,cat:'electronics'},
-  {id:106,emoji:'🎒',title:'Stealth Carry Anti-Gravity Backpack — Feels Like Nothing',desc:'Distributed weight system makes the 30-liter pack feel like nothing. We mean it weighs 4 lbs empty. Still though.',price:289,cat:'fashion'},
-  {id:107,emoji:'🧴',title:'OxyFlux Night Recovery Serum — Oxygenates Your Dreams',desc:'Applied before sleep. Contains oxygen molecules (air). 92 ingredients. Dermatologists are skeptical. Your skin will be soft.',price:168,cat:'beauty'},
-  {id:108,emoji:'🎮',title:'HandCramp 5 Pro Controller — Vibrates in 512 Patterns',desc:'512 haptic patterns. Your fingers will feel every texture, breeze, and emotional beat of your game. 12-hour battery.',price:199,cat:'electronics'},
-  {id:109,emoji:'🌡️',title:'FrostByte Smart Sock — Cools Feet to Optimal 67°F',desc:'Battery-powered cooling filaments keep socks at "peak cognitive temperature." The science is disputed. The socks are real.',price:95,cat:'fashion'},
-  {id:110,emoji:'🐾',title:'PawTalk Pet Translator — 200-Word Vocabulary Module',desc:'Clips to collar. Analyzes vocalizations. Translates to one of 200 phrases. Accuracy: "better than guessing." Probably.',price:149,cat:'pets'},
-  {id:111,emoji:'🍳',title:'AeroFry AirDon 9000 — 0.3-Second Preheat',desc:'Preheats in 0.3 seconds. Cooks in 8 minutes. App-connected. Voice-controlled. Your food tastes the same. But faster.',price:339,cat:'home'},
-  {id:112,emoji:'📚',title:'KnowledgeCube Speed-Reading Lamp — Beams Text Into Eyes',desc:'Strobing lamp syncs with text. Not medically approved. Optometrists frown. Users report "probably reading faster."',price:255,cat:'electronics'},
-  {id:113,emoji:'🧲',title:'HydroSpin Water Bottle — Vortex Infusion Technology',desc:'Magnetic vortex agitator spins water "26 times per second to align molecular structure." The water is the same. The bottle is cool.',price:79,cat:'sports'},
-  {id:114,emoji:'🎵',title:'BoneShield Titanium Earbuds — Bypasses Eardrums',desc:'Bone conduction technology lets you hear clearly while keeping ears open. Also you look like you\'re from 2047.',price:199,cat:'electronics'},
-  {id:115,emoji:'🌿',title:'CarbonZero Smart Plant Pot — Absorbs Your Carbon Guilt',desc:'Monitors soil, light, CO2. Sends plant mood updates. Vibrates when plant is "happy." Plant may still die.',price:119,cat:'home'},
+  {id:101,emoji:'🦆',img:'https://images.unsplash.com/photo-1601599561213-832382fd07ba?w=400&q=80',title:'RubberDux Quantum Bath Duck — Measures Water Pressure',desc:'A rubber duck with 7 sensors that measures bath water quantum properties. Scientists say it\'s pointless. We say it\'s essential.',price:89,cat:'home'},
+  {id:102,emoji:'🧢',img:'https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=400&q=80',title:'AirMax Vent Baseball Cap — Built-in USB-C Fan',desc:'A cap with a tiny USB-C powered fan in the brim. Keeps you cool. Makes you look like a spaceship. Worth it.',price:129,cat:'fashion'},
+  {id:103,emoji:'☕',img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80',title:'QuantumBrewX Smart Mug — Maintains Exactly 68.5°F',desc:'AI-powered mug with 47 temperature presets. App-connected. Subscription optional. The coffee is the same.',price:219,cat:'home'},
+  {id:104,emoji:'🪑',img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80',title:'AirSit ErgoChair Pro — Posture-Correcting Hover Mode',desc:'Patent-pending hover mode does not make it float. But the lumbar support is genuinely nice. We apologize for the name.',price:445,cat:'home'},
+  {id:105,emoji:'🔭',img:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80',title:'StarGaze AI Telescope — Finds Stars, Names Stars After You',desc:'Automatically discovers celestial bodies and names them after you. IAU does not recognize these names. We still do.',price:379,cat:'electronics'},
+  {id:106,emoji:'🎒',img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80',title:'Stealth Carry Anti-Gravity Backpack — Feels Like Nothing',desc:'Distributed weight system makes the 30-liter pack feel like nothing. We mean it weighs 4 lbs empty. Still though.',price:289,cat:'fashion'},
+  {id:107,emoji:'🧴',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80',title:'OxyFlux Night Recovery Serum — Oxygenates Your Dreams',desc:'Applied before sleep. Contains oxygen molecules (air). 92 ingredients. Dermatologists are skeptical. Your skin will be soft.',price:168,cat:'beauty'},
+  {id:108,emoji:'🎮',img:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80',title:'HandCramp 5 Pro Controller — Vibrates in 512 Patterns',desc:'512 haptic patterns. Your fingers will feel every texture, breeze, and emotional beat of your game. 12-hour battery.',price:199,cat:'electronics'},
+  {id:109,emoji:'🌡️',img:'https://images.unsplash.com/photo-1591195853828-11db59a44f43?w=400&q=80',title:'FrostByte Smart Sock — Cools Feet to Optimal 67°F',desc:'Battery-powered cooling filaments keep socks at "peak cognitive temperature." The science is disputed. The socks are real.',price:95,cat:'fashion'},
+  {id:110,emoji:'🐾',img:'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80',title:'PawTalk Pet Translator — 200-Word Vocabulary Module',desc:'Clips to collar. Analyzes vocalizations. Translates to one of 200 phrases. Accuracy: "better than guessing." Probably.',price:149,cat:'pets'},
+  {id:111,emoji:'🍳',img:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',title:'AeroFry AirDon 9000 — 0.3-Second Preheat',desc:'Preheats in 0.3 seconds. Cooks in 8 minutes. App-connected. Voice-controlled. Your food tastes the same. But faster.',price:339,cat:'home'},
+  {id:112,emoji:'📚',img:'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80',title:'KnowledgeCube Speed-Reading Lamp — Beams Text Into Eyes',desc:'Strobing lamp syncs with text. Not medically approved. Optometrists frown. Users report "probably reading faster."',price:255,cat:'electronics'},
+  {id:113,emoji:'🧲',img:'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&q=80',title:'HydroSpin Water Bottle — Vortex Infusion Technology',desc:'Magnetic vortex agitator spins water "26 times per second to align molecular structure." The water is the same. The bottle is cool.',price:79,cat:'sports'},
+  {id:114,emoji:'🎵',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',title:'BoneShield Titanium Earbuds — Bypasses Eardrums',desc:'Bone conduction technology lets you hear clearly while keeping ears open. Also you look like you\'re from 2047.',price:199,cat:'electronics'},
+  {id:115,emoji:'🌿',img:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80',title:'CarbonZero Smart Plant Pot — Absorbs Your Carbon Guilt',desc:'Monitors soil, light, CO2. Sends plant mood updates. Vibrates when plant is "happy." Plant may still die.',price:119,cat:'home'},
 ];
 
 let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
@@ -255,7 +258,7 @@ function dropCard(d, idx) {
   const isFirst = idx === 0;
   return `
   <div class="drop-card ${isFirst?'winner':''}" id="drop_${d.id}">
-    <div class="drop-img">${d.emoji}</div>
+    <div class="drop-img">${d.img?`<img src="${escHtml(d.img)}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:d.emoji}</div>
     <div class="drop-info">
       <div class="drop-badges">
         <div class="drop-badge lightning">⚡ Lightning Drop</div>
@@ -352,9 +355,9 @@ function renderArchive() {
     const drop = ALL_DROPS[(d.getDate() * 7) % ALL_DROPS.length];
     return `
     <div class="archive-card">
-      <div class="archive-emoji">${drop.emoji}</div>
+      <div class="archive-emoji">${drop.img?`<img src="${escHtml(drop.img)}" alt="${escHtml(drop.title)}" loading="lazy" data-emoji="${escHtml(drop.emoji)}" onerror="imgFallback(this)">`:drop.emoji}</div>
       <div class="archive-day">${days[d.getDay()]} · ${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
-      <div class="archive-winner">${drop.title}</div>
+      <div class="archive-winner">${escHtml(drop.title)}</div>
       <div class="archive-amount">$${drop.price} value · FREE</div>
     </div>`;
   }).join('');
@@ -364,9 +367,9 @@ function renderTopDrops() {
   const top = [...ALL_DROPS].sort((a,b)=>b.price-a.price).slice(0,4);
   document.getElementById('topDrops').innerHTML = top.map(d => `
     <div class="prev-winner">
-      <span style="font-size:28px;">${d.emoji}</span>
+      ${d.img?`<img class="prev-winner-img" src="${escHtml(d.img)}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:`<span style="font-size:28px;">${d.emoji}</span>`}
       <div>
-        <div style="font-size:13px;font-weight:600;">${d.title.slice(0,35)}...</div>
+        <div style="font-size:13px;font-weight:600;">${escHtml(d.title.slice(0,35))}...</div>
         <div style="font-size:12px;color:#CC0C39;font-weight:700;">$${d.price} → FREE</div>
       </div>
     </div>

@@ -391,7 +391,7 @@ function renderProduct(p) {
   document.title = `Dopazon — ${p.title}`;
   const mainImgEl = document.getElementById('mainEmoji');
   if (p.img) {
-    mainImgEl.innerHTML = `<img src="${p.img}" alt="${p.title}" onerror="this.parentElement.textContent='${p.emoji||'📦'}'">`;
+    mainImgEl.innerHTML = `<img src="${escHtml(p.img)}" alt="${escHtml(p.title)}" data-emoji="${escHtml(p.emoji||'📦')}" onerror="imgFallback(this)">`;
   } else {
     mainImgEl.textContent = p.emoji || '📦';
   }
@@ -420,7 +420,7 @@ function renderProduct(p) {
   if (p.img) {
     const thumbUrls = [p.img, p.img+'&crop=entropy', p.img+'&crop=faces', p.img+'&crop=center'];
     document.getElementById('thumbs').innerHTML = thumbUrls.map((url,i) =>
-      `<div class="thumb ${i===0?'active':''}" onclick="selectThumbImg(this,'${url}')"><img src="${url}" onerror="this.parentElement.textContent='${p.emoji||'📦'}'"></div>`
+      `<div class="thumb ${i===0?'active':''}" data-url="${escHtml(url)}" onclick="selectThumbImg(this)"><img src="${escHtml(url)}" data-emoji="${escHtml(p.emoji||'📦')}" onerror="imgFallback(this)"></div>`
     ).join('');
   } else {
     const angles = [p.emoji, p.emoji, p.emoji, p.emoji];
@@ -432,11 +432,11 @@ function renderProduct(p) {
   // Features
   const enriched = enrichProduct(p);
   document.getElementById('featuresList').innerHTML = (enriched.features||[]).map(f =>
-    `<div class="feature-item"><span class="feature-check">›</span><span>${f}</span></div>`).join('');
+    `<div class="feature-item"><span class="feature-check">›</span><span>${escHtml(f)}</span></div>`).join('');
 
   // Specs
   document.getElementById('specsTable').innerHTML = (enriched.specs||[]).map(([k,v]) =>
-    `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+    `<tr><td>${escHtml(k)}</td><td>${escHtml(v)}</td></tr>`).join('');
 
   // Reviews
   generateReviews(p);
@@ -481,12 +481,12 @@ async function renderRelated(current) {
     related = [...related, ...extra];
   }
   document.getElementById('relatedGrid').innerHTML = related.map(p => `
-    <div class="related-card" onclick="window.location='product.html?id=${p.id}'">
+    <div class="related-card" onclick="window.location='product.html?id=${encodeURIComponent(p.id)}'">
       ${p.img
-        ? `<img src="${p.img}" alt="${p.title||''}" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:6px;" onerror="this.style.display='none'">`
-        : `<div class="related-emoji">${p.emoji||'📦'}</div>`}
-      <div class="related-title">${p.title}</div>
-      <div class="related-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:11px;">$${p.price}</span></div>
+        ? `<img src="${escHtml(p.img)}" alt="${escHtml(p.title||'')}" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:6px;" onerror="this.style.display='none'">`
+        : `<div class="related-emoji">${escHtml(p.emoji||'📦')}</div>`}
+      <div class="related-title">${escHtml(p.title||'')}</div>
+      <div class="related-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:11px;">$${escHtml(p.price)}</span></div>
     </div>`).join('');
 }
 
@@ -495,8 +495,9 @@ function selectThumb(el, emoji) {
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
-function selectThumbImg(el, url) {
-  document.getElementById('mainEmoji').innerHTML = `<img src="${url}" alt="product">`;
+function selectThumbImg(el) {
+  const url = el.getAttribute('data-url') || '';
+  document.getElementById('mainEmoji').innerHTML = `<img src="${escHtml(url)}" alt="product">`;
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }

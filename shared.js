@@ -4,7 +4,24 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 // ===== SHARED UTILS =====
 function escHtml(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;')
+    .replace(/`/g,'&#96;');
+}
+
+// Safe image-load fallback: replaces only the broken <img> with its emoji
+// (read from data-emoji). No user data is ever placed inside inline JS, which
+// prevents XSS via product img/emoji. Replacing just the element (not the
+// parent's contents) keeps sibling nodes like titles intact.
+function imgFallback(el){
+  const emoji = el.getAttribute('data-emoji') || '📦';
+  const span = document.createElement('span');
+  span.textContent = emoji;
+  el.replaceWith(span);
 }
 
 function launchConfetti(){
