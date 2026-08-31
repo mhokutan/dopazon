@@ -66,7 +66,15 @@
   .store-card:hover{border-color:#FF9900;}
   .trademark-warn{color:#CC0C39;font-size:12px;margin-top:4px;display:none;}
   .error-msg{color:#CC0C39;font-size:12px;margin-top:6px;display:none;}
-  @media(max-width:768px){.shop-layout{grid-template-columns:1fr;}.sidebar{display:none;}}
+  .pager{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff;border-radius:4px;padding:14px 16px;margin-top:16px;}
+  .pager-info{font-size:13px;color:#555;}
+  .pager-btns{display:flex;gap:6px;flex-wrap:wrap;}
+  .pager-btn{background:#fff;border:1px solid #ccc;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;min-width:38px;}
+  .pager-btn:hover:not(:disabled){border-color:#FF9900;background:#FFF8EE;}
+  .pager-btn.active{background:#232F3E;border-color:#232F3E;color:#fff;font-weight:700;}
+  .pager-btn:disabled{opacity:0.45;cursor:not-allowed;}
+  .pager-gap{align-self:center;color:#888;}
+  @media(max-width:768px){.shop-layout{grid-template-columns:1fr;}.sidebar{display:none;}.pager{justify-content:center;}}
 </style>
 </head>
 <body>
@@ -172,6 +180,7 @@
       </div>
     </div>
     <div class="product-grid" id="productGrid"></div>
+    <div class="pager" id="pager"></div>
 
     <!-- Community Stores -->
     <div style="background:#fff;border-radius:4px;padding:20px;margin-top:20px;">
@@ -303,7 +312,16 @@ function doSearch() {
   renderProducts(document.getElementById('searchInput').value.toLowerCase());
 }
 
-function renderProducts(searchQ) {
+// Rendering all ~1085 cards at once produced a ~130,000px page that Chrome
+// simply stopped painting past a few thousand pixels — the grid looked empty
+// as soon as you scrolled. Render one page at a time instead.
+const PAGE_SIZE = 48;
+let _currentPage = 1;
+let _lastSearchQ = undefined;
+
+function renderProducts(searchQ, keepPage) {
+  if (!keepPage) _currentPage = 1;
+  _lastSearchQ = searchQ;
   const allProducts = [...SEED_PRODUCTS, ...dbProducts];
   let items = currentCat ? allProducts.filter(p => p.category === currentCat) : allProducts;
   if (searchQ) items = items.filter(p => p.title.toLowerCase().includes(searchQ));
@@ -312,7 +330,15 @@ function renderProducts(searchQ) {
   document.getElementById('resultCount').textContent = items.length;
   document.getElementById('resultQuery').textContent = searchQ ? `"${searchQ}"` : currentCat || 'everything free';
   _renderedProducts = items;
-  document.getElementById('productGrid').innerHTML = items.map((p,i) => `
+
+  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  if (_currentPage > totalPages) _currentPage = totalPages;
+  const start = (_currentPage - 1) * PAGE_SIZE;
+  const pageItems = items.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('productGrid').innerHTML = pageItems.map((p,pi) => {
+    const i = start + pi;   // index into _renderedProducts, so addToCart stays correct
+    return `
     <div class="product-card" onclick="window.location='product.html?id=${p.id}'" style="cursor:pointer;">
       ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">DopePrime</div>'}
       ${p.img
@@ -328,7 +354,40 @@ function renderProducts(searchQ) {
       ${p.store_name?`<div style="font-size:11px;color:#555;margin-bottom:6px;">Sold by <strong>${escHtml(p.store_name)}</strong></div>`:''}
       <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${i})">Add to Cart</button>
       <button class="buy-now-btn" onclick="event.stopPropagation();addToCart(${i});openCheckout()">Buy Now</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+
+  renderPager(items.length, totalPages);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderPager(totalItems, totalPages) {
+  const el = document.getElementById('pager');
+  if (!el) return;
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  // a compact window of page numbers around the current page
+  const nums = [];
+  const from = Math.max(1, _currentPage - 2);
+  const to   = Math.min(totalPages, from + 4);
+  for (let n = Math.max(1, to - 4); n <= to; n++) nums.push(n);
+
+  const shownFrom = (_currentPage - 1) * PAGE_SIZE + 1;
+  const shownTo   = Math.min(_currentPage * PAGE_SIZE, totalItems);
+
+  el.innerHTML = `
+    <div class="pager-info">Showing <strong>${shownFrom}-${shownTo}</strong> of <strong>${totalItems.toLocaleString()}</strong></div>
+    <div class="pager-btns">
+      <button class="pager-btn" ${_currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${_currentPage - 1})">‹ Previous</button>
+      ${nums.map(n => `<button class="pager-btn ${n === _currentPage ? 'active' : ''}" onclick="gotoPage(${n})">${n}</button>`).join('')}
+      ${to < totalPages ? `<span class="pager-gap">…</span><button class="pager-btn" onclick="gotoPage(${totalPages})">${totalPages}</button>` : ''}
+      <button class="pager-btn" ${_currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${_currentPage + 1})">Next ›</button>
+    </div>`;
+}
+
+function gotoPage(n) {
+  _currentPage = n;
+  renderProducts(_lastSearchQ, true);
 }
 
 function addToCart(idx) {
