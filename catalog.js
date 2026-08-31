@@ -6,24 +6,24 @@
 
 const DZ_CATALOG = [
   // Fashion
-  {id:'s1',emoji:'👟',img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,category:'fashion',stars:4.8,reviews:12847,store_name:'SpeedShop'},
-  {id:'s9',emoji:'👜',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80',title:'LuxCraft Structured Tote — Pebbled Leather',price:395,category:'fashion',stars:4.6,reviews:4123,store_name:'LuxBoutique'},
+  {id:'s1',emoji:'👟',img:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,category:'fashion',stars:4.8,reviews:12847,store_name:'SpeedShop'},
+  {id:'s9',emoji:'👜',img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&q=80',title:'LuxCraft Structured Tote — Pebbled Leather',price:395,category:'fashion',stars:4.6,reviews:4123,store_name:'LuxBoutique'},
   {id:'sf3',emoji:'🕶️',img:'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80',title:'Aviator Sunglasses — UV400 Polarized, Titanium Frame',price:129,category:'fashion',stars:4.7,reviews:8341,store_name:'LuxBoutique'},
   {id:'sf4',emoji:'⌚',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80',title:'Minimalist Watch — Sapphire Glass, 5ATM Waterproof',price:249,category:'fashion',stars:4.8,reviews:15023,store_name:'TimeKeeper'},
   {id:'sf5',emoji:'👠',img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80',title:'Strappy Heeled Sandals — Block Heel, Cushioned Insole',price:119,category:'fashion',stars:4.5,reviews:6782,store_name:'LuxBoutique'},
   {id:'sf6',emoji:'🧥',img:'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&q=80',title:'Puffer Jacket — 700 Fill Power Down, Packable',price:299,category:'fashion',stars:4.9,reviews:21045,store_name:'OutdoorPro'},
   // Electronics
-  {id:'s2',emoji:'📱',img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',title:'Aplix ProMax Ultra — 6.9" OLED, Triple Camera',price:1299,category:'electronics',stars:4.7,reviews:8934,store_name:'TechVault'},
-  {id:'s5',emoji:'🎧',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',title:'SoundWave Elite Wireless — 40hr Battery, ANC',price:349,category:'electronics',stars:4.8,reviews:18923,store_name:'TechVault'},
-  {id:'s10',emoji:'🎮',img:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80',title:'VortexPlay Handheld Console — 10,000+ Games',price:199,category:'electronics',stars:4.8,reviews:15678,store_name:'TechVault'},
-  {id:'se4',emoji:'⌨️',img:'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80',title:'MechType Pro Keyboard — Hot-Swap Switches, RGB',price:159,category:'electronics',stars:4.9,reviews:27891,store_name:'TechVault'},
-  {id:'se5',emoji:'📷',img:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80',title:'MirrorPro Camera — 45MP, 8K Video, Dual IS',price:2499,category:'electronics',stars:4.8,reviews:5612,store_name:'TechVault'},
-  {id:'se6',emoji:'🖥️',img:'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80',title:'UltraWide Monitor — 34" Curved, 165Hz, HDR600',price:799,category:'electronics',stars:4.7,reviews:9204,store_name:'TechVault'},
+  {id:'s2',emoji:'📱',img:'https://images.unsplash.com/photo-1592890288564-76628a30a657?w=400&q=80',title:'Aplix ProMax Ultra — 6.9" OLED, Triple Camera',price:1299,category:'electronics',stars:4.7,reviews:8934,store_name:'TechVault'},
+  {id:'s5',emoji:'🎧',img:'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&q=80',title:'SoundWave Elite Wireless — 40hr Battery, ANC',price:349,category:'electronics',stars:4.8,reviews:18923,store_name:'TechVault'},
+  {id:'s10',emoji:'🎮',img:'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&q=80',title:'VortexPlay Handheld Console — 10,000+ Games',price:199,category:'electronics',stars:4.8,reviews:15678,store_name:'TechVault'},
+  {id:'se4',emoji:'⌨️',img:'https://images.unsplash.com/photo-1595225476474-87563907a212?w=400&q=80',title:'MechType Pro Keyboard — Hot-Swap Switches, RGB',price:159,category:'electronics',stars:4.9,reviews:27891,store_name:'TechVault'},
+  {id:'se5',emoji:'📷',img:'https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?w=400&q=80',title:'MirrorPro Camera — 45MP, 8K Video, Dual IS',price:2499,category:'electronics',stars:4.8,reviews:5612,store_name:'TechVault'},
+  {id:'se6',emoji:'🖥️',img:'https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=400&q=80',title:'UltraWide Monitor — 34" Curved, 165Hz, HDR600',price:799,category:'electronics',stars:4.7,reviews:9204,store_name:'TechVault'},
   {id:'se7',emoji:'🎙️',img:'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&q=80',title:'Studio Condenser Mic — XLR/USB, Cardioid Pattern',price:199,category:'electronics',stars:4.8,reviews:14337,store_name:'TechVault'},
   // Beauty
   {id:'s3',emoji:'💄',img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&q=80',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging',price:68,category:'beauty',stars:4.9,reviews:23156,store_name:'GlowLab'},
   {id:'s11',emoji:'🧴',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80',title:'DermaClear Retinol Night Cream — Clinically Tested',price:85,category:'beauty',stars:4.7,reviews:11234,store_name:'GlowLab'},
-  {id:'sb3',emoji:'💅',img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80',title:'Makeup Brush Set — 15pc Vegan, Rose Gold Handles',price:45,category:'beauty',stars:4.8,reviews:34512,store_name:'GlowLab'},
+  {id:'sb3',emoji:'💅',img:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=80',title:'Makeup Brush Set — 15pc Vegan, Rose Gold Handles',price:45,category:'beauty',stars:4.8,reviews:34512,store_name:'GlowLab'},
   {id:'sb4',emoji:'🌸',img:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80',title:'Hyaluronic Acid Moisturizer — 72hr Hydration',price:52,category:'beauty',stars:4.9,reviews:41023,store_name:'GlowLab'},
   {id:'sb5',emoji:'🧖',img:'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80',title:'Jade Roller & Gua Sha Set — Rose Quartz',price:35,category:'beauty',stars:4.6,reviews:18904,store_name:'GlowLab'},
   // Home
@@ -59,10 +59,10 @@ const DZ_CATALOG = [
   {id:'sf13',emoji:'👔',img:'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400&q=80',title:'Slim Fit Dress Shirt — Non-Iron, Stretch Cotton',price:95,category:'fashion',stars:4.7,reviews:11023,store_name:'TimeKeeper'},
   {id:'sf14',emoji:'🩳',img:'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&q=80',title:'Athletic Shorts — 5" Inseam, Quick-Dry, Pockets',price:45,category:'fashion',stars:4.8,reviews:28901,store_name:'FitWorld'},
   // More Electronics
-  {id:'se8',emoji:'🖨️',img:'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=400&q=80',title:'Wireless Laser Printer — Auto Duplex, 42ppm',price:329,category:'electronics',stars:4.6,reviews:12034,store_name:'TechVault'},
+  {id:'se8',emoji:'🖨️',img:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80',title:'Wireless Laser Printer — Auto Duplex, 42ppm',price:329,category:'electronics',stars:4.6,reviews:12034,store_name:'TechVault'},
   {id:'se9',emoji:'📡',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',title:'WiFi 6E Router — Tri-Band, 10Gbps, Coverage 5000sqft',price:449,category:'electronics',stars:4.8,reviews:19823,store_name:'TechVault'},
   {id:'se10',emoji:'🔌',img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80',title:'65W GaN Charger — 3-Port, Folds Flat, PD 3.0',price:49,category:'electronics',stars:4.9,reviews:87234,store_name:'TechVault'},
-  {id:'se11',emoji:'🎵',img:'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80',title:'Bluetooth Speaker — 360° Sound, IP67, 24hr Battery',price:129,category:'electronics',stars:4.8,reviews:43201,store_name:'TechVault'},
+  {id:'se11',emoji:'🎵',img:'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400&q=80',title:'Bluetooth Speaker — 360° Sound, IP67, 24hr Battery',price:129,category:'electronics',stars:4.8,reviews:43201,store_name:'TechVault'},
   {id:'se12',emoji:'💻',img:'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',title:'UltraBook Pro — 14" OLED, Intel i9, 32GB RAM',price:1799,category:'electronics',stars:4.7,reviews:8234,store_name:'TechVault'},
   {id:'se13',emoji:'🎛️',img:'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=400&q=80',title:'Smart Home Hub — Works with Alexa, Google, Matter',price:99,category:'electronics',stars:4.6,reviews:15023,store_name:'TechVault'},
   {id:'se14',emoji:'📺',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80',title:'QLED TV 65" — 4K 120Hz, Dolby Vision, Gaming Mode',price:1299,category:'electronics',stars:4.8,reviews:6782,store_name:'TechVault'},
