@@ -135,7 +135,7 @@
     <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
   <div class="user-menu">
-    <a href="#" class="header-link" id="accountBtn" onclick="handleAccountClick(event)">
+    <a href="account.html" class="header-link" id="accountBtn">
       <span id="accountGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong>
     </a>
     <div class="user-dropdown">
@@ -143,7 +143,7 @@
         <button onclick="openModal('login')" style="background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:8px 40px;font-size:14px;cursor:pointer;width:100%;margin-bottom:8px;">Sign in</button>
         <div style="font-size:12px;color:#555;">New customer? <a href="#" onclick="openModal('signup')" style="color:#007185;">Start here.</a></div>
       </div>
-      <a href="#">Your Account</a><a href="#">Your Orders</a><a href="#">Wish List</a>
+      <a href="account.html">Your Account</a><a href="orders.html">Your Orders</a><a href="wishlist.html">Wish List</a>
       <a href="confessions.html">Confession Cart</a>
       <a href="#" id="signoutLink" style="display:none" onclick="signOut()">Sign Out</a>
     </div>
@@ -392,7 +392,7 @@
     <div class="footer-col"><h4>Get to Know Us</h4><a href="#">About Dopazon</a><a href="#">The Science of Dopamine</a><a href="#">Press</a><a href="#">Dopazon Cares</a></div>
     <div class="footer-col"><h4>Make Money With Us</h4><a href="shop.html">Open Your Store</a><a href="#">Dopazon Affiliates</a><a href="#">Advertise Products</a></div>
     <div class="footer-col"><h4>Payment Products</h4><a href="#">DopaPay (Free)</a><a href="#">DopePrime Benefits</a><a href="#">No Credit Card Ever</a></div>
-    <div class="footer-col"><h4>Let Us Help You</h4><a href="#">Your Account</a><a href="#">Your Orders</a><a href="#">Shipping ($0)</a><a href="#">Returns (Keep It)</a><a href="#">Help</a></div>
+    <div class="footer-col"><h4>Let Us Help You</h4><a href="account.html">Your Account</a><a href="orders.html">Your Orders</a><a href="#">Shipping ($0)</a><a href="#">Returns (Keep It)</a><a href="#">Help</a></div>
   </div>
   <div class="footer-bot">
     <div class="footer-logo">dopa<span>zon</span></div>
@@ -517,7 +517,8 @@ function startStats(){
 
 // Search
 function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
-function handleAccountClick(e){if(user)e.preventDefault();}
+// (account link now goes straight to account.html; the hover dropdown still
+//  offers sign in / sign out for quick access)
 
 // Auth
 function openModal(mode){

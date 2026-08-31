@@ -73,7 +73,7 @@
   </div>
   <a href="index.html" class="header-link"><span>Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="header-link"><span>Continue</span><strong>Shopping Free</strong></a>
-  <a href="#" class="header-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account ▾</strong></a>
+  <a href="account.html" class="header-link" id="acctBtn"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
@@ -242,9 +242,7 @@ function updateUserUI() {
   if (currentUser) document.getElementById('confUsername').value = name || '';
 }
 
-function handleAcctClick(e) {
-  if (!currentUser) { e.preventDefault(); window.location = 'index.html'; }
-}
+// (account link now goes straight to account.html for guests and members alike)
 
 async function loadConfessions() {
   try {

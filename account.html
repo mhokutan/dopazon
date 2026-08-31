@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Your Account</title>
+<link rel="stylesheet" href="shared.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<nav id="navbar">
+  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="orders.html" class="nav-link">Your Orders</a>
+  <a href="wishlist.html" class="nav-link">Wish List</a>
+  <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
+</nav>
+
+<div class="acct-wrap">
+  <div class="acct-crumb"><a href="index.html">Dopazon</a> › Your Account</div>
+  <h1 class="acct-title">Your Account</h1>
+
+  <!-- Signed-out prompt -->
+  <div class="acct-card" id="signedOutBox" style="display:none;text-align:center;">
+    <div style="font-size:48px;margin-bottom:8px;">🔐</div>
+    <h2 style="font-size:18px;margin-bottom:6px;">You're browsing as a guest</h2>
+    <p style="color:#555;font-size:13.5px;margin-bottom:16px;">
+      Sign in to keep your (completely free) orders and wish list tied to your account.
+    </p>
+    <a href="shop.html" class="acct-btn">Sign in on the shop page →</a>
+  </div>
+
+  <!-- Signed-in summary -->
+  <div class="acct-card" id="signedInBox" style="display:none;">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div id="avatarBig" style="width:58px;height:58px;border-radius:50%;background:#FF9900;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;">D</div>
+      <div style="flex:1;min-width:180px;">
+        <div style="font-size:17px;font-weight:700;" id="userName">—</div>
+        <div style="font-size:13px;color:#555;" id="userEmail">—</div>
+        <div style="font-size:12px;color:#888;margin-top:2px;" id="memberSince"></div>
+      </div>
+      <button class="acct-btn-ghost" onclick="doSignOut()">Sign out</button>
+    </div>
+  </div>
+
+  <!-- Lifetime stats -->
+  <div class="acct-stat-row">
+    <div class="acct-stat"><strong id="statOrders">0</strong><span>Free orders placed</span></div>
+    <div class="acct-stat"><strong id="statSaved">$0</strong><span>Money not spent</span></div>
+    <div class="acct-stat"><strong id="statWish">0</strong><span>Items wish-listed</span></div>
+    <div class="acct-stat"><strong id="statCart">0</strong><span>Currently in cart</span></div>
+  </div>
+
+  <div class="acct-grid">
+    <a class="acct-tile" href="orders.html">
+      <span class="ico">📦</span>
+      <div><h3>Your Orders</h3><p>Track, view, and relive every $0 purchase you've made.</p></div>
+    </a>
+    <a class="acct-tile" href="wishlist.html">
+      <span class="ico">❤️</span>
+      <div><h3>Your Wish List</h3><p>Everything you saved for later. Still free. Still waiting.</p></div>
+    </a>
+    <a class="acct-tile" href="confessions.html">
+      <span class="ico">💬</span>
+      <div><h3>Confession Cart</h3><p>Share what you almost bought and see the community's close calls.</p></div>
+    </a>
+    <a class="acct-tile" href="shop.html">
+      <span class="ico">🏪</span>
+      <div><h3>Your Store</h3><p>Open a fake storefront and list your own imaginary products.</p></div>
+    </a>
+    <a class="acct-tile" href="drops.html">
+      <span class="ico">⚡</span>
+      <div><h3>Daily Drops</h3><p>Five absurd free items every day. Keep your streak alive.</p></div>
+    </a>
+    <a class="acct-tile" href="shop.html">
+      <span class="ico">🛒</span>
+      <div><h3>Your Cart</h3><p>Head back to checkout and pay absolutely nothing.</p></div>
+    </a>
+  </div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script src="shared.js"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCartCount();
+  renderStats();
+  const { data: { session } } = await sb.auth.getSession();
+  renderUser(session?.user || null);
+});
+
+sb.auth.onAuthStateChange((_e, session) => renderUser(session?.user || null));
+
+function renderUser(user) {
+  const greet = document.getElementById('acctGreet');
+  if (user) {
+    const name = user.user_metadata?.name || user.email.split('@')[0];
+    greet.textContent = 'Hello, ' + name;
+    document.getElementById('userName').textContent = name;
+    document.getElementById('userEmail').textContent = user.email;
+    document.getElementById('avatarBig').textContent = (name[0] || 'D').toUpperCase();
+    if (user.created_at) {
+      document.getElementById('memberSince').textContent =
+        'Dopazon member since ' + new Date(user.created_at).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    }
+    document.getElementById('signedInBox').style.display = '';
+    document.getElementById('signedOutBox').style.display = 'none';
+  } else {
+    greet.textContent = 'Hello, sign in';
+    document.getElementById('signedInBox').style.display = 'none';
+    document.getElementById('signedOutBox').style.display = '';
+  }
+}
+
+function renderStats() {
+  const orders = JSON.parse(localStorage.getItem('dz_orders')||'[]');
+  const wish   = JSON.parse(localStorage.getItem('dz_wishlist')||'[]').filter(w => w && typeof w === 'object');
+  const cart   = JSON.parse(localStorage.getItem('dz_cart')||'[]');
+  const saved  = orders.reduce((s,o) => s + (o.saved||0), 0);
+  document.getElementById('statOrders').textContent = orders.length;
+  document.getElementById('statSaved').textContent  = '$' + saved.toLocaleString();
+  document.getElementById('statWish').textContent   = wish.length;
+  document.getElementById('statCart').textContent   = cart.length;
+}
+
+async function doSignOut() {
+  await sb.auth.signOut();
+  showToast('👋 Signed out.');
+}
+</script>
+</body>
+</html>

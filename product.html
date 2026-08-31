@@ -122,7 +122,7 @@
     <input class="search-input" type="text" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')window.location='shop.html?q='+encodeURIComponent(this.value)">
     <button class="search-btn" onclick="window.location='shop.html'"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="index.html" class="header-link"><span>Hello, visitor</span><strong>Account ▾</strong></a>
+  <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
   <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
@@ -282,60 +282,14 @@
 <div class="cart-toast" id="cartToast"></div>
 
 <script src="shared.js"></script>
+<script src="catalog.js"></script>
 <script>
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const ALL_PRODUCTS = [
-  {id:'s1',emoji:'👟',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box, Breathable Mesh Upper',price:189,category:'fashion',stars:4.8,reviews:12847,store:'SpeedShop',
-    desc:'The UltraRun Pro combines cutting-edge foam technology with a wide toe box for natural foot movement. Designed for serious runners and casual wearers alike.',
-    features:['Responsive foam midsole for energy return on every step','Wide toe box allows natural toe splay','Breathable engineered mesh keeps feet cool','Rubber outsole provides excellent traction','Available in 8 colorways','Machine washable'],
-    specs:[['Brand','SpeedShop'],['Material','Engineered Mesh + Synthetic'],['Sole','Rubber'],['Closure','Lace-up'],['Weight','8.5 oz per shoe'],['Country','Made in Imagination'],['Warranty','Lifetime (everything is free)']]},
-  {id:'s2',emoji:'📱',title:'Aplix ProMax Ultra — 6.9" OLED Display, Triple Camera System, 5G Ready',price:1299,category:'electronics',stars:4.7,reviews:8934,store:'TechVault',
-    desc:'The most powerful smartphone that has never existed. Features an impossible battery life, a camera that does everything, and a screen so bright it can be seen from space.',
-    features:['6.9" ProMotion OLED — 120Hz adaptive refresh','200MP triple camera system with AI enhancement','72-hour battery life on a single charge','Titanium aerospace-grade frame','Satellite connectivity included','Self-repairing screen technology'],
-    specs:[['Display','6.9" OLED, 120Hz'],['Camera','200MP + 50MP + 12MP'],['Battery','7,500 mAh'],['Processor','DopaMind Ultra Chip'],['Storage','1TB + unlimited cloud'],['5G','Yes (and 6G, and 7G']]},
-  {id:'s3',emoji:'💄',title:'GlowLux Vitamin C Serum — Brightening, Anti-Aging, Dermatologist Tested',price:68,category:'beauty',stars:4.9,reviews:23156,store:'GlowLab',
-    desc:'Our most concentrated Vitamin C formula (20% stable L-Ascorbic Acid) combined with Hyaluronic Acid and Vitamin E to target dullness, uneven tone, and fine lines.',
-    features:['20% stable L-Ascorbic Acid — highest concentration','Hyaluronic Acid for 24-hour hydration','Vitamin E for antioxidant protection','Lightweight, fast-absorbing formula','Dermatologist tested and approved','Cruelty-free and vegan formula'],
-    specs:[['Skin Type','All skin types'],['Key Ingredient','20% Vitamin C (L-AA)'],['Volume','1 fl oz / 30ml'],['Texture','Lightweight serum'],['Scent','Fragrance-free'],['Tested','Dermatologist approved']]},
-  {id:'s4',emoji:'☕',title:'BrewMaster Pro Coffee Machine — 12-Cup, Built-in Grinder, Smart Connect',price:249,category:'home',stars:4.6,reviews:5432,store:'HomeZen',
-    desc:'The BrewMaster Pro grinds fresh beans and brews a perfect pot every time. Smart scheduling, temperature control, and self-cleaning make mornings easier.',
-    features:['Built-in conical burr grinder — 5 grind settings','12-cup thermal carafe keeps coffee hot for 4 hours','Smart scheduling via app — wake up to fresh coffee','Precise brew temperature control (195–205°F)','Self-cleaning cycle with one button','Compatible with ground coffee too'],
-    specs:[['Capacity','12 cups / 60 fl oz'],['Grinder','Conical burr, 5 settings'],['Carafe','Thermal stainless steel'],['Control','App + manual'],['Dimensions','14" H × 8" W × 12" D'],['Warranty','2 years (or forever, it\'s free)']]},
-  {id:'s5',emoji:'🎧',title:'SoundWave Elite Wireless Headphones — 40hr Battery, Active Noise Cancellation',price:349,category:'electronics',stars:4.8,reviews:18923,store:'TechVault',
-    desc:'Studio-quality sound meets all-day comfort. The SoundWave Elite features 40mm dynamic drivers, industry-leading ANC, and a 40-hour battery that keeps the music going.',
-    features:['40-hour battery life with ANC on','Industry-leading active noise cancellation','40mm dynamic drivers for studio-quality audio','Auto-pause when headphones are removed','Multipoint connection — 2 devices simultaneously','Foldable design with premium carry case'],
-    specs:[['Driver Size','40mm dynamic'],['Battery','40 hours ANC on / 60 hours off'],['Bluetooth','5.3, multipoint'],['ANC Levels','3 (Light, Full, Transparency)'],['Weight','254g'],['Charging','USB-C, 10 min = 3 hours']]},
-  {id:'s6',emoji:'🐕',title:'PawNutrition Premium Dog Food — Grain-Free, Real Chicken & Sweet Potato',price:89,category:'pets',stars:4.9,reviews:31024,store:'PetParadise',
-    desc:'Made with real chicken as the #1 ingredient. Our grain-free formula supports healthy digestion, a shiny coat, and strong muscles for dogs of all sizes.',
-    features:['Real chicken is the #1 ingredient','Grain-free for sensitive stomachs','Added Omega-3 & 6 for skin and coat health','No artificial colors, flavors, or preservatives','Supports healthy digestion with prebiotics','Suitable for all life stages'],
-    specs:[['Main Protein','Real chicken'],['Formula','Grain-free'],['Size','15 lb bag'],['Life Stage','All stages'],['Guaranteed Analysis','Min. 30% protein, 15% fat'],['Calories','360 kcal/cup']]},
-  {id:'s8',emoji:'🌿',title:'ZenMist Essential Oil Diffuser — Ultrasonic, 7 Color LED, 500ml Tank',price:45,category:'home',stars:4.5,reviews:9234,store:'HomeZen',
-    desc:'Transform your space with the ZenMist diffuser. Using ultrasonic technology, it converts water and essential oils into a fine, cool mist that fills your room with your favorite scents.',
-    features:['500ml water tank — runs up to 10 hours','7 LED color options with brightness control','Ultra-quiet operation — perfect for bedroom','Auto shut-off when water runs low','Compatible with all essential oils','4 timer settings: 1h, 3h, 6h, continuous'],
-    specs:[['Capacity','500ml'],['Run Time','Up to 10 hours'],['LED','7 colors'],['Noise Level','<30dB'],['Power','12W'],['Material','BPA-free plastic']]},
-  {id:'s9',emoji:'👜',title:'LuxCraft Structured Tote Bag — Pebbled Leather, Gold Hardware',price:395,category:'fashion',stars:4.6,reviews:4123,store:'LuxBoutique',
-    desc:'Handcrafted from premium pebbled leather, the LuxCraft Tote features a structured silhouette, gold-tone hardware, and a spacious interior designed for the modern professional.',
-    features:['Premium pebbled leather exterior','Gold-tone magnetic snap closure','Interior zip pocket + 2 slip pockets','Removable crossbody strap included','Dust bag included','Fits 13" laptop'],
-    specs:[['Material','Genuine pebbled leather'],['Hardware','Gold-tone zinc alloy'],['Dimensions','14"W × 11"H × 5"D'],['Interior','Fabric-lined with pockets'],['Strap Drop','10" handles / 22" crossbody'],['Closure','Magnetic snap']]},
-  {id:'s10',emoji:'🎮',title:'VortexPlay Handheld Console — 10,000+ Built-in Games, HD Screen',price:199,category:'electronics',stars:4.8,reviews:15678,store:'TechVault',
-    desc:'The VortexPlay packs over 10,000 retro and indie games into a sleek handheld form factor. With a 5" IPS display and 8-hour battery, it\'s the ultimate gaming companion.',
-    features:['10,000+ pre-loaded games across 20+ systems','5" IPS display — 720p full lamination','8-hour battery life','Dual speakers with 3D surround sound','Wi-Fi for multiplayer + online leaderboards','USB-C charging'],
-    specs:[['Display','5" IPS 720p'],['Storage','256GB built-in'],['Battery','8 hours'],['Connectivity','Wi-Fi, Bluetooth 5.0, USB-C'],['Weight','320g'],['Systems','NES, SNES, GBA, PS1, and more']]},
-  {id:'s11',emoji:'🧴',title:'DermaClear Retinol Night Cream — Clinically Tested, 0.5% Retinol Complex',price:85,category:'beauty',stars:4.7,reviews:11234,store:'GlowLab',
-    desc:'Formulated with a 0.5% encapsulated retinol complex and niacinamide, DermaClear smooths fine lines, fades dark spots, and improves skin texture — clinically proven in 8 weeks.',
-    features:['0.5% encapsulated retinol for gradual, gentle release','Niacinamide (5%) fades dark spots and evens tone','Peptide complex for firmness and elasticity','Non-comedogenic — safe for acne-prone skin','Dermatologist tested and approved','Fragrance-free, paraben-free'],
-    specs:[['Retinol %','0.5% encapsulated'],['Niacinamide','5%'],['Size','1.7 fl oz / 50ml'],['Texture','Rich cream'],['Skin Type','All types incl. sensitive'],['Tested','8-week clinical study']]},
-  {id:'s12',emoji:'🛋️',title:'NapCloud Bean Bag Chair — Memory Foam Fill, Velvet Cover, XL',price:299,category:'home',stars:4.5,reviews:6789,store:'HomeZen',
-    desc:'Sink into the NapCloud — filled with premium shredded memory foam that conforms to your body. The ultra-soft velvet cover is removable and machine washable.',
-    features:['Premium shredded memory foam fill','Ultra-soft velvet cover — removable & washable','XL size fits adults comfortably','Durable double-stitched zipper closure','Refillable — add more foam over time','Available in 8 colors'],
-    specs:[['Fill','Shredded memory foam'],['Cover','100% polyester velvet'],['Size','XL — 6ft diameter when flat'],['Weight','18 lbs'],['Washing','Machine wash cold, tumble dry low'],['Zipper','Heavy-duty YKK']]},
-  {id:'s7',emoji:'🏋️',title:'FlexCore Adjustable Dumbbells — 5 to 52.5 lbs per Hand, Space-Saving Design',price:429,category:'sports',stars:4.7,reviews:7823,store:'FitWorld',
-    desc:'Replace 15 sets of dumbbells with one. The FlexCore system adjusts from 5 to 52.5 lbs in 2.5-lb increments with a simple twist of the handle.',
-    features:['Replaces 15 pairs of dumbbells (5–52.5 lbs)','Adjusts in 2.5-lb increments in seconds','Durable plastic tray stores all weight plates','Ergonomic handle with contoured grip','Safe locking mechanism prevents weight from slipping','2-year warranty on all components'],
-    specs:[['Weight Range','5–52.5 lbs per dumbbell'],['Increments','2.5 lbs'],['Material','Steel plates, ABS housing'],['Length','17" at maximum weight'],['Tray Dimensions','24" × 8" × 9"'],['Sold As','Pair of 2 dumbbells']]},
-];
+// Catalog now lives in catalog.js (shared with shop.html) — all 85 products
+// resolve here, so every grid item has a real detail page with its image.
+const ALL_PRODUCTS = DZ_PRODUCTS;
 
 let currentProduct = null;
 let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
@@ -343,25 +297,55 @@ let votes = JSON.parse(localStorage.getItem('dz_votes') || '{}');
 
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('cartCount').textContent = cart.length;
+
+  sb.auth.getSession().then(({ data: { session } }) => {
+    const u = session?.user;
+    if (u) document.getElementById('acctGreet').textContent =
+      'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+  });
+
   const params = new URLSearchParams(location.search);
   const id = params.get('id') || 's1';
 
-  // Try to load from Supabase first (for user-created products)
-  let product = null;
-  if (!id.startsWith('s')) {
-    const { data } = await sb.from('products').select('*').eq('id', id).single();
-    if (data) {
-      product = { ...data, store: data.store_name || 'Dopazon Store', reviews: data.reviews || 100 };
-      product = enrichProduct(product);
-    }
-  }
+  // Seed catalog first — it covers every product shown in the shop grid.
+  let product = dzFindProduct(id);
+
+  // Not in the catalog? Then it's a user-created product living in Supabase.
   if (!product) {
-    product = ALL_PRODUCTS.find(p => p.id === id) || ALL_PRODUCTS[0];
+    try {
+      const { data } = await sb.from('products').select('*').eq('id', id).maybeSingle();
+      if (data) {
+        product = enrichProduct({ ...data, store: data.store_name || 'Dopazon Store', reviews: data.reviews || 100 });
+      }
+    } catch (e) { /* invalid id / offline — fall through to not-found */ }
   }
+
+  if (!product) { renderNotFound(id); return; }
+
   currentProduct = product;
   renderProduct(product);
   renderAmazonUpsell(product);
 });
+
+function renderNotFound(id) {
+  document.title = 'Dopazon — Product not found';
+  const main = document.querySelector('.product-main') || document.body;
+  main.innerHTML = `
+    <div style="grid-column:1/-1;background:#fff;border-radius:4px;padding:60px 20px;text-align:center;">
+      <div style="font-size:70px;margin-bottom:10px;">🔍</div>
+      <h1 style="font-size:22px;margin-bottom:8px;">We couldn't find that product</h1>
+      <p style="color:#555;font-size:14px;margin-bottom:20px;">
+        The item <strong>${escHtml(id)}</strong> isn't in our (imaginary) warehouse.
+      </p>
+      <a href="shop.html" style="background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:11px 26px;font-size:15px;font-weight:700;text-decoration:none;color:#0F1111;display:inline-block;">
+        Browse all free items →
+      </a>
+    </div>`;
+  // Hide the sections that only make sense for a real product.
+  document.querySelectorAll('#reviewsSection, .related-section').forEach(el => el.style.display = 'none');
+  const bc = document.getElementById('breadName');
+  if (bc) bc.textContent = 'Not found';
+}
 
 function enrichProduct(p) {
   const catFeatures = {
@@ -467,10 +451,13 @@ async function renderRelated(current) {
   // Fetch from Supabase first, fallback to ALL_PRODUCTS
   let related = [];
   try {
-    const { data } = await sb.from('products').select('*')
-      .eq('category', current.category)
-      .neq('id', current.id)
-      .limit(12);
+    // products.id is a uuid column — excluding a seed id like "sf3" makes
+    // Postgres reject the whole query (22P02), so only filter on real uuids.
+    let q = sb.from('products').select('*').eq('category', current.category).limit(12);
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(current.id || '')) {
+      q = q.neq('id', current.id);
+    }
+    const { data } = await q;
     if (data && data.length > 0) {
       related = data.sort(() => Math.random() - 0.5).slice(0, 6);
     }
@@ -535,10 +522,21 @@ function shareProduct() {
 }
 
 function addToWishlist() {
-  const wl = JSON.parse(localStorage.getItem('dz_wishlist')||'[]');
-  wl.push(currentProduct?.id);
+  if (!currentProduct) return;
+  // Store the full item (not just the id) so wishlist.html can render it
+  // without needing to resolve products all over again.
+  let wl = JSON.parse(localStorage.getItem('dz_wishlist')||'[]')
+    .filter(w => w && typeof w === 'object');   // drop legacy id-only entries
+  const idx = wl.findIndex(w => w.id === currentProduct.id);
+  if (idx > -1) {
+    wl.splice(idx, 1);
+    showToast('♡ Removed from wishlist');
+  } else {
+    const { id, title, price, emoji, img, category, stars, reviews } = currentProduct;
+    wl.push({ id, title, price, emoji, img, category, stars, reviews, addedAt: Date.now() });
+    showToast('❤️ Added to wishlist!');
+  }
   localStorage.setItem('dz_wishlist', JSON.stringify(wl));
-  showToast('♡ Added to wishlist!');
 }
 
 function scrollToReviews() {

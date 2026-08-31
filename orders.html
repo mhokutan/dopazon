@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Your Orders</title>
+<link rel="stylesheet" href="shared.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+<style>
+  .status-pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .status-pill.delivered{background:#E7F4E8;color:#067D62;}
+  .status-pill.transit{background:#FFF4E5;color:#B35C00;}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<nav id="navbar">
+  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="orders.html" class="nav-link active">Your Orders</a>
+  <a href="wishlist.html" class="nav-link">Wish List</a>
+  <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
+</nav>
+
+<div class="acct-wrap">
+  <div class="acct-crumb"><a href="index.html">Dopazon</a> › <a href="account.html">Your Account</a> › Your Orders</div>
+  <h1 class="acct-title">Your Orders</h1>
+
+  <div class="acct-stat-row" id="statRow" style="display:none;">
+    <div class="acct-stat"><strong id="statOrders">0</strong><span>Orders placed</span></div>
+    <div class="acct-stat"><strong id="statItems">0</strong><span>Items "bought"</span></div>
+    <div class="acct-stat"><strong id="statSaved">$0</strong><span>Total not spent</span></div>
+  </div>
+
+  <div id="ordersList"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script src="shared.js"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
+let orders = [];
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCartCount();
+  orders = JSON.parse(localStorage.getItem('dz_orders')||'[]');
+  render();
+  const { data: { session } } = await sb.auth.getSession();
+  const u = session?.user;
+  if (u) document.getElementById('acctGreet').textContent =
+    'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+});
+
+// Orders "arrive" 30 minutes after they are placed — pure theatre, but it
+// makes the tracking state feel alive on repeat visits.
+const DELIVERY_MS = 30 * 60 * 1000;
+
+function render() {
+  const list = document.getElementById('ordersList');
+  if (orders.length === 0) {
+    document.getElementById('statRow').style.display = 'none';
+    list.innerHTML = `
+      <div class="acct-empty">
+        <div class="big">📦</div>
+        <h2>No orders yet</h2>
+        <p>You haven't placed a free order. That's a lot of money saved — but where's the fun?</p>
+        <a href="shop.html" class="acct-btn">Start shopping free →</a>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('statRow').style.display = '';
+  document.getElementById('statOrders').textContent = orders.length;
+  document.getElementById('statItems').textContent  = orders.reduce((s,o)=>s+(o.items?.length||0),0);
+  document.getElementById('statSaved').textContent  = '$' + orders.reduce((s,o)=>s+(o.saved||0),0).toLocaleString();
+
+  list.innerHTML = orders.map((o, oi) => {
+    const placed = new Date(o.placedAt);
+    const delivered = Date.now() - o.placedAt > DELIVERY_MS;
+    const eta = new Date(o.placedAt + DELIVERY_MS);
+    return `
+    <div>
+      <div class="order-head">
+        <div>ORDER PLACED<strong>${placed.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></div>
+        <div>TOTAL<strong style="color:#CC0C39;">$0.00</strong></div>
+        <div>YOU SAVED<strong style="color:#067D62;">$${Number(o.saved||0).toLocaleString()}</strong></div>
+        <div style="margin-left:auto;">ORDER #<strong>${escHtml(o.id||'—')}</strong></div>
+      </div>
+      <div class="order-body">
+        <div style="padding:10px 0 4px;">
+          <span class="status-pill ${delivered?'delivered':'transit'}">
+            ${delivered ? '✓ Delivered (imaginarily)' : '🚚 Out for fake delivery · ETA ' + eta.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
+          </span>
+        </div>
+        ${(o.items||[]).map((it, ii) => `
+          <div class="acct-row">
+            ${it.img
+              ? `<img class="acct-thumb" src="${escHtml(it.img)}" alt="${escHtml(it.title||'')}" loading="lazy" data-emoji="${escHtml(it.emoji||'📦')}" onerror="imgFallback(this)">`
+              : `<div class="acct-thumb-emoji">${escHtml(it.emoji||'📦')}</div>`}
+            <div class="acct-row-info">
+              <div class="acct-row-title"><a href="product.html?id=${encodeURIComponent(it.id||'')}">${escHtml(it.title||'Untitled item')}</a></div>
+              <div><span class="acct-free">FREE</span><span class="acct-was">$${Number(it.price||0).toLocaleString()}</span></div>
+            </div>
+            <button class="acct-btn-ghost" onclick="buyAgain(${oi},${ii})">Buy it again</button>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buyAgain(orderIdx, itemIdx) {
+  const item = orders[orderIdx]?.items?.[itemIdx];
+  if (!item) return;
+  const cart = JSON.parse(localStorage.getItem('dz_cart')||'[]');
+  cart.push({ ...item, addedAt: Date.now() });
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast('✅ Added to cart again — <strong>$0 charged</strong>');
+  launchConfetti();
+  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:item.title,value:0,item_list_name:'buy_again'});
+}
+</script>
+</body>
+</html>

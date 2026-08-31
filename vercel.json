@@ -4,7 +4,10 @@
     { "source": "/shop", "destination": "/shop.html" },
     { "source": "/confessions", "destination": "/confessions.html" },
     { "source": "/drops", "destination": "/drops.html" },
-    { "source": "/product", "destination": "/product.html" }
+    { "source": "/product", "destination": "/product.html" },
+    { "source": "/account", "destination": "/account.html" },
+    { "source": "/orders", "destination": "/orders.html" },
+    { "source": "/wishlist", "destination": "/wishlist.html" }
   ],
   "headers": [
     {

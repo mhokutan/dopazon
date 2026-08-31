@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Your Wish List</title>
+<link rel="stylesheet" href="shared.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<nav id="navbar">
+  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="orders.html" class="nav-link">Your Orders</a>
+  <a href="wishlist.html" class="nav-link active">Wish List</a>
+  <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
+</nav>
+
+<div class="acct-wrap">
+  <div class="acct-crumb"><a href="index.html">Dopazon</a> › <a href="account.html">Your Account</a> › Wish List</div>
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+    <h1 class="acct-title" style="margin:0;">Your Wish List</h1>
+    <span id="wishCount" style="font-size:14px;color:#555;"></span>
+    <div style="margin-left:auto;display:flex;gap:8px;" id="bulkActions"></div>
+  </div>
+
+  <div id="wishList"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script src="shared.js"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
+let wish = [];
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCartCount();
+  // Older builds stored bare ids; keep only the full objects we can render.
+  wish = JSON.parse(localStorage.getItem('dz_wishlist')||'[]').filter(w => w && typeof w === 'object');
+  save();
+  render();
+  const { data: { session } } = await sb.auth.getSession();
+  const u = session?.user;
+  if (u) document.getElementById('acctGreet').textContent =
+    'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+});
+
+function save() { localStorage.setItem('dz_wishlist', JSON.stringify(wish)); }
+
+function render() {
+  const list = document.getElementById('wishList');
+  const countEl = document.getElementById('wishCount');
+  const bulk = document.getElementById('bulkActions');
+
+  if (wish.length === 0) {
+    countEl.textContent = '';
+    bulk.innerHTML = '';
+    list.innerHTML = `
+      <div class="acct-empty">
+        <div class="big">❤️</div>
+        <h2>Your wish list is empty</h2>
+        <p>Found something you love but aren't ready to "buy"? Hit ♡ Wishlist on any product.</p>
+        <a href="shop.html" class="acct-btn">Browse free items →</a>
+      </div>`;
+    return;
+  }
+
+  const total = wish.reduce((s,w) => s + (w.price||0), 0);
+  countEl.textContent = `${wish.length} item${wish.length>1?'s':''} · $${total.toLocaleString()} of restraint`;
+  bulk.innerHTML = `
+    <button class="acct-btn" onclick="addAll()">Add all to cart</button>
+    <button class="acct-btn-ghost" onclick="clearAll()">Clear list</button>`;
+
+  list.innerHTML = `<div class="acct-card">` + wish.map((w, i) => `
+    <div class="acct-row">
+      ${w.img
+        ? `<img class="acct-thumb" src="${escHtml(w.img)}" alt="${escHtml(w.title||'')}" loading="lazy" data-emoji="${escHtml(w.emoji||'📦')}" onerror="imgFallback(this)">`
+        : `<div class="acct-thumb-emoji">${escHtml(w.emoji||'📦')}</div>`}
+      <div class="acct-row-info">
+        <div class="acct-row-title"><a href="product.html?id=${encodeURIComponent(w.id||'')}">${escHtml(w.title||'Untitled item')}</a></div>
+        <div style="margin-bottom:4px;"><span class="acct-free">FREE</span><span class="acct-was">$${Number(w.price||0).toLocaleString()}</span></div>
+        <div style="font-size:12px;color:#888;">Added ${w.addedAt ? new Date(w.addedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : 'a while ago'}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="acct-btn" style="padding:7px 14px;font-size:13px;" onclick="addOne(${i})">Add to cart</button>
+        <button class="acct-btn-ghost" onclick="removeOne(${i})">Remove</button>
+      </div>
+    </div>`).join('') + `</div>`;
+}
+
+function addOne(i) {
+  const w = wish[i];
+  if (!w) return;
+  const cart = JSON.parse(localStorage.getItem('dz_cart')||'[]');
+  cart.push({ ...w, addedAt: Date.now() });
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast('✅ Added to cart — <strong>$0 charged</strong>');
+  launchConfetti();
+  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:w.title,value:0,item_list_name:'wishlist'});
+}
+
+function addAll() {
+  if (wish.length === 0) return;
+  const cart = JSON.parse(localStorage.getItem('dz_cart')||'[]');
+  wish.forEach(w => cart.push({ ...w, addedAt: Date.now() }));
+  localStorage.setItem('dz_cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast(`🛒 Added <strong>${wish.length}</strong> item${wish.length>1?'s':''} — still $0`);
+  launchConfetti();
+  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{value:0,item_list_name:'wishlist_all'});
+}
+
+function removeOne(i) {
+  wish.splice(i, 1);
+  save();
+  render();
+  showToast('Removed from wish list');
+}
+
+function clearAll() {
+  wish = [];
+  save();
+  render();
+  showToast('Wish list cleared');
+}
+</script>
+</body>
+</html>
