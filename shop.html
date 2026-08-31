@@ -277,7 +277,15 @@ async function loadDBData() {
     sb.from('products').select('*').order('created_at', { ascending: false }).limit(1000)
   ]);
   dbStores = storesRes.data || [];
-  dbProducts = (productsRes.data || []).map(p => ({...p, store_name: p.store_name || 'Dopazon Store', emoji: p.emoji || EMOJIS[p.category] || '📦'}));
+  // Older rows were inserted without store_name and fell back to the column
+  // default, so a real storefront showed up as "Dopazon Store". Prefer the
+  // name of the store the product actually belongs to.
+  const storeNameById = Object.fromEntries(dbStores.map(s => [s.id, s.name]));
+  dbProducts = (productsRes.data || []).map(p => ({
+    ...p,
+    store_name: storeNameById[p.store_id] || p.store_name || 'Dopazon Store',
+    emoji: p.emoji || EMOJIS[p.category] || '📦'
+  }));
   renderProducts();
   renderStores();
 }
@@ -484,7 +492,7 @@ async function submitStore() {
   try {
     const {data:storeData,error:storeErr}=await sb.from('stores').insert([{user_id:currentUser.id,name,tagline:tagline||'Free everything, always',icon}]).select().single();
     if(storeErr)throw storeErr;
-    const {error:prodErr}=await sb.from('products').insert([{store_id:storeData.id,user_id:currentUser.id,title:prodName,price:prodPrice,category:prodCat,emoji:prodEmoji,stars:4.5,reviews:0}]);
+    const {error:prodErr}=await sb.from('products').insert([{store_id:storeData.id,user_id:currentUser.id,store_name:name,title:prodName,price:prodPrice,category:prodCat,emoji:prodEmoji,stars:4.5,reviews:0}]);
     if(prodErr)throw prodErr;
     closeStoreModal();
     await loadDBData();
