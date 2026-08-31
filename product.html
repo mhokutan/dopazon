@@ -283,6 +283,7 @@
 
 <script src="shared.js"></script>
 <script src="catalog.js"></script>
+<script src="dzstore.js"></script>
 <script>
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -298,8 +299,7 @@ let votes = JSON.parse(localStorage.getItem('dz_votes') || '{}');
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('cartCount').textContent = cart.length;
 
-  sb.auth.getSession().then(({ data: { session } }) => {
-    const u = session?.user;
+  DZ.init(sb).then(u => {
     if (u) document.getElementById('acctGreet').textContent =
       'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
   });
@@ -535,22 +535,11 @@ function shareProduct() {
   navigator.clipboard?.writeText(text).then(() => showToast('📋 Copied link! Paste to share.'));
 }
 
-function addToWishlist() {
+async function addToWishlist() {
   if (!currentProduct) return;
-  // Store the full item (not just the id) so wishlist.html can render it
-  // without needing to resolve products all over again.
-  let wl = JSON.parse(localStorage.getItem('dz_wishlist')||'[]')
-    .filter(w => w && typeof w === 'object');   // drop legacy id-only entries
-  const idx = wl.findIndex(w => w.id === currentProduct.id);
-  if (idx > -1) {
-    wl.splice(idx, 1);
-    showToast('♡ Removed from wishlist');
-  } else {
-    const { id, title, price, emoji, img, category, stars, reviews } = currentProduct;
-    wl.push({ id, title, price, emoji, img, category, stars, reviews, addedAt: Date.now() });
-    showToast('❤️ Added to wishlist!');
-  }
-  localStorage.setItem('dz_wishlist', JSON.stringify(wl));
+  const { id, title, price, emoji, img, category, stars, reviews } = currentProduct;
+  const added = await DZ.toggleWishlist({ id, title, price, emoji, img, category, stars, reviews });
+  showToast(added ? '❤️ Added to wishlist!' : '♡ Removed from wishlist');
 }
 
 function scrollToReviews() {

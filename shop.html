@@ -235,6 +235,7 @@
 
 <script src="shared.js"></script>
 <script src="catalog.js"></script>
+<script src="dzstore.js"></script>
 <script>
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -261,8 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentCat = params.get('cat') || '';
   if (params.get('q')) document.getElementById('searchInput').value = params.get('q');
   updateCartCount();
-  const { data: { session } } = await sb.auth.getSession();
-  currentUser = session?.user || null;
+  currentUser = await DZ.init(sb);
   updateUserUI();
   renderProducts();
   await loadDBData();
@@ -444,15 +444,14 @@ function placeOrder() {
   const saved = cart.reduce((s,p)=>s+p.price,0);
   const eta = new Date(Date.now()+30*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 
-  // Persist the order so it shows up under "Your Orders".
-  const orders = JSON.parse(localStorage.getItem('dz_orders')||'[]');
-  orders.unshift({
+  // Record the order. DZ writes it to the account when signed in and to
+  // localStorage either way, so the savings total survives a device change.
+  DZ.addOrder({
     id: 'DZ-' + Date.now().toString(36).toUpperCase(),
     placedAt: Date.now(),
     saved,
     items: cart.map(p => ({ id:p.id, title:p.title, price:p.price, emoji:p.emoji, img:p.img }))
   });
-  localStorage.setItem('dz_orders', JSON.stringify(orders.slice(0, 50)));
   document.getElementById('checkoutContent').innerHTML = `
     <div class="order-confirm">
       <div style="font-size:80px;">🎉</div>

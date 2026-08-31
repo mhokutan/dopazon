@@ -194,7 +194,9 @@
 <!-- TOAST -->
 <div class="cart-toast" id="cartToast">Done!</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared.js"></script>
+<script src="dzstore.js"></script>
 <script>
 function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
 
@@ -223,9 +225,13 @@ let streak = parseInt(localStorage.getItem('dz_streak') || '0');
 let lastDrop = localStorage.getItem('dz_last_drop');
 let totalCarts = parseInt(localStorage.getItem('dz_drop_carts') || '3847');
 
-document.addEventListener('DOMContentLoaded', () => {
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
-  checkStreak();
+  await DZ.init(sb);
+  streak = await DZ.checkInStreak();
+  renderStreak();
   renderDrops();
   renderArchive();
   renderTopDrops();
@@ -388,13 +394,7 @@ function startTimer() {
   tick(); setInterval(tick,1000);
 }
 
-function checkStreak() {
-  const today = new Date().toDateString();
-  if (lastDrop !== today) {
-    streak++;
-    localStorage.setItem('dz_streak', streak);
-    localStorage.setItem('dz_last_drop', today);
-  }
+function renderStreak() {
   document.getElementById('streakCount').textContent = streak + ' days 🔥';
   const days = document.getElementById('streakDays');
   days.innerHTML = Array.from({length:7},(_,i) => {

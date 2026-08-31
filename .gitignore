@@ -3,3 +3,9 @@ node_modules/
 package-lock.json
 .env
 .env.local
+
+# scratch contact sheets used for image audits
+sheet*.html
+cat[0-9]*.html
+nc[0-9]*.html
+cd[0-9]*.html

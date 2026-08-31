@@ -47,6 +47,7 @@
 <div class="cart-toast" id="cartToast"></div>
 
 <script src="shared.js"></script>
+<script src="dzstore.js"></script>
 <script>
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -57,17 +58,12 @@ let wish = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
-  // Older builds stored bare ids; keep only the full objects we can render.
-  wish = JSON.parse(localStorage.getItem('dz_wishlist')||'[]').filter(w => w && typeof w === 'object');
-  save();
-  render();
-  const { data: { session } } = await sb.auth.getSession();
-  const u = session?.user;
+  const u = await DZ.init(sb);
   if (u) document.getElementById('acctGreet').textContent =
     'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+  wish = await DZ.getWishlist();
+  render();
 });
-
-function save() { localStorage.setItem('dz_wishlist', JSON.stringify(wish)); }
 
 function render() {
   const list = document.getElementById('wishList');
@@ -133,17 +129,18 @@ function addAll() {
   if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{value:0,item_list_name:'wishlist_all'});
 }
 
-function removeOne(i) {
+async function removeOne(i) {
+  const item = wish[i];
   wish.splice(i, 1);
-  save();
   render();
+  if (item) await DZ.removeWishlist(item.id);
   showToast('Removed from wish list');
 }
 
-function clearAll() {
+async function clearAll() {
   wish = [];
-  save();
   render();
+  await DZ.clearWishlist();
   showToast('Wish list cleared');
 }
 </script>

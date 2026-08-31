@@ -53,6 +53,7 @@
 <div class="cart-toast" id="cartToast"></div>
 
 <script src="shared.js"></script>
+<script src="dzstore.js"></script>
 <script>
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -63,12 +64,11 @@ let orders = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
-  orders = JSON.parse(localStorage.getItem('dz_orders')||'[]');
-  render();
-  const { data: { session } } = await sb.auth.getSession();
-  const u = session?.user;
+  const u = await DZ.init(sb);
   if (u) document.getElementById('acctGreet').textContent =
     'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+  orders = await DZ.getOrders();
+  render();
 });
 
 // Orders "arrive" 30 minutes after they are placed — pure theatre, but it
