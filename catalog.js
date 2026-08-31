@@ -6,7 +6,7 @@
 
 const DZ_CATALOG = [
   // Fashion
-  {id:'s1',emoji:'👟',img:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,category:'fashion',stars:4.8,reviews:12847,store_name:'SpeedShop'},
+  {id:'s1',emoji:'👟',img:'https://images.unsplash.com/photo-1562183241-b937e95585b6?w=400&q=80',title:'UltraRun Pro Sneakers — Responsive Foam, Wide Toe Box',price:189,category:'fashion',stars:4.8,reviews:12847,store_name:'SpeedShop'},
   {id:'s9',emoji:'👜',img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&q=80',title:'LuxCraft Structured Tote — Pebbled Leather',price:395,category:'fashion',stars:4.6,reviews:4123,store_name:'LuxBoutique'},
   {id:'sf3',emoji:'🕶️',img:'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80',title:'Aviator Sunglasses — UV400 Polarized, Titanium Frame',price:129,category:'fashion',stars:4.7,reviews:8341,store_name:'LuxBoutique'},
   {id:'sf4',emoji:'⌚',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80',title:'Minimalist Watch — Sapphire Glass, 5ATM Waterproof',price:249,category:'fashion',stars:4.8,reviews:15023,store_name:'TimeKeeper'},
