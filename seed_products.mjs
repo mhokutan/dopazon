@@ -3,12 +3,12 @@ import { createClient } from '@supabase/supabase-js';
 const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
 // The service role key bypasses RLS, so it must never live in source control.
 // Provide it at run time instead:
-//   SUPABASE_SERVICE_KEY=... node seed_products.mjs
+//   SUPABASE_SERVICE_KEY=... node seed_products.mjs --yes
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 if (!SERVICE_KEY) {
   console.error('Missing SUPABASE_SERVICE_KEY environment variable.');
   console.error('Get it from Supabase > Settings > API, then run:');
-  console.error('  SUPABASE_SERVICE_KEY=<key> node seed_products.mjs');
+  console.error('  SUPABASE_SERVICE_KEY=<key> node seed_products.mjs --yes');
   process.exit(1);
 }
 
@@ -692,8 +692,16 @@ function generateProducts(count = 1000) {
 }
 
 async function main() {
-  console.log('Deleting existing products...');
-  const { error: delErr } = await sb.from('products').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  // The service key bypasses RLS. Only seeded rows (user_id IS NULL) may
+  // be replaced; products that real users created must survive a re-seed.
+  if (!process.argv.includes('--yes')) {
+    console.error('This replaces every seeded product (user_id IS NULL).');
+    console.error('User-created products are kept. Re-run with --yes to continue:');
+    console.error('  SUPABASE_SERVICE_KEY=<key> node seed_products.mjs --yes');
+    process.exit(1);
+  }
+  console.log('Deleting seeded products (user_id IS NULL)...');
+  const { error: delErr } = await sb.from('products').delete().is('user_id', null);
   if (delErr) { console.error('Delete error:', delErr.message); process.exit(1); }
   console.log('Deleted. Generating 1000 products...');
   const products = generateProducts(1000);
