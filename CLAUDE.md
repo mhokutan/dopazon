@@ -94,6 +94,11 @@ schema + RLS), `add_user_data.sql` (orders, wishlist, streak),
    publishable key `sb_publishable_...`, deploy, verify login + shop work;
    (2) create a new secret key `sb_secret_...` for scripts; (3) only then
    disable the legacy API keys. Never rotate the JWT secret as a shortcut.
+   **Done 2026-10-12:** client on the publishable key, legacy API keys
+   disabled, legacy HS256 signing key revoked (JWT signing is ECC P-256).
+   Verified: the old anon JWT is rejected as `apikey`, as `Bearer`, and as
+   `Bearer` alongside the publishable key — the last one stayed open until
+   the legacy signing key itself was revoked.
 9. **Real users exist.** ~9 signups, one active user ("Thomas", store
    "Plum Fingerboards"). Never delete or rewrite real user rows without the
    owner's explicit approval; seeded rows are `user_id IS NULL`.
