@@ -82,6 +82,13 @@ schema + RLS), `add_user_data.sql` (orders, wishlist, streak),
 8. **Secrets never in the repo.** The service_role key bypasses RLS. It was
    committed once (history: c2e935e, removed in cd956dc) — treat that key as
    burned. Read secrets from environment variables only; keep `.env` ignored.
+   **Revoking it is not one click.** On Supabase's legacy keys, anon and
+   service_role are both JWTs signed by the same JWT secret: rotating that
+   secret also kills the anon key hardcoded in `shared.js` (site down) and
+   signs every user out. Safe order: (1) switch `shared.js` to the new
+   publishable key `sb_publishable_...`, deploy, verify login + shop work;
+   (2) create a new secret key `sb_secret_...` for scripts; (3) only then
+   disable the legacy API keys. Never rotate the JWT secret as a shortcut.
 9. **Real users exist.** ~9 signups, one active user ("Thomas", store
    "Plum Fingerboards"). Never delete or rewrite real user rows without the
    owner's explicit approval; seeded rows are `user_id IS NULL`.
