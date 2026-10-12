@@ -35,6 +35,20 @@ const DZ_CATEGORY_EMOJI = {fashion:'👗',electronics:'📱',beauty:'💄',home:
 // (read from data-emoji). No user data is ever placed inside inline JS, which
 // prevents XSS via product img/emoji. Replacing just the element (not the
 // parent's contents) keeps sibling nodes like titles intact.
+// Unsplash serves AVIF/WebP at the size asked for. The catalogue stores
+// ?w=400&q=80 JPEG URLs, so size them per use. Other hosts pass through.
+function dzImg(url, w, h, crop){
+  if(!url || !/^https:\/\/images\.unsplash\.com\//.test(url)) return url || '';
+  try{
+    const u=new URL(url);
+    u.searchParams.set('w', String(w)); u.searchParams.set('q','70');
+    u.searchParams.set('auto','format'); u.searchParams.set('fit','crop');
+    if(h) u.searchParams.set('h', String(h)); else u.searchParams.delete('h');
+    if(crop) u.searchParams.set('crop', crop); else u.searchParams.delete('crop');
+    return u.toString();
+  }catch(e){ return url; }
+}
+
 function imgFallback(el){
   const emoji = el.getAttribute('data-emoji') || '📦';
   const span = document.createElement('span');

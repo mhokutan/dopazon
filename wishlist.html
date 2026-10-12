@@ -98,7 +98,7 @@ function render() {
   list.innerHTML = `<div class="acct-card">` + wish.map((w, i) => `
     <div class="acct-row">
       ${w.img
-        ? `<img class="acct-thumb" src="${escHtml(w.img)}" alt="${escHtml(w.title||'')}" loading="lazy" data-emoji="${escHtml(w.emoji||'📦')}" onerror="imgFallback(this)">`
+        ? `<img class="acct-thumb" src="${escHtml(dzImg(w.img,160,160))}" alt="${escHtml(w.title||'')}" loading="lazy" data-emoji="${escHtml(w.emoji||'📦')}" onerror="imgFallback(this)">`
         : `<div class="acct-thumb-emoji">${escHtml(w.emoji||'📦')}</div>`}
       <div class="acct-row-info">
         <div class="acct-row-title"><a href="product.html?id=${encodeURIComponent(w.id||'')}">${escHtml(w.title||'Untitled item')}</a></div>

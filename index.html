@@ -310,12 +310,12 @@
   <!-- BANNER STRIPS -->
   <div class="banner-strip">
     <div class="banner-card" onclick="location='shop.html?cat=fashion'">
-      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80" alt="Fashion Sale">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&amp;h=400&amp;q=70&amp;auto=format&amp;fit=crop" alt="Fashion Sale" width="800" height="400" loading="lazy">
       <div class="banner-overlay"></div>
       <div class="banner-text"><h3>Fashion Picks</h3><a href="shop.html?cat=fashion">Shop now →</a></div>
     </div>
     <div class="banner-card" onclick="location='shop.html?cat=electronics'">
-      <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=800&q=80" alt="Tech Deals">
+      <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=800&amp;h=400&amp;q=70&amp;auto=format&amp;fit=crop" alt="Tech Deals" width="800" height="400" loading="lazy">
       <div class="banner-overlay"></div>
       <div class="banner-text"><h3>Tech Deals</h3><a href="shop.html?cat=electronics">Shop now →</a></div>
     </div>
@@ -458,7 +458,7 @@ function renderDropsWidget(){
   // Mirror what drops.html is showing today, so the teaser matches the page.
   const picks=PRODUCTS.filter(p=>p.img && ['toys','gaming','music','travel'].includes(p.category)).slice(0,4);
   el.innerHTML=picks.map(p=>
-    `<img src="${escHtml(p.img)}" alt="${escHtml(p.title)}" loading="lazy" onclick="location='drops.html'">`).join('');
+    `<img src="${escHtml(dzImg(p.img,240,240))}" alt="${escHtml(p.title)}" width="120" height="120" loading="lazy" onclick="location='drops.html'">`).join('');
 }
 
 function renderWidgets(){
@@ -466,7 +466,7 @@ function renderWidgets(){
     const cat=grid.dataset.cat;
     const picks=PRODUCTS.filter(p=>p.category===cat && p.img).slice(0,4);
     grid.innerHTML=picks.map(p=>
-      `<img src="${escHtml(p.img)}" alt="${escHtml(p.title)}" loading="lazy"
+      `<img src="${escHtml(dzImg(p.img,240,240))}" alt="${escHtml(p.title)}" width="120" height="120" loading="lazy"
             onclick="location='shop.html?cat=${encodeURIComponent(cat)}'">`).join('');
   });
 }
@@ -474,7 +474,7 @@ function renderWidgets(){
 function renderRow(containerId, items){
   document.getElementById(containerId).innerHTML=items.map(p=>`
     <div class="pcard" onclick="location='product.html?id=${encodeURIComponent(p.id)}'">
-      ${p.img?`<img src="${escHtml(p.img)}" alt="" loading="lazy" data-emoji="${escHtml(p.emoji)}" onerror="imgFallback(this)">`:`<div class="pcard-emoji">${escHtml(p.emoji)}</div>`}
+      ${p.img?`<img src="${escHtml(dzImg(p.img,400))}" alt="" loading="lazy" data-emoji="${escHtml(p.emoji)}" onerror="imgFallback(this)">`:`<div class="pcard-emoji">${escHtml(p.emoji)}</div>`}
       <div class="pcard-title"><a class="card-link" href="product.html?id=${encodeURIComponent(p.id)}">${escHtml(p.title)}</a></div>
       <div class="pcard-stars">${'★'.repeat(Math.floor(p.stars))}${'☆'.repeat(5-Math.floor(p.stars))}</div>
       <div class="pcard-reviews">(${p.reviews.toLocaleString()})</div>

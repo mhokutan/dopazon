@@ -279,7 +279,7 @@ function dropCard(d, idx) {
   const isFirst = idx === 0;
   return `
   <div class="drop-card ${isFirst?'winner':''}" id="drop_${d.id}">
-    <div class="drop-img">${d.img?`<img src="${escHtml(d.img)}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:d.emoji}</div>
+    <div class="drop-img">${d.img?`<img src="${escHtml(dzImg(d.img,480))}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:d.emoji}</div>
     <div class="drop-info">
       <div class="drop-badges">
         <div class="drop-badge lightning">⚡ Lightning Drop</div>
@@ -376,7 +376,7 @@ function renderArchive() {
     const drop = ALL_DROPS[(d.getDate() * 7) % ALL_DROPS.length];
     return `
     <div class="archive-card">
-      <div class="archive-emoji">${drop.img?`<img src="${escHtml(drop.img)}" alt="${escHtml(drop.title)}" loading="lazy" data-emoji="${escHtml(drop.emoji)}" onerror="imgFallback(this)">`:drop.emoji}</div>
+      <div class="archive-emoji">${drop.img?`<img src="${escHtml(dzImg(drop.img,160,160))}" alt="${escHtml(drop.title)}" loading="lazy" data-emoji="${escHtml(drop.emoji)}" onerror="imgFallback(this)">`:drop.emoji}</div>
       <div class="archive-day">${days[d.getDay()]} · ${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
       <div class="archive-winner">${escHtml(drop.title)}</div>
       <div class="archive-amount">$${drop.price} value · FREE</div>
@@ -388,7 +388,7 @@ function renderTopDrops() {
   const top = [...ALL_DROPS].sort((a,b)=>b.price-a.price).slice(0,4);
   document.getElementById('topDrops').innerHTML = top.map(d => `
     <div class="prev-winner">
-      ${d.img?`<img class="prev-winner-img" src="${escHtml(d.img)}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:`<span style="font-size:28px;">${d.emoji}</span>`}
+      ${d.img?`<img class="prev-winner-img" src="${escHtml(dzImg(d.img,200,200))}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:`<span style="font-size:28px;">${d.emoji}</span>`}
       <div>
         <div style="font-size:13px;font-weight:600;">${escHtml(d.title.slice(0,35))}...</div>
         <div style="font-size:12px;color:#CC0C39;font-weight:700;">$${d.price} → FREE</div>

@@ -121,7 +121,7 @@ function render() {
         ${(o.items||[]).map((it, ii) => `
           <div class="acct-row">
             ${it.img
-              ? `<img class="acct-thumb" src="${escHtml(it.img)}" alt="${escHtml(it.title||'')}" loading="lazy" data-emoji="${escHtml(it.emoji||'📦')}" onerror="imgFallback(this)">`
+              ? `<img class="acct-thumb" src="${escHtml(dzImg(it.img,160,160))}" alt="${escHtml(it.title||'')}" loading="lazy" data-emoji="${escHtml(it.emoji||'📦')}" onerror="imgFallback(this)">`
               : `<div class="acct-thumb-emoji">${escHtml(it.emoji||'📦')}</div>`}
             <div class="acct-row-info">
               <div class="acct-row-title"><a href="product.html?id=${encodeURIComponent(it.id||'')}">${escHtml(it.title||'Untitled item')}</a></div>

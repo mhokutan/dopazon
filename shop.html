@@ -379,7 +379,7 @@ function renderProducts(searchQ, keepPage) {
     <div class="product-card" onclick="window.location='product.html?id=${encodeURIComponent(p.id)}'" style="cursor:pointer;">
       ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">DopePrime</div>'}
       ${p.img
-        ? `<div class="product-img" style="padding:0;overflow:hidden;border-radius:4px;"><img src="${escHtml(p.img)}" alt="" style="width:100%;height:180px;object-fit:cover;" loading="lazy" data-emoji="${escHtml(p.emoji||EMOJIS[p.category]||'📦')}" onerror="imgFallback(this)"></div>`
+        ? `<div class="product-img" style="padding:0;overflow:hidden;border-radius:4px;"><img src="${escHtml(dzImg(p.img,480,360))}" width="240" height="180" alt="" style="width:100%;height:180px;object-fit:cover;" loading="lazy" data-emoji="${escHtml(p.emoji||EMOJIS[p.category]||'📦')}" onerror="imgFallback(this)"></div>`
         : `<div class="product-img">${escHtml(p.emoji||EMOJIS[p.category]||'📦')}</div>`}
       <div class="product-title"><a class="card-link" href="product.html?id=${encodeURIComponent(p.id)}" onclick="event.stopPropagation()">${escHtml(p.title)}</a></div>
       <div class="stars">${'★'.repeat(Math.floor(p.stars||4.5))}${'☆'.repeat(5-Math.floor(p.stars||4.5))}</div>
