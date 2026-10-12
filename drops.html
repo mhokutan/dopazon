@@ -122,7 +122,7 @@
   </div>
   <a href="index.html" class="header-link"><span>Back to</span><strong>Dopazon</strong></a>
   <a href="shop.html" class="header-link"><span>Browse</span><strong>All Items</strong></a>
-  <a href="shop.html" class="cart-link">
+  <a href="shop.html?cart=1" class="cart-link">
     <span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span>
     <strong>Cart</strong>
   </a>
@@ -324,7 +324,7 @@ function addDropToCart(d) {
   localStorage.setItem('dz_drop_carts', totalCarts);
   updateCartCount();
   updateStats();
-  showToast('⚡ Added <strong>' + d.title.slice(0,30) + '...</strong> to cart — $0!');
+  dzAddedToast('⚡ Added <strong>' + escHtml(d.title.slice(0,30)) + '…</strong> to cart — $0!');
   launchConfetti();
   if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:d.title,value:0,item_list_name:'daily_drops'});
 }

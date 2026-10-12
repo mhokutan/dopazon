@@ -128,7 +128,7 @@
   </div>
   <a href="account.html" class="header-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
-  <a href="#" class="cart-link" onclick="openCheckout(event)"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+  <a href="shop.html?cart=1" class="cart-link" onclick="openCheckout(event)"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
@@ -280,6 +280,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentCat = params.get('cat') || '';
   if (params.get('q')) document.getElementById('searchInput').value = params.get('q');
   updateCartCount();
+  // Cart links on every other page point here with ?cart=1.
+  if (params.get('cart') === '1') openCheckout();
   currentUser = await DZ.init(sb);
   updateUserUI();
   renderProducts();
@@ -413,7 +415,7 @@ function addToCart(idx) {
   cart.push({...p, addedAt: Date.now()});
   localStorage.setItem('dz_cart', JSON.stringify(cart));
   updateCartCount();
-  showToast('✅ Added to cart — <strong>$0 charged</strong>');
+  dzAddedToast('✅ Added to cart — <strong>$0 charged</strong>');
   launchConfetti();
 }
 

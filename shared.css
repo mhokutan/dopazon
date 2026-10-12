@@ -31,7 +31,8 @@ body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
 .nav-link.active{background:#131921;}
 
 /* ===== TOAST ===== */
-.cart-toast{position:fixed;bottom:20px;right:20px;background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;animation:slideIn 0.3s ease;}
+.cart-toast{position:fixed;bottom:80px;right:20px;max-width:calc(100vw - 40px);background:#131921;color:#fff;padding:12px 20px;border-radius:4px;z-index:999;display:none;border-left:4px solid #FF9900;animation:slideIn 0.3s ease;}
+.cart-toast .toast-cta{display:inline-block;margin-left:10px;color:#131921;background:#FFD814;border-radius:14px;padding:4px 12px;font-weight:700;text-decoration:none;white-space:nowrap;}
 @keyframes slideIn{from{transform:translateX(100px);opacity:0;}to{transform:translateX(0);opacity:1;}}
 
 /* ===== CONFETTI ===== */

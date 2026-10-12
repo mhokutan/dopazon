@@ -26,7 +26,7 @@
   </div>
   <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
-  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+  <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
@@ -119,7 +119,7 @@ function addOne(i) {
   cart.push({ ...w, addedAt: Date.now() });
   localStorage.setItem('dz_cart', JSON.stringify(cart));
   updateCartCount();
-  showToast('✅ Added to cart — <strong>$0 charged</strong>');
+  dzAddedToast('✅ Added to cart — <strong>$0 charged</strong>');
   launchConfetti();
   if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:w.title,value:0,item_list_name:'wishlist'});
 }
@@ -130,7 +130,7 @@ function addAll() {
   wish.forEach(w => cart.push({ ...w, addedAt: Date.now() }));
   localStorage.setItem('dz_cart', JSON.stringify(cart));
   updateCartCount();
-  showToast(`🛒 Added <strong>${wish.length}</strong> item${wish.length>1?'s':''} — still $0`);
+  dzAddedToast(`🛒 Added <strong>${wish.length}</strong> item${wish.length>1?'s':''} — still $0`);
   launchConfetti();
   if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{value:0,item_list_name:'wishlist_all'});
 }

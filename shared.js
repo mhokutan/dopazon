@@ -53,13 +53,26 @@ function launchConfetti(){
   }
 }
 
+let _dzToastTimer=null;
 function showToast(msg, duration=2500){
   const t=document.getElementById('cartToast');
   if(!t)return;
+  t.setAttribute('role','status');
   t.innerHTML=msg;
   t.style.display='block';
-  setTimeout(()=>t.style.display='none',duration);
+  clearTimeout(_dzToastTimer);
+  _dzToastTimer=setTimeout(()=>t.style.display='none',duration);
 }
+
+// "Added to cart" toast with a way forward: the free checkout.
+function dzAddedToast(msg){
+  showToast(msg+' <a href="shop.html?cart=1" class="toast-cta">Check out free →</a>', 5000);
+}
+// On the shop page the cart is a panel, so open it instead of reloading.
+document.addEventListener('click', e=>{
+  const a=e.target.closest && e.target.closest('.toast-cta');
+  if(a && typeof window.openCheckout==='function'){ e.preventDefault(); window.openCheckout(); }
+});
 
 function updateCartCount(){
   const cart=JSON.parse(localStorage.getItem('dz_cart')||'[]');

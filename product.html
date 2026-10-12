@@ -137,7 +137,7 @@
   </div>
   <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
-  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+  <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
@@ -244,7 +244,7 @@
       </select>
     </div>
     <button class="add-cart-big" onclick="addToCart()">Add to Cart</button>
-    <button class="buy-now-big" onclick="addToCart();window.location='shop.html'">Buy Now</button>
+    <button class="buy-now-big" onclick="addToCart();window.location='shop.html?cart=1'">Buy Now</button>
     <div class="buy-box-divider"></div>
     <div class="buy-box-row"><span class="buy-box-label">Ships from</span><span class="buy-box-val">Dopazon (Fake)</span></div>
     <div class="buy-box-row"><span class="buy-box-label">Sold by</span><span class="buy-box-val" id="bbSeller">Dopazon Store</span></div>
@@ -529,7 +529,7 @@ function addToCart() {
   for (let i = 0; i < qty; i++) cart.push({...currentProduct, addedAt: Date.now()});
   localStorage.setItem('dz_cart', JSON.stringify(cart));
   document.getElementById('cartCount').textContent = cart.length;
-  showToast(`✅ ${qty > 1 ? qty + '× ' : ''}Added to cart — <strong>$0 charged</strong>`);
+  dzAddedToast(`✅ ${qty > 1 ? qty + '× ' : ''}Added to cart — <strong>$0 charged</strong>`);
   launchConfetti();
   gtag('event','add_to_cart',{item_name: currentProduct.title, value: 0});
 }
