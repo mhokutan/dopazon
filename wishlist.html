@@ -121,7 +121,7 @@ function addOne(i) {
   updateCartCount();
   dzAddedToast('✅ Added to cart — <strong>$0 charged</strong>');
   launchConfetti();
-  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:w.title,value:0,item_list_name:'wishlist'});
+  dzTrackItems('add_to_cart', [w], { item_list_name: 'wishlist', flow: 'cart' });
 }
 
 function addAll() {
@@ -132,7 +132,7 @@ function addAll() {
   updateCartCount();
   dzAddedToast(`🛒 Added <strong>${wish.length}</strong> item${wish.length>1?'s':''} — still $0`);
   launchConfetti();
-  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{value:0,item_list_name:'wishlist_all'});
+  dzTrackItems('add_to_cart', wish, { item_list_name: 'wishlist_all', flow: 'cart' });
 }
 
 async function removeOne(i) {

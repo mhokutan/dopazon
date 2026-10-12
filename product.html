@@ -564,7 +564,7 @@ function addToCart() {
   document.getElementById('cartCount').textContent = cart.length;
   dzAddedToast(`✅ ${qty > 1 ? qty + '× ' : ''}Added to cart — <strong>$0 charged</strong>`);
   launchConfetti();
-  gtag('event','add_to_cart',{item_name: currentProduct.title, value: 0});
+  dzTrackItems('add_to_cart', Array(qty).fill(currentProduct), { item_list_name: 'product', flow: 'cart' });
 }
 
 function vote(type) {
@@ -574,7 +574,7 @@ function vote(type) {
   const kw = AMAZON_SEARCH[currentProduct?.id] || CATEGORY_SEARCH[currentProduct?.category] || 'trending+products';
   const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
   const msgs = {
-    yes: `👍 Noted! Then <a href="${url}" target="_blank" rel="noopener sponsored" style="color:#C7511F;font-weight:700;">Shop the real thing on Amazon →</a>`,
+    yes: `👍 Noted! Then <a href="${url}" target="_blank" rel="noopener sponsored" data-placement="vote_yes" data-item-id="${escHtml(currentProduct?.id||'')}" data-item-name="${escHtml(currentProduct?.title||'')}" style="color:#C7511F;font-weight:700;">Shop the real thing on Amazon →</a>`,
     no: '👎 Smart move keeping your money.',
     maybe: '🤔 Fair enough — keeping it on the wishlist.'
   };
@@ -640,9 +640,12 @@ const CATEGORY_SEARCH = {
 function renderAmazonUpsell(p) {
   const kw = AMAZON_SEARCH[p.id] || CATEGORY_SEARCH[p.category] || 'trending+products';
   const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
-  document.getElementById('amazonLink').href = url;
+  for (const [id, placement] of [['amazonLink','buy_box'], ['amazonBannerLink','banner']]) {
+    const a = document.getElementById(id);
+    a.href = url;
+    a.dataset.placement = placement; a.dataset.itemId = p.id; a.dataset.itemName = p.title;
+  }
   document.getElementById('amazonUpsell').style.display = 'block';
-  document.getElementById('amazonBannerLink').href = url;
 }
 
 </script>

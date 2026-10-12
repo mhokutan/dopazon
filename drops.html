@@ -326,7 +326,7 @@ function addDropToCart(d) {
   updateStats();
   dzAddedToast('⚡ Added <strong>' + escHtml(d.title.slice(0,30)) + '…</strong> to cart — $0!');
   launchConfetti();
-  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:d.title,value:0,item_list_name:'daily_drops'});
+  dzTrackItems('add_to_cart', [d], { item_list_name: 'daily_drops', flow: 'cart' });
 }
 
 function reactDrop(id, type, btn) {

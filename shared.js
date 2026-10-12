@@ -79,6 +79,38 @@ function showToast(msg, duration=2500){
   _dzToastTimer=setTimeout(()=>t.style.display='none',duration);
 }
 
+// ===== ANALYTICS: GA4 funnel =====
+// Event names and parameters are listed in CLAUDE.md ("Analytics"). Every
+// funnel event uses GA4's recommended ecommerce shape with value 0 (nothing
+// is ever charged) plus `savings`: the list price the visitor did not pay.
+function dzTrack(name, params){
+  try{ if(typeof gtag==='function') gtag('event', name, params || {}); }catch(e){}
+}
+function dzTrackItems(name, products, extra){
+  const list = (products || []).filter(Boolean);
+  dzTrack(name, Object.assign({
+    currency: 'USD',
+    value: 0,
+    savings: list.reduce((s,p)=>s+(Number(p.price)||0), 0),
+    items: list.map((p,i)=>({
+      item_id: String(p.id), item_name: String(p.title || '').slice(0,100),
+      item_category: p.category || undefined, price: 0, quantity: 1, index: i
+    }))
+  }, extra || {}));
+}
+// Amazon affiliate links are marked rel="sponsored" + data-placement.
+document.addEventListener('click', e=>{
+  const a = e.target.closest && e.target.closest('a[rel~="sponsored"][href*="amazon."]');
+  if(!a) return;
+  dzTrack('affiliate_click', {
+    placement: a.getAttribute('data-placement') || 'unknown',
+    item_id: a.getAttribute('data-item-id') || undefined,
+    item_name: a.getAttribute('data-item-name') || undefined,
+    link_domain: 'amazon.com',
+    affiliate_tag: 'dopazon-20'
+  });
+});
+
 // "Added to cart" toast with a way forward: the free checkout.
 function dzAddedToast(msg){
   showToast(msg+' <a href="shop.html?cart=1" class="toast-cta">Check out free →</a>', 5000);

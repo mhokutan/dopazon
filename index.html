@@ -518,9 +518,15 @@ function showTempt(n, focusBuy){
 async function buyTempt(){
   const p=tempts[ti], btn=document.getElementById('pbBuy');
   btn.disabled=true;
+  // One tap is the whole funnel, so all three steps are sent (flow one_tap).
+  const orderId='DZ-'+Date.now().toString(36).toUpperCase();
+  const ga={item_list_name:'home_one_tap',flow:'one_tap'};
+  dzTrackItems('add_to_cart',[p],ga);
+  dzTrackItems('begin_checkout',[p],ga);
+  dzTrackItems('purchase',[p],{...ga,transaction_id:orderId});
   try{
     await DZ.addOrder({
-      id:'DZ-'+Date.now().toString(36).toUpperCase(),
+      id:orderId,
       placedAt:Date.now(),
       saved:Number(p.price)||0,
       items:[{id:p.id,title:p.title,price:p.price,emoji:p.emoji,img:p.img}]
@@ -601,6 +607,7 @@ async function submitAuth(){
     if(authMode==='signup'){res=await sb.auth.signUp({email,password:pass,options:{data:{name}}});}
     else{res=await sb.auth.signInWithPassword({email,password:pass});}
     if(res.error)throw res.error;
+    dzTrack(authMode==='signup'?'sign_up':'login',{method:'email'});
     if(authMode==='signup' && !res.data?.session){
       info.innerHTML=`📬 Almost there! We sent a link to <strong>${escHtml(email)}</strong>. Click it to confirm, then sign in.`;
       info.style.display='block';

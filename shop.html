@@ -434,6 +434,7 @@ function addToCart(idx) {
   updateCartCount();
   dzAddedToast('✅ Added to cart — <strong>$0 charged</strong>');
   launchConfetti();
+  dzTrackItems('add_to_cart', [p], { item_list_name: 'shop', flow: 'cart' });
 }
 
 function renderStores() {
@@ -452,7 +453,10 @@ function renderStores() {
 }
 
 // ===== CHECKOUT =====
-function openCheckout(e) { if(e)e.preventDefault(); orderPlaced=false; renderCheckout(); document.getElementById('checkoutOverlay').classList.add('active'); }
+function openCheckout(e) {
+  if(e)e.preventDefault(); orderPlaced=false; renderCheckout(); document.getElementById('checkoutOverlay').classList.add('active');
+  if (cart.length) dzTrackItems('begin_checkout', cart, { flow: 'cart' });
+}
 function closeCheckout() { document.getElementById('checkoutOverlay').classList.remove('active'); }
 function closeCheckoutIfBg(e) { if(e.target===document.getElementById('checkoutOverlay'))closeCheckout(); }
 
@@ -484,8 +488,10 @@ function placeOrder() {
 
   // Record the order. DZ writes it to the account when signed in and to
   // localStorage either way, so the savings total survives a device change.
+  const orderId = 'DZ-' + Date.now().toString(36).toUpperCase();
+  dzTrackItems('purchase', cart, { transaction_id: orderId, flow: 'cart' });
   DZ.addOrder({
-    id: 'DZ-' + Date.now().toString(36).toUpperCase(),
+    id: orderId,
     placedAt: Date.now(),
     saved,
     items: cart.map(p => ({ id:p.id, title:p.title, price:p.price, emoji:p.emoji, img:p.img }))
@@ -516,7 +522,6 @@ function placeOrder() {
       <button onclick="orderPlaced=false;clearCart();closeCheckout();" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px;">Shop More</button>
     </div>`;
   orderPlaced=true; cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); launchConfetti();
-  gtag('event','purchase',{value:0,currency:'USD'});
   renderConfirmTotal();
 }
 
@@ -596,7 +601,7 @@ async function submitAuth() {
       res = await sb.auth.signInWithPassword({email,password:pass});
     }
     if (res.error) throw res.error;
-    gtag('event', authMode==='signup'?'sign_up':'login');
+    dzTrack(authMode==='signup' ? 'sign_up' : 'login', { method: 'email' });
     if (authMode==='signup' && !res.data?.session) {
       // Email confirmation is on: there is no session until the link is
       // clicked. Say so instead of a "Welcome" that leaves them signed out.

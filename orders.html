@@ -143,7 +143,7 @@ function buyAgain(orderIdx, itemIdx) {
   updateCartCount();
   dzAddedToast('✅ Added to cart again — <strong>$0 charged</strong>');
   launchConfetti();
-  if (typeof gtag !== 'undefined') gtag('event','add_to_cart',{item_name:item.title,value:0,item_list_name:'buy_again'});
+  dzTrackItems('add_to_cart', [item], { item_list_name: 'buy_again', flow: 'cart' });
 }
 </script>
 </body>
