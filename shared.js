@@ -43,6 +43,7 @@ function imgFallback(el){
 }
 
 function launchConfetti(){
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const colors=['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62','#fff'];
   for(let i=0;i<30;i++){
     const c=document.createElement('div');

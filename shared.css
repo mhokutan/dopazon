@@ -116,3 +116,17 @@ body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
 .form-submit{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:15px;font-weight:500;cursor:pointer;margin-top:8px;}
 .form-submit:hover{background:#F7CA00;}
 .form-submit:disabled{opacity:0.6;cursor:not-allowed;}
+
+/* ===== ACCESSIBILITY ===== */
+.card-link{color:inherit;text-decoration:none;}
+.card-link:hover{text-decoration:underline;color:#C7511F;}
+/* Several inputs set outline:none; keyboard focus must stay visible. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #FF9900 !important;outline-offset:2px;}
+.search-bar:focus-within{box-shadow:0 0 0 3px #FF9900;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:8px;top:-60px;z-index:100000;background:#FFD814;color:#0F1111;padding:10px 16px;border-radius:4px;font-weight:700;text-decoration:none;}
+.skip-link:focus{top:8px;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  .confetti-piece{display:none !important;}
+}

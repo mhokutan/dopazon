@@ -100,7 +100,7 @@
   <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
   <div class="deliver"><span>📍 Deliver to</span><strong>United States</strong></div>
   <div class="search-bar">
-    <select class="search-select" id="catFilter">
+    <select class="search-select" id="catFilter" aria-label="Search in department">
       <option value="">All Departments</option>
       <option value="fashion">Fashion</option>
       <option value="electronics">Electronics</option>
@@ -123,8 +123,8 @@
       <option value="music">Musical Instruments</option>
       <option value="art">Arts & Crafts</option>
     </select>
-    <input class="search-input" type="text" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')doSearch()">
-    <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <input class="search-input" type="search" aria-label="Search Dopazon" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="search-btn" aria-label="Search" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
   <a href="account.html" class="header-link acct-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
@@ -154,27 +154,27 @@
   <aside class="sidebar">
     <h3>🛍️ Department</h3>
     <div class="filter-section">
-      <div class="filter-option"><input type="radio" name="cat" value="" checked onchange="filterCat('')"> All Departments</div>
-      <div class="filter-option"><input type="radio" name="cat" value="fashion" onchange="filterCat('fashion')"> 👗 Fashion</div>
-      <div class="filter-option"><input type="radio" name="cat" value="electronics" onchange="filterCat('electronics')"> 📱 Electronics</div>
-      <div class="filter-option"><input type="radio" name="cat" value="beauty" onchange="filterCat('beauty')"> 💄 Beauty</div>
-      <div class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home & Kitchen</div>
-      <div class="filter-option"><input type="radio" name="cat" value="kitchen" onchange="filterCat('kitchen')"> 🍳 Kitchen & Dining</div>
-      <div class="filter-option"><input type="radio" name="cat" value="sports" onchange="filterCat('sports')"> 🏃 Sports & Outdoors</div>
-      <div class="filter-option"><input type="radio" name="cat" value="pets" onchange="filterCat('pets')"> 🐾 Pet Supplies</div>
-      <div class="filter-option"><input type="radio" name="cat" value="food" onchange="filterCat('food')"> 🛒 Grocery & Food</div>
-      <div class="filter-option"><input type="radio" name="cat" value="health" onchange="filterCat('health')"> 💊 Health & Household</div>
-      <div class="filter-option"><input type="radio" name="cat" value="toys" onchange="filterCat('toys')"> 🧸 Toys & Games</div>
-      <div class="filter-option"><input type="radio" name="cat" value="gaming" onchange="filterCat('gaming')"> 🎮 Video Games</div>
-      <div class="filter-option"><input type="radio" name="cat" value="baby" onchange="filterCat('baby')"> 👶 Baby</div>
-      <div class="filter-option"><input type="radio" name="cat" value="books" onchange="filterCat('books')"> 📚 Books & Media</div>
-      <div class="filter-option"><input type="radio" name="cat" value="tools" onchange="filterCat('tools')"> 🔧 Tools & DIY</div>
-      <div class="filter-option"><input type="radio" name="cat" value="automotive" onchange="filterCat('automotive')"> 🚗 Automotive</div>
-      <div class="filter-option"><input type="radio" name="cat" value="garden" onchange="filterCat('garden')"> 🌱 Garden & Outdoor</div>
-      <div class="filter-option"><input type="radio" name="cat" value="office" onchange="filterCat('office')"> 🖊️ Office Products</div>
-      <div class="filter-option"><input type="radio" name="cat" value="travel" onchange="filterCat('travel')"> 🧳 Luggage & Travel</div>
-      <div class="filter-option"><input type="radio" name="cat" value="music" onchange="filterCat('music')"> 🎸 Musical Instruments</div>
-      <div class="filter-option"><input type="radio" name="cat" value="art" onchange="filterCat('art')"> 🎨 Arts & Crafts</div>
+      <label class="filter-option"><input type="radio" name="cat" value="" checked onchange="filterCat('')"> All Departments</label>
+      <label class="filter-option"><input type="radio" name="cat" value="fashion" onchange="filterCat('fashion')"> 👗 Fashion</label>
+      <label class="filter-option"><input type="radio" name="cat" value="electronics" onchange="filterCat('electronics')"> 📱 Electronics</label>
+      <label class="filter-option"><input type="radio" name="cat" value="beauty" onchange="filterCat('beauty')"> 💄 Beauty</label>
+      <label class="filter-option"><input type="radio" name="cat" value="home" onchange="filterCat('home')"> 🏠 Home & Kitchen</label>
+      <label class="filter-option"><input type="radio" name="cat" value="kitchen" onchange="filterCat('kitchen')"> 🍳 Kitchen & Dining</label>
+      <label class="filter-option"><input type="radio" name="cat" value="sports" onchange="filterCat('sports')"> 🏃 Sports & Outdoors</label>
+      <label class="filter-option"><input type="radio" name="cat" value="pets" onchange="filterCat('pets')"> 🐾 Pet Supplies</label>
+      <label class="filter-option"><input type="radio" name="cat" value="food" onchange="filterCat('food')"> 🛒 Grocery & Food</label>
+      <label class="filter-option"><input type="radio" name="cat" value="health" onchange="filterCat('health')"> 💊 Health & Household</label>
+      <label class="filter-option"><input type="radio" name="cat" value="toys" onchange="filterCat('toys')"> 🧸 Toys & Games</label>
+      <label class="filter-option"><input type="radio" name="cat" value="gaming" onchange="filterCat('gaming')"> 🎮 Video Games</label>
+      <label class="filter-option"><input type="radio" name="cat" value="baby" onchange="filterCat('baby')"> 👶 Baby</label>
+      <label class="filter-option"><input type="radio" name="cat" value="books" onchange="filterCat('books')"> 📚 Books & Media</label>
+      <label class="filter-option"><input type="radio" name="cat" value="tools" onchange="filterCat('tools')"> 🔧 Tools & DIY</label>
+      <label class="filter-option"><input type="radio" name="cat" value="automotive" onchange="filterCat('automotive')"> 🚗 Automotive</label>
+      <label class="filter-option"><input type="radio" name="cat" value="garden" onchange="filterCat('garden')"> 🌱 Garden & Outdoor</label>
+      <label class="filter-option"><input type="radio" name="cat" value="office" onchange="filterCat('office')"> 🖊️ Office Products</label>
+      <label class="filter-option"><input type="radio" name="cat" value="travel" onchange="filterCat('travel')"> 🧳 Luggage & Travel</label>
+      <label class="filter-option"><input type="radio" name="cat" value="music" onchange="filterCat('music')"> 🎸 Musical Instruments</label>
+      <label class="filter-option"><input type="radio" name="cat" value="art" onchange="filterCat('art')"> 🎨 Arts & Crafts</label>
     </div>
     <div class="filter-section">
       <h4>💰 Price</h4>
@@ -188,7 +188,7 @@
     <div class="results-header">
       <div class="results-count"><strong id="resultCount">0</strong> results for <strong id="resultQuery">"everything free"</strong></div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <label style="font-size:13px;">Sort by:</label>
+        <label for="sortSelect" style="font-size:13px;">Sort by:</label>
         <select class="sort-select" id="sortSelect" onchange="renderProducts(_lastSearchQ)">
           <option value="featured">Featured</option>
           <option value="rating">Avg. Customer Review</option>
@@ -371,12 +371,12 @@ function renderProducts(searchQ, keepPage) {
   document.getElementById('productGrid').innerHTML = pageItems.map((p,pi) => {
     const i = start + pi;   // index into _renderedProducts, so addToCart stays correct
     return `
-    <div class="product-card" onclick="window.location='product.html?id=${p.id}'" style="cursor:pointer;">
+    <div class="product-card" onclick="window.location='product.html?id=${encodeURIComponent(p.id)}'" style="cursor:pointer;">
       ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">DopePrime</div>'}
       ${p.img
-        ? `<div class="product-img" style="padding:0;overflow:hidden;border-radius:4px;"><img src="${escHtml(p.img)}" alt="${escHtml(p.title)}" style="width:100%;height:180px;object-fit:cover;" loading="lazy" data-emoji="${escHtml(p.emoji||EMOJIS[p.category]||'📦')}" onerror="imgFallback(this)"></div>`
+        ? `<div class="product-img" style="padding:0;overflow:hidden;border-radius:4px;"><img src="${escHtml(p.img)}" alt="" style="width:100%;height:180px;object-fit:cover;" loading="lazy" data-emoji="${escHtml(p.emoji||EMOJIS[p.category]||'📦')}" onerror="imgFallback(this)"></div>`
         : `<div class="product-img">${escHtml(p.emoji||EMOJIS[p.category]||'📦')}</div>`}
-      <div class="product-title">${escHtml(p.title)}</div>
+      <div class="product-title"><a class="card-link" href="product.html?id=${encodeURIComponent(p.id)}" onclick="event.stopPropagation()">${escHtml(p.title)}</a></div>
       <div class="stars">${'★'.repeat(Math.floor(p.stars||4.5))}${'☆'.repeat(5-Math.floor(p.stars||4.5))}</div>
       <div class="review-count">(${(p.reviews||Math.floor(Math.random()*5000+100)).toLocaleString()} reviews)</div>
       <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
@@ -384,8 +384,8 @@ function renderProducts(searchQ, keepPage) {
       <div class="price-saved">Save $${p.price.toLocaleString()} (100%)</div>
       <div class="prime-badge">✓ DopePrime · Free Delivery</div>
       ${p.store_name?`<div style="font-size:11px;color:#555;margin-bottom:6px;">Sold by <strong>${escHtml(p.store_name)}</strong></div>`:''}
-      <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${i})">Add to Cart</button>
-      <button class="buy-now-btn" onclick="event.stopPropagation();addToCart(${i});openCheckout()">Buy Now</button>
+      <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${i})" aria-label="Add ${escHtml(p.title)} to cart">Add to Cart</button>
+      <button class="buy-now-btn" onclick="event.stopPropagation();addToCart(${i});openCheckout()" aria-label="Buy ${escHtml(p.title)} now">Buy Now</button>
     </div>`;
   }).join('');
 

@@ -117,7 +117,7 @@
   /* Related */
   .related-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
   .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
-  .related-card{border:1px solid #eee;border-radius:4px;padding:10px;cursor:pointer;text-align:center;}
+  .related-card{display:block;color:inherit;text-decoration:none;border:1px solid #eee;border-radius:4px;padding:10px;cursor:pointer;text-align:center;}
   .related-card:hover{border-color:#FF9900;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
   .related-emoji{font-size:50px;margin-bottom:6px;}
   .related-title{font-size:12px;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
@@ -131,9 +131,9 @@
 <header id="header">
   <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
   <div class="search-bar">
-    <select class="search-select"><option>All</option></select>
-    <input class="search-input" type="text" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')window.location='shop.html?q='+encodeURIComponent(this.value)">
-    <button class="search-btn" onclick="window.location='shop.html?q='+encodeURIComponent(this.previousElementSibling.value)"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <select class="search-select" aria-label="Search in department"><option>All</option></select>
+    <input class="search-input" type="search" aria-label="Search Dopazon" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')window.location='shop.html?q='+encodeURIComponent(this.value)">
+    <button class="search-btn" aria-label="Search" onclick="window.location='shop.html?q='+encodeURIComponent(this.previousElementSibling.value)"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
   <a href="account.html" class="header-link acct-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
   <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
@@ -238,7 +238,7 @@
     </div>
     <div class="in-stock">✓ In Stock — Fake Fulfillment Center</div>
     <div class="qty-row">
-      <label style="font-size:13px;">Qty:</label>
+      <label for="qtySelect" style="font-size:13px;">Qty:</label>
       <select class="qty-select" id="qtySelect">
         <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option><option>99</option>
       </select>
@@ -502,13 +502,13 @@ async function renderRelated(current) {
     related = [...related, ...extra];
   }
   document.getElementById('relatedGrid').innerHTML = related.map(p => `
-    <div class="related-card" onclick="window.location='product.html?id=${encodeURIComponent(p.id)}'">
+    <a class="related-card" href="product.html?id=${encodeURIComponent(p.id)}">
       ${p.img
-        ? `<img src="${escHtml(p.img)}" alt="${escHtml(p.title||'')}" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:6px;" onerror="this.style.display='none'">`
+        ? `<img src="${escHtml(p.img)}" alt="" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:6px;" onerror="this.style.display='none'">`
         : `<div class="related-emoji">${escHtml(p.emoji||'📦')}</div>`}
       <div class="related-title">${escHtml(p.title||'')}</div>
       <div class="related-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:11px;">$${escHtml(p.price)}</span></div>
-    </div>`).join('');
+    </a>`).join('');
 }
 
 function selectThumb(el) {
