@@ -364,6 +364,9 @@ function renderProducts(searchQ, keepPage) {
   if (searchQ) items = items.filter(p => p.title.toLowerCase().includes(searchQ));
   const sort = document.getElementById('sortSelect').value;
   if (sort === 'rating') items.sort((a,b) => (b.stars||4) - (a.stars||4));
+  // Featured: products with a (brand-checked) photo first, emoji-only after.
+  else if (sort === 'featured') items = [...items.filter(p => p.img), ...items.filter(p => !p.img)];
+  else if (sort === 'newest') items.sort((a,b) => (Date.parse(b.created_at)||0) - (Date.parse(a.created_at)||0));
   document.getElementById('resultCount').textContent = items.length;
   document.getElementById('resultQuery').textContent = searchQ ? `"${searchQ}"` : currentCat || 'everything free';
   _renderedProducts = items;
