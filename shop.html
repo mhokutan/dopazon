@@ -209,43 +209,43 @@
 </div>
 
 <!-- CHECKOUT PANEL -->
-<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckoutIfBg(event)">
-  <div class="checkout-panel">
-    <div class="checkout-header"><h2 style="font-size:20px;">🛒 Your Cart</h2><button class="checkout-close" onclick="closeCheckout()">×</button></div>
+<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckoutIfBg(event)" data-dz-dialog="closeCheckout">
+  <div class="checkout-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="checkout-header"><h2 id="cartTitle" style="font-size:20px;">🛒 Your Cart</h2><button type="button" class="checkout-close" onclick="closeCheckout()" aria-label="Close cart">×</button></div>
     <div id="checkoutContent"></div>
   </div>
 </div>
 
 <!-- AUTH MODAL -->
-<div class="modal-overlay" id="authModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAuth()">×</button>
+<div class="modal-overlay" id="authModal" data-dz-dialog="closeAuth">
+  <form class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle" onsubmit="event.preventDefault();submitAuth()" novalidate>
+    <button type="button" class="modal-close" onclick="closeAuth()" aria-label="Close">×</button>
     <h2 id="authTitle" style="margin-bottom:15px;">Sign in to Dopazon</h2>
     <p id="authNote" style="display:none;font-size:13px;color:#555;margin:-8px 0 14px;"></p>
-    <div class="form-group"><label>Email</label><input type="email" id="authEmail" placeholder="you@example.com"></div>
-    <div class="form-group" id="nameGroup" style="display:none"><label>Name</label><input type="text" id="authName" placeholder="First name"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="authPass" placeholder="At least 6 characters"></div>
-    <div class="error-msg" id="authError" style="display:none;"></div>
+    <div class="form-group"><label for="authEmail">Email</label><input type="email" id="authEmail" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="form-group" id="nameGroup" style="display:none"><label for="authName">Name</label><input type="text" id="authName" autocomplete="given-name" maxlength="80" placeholder="First name"></div>
+    <div class="form-group"><label for="authPass">Password</label><input type="password" id="authPass" autocomplete="current-password" placeholder="At least 6 characters"></div>
+    <div class="error-msg" id="authError" role="alert" style="display:none;"></div>
     <div id="authInfo" role="status" style="display:none;background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;font-size:13px;color:#0F1111;margin-bottom:10px;"></div>
-    <button class="form-submit" id="authSubmitBtn" onclick="submitAuth()">Sign in</button>
-    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Create account</a></div>
-  </div>
+    <button type="submit" class="form-submit" id="authSubmitBtn">Sign in</button>
+    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="event.preventDefault();toggleAuthMode()" style="color:#007185;">Create account</a></div>
+  </form>
 </div>
 
 <!-- STORE MODAL -->
-<div class="modal-overlay" id="storeModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeStoreModal()">×</button>
-    <h2 style="margin-bottom:5px;">🏪 Open Your Store</h2>
+<div class="modal-overlay" id="storeModal" data-dz-dialog="closeStoreModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="storeTitle">
+    <button type="button" class="modal-close" onclick="closeStoreModal()" aria-label="Close">×</button>
+    <h2 id="storeTitle" style="margin-bottom:5px;">🏪 Open Your Store</h2>
     <p style="font-size:13px;color:#555;margin-bottom:15px;">List your dream products. Everything is free here.</p>
-    <div class="form-group"><label>Store Name</label><input type="text" id="storeName" placeholder="e.g. TechDreams, LuxuryWishes..." oninput="checkTM(this,'tmWarn1')"><div class="trademark-warn" id="tmWarn1">⚠️ No trademarked brand names</div></div>
-    <div class="form-group"><label>Tagline</label><input type="text" id="storeTagline" placeholder="e.g. Luxury for zero dollars"></div>
-    <div class="form-group"><label>Store Icon (emoji)</label><input type="text" id="storeIcon" placeholder="🏪" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
-    <div class="form-group"><label>First Product Name</label><input type="text" id="prodName" placeholder="e.g. UltraLux Watch Pro" oninput="checkTM(this,'tmWarn2')"><div class="trademark-warn" id="tmWarn2">⚠️ No trademarked names</div></div>
-    <div class="form-group"><label>Category</label><select id="prodCat"><option value="fashion">Fashion</option><option value="electronics">Electronics</option><option value="beauty">Beauty</option><option value="home">Home</option><option value="sports">Sports</option><option value="pets">Pets</option><option value="food">Food</option></select></div>
-    <div class="form-group"><label>Fake Price ($)</label><input type="number" id="prodPrice" placeholder="299" min="1"></div>
-    <div class="form-group"><label>Product Emoji</label><input type="text" id="prodEmoji" placeholder="⌚" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
-    <div class="error-msg" id="storeError"></div>
+    <div class="form-group"><label for="storeName">Store Name</label><input type="text" id="storeName" placeholder="e.g. TechDreams, LuxuryWishes..." oninput="checkTM(this,'tmWarn1')"><div class="trademark-warn" id="tmWarn1">⚠️ No trademarked brand names</div></div>
+    <div class="form-group"><label for="storeTagline">Tagline</label><input type="text" id="storeTagline" placeholder="e.g. Luxury for zero dollars"></div>
+    <div class="form-group"><label for="storeIcon">Store Icon (emoji)</label><input type="text" id="storeIcon" placeholder="🏪" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
+    <div class="form-group"><label for="prodName">First Product Name</label><input type="text" id="prodName" placeholder="e.g. UltraLux Watch Pro" oninput="checkTM(this,'tmWarn2')"><div class="trademark-warn" id="tmWarn2">⚠️ No trademarked names</div></div>
+    <div class="form-group"><label for="prodCat">Category</label><select id="prodCat"><option value="fashion">Fashion</option><option value="electronics">Electronics</option><option value="beauty">Beauty</option><option value="home">Home</option><option value="sports">Sports</option><option value="pets">Pets</option><option value="food">Food</option></select></div>
+    <div class="form-group"><label for="prodPrice">Fake Price ($)</label><input type="number" id="prodPrice" placeholder="299" min="1"></div>
+    <div class="form-group"><label for="prodEmoji">Product Emoji</label><input type="text" id="prodEmoji" placeholder="⌚" maxlength="2" style="font-size:24px;text-align:center;width:60px;"></div>
+    <div class="error-msg" id="storeError" role="alert"></div>
     <button class="form-submit" id="storeSubmitBtn" onclick="submitStore()">Open My Store 🚀</button>
   </div>
 </div>
@@ -565,6 +565,7 @@ function openAuth(mode, note) {
   document.getElementById('authTitle').textContent = mode==='login'?'Sign in to Dopazon':'Create your account';
   document.getElementById('authSubmitBtn').textContent = mode==='login'?'Sign in':'Create account';
   document.getElementById('nameGroup').style.display = mode==='signup'?'block':'none';
+  document.getElementById('authPass').autocomplete = mode==='signup' ? 'new-password' : 'current-password';
   document.getElementById('authError').style.display='none';
 }
 function closeAuth() { document.getElementById('authModal').classList.remove('active'); }

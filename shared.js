@@ -94,9 +94,9 @@ function updateCartCount(){
     #dz-fb-modal p{font-size:13px;color:#555;margin-bottom:16px;}
     .dz-tab-row{display:flex;gap:0;margin-bottom:18px;border:1px solid #ddd;border-radius:6px;overflow:hidden;}
     .dz-tab{flex:1;padding:9px;font-size:13px;font-weight:600;cursor:pointer;background:#f7f7f7;border:none;transition:background 0.15s;}
-    .dz-tab.active{background:#FF9900;color:#fff;}
+    .dz-tab.active{background:#131921;color:#FF9900;}
     .dz-stars{display:flex;gap:6px;margin-bottom:14px;}
-    .dz-star{font-size:28px;cursor:pointer;color:#ddd;transition:color 0.1s;}
+    .dz-star{font-size:28px;cursor:pointer;color:#ddd;transition:color 0.1s;background:none;border:none;padding:0 2px;line-height:1;}
     .dz-star.lit{color:#FF9900;}
     #dz-fb-modal textarea,#dz-fb-modal input,#dz-fb-modal select{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:10px;resize:vertical;}
     #dz-fb-modal textarea{height:90px;}
@@ -109,30 +109,30 @@ function updateCartCount(){
   document.head.appendChild(style);
 
   const html=`
-    <button id="dz-feedback-btn">💬 Feedback</button>
-    <div id="dz-fb-overlay">
-      <div id="dz-fb-modal">
-        <h2>Share your thoughts</h2>
+    <button type="button" id="dz-feedback-btn" aria-haspopup="dialog">💬 Feedback</button>
+    <div id="dz-fb-overlay" data-dz-dialog="dzCloseFb">
+      <div id="dz-fb-modal" role="dialog" aria-modal="true" aria-labelledby="dz-fb-title">
+        <h2 id="dz-fb-title">Share your thoughts</h2>
         <p>Help us improve Dopazon — your fake shopping paradise 🛒</p>
         <div class="dz-tab-row">
-          <button class="dz-tab active" onclick="dzSwitchTab('feedback',this)">💬 Feedback</button>
-          <button class="dz-tab" onclick="dzSwitchTab('suggest',this)">💡 Suggest a Product</button>
+          <button type="button" class="dz-tab active" aria-pressed="true" onclick="dzSwitchTab('feedback',this)">💬 Feedback</button>
+          <button type="button" class="dz-tab" aria-pressed="false" onclick="dzSwitchTab('suggest',this)">💡 Suggest a Product</button>
         </div>
 
         <div id="dz-tab-feedback">
-          <div class="dz-stars" id="dzStars">
-            <span class="dz-star" data-v="1" onclick="dzSetStar(1)">★</span>
-            <span class="dz-star" data-v="2" onclick="dzSetStar(2)">★</span>
-            <span class="dz-star" data-v="3" onclick="dzSetStar(3)">★</span>
-            <span class="dz-star" data-v="4" onclick="dzSetStar(4)">★</span>
-            <span class="dz-star" data-v="5" onclick="dzSetStar(5)">★</span>
+          <div class="dz-stars" id="dzStars" role="group" aria-label="Rating">
+            <button type="button" class="dz-star" data-v="1" aria-label="1 star" aria-pressed="false" onclick="dzSetStar(1)">★</button>
+            <button type="button" class="dz-star" data-v="2" aria-label="2 stars" aria-pressed="false" onclick="dzSetStar(2)">★</button>
+            <button type="button" class="dz-star" data-v="3" aria-label="3 stars" aria-pressed="false" onclick="dzSetStar(3)">★</button>
+            <button type="button" class="dz-star" data-v="4" aria-label="4 stars" aria-pressed="false" onclick="dzSetStar(4)">★</button>
+            <button type="button" class="dz-star" data-v="5" aria-label="5 stars" aria-pressed="false" onclick="dzSetStar(5)">★</button>
           </div>
-          <textarea id="dz-fb-msg" placeholder="What do you love? What's missing? Any bugs?"></textarea>
+          <textarea id="dz-fb-msg" aria-label="Your feedback" maxlength="2000" placeholder="What do you love? What's missing? Any bugs?"></textarea>
         </div>
 
         <div id="dz-tab-suggest" style="display:none;">
-          <input id="dz-sg-name" type="text" placeholder="Product name (e.g. noise-cancelling earbuds)">
-          <select id="dz-sg-cat">
+          <input id="dz-sg-name" type="text" aria-label="Product name" maxlength="120" placeholder="Product name (e.g. noise-cancelling earbuds)">
+          <select id="dz-sg-cat" aria-label="Category">
             <option value="">— Category —</option>
             <option>fashion</option><option>electronics</option><option>beauty</option>
             <option>home</option><option>kitchen</option><option>sports</option>
@@ -142,11 +142,11 @@ function updateCartCount(){
             <option>garden</option><option>office</option><option>travel</option>
             <option>music</option><option>art</option>
           </select>
-          <textarea id="dz-sg-reason" placeholder="Why should Dopazon carry this? (optional)"></textarea>
+          <textarea id="dz-sg-reason" aria-label="Why should Dopazon carry this" maxlength="1000" placeholder="Why should Dopazon carry this? (optional)"></textarea>
         </div>
 
         <div id="dz-fb-err" role="alert" style="display:none;color:#CC0C39;font-size:13px;margin-bottom:8px;"></div>
-        <div id="dz-fb-success">
+        <div id="dz-fb-success" role="status">
           <div class="dz-big-check">🎉</div>
           <strong style="font-size:16px;">Thanks! We got it.</strong>
           <p style="color:#555;font-size:13px;margin-top:6px;">Your dopamine contribution has been recorded.</p>
@@ -186,6 +186,7 @@ function dzSwitchTab(tab, btn){
   _dzTab=tab;
   document.querySelectorAll('.dz-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
+  document.querySelectorAll('.dz-tab').forEach(t=>t.setAttribute('aria-pressed', t===btn?'true':'false'));
   document.getElementById('dz-tab-feedback').style.display=tab==='feedback'?'':'none';
   document.getElementById('dz-tab-suggest').style.display=tab==='suggest'?'':'none';
 }
@@ -194,6 +195,7 @@ function dzSetStar(n){
   _dzStar=n;
   document.querySelectorAll('.dz-star').forEach(s=>{
     s.classList.toggle('lit', parseInt(s.dataset.v)<=n);
+    s.setAttribute('aria-pressed', parseInt(s.dataset.v)===n ? 'true' : 'false');
   });
 }
 
@@ -257,3 +259,44 @@ async function dzSubmitFeedback(){
     errEl.style.display='block';
   }
 }
+
+// ===== DIALOGS =====
+// Overlays marked data-dz-dialog="<name of their close function>" get the
+// basics a modal needs: focus moves in when it opens, Tab stays inside,
+// Escape closes it, and focus goes back where it was afterwards.
+(function(){
+  const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  const returnTo=new Map();
+  const isOpen=o=>getComputedStyle(o).display!=='none';
+  const focusables=o=>[...o.querySelectorAll(FOCUSABLE)].filter(e=>e.offsetParent!==null);
+  function watch(o){
+    let was=isOpen(o);
+    new MutationObserver(()=>{
+      const now=isOpen(o); if(now===was) return; was=now;
+      if(now){
+        returnTo.set(o,document.activeElement);
+        const f=focusables(o); const first=f.find(e=>/INPUT|TEXTAREA/.test(e.tagName))||f[0];
+        if(first) first.focus();
+      } else {
+        const prev=returnTo.get(o); returnTo.delete(o);
+        if(prev && prev.focus && document.contains(prev)) prev.focus();
+      }
+    }).observe(o,{attributes:true,attributeFilter:['class','style']});
+  }
+  document.addEventListener('keydown',e=>{
+    const open=[...document.querySelectorAll('[data-dz-dialog]')].filter(isOpen).pop();
+    if(!open) return;
+    if(e.key==='Escape'){
+      const close=window[open.getAttribute('data-dz-dialog')];
+      if(typeof close==='function'){ e.preventDefault(); close(); }
+    } else if(e.key==='Tab'){
+      const f=focusables(open); if(!f.length) return;
+      const first=f[0], last=f[f.length-1];
+      if(!open.contains(document.activeElement)){ e.preventDefault(); first.focus(); }
+      else if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  const init=()=>document.querySelectorAll('[data-dz-dialog]').forEach(watch);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
