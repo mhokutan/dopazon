@@ -29,7 +29,7 @@
   .svc-hero-btn{background:#fff;color:#7b2d8b;font-size:16px;font-weight:700;padding:12px 32px;border:none;border-radius:30px;cursor:pointer;}
   .main{max-width:1200px;margin:0 auto;padding:20px;}
   .section-title{font-size:22px;font-weight:700;margin:25px 0 15px;}
-  .pet-tabs{display:flex;gap:10px;margin-bottom:20px;}
+  .pet-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
   .pet-tab{background:#fff;border:2px solid #ddd;border-radius:20px;padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;}
   .pet-tab:hover,.pet-tab.active{background:#7b2d8b;color:#fff;border-color:#7b2d8b;}
   .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-bottom:30px;}
@@ -53,7 +53,7 @@
     <div class="logo-text">dopa<span>zon</span></div>
     <div class="logo-sub">.com</div>
   </a>
-  <div style="flex:1;display:flex;align-items:center;padding:0 20px;">
+  <div class="svc-label" style="flex:1;display:flex;align-items:center;padding:0 20px;">
     <span style="font-size:28px;margin-right:10px;">🐾</span>
     <span style="color:#FF9900;font-size:20px;font-weight:700;">DopaPet</span>
   </div>
@@ -110,11 +110,11 @@
 <script src="shared.js"></script>
 <script>
 const TOP_PETS = [
-  {emoji:'🥩',name:'OrigenDopa Raw-Inspired Dry Food',sub:'25 lb · Grain-free · 85% protein',stars:'4.9',price:89},
+  {emoji:'🥩',name:'PrairieRaw Dry Dog Food',sub:'25 lb · Grain-free · 85% protein',stars:'4.9',price:89},
   {emoji:'🐟',name:'Wild Salmon Dog Food — Premium',sub:'12 cans · Omega-3 rich',stars:'4.8',price:54},
   {emoji:'🍗',name:'Freeze-Dried Chicken Treats',sub:'6oz · Single ingredient',stars:'4.9',price:22},
   {emoji:'🥕',name:'Organic Puppy Starter Kit',sub:'30-day supply · Vet approved',stars:'4.7',price:65},
-  {emoji:'🐱',name:'Royal Canin Cat Indoor Ultra',sub:'7 lb · Hairball control',stars:'4.8',price:48},
+  {emoji:'🐱',name:'Indoor Cat Formula Ultra',sub:'7 lb · Hairball control',stars:'4.8',price:48},
   {emoji:'🐠',name:'Tropical Fish Flake Premium Mix',sub:'3.5oz · All tropical species',stars:'4.6',price:18},
 ];
 const TOYS = [
