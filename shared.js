@@ -16,6 +16,18 @@ function escHtml(s){
     .replace(/`/g,'&#96;');
 }
 
+// Brand names users may not put in store or product names. Shared by every
+// page that lets a user name something (shop.html, mystore.html).
+const TRADEMARKS = ['nike','apple','samsung','amazon','google','microsoft','sony','disney','netflix','adidas','gucci','prada','chanel','louis vuitton','hermes','rolex','tesla','walmart','zara','lululemon','peloton'];
+function dzHasTrademark(s){
+  const v=String(s||'').toLowerCase();
+  return TRADEMARKS.some(t=>v.includes(t));
+}
+
+// Product categories a user can pick, with the emoji used when a product has
+// none of its own.
+const DZ_CATEGORY_EMOJI = {fashion:'👗',electronics:'📱',beauty:'💄',home:'🏠',kitchen:'🍳',sports:'🏃',pets:'🐾',food:'🛒',health:'💊',toys:'🧸',gaming:'🎮',baby:'👶',books:'📚',tools:'🔧',automotive:'🚗',garden:'🌱',office:'🖊️',travel:'🧳',music:'🎸',art:'🎨'};
+
 // Safe image-load fallback: replaces only the broken <img> with its emoji
 // (read from data-emoji). No user data is ever placed inside inline JS, which
 // prevents XSS via product img/emoji. Replacing just the element (not the

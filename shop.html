@@ -240,8 +240,7 @@
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const TRADEMARKS = ['nike','apple','samsung','amazon','google','microsoft','sony','disney','netflix','adidas','gucci','prada','chanel','louis vuitton','hermes','rolex','tesla','walmart','zara','lululemon','peloton'];
-const EMOJIS = {fashion:'👗',electronics:'📱',beauty:'💄',home:'🏠',kitchen:'🍳',sports:'🏃',pets:'🐾',food:'🛒',health:'💊',toys:'🧸',gaming:'🎮',baby:'👶',books:'📚',tools:'🔧',automotive:'🚗',garden:'🌱',office:'🖊️',travel:'🧳',music:'🎸',art:'🎨'};
+const EMOJIS = DZ_CATEGORY_EMOJI;
 
 // Seed catalog now lives in catalog.js (shared with product.html)
 const SEED_PRODUCTS = DZ_CATALOG;
@@ -520,12 +519,18 @@ async function submitAuth() {
 }
 
 // ===== STORE =====
-function openStoreModal() { if(!currentUser){openAuth('login');return;} document.getElementById('storeModal').classList.add('active'); }
+async function openStoreModal() {
+  if(!currentUser){openAuth('login');return;}
+  // A user who already has a store manages it on My Store instead of opening
+  // a second one (that is how duplicate stores were created).
+  const {data}=await sb.from('stores').select('id').eq('user_id',currentUser.id).limit(1);
+  if(data&&data.length){window.location='mystore.html';return;}
+  document.getElementById('storeModal').classList.add('active');
+}
 function closeStoreModal() { document.getElementById('storeModal').classList.remove('active'); }
 
 function checkTM(input, warnId) {
-  const val=input.value.toLowerCase();
-  const hit=TRADEMARKS.some(t=>val.includes(t));
+  const hit=dzHasTrademark(input.value);
   document.getElementById(warnId).style.display=hit?'block':'none';
   return !hit;
 }

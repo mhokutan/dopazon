@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon — Your Store</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ms-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .ms-icon{font-size:42px;line-height:1;width:58px;text-align:center;}
+  .ms-name{font-size:19px;font-weight:700;word-break:break-word;}
+  .ms-tagline{font-size:13px;color:#555;margin-top:2px;word-break:break-word;}
+  .ms-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .ms-danger{border-color:#e5b3bd;color:#B12704;}
+  .ms-danger:hover{border-color:#B12704;}
+  .ms-sub{font-size:14px;font-weight:700;margin:18px 0 4px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .ms-price{font-size:13px;color:#555;}
+  .ms-empty{font-size:13px;color:#777;padding:10px 0;}
+  .ms-form{background:#F7F8F8;border:1px solid #e3e3e3;border-radius:8px;padding:14px;margin:10px 0;}
+  .ms-form .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ms-form label{display:block;font-size:12.5px;font-weight:700;margin:8px 0 3px;}
+  .ms-form input,.ms-form select,.ms-form textarea{width:100%;box-sizing:border-box;border:1px solid #bbb;border-radius:4px;padding:8px 10px;font-size:14px;font-family:inherit;}
+  .ms-form textarea{height:70px;resize:vertical;}
+  .ms-form .emoji-in{font-size:22px;text-align:center;max-width:90px;}
+  .ms-form-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .ms-err{color:#CC0C39;font-size:12.5px;margin-top:8px;}
+  .ms-note{font-size:12.5px;color:#555;margin-top:10px;}
+  @media(max-width:600px){.ms-form .row{grid-template-columns:1fr;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <select class="search-select"><option>All</option></select>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
+    <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="account.html" class="header-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
+  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="shop.html" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<nav id="navbar">
+  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
+  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="orders.html" class="nav-link">Your Orders</a>
+  <a href="wishlist.html" class="nav-link">Wish List</a>
+  <a href="mystore.html" class="nav-link active">Your Store</a>
+</nav>
+
+<div class="acct-wrap">
+  <div class="acct-crumb"><a href="index.html">Dopazon</a> › <a href="account.html">Your Account</a> › Your Store</div>
+  <h1 class="acct-title">Your Store</h1>
+
+  <div class="acct-card" id="msLoading"><span class="spinner"></span> Loading your store...</div>
+
+  <div class="acct-empty" id="msSignedOut" style="display:none;">
+    <div class="big">🔐</div>
+    <h2>Sign in to manage your store</h2>
+    <p>Your storefront and its products are tied to your Dopazon account.</p>
+    <a href="shop.html" class="acct-btn">Sign in on the shop page →</a>
+  </div>
+
+  <div id="msError" class="acct-card ms-err" style="display:none;"></div>
+
+  <!-- Everything below is rendered from the user's own rows. Every value goes
+       through escHtml and buttons carry only data-act / data-id attributes. -->
+  <div id="myStores"></div>
+</div>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script src="shared.js"></script>
+<script src="dzstore.js"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const LIMITS = { storeName: 60, tagline: 120, icon: 2, title: 120, description: 1000 };
+
+let me = null;            // signed-in user
+let stores = [];          // only rows with user_id = me.id
+let products = [];        // only rows with user_id = me.id
+let open = null;          // which form is open: {kind:'store'|'newStore'|'product'|'newProduct', id}
+let busy = false;
+
+function goSearch(){const q=document.getElementById('searchInput').value;if(q)window.location='shop.html?q='+encodeURIComponent(q);}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateCartCount();
+  await DZ.init(sb);
+  DZ.onUser(u => load(u));
+});
+
+async function load(user) {
+  me = user || null;
+  const greet = document.getElementById('acctGreet');
+  greet.textContent = me ? 'Hello, ' + (me.user_metadata?.name || me.email.split('@')[0]) : 'Hello, sign in';
+  document.getElementById('msSignedOut').style.display = me ? 'none' : '';
+  if (!me) {
+    document.getElementById('msLoading').style.display = 'none';
+    document.getElementById('myStores').innerHTML = '';
+    stores = []; products = [];
+    return;
+  }
+  document.getElementById('msLoading').style.display = '';
+  // RLS lets anyone read stores/products, so the user_id filter is what keeps
+  // this page to the signed-in user's own rows.
+  const [s, p] = await Promise.all([
+    sb.from('stores').select('*').eq('user_id', me.id).order('created_at', { ascending: true }),
+    sb.from('products').select('*').eq('user_id', me.id).order('created_at', { ascending: true })
+  ]);
+  document.getElementById('msLoading').style.display = 'none';
+  if (s.error || p.error) { showError((s.error || p.error).message); return; }
+  stores = (s.data || []).filter(r => r.user_id === me.id);
+  products = (p.data || []).filter(r => r.user_id === me.id);
+  render();
+}
+
+function showError(msg) {
+  const el = document.getElementById('msError');
+  el.textContent = msg ? 'Something went wrong: ' + msg : '';
+  el.style.display = msg ? '' : 'none';
+}
+
+// ---------- rendering ----------
+function render() {
+  const storeIds = new Set(stores.map(s => s.id));
+  const orphans = products.filter(p => !storeIds.has(p.store_id));
+  let html = '';
+
+  if (!stores.length) {
+    html += `<div class="acct-empty">
+      <div class="big">🏪</div>
+      <h2>You have not opened a store yet</h2>
+      <p>Open a fake storefront and list your own imaginary products. Everything sells for $0.</p>
+      ${open?.kind === 'newStore' ? storeForm(null) : '<button class="acct-btn" data-act="new-store">Open your store</button>'}
+    </div>`;
+  }
+
+  stores.forEach(s => {
+    const own = products.filter(p => p.store_id === s.id);
+    html += `<div class="acct-card ms-store" data-id="${escHtml(s.id)}">
+      ${open?.kind === 'store' && open.id === s.id ? storeForm(s) : `
+      <div class="ms-head">
+        <div class="ms-icon">${escHtml(s.icon || '🏪')}</div>
+        <div style="flex:1;min-width:180px;">
+          <div class="ms-name">${escHtml(s.name)}</div>
+          <div class="ms-tagline">${escHtml(s.tagline || '')}</div>
+        </div>
+        <div class="ms-actions">
+          <button class="acct-btn-ghost" data-act="edit-store" data-id="${escHtml(s.id)}">Edit store</button>
+          <button class="acct-btn-ghost ms-danger" data-act="delete-store" data-id="${escHtml(s.id)}">Delete store</button>
+        </div>
+      </div>`}
+      <div class="ms-sub"><span>Products (${own.length})</span>
+        ${open?.kind === 'newProduct' && open.id === s.id ? '' : `<button class="acct-btn-ghost" data-act="new-product" data-id="${escHtml(s.id)}">+ Add product</button>`}
+      </div>
+      ${open?.kind === 'newProduct' && open.id === s.id ? productForm(null) : ''}
+      ${own.length ? own.map(productRow).join('') : '<div class="ms-empty">No products yet.</div>'}
+    </div>`;
+  });
+
+  if (orphans.length) {
+    html += `<div class="acct-card"><div class="ms-sub" style="margin-top:0;"><span>Products without a store (${orphans.length})</span></div>
+      ${orphans.map(productRow).join('')}</div>`;
+  }
+
+  if (stores.length) {
+    html += open?.kind === 'newStore'
+      ? `<div class="acct-card">${storeForm(null)}</div>`
+      : `<p class="ms-note">Your products show up in the <a href="shop.html" style="color:#007185;">shop</a> for everyone.
+         <button class="acct-btn-ghost" data-act="new-store" style="margin-left:6px;">Open another store</button></p>`;
+  }
+
+  document.getElementById('myStores').innerHTML = html;
+}
+
+function productRow(p) {
+  if (open?.kind === 'product' && open.id === p.id) return productForm(p);
+  const emoji = p.emoji || DZ_CATEGORY_EMOJI[p.category] || '📦';
+  return `<div class="acct-row ms-prod" data-id="${escHtml(p.id)}">
+    <div class="acct-thumb-emoji">${escHtml(emoji)}</div>
+    <div class="acct-row-info">
+      <div class="acct-row-title"><a href="product.html?id=${encodeURIComponent(p.id)}">${escHtml(p.title || 'Untitled')}</a></div>
+      <div class="ms-price"><span class="acct-free">FREE</span><span class="acct-was">$${escHtml(Number(p.price || 0).toLocaleString())}</span> · ${escHtml(p.category || 'other')}</div>
+    </div>
+    <div class="ms-actions">
+      <button class="acct-btn-ghost" data-act="edit-product" data-id="${escHtml(p.id)}">Edit</button>
+      <button class="acct-btn-ghost ms-danger" data-act="delete-product" data-id="${escHtml(p.id)}">Delete</button>
+    </div>
+  </div>`;
+}
+
+function storeForm(s) {
+  return `<form class="ms-form" data-form="${s ? 'store' : 'newStore'}" data-id="${s ? escHtml(s.id) : ''}">
+    <div style="font-weight:700;">${s ? 'Edit store' : 'Open a new store'}</div>
+    <label for="fName">Store name</label>
+    <input id="fName" maxlength="${LIMITS.storeName}" value="${escHtml(s?.name || '')}" placeholder="e.g. TechDreams" required>
+    <label for="fTagline">Tagline</label>
+    <input id="fTagline" maxlength="${LIMITS.tagline}" value="${escHtml(s?.tagline || '')}" placeholder="e.g. Luxury for zero dollars">
+    <label for="fIcon">Icon (emoji)</label>
+    <input id="fIcon" class="emoji-in" maxlength="24" value="${escHtml(s?.icon || '🏪')}">
+    <div class="ms-err" id="fErr" style="display:none;"></div>
+    <div class="ms-form-btns">
+      <button type="submit" class="acct-btn">${s ? 'Save changes' : 'Open store'}</button>
+      <button type="button" class="acct-btn-ghost" data-act="cancel">Cancel</button>
+    </div>
+  </form>`;
+}
+
+function productForm(p) {
+  const cats = Object.keys(DZ_CATEGORY_EMOJI);
+  if (p?.category && !cats.includes(p.category)) cats.push(p.category);
+  return `<form class="ms-form" data-form="${p ? 'product' : 'newProduct'}" data-id="${p ? escHtml(p.id) : escHtml(open.id)}">
+    <div style="font-weight:700;">${p ? 'Edit product' : 'Add a product'}</div>
+    <label for="fTitle">Product name</label>
+    <input id="fTitle" maxlength="${LIMITS.title}" value="${escHtml(p?.title || '')}" placeholder="e.g. UltraLux Watch Pro" required>
+    <div class="row">
+      <div><label for="fCat">Category</label>
+        <select id="fCat">${cats.map(c => `<option value="${escHtml(c)}"${(p?.category || 'fashion') === c ? ' selected' : ''}>${escHtml(c[0].toUpperCase() + c.slice(1))}</option>`).join('')}</select></div>
+      <div><label for="fPrice">Fake price ($)</label>
+        <input id="fPrice" type="number" min="1" max="1000000" step="1" value="${escHtml(p?.price ?? '')}" placeholder="299" required></div>
+    </div>
+    <label for="fEmoji">Emoji</label>
+    <input id="fEmoji" class="emoji-in" maxlength="24" value="${escHtml(p?.emoji || '')}" placeholder="⌚">
+    <label for="fDesc">Description (optional)</label>
+    <textarea id="fDesc" maxlength="${LIMITS.description}">${escHtml(p?.description || '')}</textarea>
+    <div class="ms-err" id="fErr" style="display:none;"></div>
+    <div class="ms-form-btns">
+      <button type="submit" class="acct-btn">${p ? 'Save product' : 'Add product'}</button>
+      <button type="button" class="acct-btn-ghost" data-act="cancel">Cancel</button>
+    </div>
+  </form>`;
+}
+
+function openForm(kind, id) {
+  open = { kind, id };
+  render();
+  const first = document.querySelector('#myStores form input');
+  if (first) first.focus();
+}
+
+// ---------- events (delegated; no user data in inline JS) ----------
+document.getElementById('myStores').addEventListener('click', e => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn || busy) return;
+  const id = btn.dataset.id || null;
+  switch (btn.dataset.act) {
+    case 'new-store':      openForm('newStore', null); break;
+    case 'edit-store':     openForm('store', id); break;
+    case 'new-product':    openForm('newProduct', id); break;
+    case 'edit-product':   openForm('product', id); break;
+    case 'cancel':         open = null; render(); break;
+    case 'delete-store':   deleteStore(id); break;
+    case 'delete-product': deleteProduct(id); break;
+  }
+});
+
+document.getElementById('myStores').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (busy) return;
+  const form = e.target;
+  const kind = form.dataset.form, id = form.dataset.id || null;
+  const err = form.querySelector('#fErr');
+  const submit = form.querySelector('button[type=submit]');
+  const label = submit.textContent;
+  err.style.display = 'none';
+  busy = true; submit.disabled = true; submit.textContent = 'Saving...';
+  try {
+    if (kind === 'store' || kind === 'newStore') await saveStore(kind, id, form);
+    else await saveProduct(kind, id, form);
+    open = null;
+    await load(me);
+  } catch (ex) {
+    err.textContent = ex.message || 'Could not save. Try again.';
+    err.style.display = '';
+    submit.disabled = false; submit.textContent = label;
+  } finally {
+    busy = false;
+  }
+});
+
+// ---------- writes ----------
+const val = (form, sel) => form.querySelector(sel).value.trim();
+const chars = s => [...s].length;
+// Count what a person sees as one character, so a ZWJ emoji like 👨‍👩‍👧 is 1.
+const graphemes = s => window.Intl?.Segmenter
+  ? [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(s)].length
+  : chars(s);
+
+function checkText(fields) {
+  for (const [label, v] of fields) {
+    if (dzHasTrademark(v)) throw new Error(label + ' contains a trademarked brand name. Please remove it.');
+  }
+}
+
+function ownStore(id) {
+  const s = stores.find(x => x.id === id);
+  if (!s || !UUID_RE.test(id)) throw new Error('That store is not yours.');
+  return s;
+}
+function ownProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p || !UUID_RE.test(id)) throw new Error('That product is not yours.');
+  return p;
+}
+
+// PostgREST answers 204 even when RLS matched nothing, so every write asks
+// for the rows back and treats an empty result as a failure.
+function expectRows(res, what) {
+  if (res.error) throw res.error;
+  if (!res.data || !res.data.length) throw new Error(what + ' was not saved. Please sign in again and retry.');
+  return res.data;
+}
+
+async function saveStore(kind, id, form) {
+  const name = val(form, '#fName');
+  const tagline = val(form, '#fTagline');
+  const icon = val(form, '#fIcon') || '🏪';
+  if (!name) throw new Error('Please give your store a name.');
+  if (chars(name) > LIMITS.storeName) throw new Error('Store name is too long.');
+  if (chars(tagline) > LIMITS.tagline) throw new Error('Tagline is too long.');
+  if (graphemes(icon) > LIMITS.icon) throw new Error('Icon should be a single emoji.');
+  checkText([['Store name', name], ['Tagline', tagline]]);
+  const row = { name, tagline: tagline || 'Free everything, always', icon };
+
+  if (kind === 'newStore') {
+    expectRows(await sb.from('stores').insert([{ ...row, user_id: me.id }]).select(), 'Your store');
+    showToast('🎉 Your store is open!');
+    launchConfetti();
+    return;
+  }
+  const s = ownStore(id);
+  expectRows(await sb.from('stores').update(row).eq('id', id).eq('user_id', me.id).select(), 'Your store');
+  // Products keep a copy of the store name for older pages; keep it in step.
+  if (name !== s.name && products.some(p => p.store_id === id)) {
+    const r = await sb.from('products').update({ store_name: name }).eq('store_id', id).eq('user_id', me.id).select('id');
+    if (r.error) throw r.error;
+  }
+  showToast('✅ Store saved.');
+}
+
+async function saveProduct(kind, id, form) {
+  const title = val(form, '#fTitle');
+  const category = form.querySelector('#fCat').value;
+  const price = Number(form.querySelector('#fPrice').value);
+  const emoji = val(form, '#fEmoji');
+  const description = val(form, '#fDesc');
+  if (!title) throw new Error('Please give the product a name.');
+  if (chars(title) > LIMITS.title) throw new Error('Product name is too long.');
+  if (!Number.isInteger(price) || price < 1 || price > 1000000) throw new Error('Price must be a whole number between 1 and 1,000,000.');
+  if (graphemes(emoji) > LIMITS.icon) throw new Error('Emoji should be a single emoji.');
+  if (chars(description) > LIMITS.description) throw new Error('Description is too long.');
+  checkText([['Product name', title], ['Description', description]]);
+  const row = { title, category, price, emoji: emoji || DZ_CATEGORY_EMOJI[category] || '📦', description: description || null };
+
+  if (kind === 'newProduct') {
+    const s = ownStore(id);
+    expectRows(await sb.from('products').insert([{ ...row, store_id: s.id, store_name: s.name, user_id: me.id, stars: 4.5, reviews: 0 }]).select(), 'Your product');
+    showToast('✅ Product added.');
+    return;
+  }
+  ownProduct(id);
+  expectRows(await sb.from('products').update(row).eq('id', id).eq('user_id', me.id).select(), 'Your product');
+  showToast('✅ Product saved.');
+}
+
+async function deleteStore(id) {
+  let s;
+  try { s = ownStore(id); } catch (ex) { showError(ex.message); return; }
+  const n = products.filter(p => p.store_id === id).length;
+  const msg = 'Delete the store "' + s.name + '"?' +
+    (n ? '\n\nIts ' + n + ' product' + (n === 1 ? '' : 's') + ' will be deleted too.' : '') +
+    '\n\nThis cannot be undone.';
+  if (!confirm(msg)) return;
+  busy = true;
+  try {
+    expectRows(await sb.from('stores').delete().eq('id', id).eq('user_id', me.id).select(), 'The delete');
+    showToast('🗑️ Store deleted.');
+    open = null;
+    await load(me);
+  } catch (ex) { showError(ex.message); }
+  finally { busy = false; }
+}
+
+async function deleteProduct(id) {
+  let p;
+  try { p = ownProduct(id); } catch (ex) { showError(ex.message); return; }
+  if (!confirm('Delete "' + p.title + '"? This cannot be undone.')) return;
+  busy = true;
+  try {
+    expectRows(await sb.from('products').delete().eq('id', id).eq('user_id', me.id).select(), 'The delete');
+    showToast('🗑️ Product deleted.');
+    open = null;
+    await load(me);
+  } catch (ex) { showError(ex.message); }
+  finally { busy = false; }
+}
+</script>
+</body>
+</html>
