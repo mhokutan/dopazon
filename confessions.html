@@ -301,24 +301,26 @@ async function react(id, type, btn) {
   const countEl = document.getElementById((type==='like'?'likes_':'sames_')+id);
   const conf = allConfessions.find(x => x.id === id);
   if (!conf) return;
-
-  if (localReactions[key]) {
-    localReactions[key] = false;
-    btn.classList.remove('liked');
-    const fn = type === 'like' ? 'decrement_likes' : 'decrement_sames';
-    await sb.rpc(fn, { confession_id: id });
-    const newCount = Math.max((type==='like'?conf.likes:conf.sames) - 1, 0);
-    if (type==='like') conf.likes = newCount; else conf.sames = newCount;
-    countEl.textContent = newCount;
-  } else {
-    localReactions[key] = true;
-    btn.classList.add('liked');
-    const fn = type === 'like' ? 'increment_likes' : 'increment_sames';
-    await sb.rpc(fn, { confession_id: id });
-    const newCount = (type==='like'?conf.likes:conf.sames) + 1;
-    if (type==='like') conf.likes = newCount; else conf.sames = newCount;
-    countEl.textContent = newCount;
+  // Reactions are signed-in only (the counter RPCs are not callable by anon),
+  // so one person cannot pump a count from a script.
+  if (!currentUser) {
+    showToast('🔒 <a href="shop.html" style="color:#FF9900;">Sign in</a> to react. Free, obviously.', 4000);
+    return;
   }
+
+  const removing = !!localReactions[key];
+  const fn = (removing ? 'decrement_' : 'increment_') + (type === 'like' ? 'likes' : 'sames');
+  btn.disabled = true;
+  const { error } = await sb.rpc(fn, { confession_id: id });
+  btn.disabled = false;
+  if (error) { showToast('Could not save that reaction. Try again.'); return; }
+
+  localReactions[key] = !removing;
+  btn.classList.toggle('liked', !removing);
+  const cur = type==='like' ? conf.likes : conf.sames;
+  const newCount = removing ? Math.max(cur - 1, 0) : cur + 1;
+  if (type==='like') conf.likes = newCount; else conf.sames = newCount;
+  countEl.textContent = newCount;
   localStorage.setItem('dz_reactions', JSON.stringify(localReactions));
 }
 
