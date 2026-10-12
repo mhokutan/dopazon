@@ -189,7 +189,7 @@
       <div class="results-count"><strong id="resultCount">0</strong> results for <strong id="resultQuery">"everything free"</strong></div>
       <div style="display:flex;align-items:center;gap:8px;">
         <label style="font-size:13px;">Sort by:</label>
-        <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+        <select class="sort-select" id="sortSelect" onchange="renderProducts(_lastSearchQ)">
           <option value="featured">Featured</option>
           <option value="rating">Avg. Customer Review</option>
           <option value="newest">Newest Arrivals</option>
@@ -268,6 +268,7 @@ let cart = JSON.parse(localStorage.getItem('dz_cart') || '[]');
 let currentUser = null;
 let authMode = 'login';
 let currentCat = '';
+let _lastSearchQ = undefined;   // current search, kept across re-renders
 let dbProducts = [];
 let dbStores = [];
 let _renderedProducts = [];
@@ -277,14 +278,19 @@ let authSubmitting = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(location.search);
-  currentCat = params.get('cat') || '';
-  if (params.get('q')) document.getElementById('searchInput').value = params.get('q');
+  // ?q= (from the header search on other pages) and ?cat= both have to
+  // reach the grid, the radios and the breadcrumb, and survive the re-render
+  // when the database products arrive.
+  const q = (params.get('q') || '').trim();
+  if (q) document.getElementById('searchInput').value = q;
+  _lastSearchQ = q ? q.toLowerCase() : undefined;
+  syncCatUI(params.get('cat') || '');
   updateCartCount();
   // Cart links on every other page point here with ?cart=1.
   if (params.get('cart') === '1') openCheckout();
   currentUser = await DZ.init(sb);
   updateUserUI();
-  renderProducts();
+  renderProducts(_lastSearchQ);
   await loadDBData();
 });
 
@@ -315,21 +321,26 @@ async function loadDBData() {
     store_name: storeNameById[p.store_id] || p.store_name || 'Dopazon Store',
     emoji: p.emoji || EMOJIS[p.category] || '📦'
   }));
-  renderProducts();
+  renderProducts(_lastSearchQ, true);
   renderStores();
+}
+
+function syncCatUI(cat) {
+  currentCat = cat;
+  document.getElementById('breadcrumbCat').textContent = cat ? cat.charAt(0).toUpperCase()+cat.slice(1) : 'All Departments';
+  document.querySelectorAll('input[name="cat"]').forEach(r => r.checked = r.value === cat);
 }
 
 function filterCat(cat, e) {
   if (e) e.preventDefault();
-  currentCat = cat;
-  document.getElementById('breadcrumbCat').textContent = cat ? cat.charAt(0).toUpperCase()+cat.slice(1) : 'All Departments';
-  document.querySelectorAll('input[name="cat"]').forEach(r => r.checked = r.value === cat);
-  renderProducts();
+  syncCatUI(cat);
+  renderProducts(_lastSearchQ);
 }
 
 function doSearch() {
-  currentCat = '';
-  renderProducts(document.getElementById('searchInput').value.toLowerCase());
+  syncCatUI('');
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  renderProducts(q || undefined);
 }
 
 // Rendering all ~1085 cards at once produced a ~130,000px page that Chrome
@@ -337,7 +348,6 @@ function doSearch() {
 // as soon as you scrolled. Render one page at a time instead.
 const PAGE_SIZE = 48;
 let _currentPage = 1;
-let _lastSearchQ = undefined;
 
 function renderProducts(searchQ, keepPage) {
   if (!keepPage) _currentPage = 1;
