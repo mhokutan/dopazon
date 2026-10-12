@@ -56,7 +56,9 @@ RLS model — keep it this way:
 
 SQL history (all already applied in production): `setup.sql` (consolidated
 schema + RLS), `add_user_data.sql` (orders, wishlist, streak),
-`fix_product_images.sql`, `fix_trademarks.sql`. `supabase_schema.sql` and
+`fix_product_images.sql`, `fix_trademarks.sql`, `fix_my_savings_view.sql`
+(view runs as caller), `fix_products_store_ownership.sql` (a product may only
+point at the caller's own store; applied 2026-10-12, verified in pg_policies). `supabase_schema.sql` and
 `feedback_schema.sql` are deprecated stubs — do not run them.
 
 ## Rules learned the hard way
