@@ -83,6 +83,9 @@
   .store-card:hover{border-color:#FF9900;}
   .trademark-warn{color:#CC0C39;font-size:12px;margin-top:4px;display:none;}
   .error-msg{color:#CC0C39;font-size:12px;margin-top:6px;display:none;}
+  /* Reserve room until the first render so the pager/footer do not jump. */
+  .product-grid:empty{min-height:150vh;}
+  .pager:empty{display:none;}
   .pager{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff;border-radius:4px;padding:14px 16px;margin-top:16px;}
   .pager-info{font-size:13px;color:#555;}
   .pager-btns{display:flex;gap:6px;flex-wrap:wrap;}
@@ -288,11 +291,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
   // Cart links on every other page point here with ?cart=1.
   if (params.get('cart') === '1') openCheckout();
+  // Paint the catalogue grid before waiting on the auth session, otherwise
+  // the page first shows an empty grid and then jumps (CLS 0.17).
+  renderProducts(_lastSearchQ);
   currentUser = await DZ.init(sb);
   updateUserUI();
   // account/mystore send signed-out users here with ?signin=1&next=...
   if (params.get('signin') === '1' && !currentUser) openAuth('login');
-  renderProducts(_lastSearchQ);
   await loadDBData();
 });
 
