@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dopazon: Buy it. It's free.</title>
+<!-- Unlinked design preview (direction B, "one-tap temptation"). Not in the sitemap. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#131921">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="shared.css">
+<style>
+:root{
+  --stage:#131921;     /* the site's header navy, used as a stage */
+  --stage-2:#232F3E;
+  --text:#FFFFFF;
+  --text-soft:#C9CED4;
+  --was:#FF8A80;       /* the old price, struck out */
+  --zero:#FFD814;      /* the new price and the button */
+  --kept:#5BD6A0;      /* money kept, on navy */
+}
+body{background:var(--stage);}
+.pb{color:var(--text);min-height:calc(100vh - 66px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:center;gap:48px;max-width:1240px;margin:0 auto;padding:32px 32px 48px;}
+.pb-photo{position:relative;aspect-ratio:1/1;max-height:72vh;width:100%;border-radius:18px;overflow:hidden;background:var(--stage-2);}
+.pb-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s ease;}
+.pb-photo img.swap{opacity:0;}
+.pb-stamp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg) scale(1);border:5px solid var(--kept);color:var(--kept);background:rgba(19,25,33,.82);font-weight:900;font-size:clamp(28px,5vw,54px);padding:8px 22px;border-radius:12px;letter-spacing:.04em;pointer-events:none;}
+.pb-stamp[hidden]{display:none;}
+.pb-stamp.hit{animation:stamp .35s cubic-bezier(.2,1.6,.4,1);}
+@keyframes stamp{from{transform:translate(-50%,-50%) rotate(-12deg) scale(1.8);opacity:0;}to{transform:translate(-50%,-50%) rotate(-12deg) scale(1);opacity:1;}}
+
+.pb-lead{font-size:18px;color:var(--text-soft);margin-bottom:6px;}
+.pb h1{font-size:clamp(26px,3.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.01em;max-width:20ch;}
+.pb-price{display:flex;align-items:baseline;gap:18px;margin:14px 0 22px;font-variant-numeric:tabular-nums;}
+.pb-price s{font-size:clamp(34px,5vw,64px);font-weight:300;color:var(--was);text-decoration-thickness:4px;}
+.pb-price strong{font-size:clamp(64px,10vw,128px);line-height:.9;font-weight:900;color:var(--zero);letter-spacing:-.04em;}
+.pb-buy{width:100%;max-width:420px;min-height:60px;background:var(--zero);color:#0F1111;border:none;border-radius:999px;font-size:20px;font-weight:800;cursor:pointer;}
+.pb-buy:hover{background:#F7CA00;}
+.pb-next{display:block;margin-top:14px;background:none;border:none;color:var(--text);text-decoration:underline;text-underline-offset:3px;font-size:15px;cursor:pointer;padding:6px 0;}
+.pb-fine{margin-top:18px;font-size:13px;color:var(--text-soft);max-width:44ch;line-height:1.5;}
+
+.pb-done{max-width:440px;}
+.pb-done[hidden]{display:none;}
+.pb-done p.big{font-size:clamp(26px,3vw,34px);font-weight:800;line-height:1.15;}
+.pb-done p.big b{color:var(--kept);}
+.pb-done .tally{margin:10px 0 20px;color:var(--text-soft);font-size:15px;}
+.pb-done .tally b{color:var(--text);}
+.pb-keep{display:block;text-align:center;background:var(--zero);color:#0F1111;font-weight:800;font-size:17px;padding:16px;border-radius:999px;text-decoration:none;}
+.pb-again{display:block;width:100%;margin-top:10px;background:transparent;color:var(--text);border:2px solid #4A5562;border-radius:999px;padding:13px;font-size:16px;font-weight:700;cursor:pointer;}
+.pb-again:hover{border-color:var(--text);}
+
+@media(max-width:860px){
+  .pb{grid-template-columns:1fr;gap:18px;padding:14px 16px 32px;min-height:0;}
+  .pb-photo{aspect-ratio:4/3;max-height:40vh;border-radius:14px;}
+  .pb-lead{font-size:15px;}
+  .pb-price{margin:8px 0 14px;gap:12px;}
+  .pb-buy{max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){.pb-stamp.hit{animation:none;}.pb-photo img{transition:none;}}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
+  <div class="search-bar">
+    <input class="search-input" type="search" aria-label="Search Dopazon" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')location='shop.html?q='+encodeURIComponent(this.value)">
+    <button class="search-btn" aria-label="Search" onclick="location='shop.html?q='+encodeURIComponent(document.getElementById('searchInput').value)"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists</strong></a>
+  <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
+</header>
+
+<main class="pb" id="main">
+  <div class="pb-photo">
+    <img id="pbImg" src="" alt="" width="800" height="800" fetchpriority="high">
+    <div class="pb-stamp" id="pbStamp" hidden>ORDERED</div>
+  </div>
+
+  <div>
+    <section id="pbPitch" aria-labelledby="pbTitle">
+      <p class="pb-lead">Go on. You want this.</p>
+      <h1 id="pbTitle"></h1>
+      <div class="pb-price" aria-label="">
+        <s id="pbWas"></s><strong>$0</strong>
+      </div>
+      <button type="button" class="pb-buy" id="pbBuy">Buy it for $0</button>
+      <button type="button" class="pb-next" id="pbNext">Not tempted? Show me something else</button>
+      <p class="pb-fine">Dopazon is a pretend store. One tap places a fake order. Nothing ships, nothing is charged, no account needed.</p>
+    </section>
+
+    <section class="pb-done" id="pbDone" hidden aria-live="polite" tabindex="-1">
+      <p class="big">Ordered. You didn't spend <b id="pbSaved"></b>.</p>
+      <p class="tally">Money you did not spend so far: <b id="pbTotal">$0</b></p>
+      <a class="pb-keep" id="pbKeep" href="shop.html?signin=signup&amp;next=account">Keep my total with a free account</a>
+      <button type="button" class="pb-again" id="pbAgain">Tempt me again</button>
+    </section>
+  </div>
+</main>
+
+<div class="cart-toast" id="cartToast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
+<script src="shared.js"></script>
+<script src="catalog.js"></script>
+<script src="dzstore.js"></script>
+<script>
+// Temptations come from catalog.js (the one catalogue), most expensive
+// first. These ids passed a full-size brand check on 2026-10-12.
+const TEMPT_IDS = ['s9', 'sf4', 's1', 'nk2', 'sp2', 'sf3', 'nx1', 'fd3'];
+const items = TEMPT_IDS.map(dzFindProduct).filter(Boolean);
+const shortTitle = t => String(t).split(' — ')[0];
+const money = n => '$' + (Number(n) || 0).toLocaleString();
+let i = 0, user = null;
+
+function show(n, focusBuy) {
+  i = (n + items.length) % items.length;
+  const p = items[i], img = document.getElementById('pbImg');
+  img.classList.add('swap');
+  const next = new Image();
+  next.onload = next.onerror = () => { img.src = next.src; img.classList.remove('swap'); };
+  next.src = dzImg(p.img, 800, 800);
+  img.alt = shortTitle(p.title);
+  document.getElementById('pbTitle').textContent = shortTitle(p.title);
+  document.getElementById('pbWas').textContent = money(p.price);
+  document.querySelector('.pb-price').setAttribute('aria-label', `Was ${money(p.price)}, now $0`);
+  document.getElementById('pbStamp').hidden = true;
+  document.getElementById('pbPitch').hidden = false;
+  document.getElementById('pbDone').hidden = true;
+  if (focusBuy) document.getElementById('pbBuy').focus();
+}
+
+async function buy() {
+  const p = items[i];
+  // Same order shape as the shop checkout, so account/orders show it and
+  // the first sign-in moves it to the account.
+  await DZ.addOrder({
+    id: 'DZ-' + Date.now().toString(36).toUpperCase(),
+    placedAt: Date.now(),
+    saved: Number(p.price) || 0,
+    items: [{ id: p.id, title: p.title, price: p.price, emoji: p.emoji, img: p.img }]
+  });
+  const stamp = document.getElementById('pbStamp');
+  stamp.hidden = false; stamp.classList.remove('hit'); void stamp.offsetWidth; stamp.classList.add('hit');
+  document.getElementById('pbSaved').textContent = money(p.price);
+  let total = Number(p.price) || 0;
+  try { total = (await DZ.savingsSummary()).totalSaved; } catch (e) {}
+  document.getElementById('pbTotal').textContent = money(total);
+  const keep = document.getElementById('pbKeep');
+  if (user) { keep.textContent = 'See your total'; keep.href = 'account.html'; }
+  document.getElementById('pbPitch').hidden = true;
+  const done = document.getElementById('pbDone');
+  done.hidden = false; done.focus();
+}
+
+document.getElementById('pbBuy').addEventListener('click', buy);
+document.getElementById('pbNext').addEventListener('click', () => show(i + 1, true));
+document.getElementById('pbAgain').addEventListener('click', () => show(i + 1, true));
+
+show(0);
+updateCartCount();
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+DZ.init(sb).then(u => {
+  user = u;
+  if (u) document.getElementById('acctGreet').textContent = 'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+});
+</script>
+</body>
+</html>
