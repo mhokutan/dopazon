@@ -111,6 +111,17 @@
   .share-row{display:flex;gap:8px;margin-top:12px;}
   .share-small-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer;flex:1;}
   .share-small-btn:hover{background:#eee;}
+  .sticky-cta{display:none;}
+  @media(max-width:600px){
+    .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:900;background:#fff;border-top:1px solid #ddd;box-shadow:0 -2px 10px rgba(0,0,0,.12);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;}
+    .sticky-cta[hidden]{display:none;}
+    .sticky-cta-price{font-size:13px;color:#555;white-space:nowrap;}
+    .sticky-cta-price strong{color:#B12704;font-size:18px;}
+    .sticky-cta-price span{text-decoration:line-through;}
+    .sticky-cta-btn{flex:1;min-height:44px;background:#FFD814;border:1px solid #FCD200;border-radius:22px;font-size:16px;font-weight:700;color:#0F1111;cursor:pointer;}
+    body.has-sticky-cta #dz-feedback-btn{bottom:84px;}
+    body.has-sticky-cta .cart-toast{bottom:140px;}
+  }
   .amazon-upsell{margin-top:14px;padding:12px;background:#FFFBF2;border:1px solid #FF9900;border-radius:6px;text-align:center;}
   .amazon-upsell p{font-size:11px;color:#666;margin-bottom:8px;line-height:1.4;}
   .amazon-upsell a{display:block;background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:9px 12px;border-radius:20px;text-decoration:none;transition:background 0.2s;}
@@ -296,6 +307,12 @@
 
 <div class="cart-toast" id="cartToast"></div>
 
+<!-- Phones: the buy box sits far below the fold, so keep the CTA in reach. -->
+<div class="sticky-cta" id="stickyCta" hidden>
+  <div class="sticky-cta-price"><strong>FREE</strong> <span id="stickyWas"></span></div>
+  <button type="button" class="sticky-cta-btn" onclick="addToCart()">Add to Cart</button>
+</div>
+
 <script src="shared.js"></script>
 <script src="catalog.js"></script>
 <script src="dzstore.js"></script>
@@ -427,6 +444,8 @@ function renderProduct(p) {
   document.getElementById('priceWas').textContent = 'Was: $' + p.price.toLocaleString() + '.00';
   document.getElementById('priceSave').textContent = 'You save: $' + p.price.toLocaleString() + '.00 (100%)';
   document.getElementById('bbWas').textContent = 'Was: $' + p.price.toLocaleString();
+  document.getElementById('stickyWas').textContent = '$' + p.price.toLocaleString();
+  setupStickyCta();
   document.getElementById('bbSave').textContent = 'Save $' + p.price.toLocaleString() + ' (100%)';
 
   const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
@@ -522,6 +541,19 @@ function selectThumbImg(el) {
   const url = el.getAttribute('data-url') || '';
   document.getElementById('mainEmoji').innerHTML = `<img src="${escHtml(url)}" alt="${escHtml(currentProduct?.title || 'Product')}">`;
   document.querySelectorAll('.thumb').forEach(t => { t.classList.toggle('active', t === el); t.setAttribute('aria-pressed', t === el); });
+}
+
+// Show the bar only while the real Add to Cart button is off screen.
+function setupStickyCta() {
+  const bar = document.getElementById('stickyCta');
+  const main = document.querySelector('.add-cart-big');
+  if (!bar || !main || !('IntersectionObserver' in window) || bar.dataset.ready) return;
+  bar.dataset.ready = '1';
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top > 0;
+    bar.hidden = !show;
+    document.body.classList.toggle('has-sticky-cta', show && matchMedia('(max-width:600px)').matches);
+  }).observe(main);
 }
 
 function addToCart() {
