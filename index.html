@@ -19,6 +19,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.dopazon.com/">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1024&amp;q=70&amp;auto=format&amp;fit=crop" imagesrcset="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=640&amp;q=70&amp;auto=format&amp;fit=crop 640w, https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1024&amp;q=70&amp;auto=format&amp;fit=crop 1024w, https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1500&amp;q=70&amp;auto=format&amp;fit=crop 1500w" imagesizes="100vw" fetchpriority="high">
+<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7NNBGKNB3"></script>
@@ -31,7 +33,7 @@
 .hero-slide img{width:100%;height:100%;object-fit:cover;}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.55) 0%,transparent 60%);}
 .hero-content{position:absolute;top:50%;left:60px;transform:translateY(-50%);color:#fff;}
-.hero-content h1{font-size:38px;font-weight:700;margin-bottom:10px;text-shadow:1px 1px 4px rgba(0,0,0,0.6);}
+.hero-content h1,.hero-content .hero-h{font-size:38px;font-weight:700;margin-bottom:10px;text-shadow:1px 1px 4px rgba(0,0,0,0.6);}
 .hero-content p{font-size:16px;margin-bottom:18px;text-shadow:1px 1px 3px rgba(0,0,0,0.5);}
 .hero-btn{background:#FF9900;color:#0F1111;padding:11px 26px;border:none;border-radius:4px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;}
 .hero-btn:hover{background:#e88a00;}
@@ -40,8 +42,10 @@
 .hero-prev{left:0;border-radius:0 4px 4px 0;}
 .hero-next{right:0;border-radius:4px 0 0 4px;}
 .hero-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}
-.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;}
-.hero-dot.active{background:#FF9900;}
+.hero-dot{width:24px;height:24px;border:none;background:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.hero-dot::before{content:"";width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.7);box-shadow:0 0 0 1px rgba(0,0,0,.35);}
+.hero-dot.active::before{background:#FF9900;}
+.hero-pause{position:absolute;bottom:12px;right:14px;z-index:10;width:32px;height:28px;border:none;border-radius:4px;background:rgba(19,25,33,.75);color:#fff;font-size:11px;cursor:pointer;}
 
 /* ===== MAIN GRID ===== */
 .main{max-width:1500px;margin:0 auto;padding:12px 15px;}
@@ -132,7 +136,7 @@
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){.widget-grid{grid-template-columns:repeat(2,1fr);}.banner-strip{grid-template-columns:1fr;}}
-@media(max-width:600px){.widget-grid{grid-template-columns:1fr 1fr;}.hero-content{left:20px;}.hero-content h1{font-size:24px;}.hero-content p{font-size:13px;display:none;}.widget-img-grid img{height:80px;}.banner-card{height:140px;}}
+@media(max-width:600px){.widget-grid{grid-template-columns:1fr 1fr;}.hero-content{left:20px;}.hero-content h1,.hero-content .hero-h{font-size:24px;}.hero-content p{font-size:13px;display:none;}.widget-img-grid img{height:80px;}.banner-card{height:140px;}}
 </style>
 </head>
 <body>
@@ -199,7 +203,7 @@
 <div class="hero">
   <div class="hero-slides" id="heroSlides">
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1500&q=80" alt="Shop Everything">
+      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1024&amp;q=70&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=640&amp;q=70&amp;auto=format&amp;fit=crop 640w, https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1024&amp;q=70&amp;auto=format&amp;fit=crop 1024w, https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1500&amp;q=70&amp;auto=format&amp;fit=crop 1500w" sizes="100vw" alt="" width="1500" height="500" fetchpriority="high">
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1>Shop Everything.<br>Pay Nothing.</h1>
@@ -208,36 +212,37 @@
       </div>
     </div>
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1500&q=80" alt="Fashion">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1024&amp;q=70&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=640&amp;q=70&amp;auto=format&amp;fit=crop 640w, https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1024&amp;q=70&amp;auto=format&amp;fit=crop 1024w, https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1500&amp;q=70&amp;auto=format&amp;fit=crop 1500w" sizes="100vw" alt="" width="1500" height="500" loading="lazy">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <h1>New Season.<br>Zero Dollars.</h1>
-        <p>Top fashion brands — all free, all the time</p>
+        <h2 class="hero-h">New Season.<br>Zero Dollars.</h2>
+        <p>Every look you have been eyeing — all free, all the time</p>
         <a href="shop.html?cat=fashion" class="hero-btn">Shop Fashion →</a>
       </div>
     </div>
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1500&q=80" alt="Electronics">
+      <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1024&amp;q=70&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=640&amp;q=70&amp;auto=format&amp;fit=crop 640w, https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1024&amp;q=70&amp;auto=format&amp;fit=crop 1024w, https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1500&amp;q=70&amp;auto=format&amp;fit=crop 1500w" sizes="100vw" alt="" width="1500" height="500" loading="lazy">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <h1>Best Gadgets.<br>Free Forever.</h1>
+        <h2 class="hero-h">Best Gadgets.<br>Free Forever.</h2>
         <p>Phones, laptops, headphones — add them all</p>
         <a href="shop.html?cat=electronics" class="hero-btn">Shop Electronics →</a>
       </div>
     </div>
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1500&q=80" alt="Sports">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1024&amp;q=70&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=640&amp;q=70&amp;auto=format&amp;fit=crop 640w, https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1024&amp;q=70&amp;auto=format&amp;fit=crop 1024w, https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1500&amp;q=70&amp;auto=format&amp;fit=crop 1500w" sizes="100vw" alt="" width="1500" height="500" loading="lazy">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <h1>Train Like a Pro.<br>$0 Budget.</h1>
+        <h2 class="hero-h">Train Like a Pro.<br>$0 Budget.</h2>
         <p>Premium sports & fitness gear — fake price, real dopamine</p>
         <a href="shop.html?cat=sports" class="hero-btn">Shop Sports →</a>
       </div>
     </div>
   </div>
-  <button class="hero-arrow hero-prev" onclick="slideHero(-1)">❮</button>
-  <button class="hero-arrow hero-next" onclick="slideHero(1)">❯</button>
+  <button type="button" class="hero-arrow hero-prev" onclick="slideHero(-1)" aria-label="Previous slide">❮</button>
+  <button type="button" class="hero-arrow hero-next" onclick="slideHero(1)" aria-label="Next slide">❯</button>
   <div class="hero-dots" id="heroDots"></div>
+  <button type="button" class="hero-pause" id="heroPause" onclick="toggleHeroPause()" aria-label="Pause slideshow">❚❚</button>
 </div>
 
 <!-- MAIN -->
@@ -273,9 +278,9 @@
     <a href="shop.html">See all deals →</a>
   </div>
   <div class="hscroll-wrap">
-    <button class="hscroll-btn hscroll-prev" onclick="scroll('bestScroll',-1)">❮</button>
+    <button class="hscroll-btn hscroll-prev" onclick="scroll('bestScroll',-1)" aria-label="Scroll best sellers left">❮</button>
     <div class="hscroll" id="bestScroll"></div>
-    <button class="hscroll-btn hscroll-next" onclick="scroll('bestScroll',1)">❯</button>
+    <button class="hscroll-btn hscroll-next" onclick="scroll('bestScroll',1)" aria-label="Scroll best sellers right">❯</button>
   </div>
 
   <!-- ROW 3: 4-col second batch widgets -->
@@ -322,9 +327,9 @@
     <a href="shop.html">See more →</a>
   </div>
   <div class="hscroll-wrap">
-    <button class="hscroll-btn hscroll-prev" onclick="scroll('newScroll',-1)">❮</button>
+    <button class="hscroll-btn hscroll-prev" onclick="scroll('newScroll',-1)" aria-label="Scroll new arrivals left">❮</button>
     <div class="hscroll" id="newScroll"></div>
-    <button class="hscroll-btn hscroll-next" onclick="scroll('newScroll',1)">❯</button>
+    <button class="hscroll-btn hscroll-next" onclick="scroll('newScroll',1)" aria-label="Scroll new arrivals right">❯</button>
   </div>
 
   <!-- DOPAZON SERVICES -->
@@ -485,17 +490,37 @@ function scroll(id, dir){
 
 // Hero
 let slide=0,heroTimer;
-function slideHero(dir){
+// Auto-advance pauses on hover/focus, can be paused by button, and never
+// starts for prefers-reduced-motion (WCAG 2.2.2). Hidden slides are inert so
+// Tab never lands on an invisible link.
+let heroPaused=false, heroHover=false;
+function showHero(n){
   const slides=document.querySelectorAll('.hero-slide');
-  slide=(slide+dir+slides.length)%slides.length;
+  slide=(n+slides.length)%slides.length;
   document.getElementById('heroSlides').style.transform=`translateX(-${slide*100}%)`;
-  document.querySelectorAll('.hero-dot').forEach((d,i)=>d.classList.toggle('active',i===slide));
-  clearInterval(heroTimer); heroTimer=setInterval(()=>slideHero(1),5000);
+  slides.forEach((s,i)=>{ s.inert = i!==slide; s.setAttribute('aria-hidden', i===slide?'false':'true'); });
+  document.querySelectorAll('.hero-dot').forEach((d,i)=>{ d.classList.toggle('active',i===slide); d.setAttribute('aria-current', i===slide?'true':'false'); });
+}
+function slideHero(dir){ showHero(slide+dir); restartHeroTimer(); }
+function goHero(i){ showHero(i); restartHeroTimer(); }
+function restartHeroTimer(){
+  clearInterval(heroTimer);
+  if(heroPaused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  heroTimer=setInterval(()=>{ if(!heroHover) showHero(slide+1); },6000);
+}
+function toggleHeroPause(){
+  heroPaused=!heroPaused;
+  const b=document.getElementById('heroPause');
+  b.textContent=heroPaused?'▶':'❚❚'; b.setAttribute('aria-label', heroPaused?'Play slideshow':'Pause slideshow');
+  restartHeroTimer();
 }
 function startHeroAuto(){
   const slides=document.querySelectorAll('.hero-slide');
-  document.getElementById('heroDots').innerHTML=[...slides].map((_,i)=>`<div class="hero-dot${i===0?' active':''}" onclick="slideHero(${i-slide})"></div>`).join('');
-  heroTimer=setInterval(()=>slideHero(1),5000);
+  document.getElementById('heroDots').innerHTML=[...slides].map((_,i)=>`<button type="button" class="hero-dot${i===0?' active':''}" onclick="goHero(${i})" aria-label="Show slide ${i+1} of ${slides.length}"></button>`).join('');
+  const hero=document.querySelector('.hero');
+  hero.addEventListener('mouseenter',()=>heroHover=true); hero.addEventListener('mouseleave',()=>heroHover=false);
+  hero.addEventListener('focusin',()=>heroHover=true); hero.addEventListener('focusout',()=>heroHover=false);
+  showHero(0); restartHeroTimer();
 }
 
 // Timer
