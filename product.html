@@ -126,7 +126,7 @@
   .amazon-upsell p{font-size:11px;color:#666;margin-bottom:8px;line-height:1.4;}
   .amazon-upsell a{display:block;background:#FF9900;color:#0F1111;font-weight:700;font-size:13px;padding:9px 12px;border-radius:20px;text-decoration:none;transition:background 0.2s;}
   .amazon-upsell a:hover{background:#e88a00;}
-  .amazon-upsell .amz-logo{font-size:11px;color:#888;margin-top:6px;}
+  .amazon-upsell .amz-logo{font-size:11px;color:#565959;margin-top:6px;}
   /* Related */
   .related-section{background:#fff;border-radius:4px;padding:20px;margin-top:15px;}
   .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
@@ -236,6 +236,7 @@
          style="background:#FFD814;color:#0F1111;font-weight:700;font-size:14px;padding:10px 20px;border-radius:20px;text-decoration:none;white-space:nowrap;flex-shrink:0;">
         Shop on Amazon →
       </a>
+      <p class="aff-note" style="flex-basis:100%;font-size:11px;color:#C9CED4;margin:0;">Affiliate link: As an Amazon Associate, Dopazon earns from qualifying purchases. Dopazon is a parody and is not affiliated with or endorsed by Amazon.</p>
     </div>
   </div>
 
@@ -272,7 +273,7 @@
     <div class="amazon-upsell" id="amazonUpsell" style="display:none;">
       <p>Want to actually buy something like this?<br>Check similar products on Amazon 👇</p>
       <a id="amazonLink" href="#" target="_blank" rel="noopener sponsored">🛒 Shop on Amazon →</a>
-      <div class="amz-logo">amazon.com — dopazon-20</div>
+      <div class="amz-logo">Affiliate link. As an Amazon Associate, Dopazon earns from qualifying purchases.</div>
     </div>
   </div>
 </div>
@@ -574,7 +575,7 @@ function vote(type) {
   const kw = AMAZON_SEARCH[currentProduct?.id] || CATEGORY_SEARCH[currentProduct?.category] || 'trending+products';
   const url = `https://www.amazon.com/s?k=${kw}&tag=${AMAZON_TAG}`;
   const msgs = {
-    yes: `👍 Noted! Then <a href="${url}" target="_blank" rel="noopener sponsored" data-placement="vote_yes" data-item-id="${escHtml(currentProduct?.id||'')}" data-item-name="${escHtml(currentProduct?.title||'')}" style="color:#C7511F;font-weight:700;">Shop the real thing on Amazon →</a>`,
+    yes: `👍 Noted! Then <small style="display:block;color:#565959;font-size:11px;margin-bottom:4px;">Affiliate link: as an Amazon Associate, Dopazon earns from qualifying purchases.</small><a href="${url}" target="_blank" rel="noopener sponsored" data-placement="vote_yes" data-item-id="${escHtml(currentProduct?.id||'')}" data-item-name="${escHtml(currentProduct?.title||'')}" style="color:#C7511F;font-weight:700;">Shop the real thing on Amazon →</a>`,
     no: '👎 Smart move keeping your money.',
     maybe: '🤔 Fair enough — keeping it on the wishlist.'
   };
