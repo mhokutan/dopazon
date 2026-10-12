@@ -125,7 +125,7 @@
 .modal h2{font-size:20px;margin-bottom:15px;}
 .user-menu{position:relative;}
 .user-dropdown{display:none;position:absolute;top:100%;right:0;background:#fff;border:1px solid #ddd;border-radius:4px;min-width:220px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:150;padding:15px;}
-.user-menu:hover .user-dropdown{display:block;}
+.user-menu:hover .user-dropdown,.user-menu:focus-within .user-dropdown{display:block;}
 .user-dropdown a{display:block;color:#0F1111;text-decoration:none;font-size:13px;padding:5px 0;border-bottom:1px solid #eee;}
 .user-dropdown a:last-child{border:none;}
 .user-dropdown a:hover{color:#C7511F;}
@@ -150,7 +150,7 @@
     <button class="search-btn" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
   <div class="user-menu">
-    <a href="account.html" class="header-link" id="accountBtn">
+    <a href="account.html" class="header-link acct-link" id="accountBtn">
       <span id="accountGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong>
     </a>
     <div class="user-dropdown">

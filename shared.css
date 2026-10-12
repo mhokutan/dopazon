@@ -48,6 +48,14 @@ body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
   .cart-link{order:2;margin-left:auto;}
   .deliver{display:none;}
   .header-link{display:none;}
+  /* keep a way to sign in / reach the account on phones */
+  .user-menu{order:2;margin-left:auto;}
+  .user-menu .user-dropdown{display:none !important;}
+  .header-link.acct-link{display:block;order:2;margin-left:auto;padding:4px;}
+  .user-menu .header-link.acct-link{margin-left:0;}
+  .header-link.acct-link strong{display:none;}
+  .header-link.acct-link span{font-size:13px;}
+  .cart-link{margin-left:0;}
 }
 
 /* ===== SPINNER ===== */
