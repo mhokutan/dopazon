@@ -58,7 +58,7 @@ function imgFallback(el){
 
 function launchConfetti(){
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const colors=['#FF9900','#FFD814','#00A8E0','#CC0C39','#067D62','#fff'];
+  const colors=['#A98BFF','#FF4F8B','#00A8E0','#C8104F','#0B8A5F','#fff'];
   for(let i=0;i<30;i++){
     const c=document.createElement('div');
     c.className='confetti-piece';
@@ -131,26 +131,26 @@ function updateCartCount(){
 (function injectFeedbackWidget(){
   const style=document.createElement('style');
   style.textContent=`
-    #dz-feedback-btn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#131921;color:#FF9900;border:none;border-radius:50px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.35);display:flex;align-items:center;gap:6px;transition:transform 0.15s;}
+    #dz-feedback-btn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#1C1433;color:#A98BFF;border:none;border-radius:50px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.35);display:flex;align-items:center;gap:6px;transition:transform 0.15s;}
     #dz-feedback-btn:hover{transform:scale(1.06);background:#1a252f;}
     /* phones: a small round button so it does not cover prices and buttons */
     @media(max-width:600px){#dz-feedback-btn{bottom:14px;right:12px;width:44px;height:44px;padding:0;justify-content:center;font-size:20px;opacity:.92;}#dz-feedback-btn .dz-fb-label{display:none;}}
     #dz-fb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;}
     #dz-fb-overlay.open{display:flex;}
     #dz-fb-modal{background:#fff;border-radius:8px;padding:28px;width:100%;max-width:420px;margin:16px;box-shadow:0 8px 40px rgba(0,0,0,0.25);}
-    #dz-fb-modal h2{font-size:18px;font-weight:700;margin-bottom:4px;color:#131921;}
+    #dz-fb-modal h2{font-size:18px;font-weight:700;margin-bottom:4px;color:#1C1433;}
     #dz-fb-modal p{font-size:13px;color:#555;margin-bottom:16px;}
     .dz-tab-row{display:flex;gap:0;margin-bottom:18px;border:1px solid #ddd;border-radius:6px;overflow:hidden;}
     .dz-tab{flex:1;padding:9px;font-size:13px;font-weight:600;cursor:pointer;background:#f7f7f7;border:none;transition:background 0.15s;}
-    .dz-tab.active{background:#131921;color:#FF9900;}
+    .dz-tab.active{background:#1C1433;color:#A98BFF;}
     .dz-stars{display:flex;gap:6px;margin-bottom:14px;}
     .dz-star{font-size:28px;cursor:pointer;color:#ddd;transition:color 0.1s;background:none;border:none;padding:0 2px;line-height:1;}
-    .dz-star.lit{color:#FF9900;}
+    .dz-star.lit{color:#A98BFF;}
     #dz-fb-modal textarea,#dz-fb-modal input,#dz-fb-modal select{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:10px;resize:vertical;}
     #dz-fb-modal textarea{height:90px;}
-    #dz-fb-submit{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;}
-    #dz-fb-submit:hover{background:#F7CA00;}
-    #dz-fb-cancel{width:100%;background:none;border:none;color:#007185;font-size:13px;cursor:pointer;margin-top:8px;padding:4px;}
+    #dz-fb-submit{width:100%;background:#FF4F8B;border:1px solid #F0397A;border-radius:4px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;}
+    #dz-fb-submit:hover{background:#F0397A;}
+    #dz-fb-cancel{width:100%;background:none;border:none;color:#5B3FD0;font-size:13px;cursor:pointer;margin-top:8px;padding:4px;}
     #dz-fb-success{text-align:center;padding:20px 0;display:none;}
     #dz-fb-success .dz-big-check{font-size:52px;margin-bottom:10px;}
   `;
@@ -193,7 +193,7 @@ function updateCartCount(){
           <textarea id="dz-sg-reason" aria-label="Why should Dopazon carry this" maxlength="1000" placeholder="Why should Dopazon carry this? (optional)"></textarea>
         </div>
 
-        <div id="dz-fb-err" role="alert" style="display:none;color:#CC0C39;font-size:13px;margin-bottom:8px;"></div>
+        <div id="dz-fb-err" role="alert" style="display:none;color:#C8104F;font-size:13px;margin-bottom:8px;"></div>
         <div id="dz-fb-success" role="status">
           <div class="dz-big-check">🎉</div>
           <strong style="font-size:16px;">Thanks! We got it.</strong>
@@ -276,7 +276,7 @@ async function dzSubmitFeedback(){
       const msg=document.getElementById('dz-fb-msg').value.trim();
       if(!msg){
         btn.textContent='Send →';btn.disabled=false;
-        document.getElementById('dz-fb-msg').style.borderColor='#CC0C39';
+        document.getElementById('dz-fb-msg').style.borderColor='#C8104F';
         document.getElementById('dz-fb-msg').placeholder='Please write something first!';
         return;
       }
@@ -286,7 +286,7 @@ async function dzSubmitFeedback(){
       const name=document.getElementById('dz-sg-name').value.trim();
       if(!name){
         btn.textContent='Send →';btn.disabled=false;
-        document.getElementById('dz-sg-name').style.borderColor='#CC0C39';
+        document.getElementById('dz-sg-name').style.borderColor='#C8104F';
         document.getElementById('dz-sg-name').placeholder='Product name is required!';
         return;
       }

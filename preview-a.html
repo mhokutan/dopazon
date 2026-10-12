@@ -8,19 +8,19 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#131921">
+<meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="shared.css">
 <style>
 :root{
-  --navy:#131921;      /* site header */
-  --shelf:#EAEDED;     /* site page grey */
+  --navy:#1C1433;      /* site header */
+  --shelf:#F3F1F8;     /* site page grey */
   --paper:#FFFFFF;     /* thermal paper */
-  --ink:#0F1111;
+  --ink:#1C1433;
   --ink-soft:#565959;
-  --strike:#B12704;    /* the price you would have paid */
-  --kept:#067D62;      /* the money you keep */
-  --cta:#FFD814;
+  --strike:#C8104F;    /* the price you would have paid */
+  --kept:#0B8A5F;      /* the money you keep */
+  --cta:#FF4F8B;
 }
 body{background:var(--shelf);color:var(--ink);}
 .pa{max-width:1240px;margin:0 auto;padding:28px 24px 40px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:32px;align-items:start;}
@@ -39,12 +39,12 @@ body{background:var(--shelf);color:var(--ink);}
 .pa-tile .a{margin:auto 12px 12px;margin-top:auto;align-self:flex-start;font-size:13px;font-weight:700;border-radius:999px;padding:6px 14px;background:var(--cta);color:var(--ink);}
 .pa-tile[aria-pressed="true"]{border-color:var(--kept);}
 .pa-tile[aria-pressed="true"] .a{background:var(--kept);color:#fff;}
-.pa-more{display:inline-block;margin-top:16px;color:#007185;font-size:14px;}
+.pa-more{display:inline-block;margin-top:16px;color:#5B3FD0;font-size:14px;}
 
 /* right: the receipt */
 .pa-receipt{position:sticky;top:16px;}
 .paper{background:var(--paper);padding:22px 22px 30px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;font-size:14px;line-height:1.5;color:var(--ink);
-  box-shadow:0 1px 0 #D5D9D9,0 12px 30px rgba(15,17,17,.12);
+  box-shadow:0 1px 0 #D5D9D9,0 12px 30px rgba(28,20,51,.12);
   /* torn bottom edge */
   -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 10px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 10px repeat-x;
           mask:linear-gradient(#000 0 0) top/100% calc(100% - 10px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 10px repeat-x;}
@@ -61,7 +61,7 @@ body{background:var(--shelf);color:var(--ink);}
 .r-row{display:flex;justify-content:space-between;}
 .r-row.charged{font-weight:700;}
 .r-row.kept{font-weight:700;color:var(--kept);font-size:20px;margin-top:6px;}
-.r-cta{display:block;text-align:center;margin-top:18px;background:var(--cta);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:700;font-size:17px;padding:14px;border-radius:999px;text-decoration:none;border:1px solid #FCD200;}
+.r-cta{display:block;text-align:center;margin-top:18px;background:var(--cta);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:700;font-size:17px;padding:14px;border-radius:999px;text-decoration:none;border:1px solid #F0397A;}
 .r-cta[aria-disabled="true"]{background:#F0F2F2;border-color:#D5D9D9;color:var(--ink-soft);pointer-events:none;}
 .r-fine{text-align:center;font-size:12px;color:var(--ink-soft);margin-top:10px;}
 
@@ -87,9 +87,9 @@ body{background:var(--shelf);color:var(--ink);}
   <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
   <div class="search-bar">
     <input class="search-input" type="search" aria-label="Search Dopazon" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')location='shop.html?q='+encodeURIComponent(this.value)">
-    <button class="search-btn" aria-label="Search" onclick="location='shop.html?q='+encodeURIComponent(document.getElementById('searchInput').value)"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <button class="search-btn" aria-label="Search" onclick="location='shop.html?q='+encodeURIComponent(document.getElementById('searchInput').value)"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1433" stroke-width="2.5" stroke-linecap="round" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists</strong></a>
+  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Sign in</span><strong>Your stuff</strong></a>
   <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
@@ -192,7 +192,7 @@ try {
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   sb.auth.getSession().then(({ data: { session } }) => {
     const u = session?.user; if (!u) return;
-    document.getElementById('acctGreet').textContent = 'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+    document.getElementById('acctGreet').textContent = 'Hi, ' + (u.user_metadata?.name || u.email.split('@')[0]);
   });
 } catch (e) {}
 </script>

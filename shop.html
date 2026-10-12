@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#131921">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://www.dopazon.com/shop">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dopazon">
@@ -25,64 +25,64 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   .breadcrumb{background:#fff;padding:8px 15px;font-size:13px;color:#555;}
-  .breadcrumb a{color:#007185;text-decoration:none;}
+  .breadcrumb a{color:#5B3FD0;text-decoration:none;}
   .shop-layout{display:grid;grid-template-columns:230px 1fr;gap:20px;max-width:1500px;margin:15px auto;padding:0 15px;}
-  .sidebar{background:#fff;border-radius:4px;padding:15px;height:fit-content;position:sticky;top:80px;}
+  .sidebar{background:#fff;border-radius:16px;padding:15px;height:fit-content;position:sticky;top:80px;}
   .sidebar h3{font-size:16px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd;}
   .filter-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #eee;}
   .filter-section h4{font-size:13px;font-weight:700;margin-bottom:8px;}
   .filter-option{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;font-size:13px;}
-  .filter-option input{cursor:pointer;accent-color:#FF9900;}
-  .results-header{background:#fff;padding:10px 15px;border-radius:4px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .filter-option input{cursor:pointer;accent-color:#A98BFF;}
+  .results-header{background:#fff;padding:10px 15px;border-radius:16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
   .results-count{font-size:14px;color:#555;}
-  .results-count strong{color:#C7511F;}
+  .results-count strong{color:#4A2FB8;}
   .sort-select{border:1px solid #aaa;border-radius:4px;padding:6px 10px;font-size:13px;cursor:pointer;outline:none;}
   .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;}
-  .product-card{background:#fff;padding:14px;border-radius:4px;cursor:pointer;transition:box-shadow 0.2s;position:relative;}
+  .product-card{background:#fff;padding:14px;border-radius:16px;cursor:pointer;transition:box-shadow 0.2s;position:relative;}
   .product-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
   .badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;color:#fff;}
-  .badge-sale{background:#CC0C39;}.badge-prime{background:#007185;}.badge-hot{background:#C7511F;}
+  .badge-sale{background:#C8104F;}.badge-prime{background:#5B3FD0;}.badge-hot{background:#4A2FB8;}
   .product-img{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:10px;}
   .product-title{font-size:13px;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .stars{color:#FF9900;font-size:13px;margin-bottom:4px;}
-  .review-count{color:#007185;font-size:12px;}
+  .stars{color:#A98BFF;font-size:13px;margin-bottom:4px;}
+  .review-count{color:#5B3FD0;font-size:12px;}
   .price-original{text-decoration:line-through;color:#565959;font-size:12px;}
-  .price-free{color:#CC0C39;font-weight:700;font-size:20px;}
-  .price-saved{color:#CC0C39;font-size:12px;margin-bottom:6px;}
-  .prime-badge{color:#007185;font-size:12px;font-weight:700;margin-bottom:8px;}
-  .add-cart-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;}
-  .add-cart-btn:hover{background:#F7CA00;}
-  .buy-now-btn{width:100%;background:#FF9900;border:1px solid #FF8F00;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;margin-top:5px;}
+  .price-free{color:#C8104F;font-weight:700;font-size:20px;}
+  .price-saved{color:#C8104F;font-size:12px;margin-bottom:6px;}
+  .prime-badge{color:#5B3FD0;font-size:12px;font-weight:700;margin-bottom:8px;}
+  .add-cart-btn{width:100%;background:#FF4F8B;border:1px solid #F0397A;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;}
+  .add-cart-btn:hover{background:#F0397A;}
+  .buy-now-btn{width:100%;background:#A98BFF;border:1px solid #9677FF;border-radius:20px;padding:7px;font-size:13px;cursor:pointer;margin-top:5px;}
   /* Checkout panel */
   .checkout-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-start;justify-content:flex-end;}
   .checkout-overlay.active{display:flex;}
   .checkout-panel{background:#fff;width:420px;height:100vh;overflow-y:auto;padding:20px;}
-  .checkout-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid #FF9900;}
+  .checkout-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid #A98BFF;}
   .checkout-close{background:none;border:none;font-size:24px;cursor:pointer;color:#555;}
   .cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eee;align-items:center;}
   .cart-item-emoji{font-size:40px;}
   .cart-item-info{flex:1;}
   .cart-item-title{font-size:13px;font-weight:500;margin-bottom:4px;}
-  .cart-item-price{color:#CC0C39;font-weight:700;}
-  .cart-item-remove{background:none;border:none;color:#CC0C39;cursor:pointer;font-size:18px;}
-  .order-total{background:#EAEDED;padding:15px;border-radius:4px;margin:15px 0;}
+  .cart-item-price{color:#C8104F;font-weight:700;}
+  .cart-item-remove{background:none;border:none;color:#C8104F;cursor:pointer;font-size:18px;}
+  .order-total{background:#F3F1F8;padding:15px;border-radius:4px;margin:15px 0;}
   .order-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;}
   .order-row.total{font-weight:700;font-size:18px;padding-top:8px;border-top:1px solid #aaa;margin-top:8px;}
-  .place-order-btn{width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:14px;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:10px;}
-  .place-order-btn:hover{background:#F7CA00;}
+  .place-order-btn{width:100%;background:#FF4F8B;border:1px solid #F0397A;border-radius:4px;padding:14px;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+  .place-order-btn:hover{background:#F0397A;}
   .order-confirm{text-align:center;padding:30px 20px;}
   .tracking-step{display:flex;gap:12px;margin-bottom:15px;align-items:flex-start;}
   .conf-ask-btn{flex:1;min-height:40px;background:#fff;border:1px solid #888;border-radius:20px;font-size:14px;cursor:pointer;}
   .conf-ask-btn:hover{background:#F7F7F7;}.conf-ask-btn:disabled{opacity:.6;cursor:default;}
   .tracking-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:2px;}
-  .tracking-dot.done{background:#067D62;}.tracking-dot.active{background:#FF9900;animation:pulse 1.5s infinite;}.tracking-dot.pending{background:#ddd;}
+  .tracking-dot.done{background:#0B8A5F;}.tracking-dot.active{background:#A98BFF;animation:pulse 1.5s infinite;}.tracking-dot.pending{background:#ddd;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
-  .my-store-btn{width:100%;background:#131921;color:#FF9900;border:none;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:15px;}
+  .my-store-btn{width:100%;background:#1C1433;color:#A98BFF;border:none;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:15px;}
   .store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:15px;}
   .store-card{background:#fff;border:1px solid #ddd;border-radius:4px;padding:14px;cursor:pointer;}
-  .store-card:hover{border-color:#FF9900;}
-  .trademark-warn{color:#CC0C39;font-size:12px;margin-top:4px;display:none;}
-  .error-msg{color:#CC0C39;font-size:12px;margin-top:6px;display:none;}
+  .store-card:hover{border-color:#A98BFF;}
+  .trademark-warn{color:#C8104F;font-size:12px;margin-top:4px;display:none;}
+  .error-msg{color:#C8104F;font-size:12px;margin-top:6px;display:none;}
   /* Reserve room until the first render so the pager/footer do not jump. */
   .product-grid:empty{min-height:150vh;}
   .pager:empty{display:none;}
@@ -90,8 +90,8 @@
   .pager-info{font-size:13px;color:#555;}
   .pager-btns{display:flex;gap:6px;flex-wrap:wrap;}
   .pager-btn{background:#fff;border:1px solid #ccc;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;min-width:38px;}
-  .pager-btn:hover:not(:disabled){border-color:#FF9900;background:#FFF8EE;}
-  .pager-btn.active{background:#232F3E;border-color:#232F3E;color:#fff;font-weight:700;}
+  .pager-btn:hover:not(:disabled){border-color:#A98BFF;background:#FFF0F6;}
+  .pager-btn.active{background:#2B2147;border-color:#2B2147;color:#fff;font-weight:700;}
   .pager-btn:disabled{opacity:0.45;cursor:not-allowed;}
   .pager-gap{align-self:center;color:#888;}
   @media(max-width:768px){.shop-layout{grid-template-columns:1fr;}.sidebar{display:none;}.pager{justify-content:center;}}
@@ -101,10 +101,9 @@
 
 <header id="header">
   <a href="index.html" class="logo"><div class="logo-text">dopa<span>zon</span></div><div class="logo-sub">.com</div></a>
-  <div class="deliver"><span>📍 Deliver to</span><strong>United States</strong></div>
   <div class="search-bar">
     <select class="search-select" id="catFilter" aria-label="Search in department">
-      <option value="">All Departments</option>
+      <option value="">All categories</option>
       <option value="fashion">Fashion</option>
       <option value="electronics">Electronics</option>
       <option value="beauty">Beauty</option>
@@ -127,15 +126,15 @@
       <option value="art">Arts & Crafts</option>
     </select>
     <input class="search-input" type="search" aria-label="Search Dopazon" placeholder="Search Dopazon" id="searchInput" onkeydown="if(event.key==='Enter')doSearch()">
-    <button class="search-btn" aria-label="Search" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <button class="search-btn" aria-label="Search" onclick="doSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1433" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="account.html" class="header-link acct-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
-  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="account.html" class="header-link acct-link" id="acctBtn" onclick="handleAcctClick(event)"><span id="acctGreet">Sign in</span><strong>Your stuff</strong></a>
+  <a href="confessions.html" class="header-link"><span>Read the</span><strong>Confessions</strong></a>
   <a href="shop.html?cart=1" class="cart-link" onclick="openCheckout(event)"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
-  <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="index.html" class="nav-link" style="font-weight:700;">✨ Everything</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="#" class="nav-link" onclick="filterCat('fashion',event)">Fashion</a>
   <a href="#" class="nav-link" onclick="filterCat('electronics',event)">Electronics</a>
@@ -151,13 +150,13 @@
   <a href="confessions.html" class="nav-link">Confessions</a>
 </nav>
 
-<div class="breadcrumb"><a href="index.html">Dopazon</a> › <span id="breadcrumbCat">All Departments</span></div>
+<div class="breadcrumb"><a href="index.html">Dopazon</a> › <span id="breadcrumbCat">All categories</span></div>
 
 <div class="shop-layout">
   <aside class="sidebar">
     <h3>🛍️ Department</h3>
     <div class="filter-section">
-      <label class="filter-option"><input type="radio" name="cat" value="" checked onchange="filterCat('')"> All Departments</label>
+      <label class="filter-option"><input type="radio" name="cat" value="" checked onchange="filterCat('')"> All categories</label>
       <label class="filter-option"><input type="radio" name="cat" value="fashion" onchange="filterCat('fashion')"> 👗 Fashion</label>
       <label class="filter-option"><input type="radio" name="cat" value="electronics" onchange="filterCat('electronics')"> 📱 Electronics</label>
       <label class="filter-option"><input type="radio" name="cat" value="beauty" onchange="filterCat('beauty')"> 💄 Beauty</label>
@@ -181,10 +180,10 @@
     </div>
     <div class="filter-section">
       <h4>💰 Price</h4>
-      <div style="background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;text-align:center;font-size:14px;color:#067D62;font-weight:700;">Every item is FREE<br><span style="font-size:11px;font-weight:400;color:#555;">No credit card needed</span></div>
+      <div style="background:#E7F4E8;border:1px solid #0B8A5F;border-radius:4px;padding:10px;text-align:center;font-size:14px;color:#0B8A5F;font-weight:700;">Every item is FREE<br><span style="font-size:11px;font-weight:400;color:#555;">No credit card needed</span></div>
     </div>
     <button class="my-store-btn" onclick="openStoreModal()">🏪 Open My Store</button>
-    <button class="my-store-btn" style="margin-top:8px;background:#FF9900;color:#131921;" onclick="dzSwitchTab('suggest',document.querySelectorAll('.dz-tab')[1]);document.getElementById('dz-fb-overlay').classList.add('open')">💡 Suggest a Product</button>
+    <button class="my-store-btn" style="margin-top:8px;background:#A98BFF;color:#1C1433;" onclick="dzSwitchTab('suggest',document.querySelectorAll('.dz-tab')[1]);document.getElementById('dz-fb-overlay').classList.add('open')">💡 Suggest a Product</button>
   </aside>
 
   <main>
@@ -229,9 +228,9 @@
     <div class="form-group" id="nameGroup" style="display:none"><label for="authName">Name</label><input type="text" id="authName" autocomplete="given-name" maxlength="80" placeholder="First name"></div>
     <div class="form-group"><label for="authPass">Password</label><input type="password" id="authPass" autocomplete="current-password" placeholder="At least 6 characters"></div>
     <div class="error-msg" id="authError" role="alert" style="display:none;"></div>
-    <div id="authInfo" role="status" style="display:none;background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;font-size:13px;color:#0F1111;margin-bottom:10px;"></div>
+    <div id="authInfo" role="status" style="display:none;background:#E7F4E8;border:1px solid #0B8A5F;border-radius:4px;padding:10px;font-size:13px;color:#1C1433;margin-bottom:10px;"></div>
     <button type="submit" class="form-submit" id="authSubmitBtn">Sign in</button>
-    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="event.preventDefault();toggleAuthMode()" style="color:#007185;">Create account</a></div>
+    <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="event.preventDefault();toggleAuthMode()" style="color:#5B3FD0;">Create account</a></div>
   </form>
 </div>
 
@@ -309,7 +308,7 @@ sb.auth.onAuthStateChange((_e, session) => {
 function updateCartCount() { document.getElementById('cartCount').textContent = cart.length; }
 function updateUserUI() {
   const name = currentUser?.user_metadata?.name || currentUser?.email?.split('@')[0];
-  document.getElementById('acctGreet').textContent = currentUser ? 'Hello, ' + name : 'Hello, sign in';
+  document.getElementById('acctGreet').textContent = currentUser ? 'Hi, ' + name : 'Sign in';
 }
 function handleAcctClick(e) { if (!currentUser) { e.preventDefault(); openAuth('login'); } }
 
@@ -334,7 +333,7 @@ async function loadDBData() {
 
 function syncCatUI(cat) {
   currentCat = cat;
-  document.getElementById('breadcrumbCat').textContent = cat ? cat.charAt(0).toUpperCase()+cat.slice(1) : 'All Departments';
+  document.getElementById('breadcrumbCat').textContent = cat ? cat.charAt(0).toUpperCase()+cat.slice(1) : 'All categories';
   document.querySelectorAll('input[name="cat"]').forEach(r => r.checked = r.value === cat);
 }
 
@@ -380,7 +379,7 @@ function renderProducts(searchQ, keepPage) {
     const i = start + pi;   // index into _renderedProducts, so addToCart stays correct
     return `
     <div class="product-card" onclick="window.location='product.html?id=${encodeURIComponent(p.id)}'" style="cursor:pointer;">
-      ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">DopePrime</div>'}
+      ${i%5===0?'<div class="badge badge-sale">SALE</div>':i%3===0?'<div class="badge badge-hot">HOT</div>':'<div class="badge badge-prime">$0</div>'}
       ${p.img
         ? `<div class="product-img" style="padding:0;overflow:hidden;border-radius:4px;"><img src="${escHtml(dzImg(p.img,480,360))}" width="240" height="180" alt="" style="width:100%;height:180px;object-fit:cover;" loading="lazy" data-emoji="${escHtml(p.emoji||EMOJIS[p.category]||'📦')}" onerror="imgFallback(this)"></div>`
         : `<div class="product-img">${escHtml(p.emoji||EMOJIS[p.category]||'📦')}</div>`}
@@ -390,10 +389,10 @@ function renderProducts(searchQ, keepPage) {
       <div class="price-original">Was: $${p.price.toLocaleString()}.00</div>
       <div class="price-free">FREE</div>
       <div class="price-saved">Save $${p.price.toLocaleString()} (100%)</div>
-      <div class="prime-badge">✓ DopePrime · Free Delivery</div>
-      ${p.store_name?`<div style="font-size:11px;color:#555;margin-bottom:6px;">Sold by <strong>${escHtml(p.store_name)}</strong></div>`:''}
+      <div class="prime-badge">✓ Free fake delivery</div>
+      ${p.store_name?`<div style="font-size:11px;color:#555;margin-bottom:6px;">From <strong>${escHtml(p.store_name)}</strong></div>`:''}
       <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${i})" aria-label="Add ${escHtml(p.title)} to cart">Add to Cart</button>
-      <button class="buy-now-btn" onclick="event.stopPropagation();addToCart(${i});openCheckout()" aria-label="Buy ${escHtml(p.title)} now">Buy Now</button>
+      <button class="buy-now-btn" onclick="event.stopPropagation();addToCart(${i});openCheckout()" aria-label="Get ${escHtml(p.title)} for $0">Get it for $0</button>
     </div>`;
   }).join('');
 
@@ -466,18 +465,18 @@ function closeCheckoutIfBg(e) { if(e.target===document.getElementById('checkoutO
 function renderCheckout() {
   const panel = document.getElementById('checkoutContent');
   if (orderPlaced) return;
-  if (cart.length === 0) { panel.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:60px;">🛒</div><p style="color:#555;margin-top:10px;">Cart is empty. Go add some free stuff!</p><a href="#" onclick="closeCheckout()" style="color:#007185;">Continue Shopping</a></div>`; return; }
+  if (cart.length === 0) { panel.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:60px;">🛒</div><p style="color:#555;margin-top:10px;">Cart is empty. Go add some free stuff!</p><a href="#" onclick="closeCheckout()" style="color:#5B3FD0;">Continue Shopping</a></div>`; return; }
   const total = cart.reduce((s,p)=>s+(Number(p.price)||0),0);
   panel.innerHTML = `
     ${cart.map((p,i)=>`<div class="cart-item"><div class="cart-item-emoji">${escHtml(p.emoji||'📦')}</div><div class="cart-item-info"><div class="cart-item-title">${escHtml(p.title)}</div><div class="cart-item-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:12px;">$${escHtml(Number(p.price)||0)}</span></div></div><button class="cart-item-remove" onclick="removeCart(${i})" aria-label="Remove ${escHtml(p.title)}">🗑</button></div>`).join('')}
     <div class="order-total">
       <div class="order-row"><span>Items (${cart.length}):</span><span style="text-decoration:line-through;color:#aaa;">$${total.toLocaleString()}</span></div>
-      <div class="order-row"><span>DopePrime Savings:</span><span style="color:#067D62;">-$${total.toLocaleString()}</span></div>
-      <div class="order-row"><span>Shipping:</span><span style="color:#067D62;">FREE</span></div>
-      <div class="order-row total"><span>Total:</span><span style="color:#CC0C39;">$0.00</span></div>
+      <div class="order-row"><span>Dopamine discount:</span><span style="color:#0B8A5F;">-$${total.toLocaleString()}</span></div>
+      <div class="order-row"><span>Shipping:</span><span style="color:#0B8A5F;">FREE</span></div>
+      <div class="order-row total"><span>Total:</span><span style="color:#C8104F;">$0.00</span></div>
     </div>
     <button class="place-order-btn" onclick="placeOrder()">🛍️ Place Your Free Order</button>
-    <button onclick="clearCart()" style="width:100%;background:none;border:none;color:#CC0C39;cursor:pointer;font-size:13px;padding:8px;">Clear Cart</button>`;
+    <button onclick="clearCart()" style="width:100%;background:none;border:none;color:#C8104F;cursor:pointer;font-size:13px;padding:8px;">Clear Cart</button>`;
 }
 
 function removeCart(i) { cart.splice(i,1); localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); renderCheckout(); }
@@ -502,8 +501,8 @@ function placeOrder() {
   document.getElementById('checkoutContent').innerHTML = `
     <div class="order-confirm">
       <div style="font-size:80px;">🎉</div>
-      <h2 style="color:#067D62;margin-bottom:8px;">Order Confirmed!</h2>
-      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;"><strong style="color:#067D62;">You saved $${saved.toLocaleString()}!</strong><div id="confTotal" style="margin-top:4px;color:#0F1111;"></div></div>
+      <h2 style="color:#0B8A5F;margin-bottom:8px;">Order Confirmed!</h2>
+      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;"><strong style="color:#0B8A5F;">You saved $${saved.toLocaleString()}!</strong><div id="confTotal" style="margin-top:4px;color:#1C1433;"></div></div>
       <div id="confKeep"></div>
       <div id="confAsk" style="border:1px solid #ddd;border-radius:4px;padding:12px;margin:12px 0;">
         <div style="font-weight:700;font-size:14px;margin-bottom:8px;">Quick one: did that scratch the itch?</div>
@@ -519,10 +518,10 @@ function placeOrder() {
         <div class="tracking-step"><div class="tracking-dot active"></div><div><div style="font-weight:700;font-size:14px;">Preparing 📦</div><div style="font-size:12px;color:#555;">At warehouse</div></div></div>
         <div class="tracking-step"><div class="tracking-dot pending"></div><div><div style="font-weight:700;font-size:14px;">Out for Delivery 🚚</div><div style="font-size:12px;color:#555;">ETA ${eta}</div></div></div>
         <div class="tracking-step"><div class="tracking-dot pending"></div><div><div style="font-weight:700;font-size:14px;">Delivered! 🏠</div></div></div>
-        <div style="margin-top:10px;background:#131921;color:#FF9900;border-radius:4px;padding:10px;font-size:13px;text-align:center;font-weight:700;">🚗 Driver: Alex K. · ⭐ 4.98 · On the way</div>
+        <div style="margin-top:10px;background:#1C1433;color:#A98BFF;border-radius:4px;padding:10px;font-size:13px;text-align:center;font-weight:700;">🚗 Driver: Alex K. · ⭐ 4.98 · On the way</div>
       </div>
-      <button onclick="shareConf(${saved})" style="width:100%;background:#232F3E;color:#fff;border:none;border-radius:4px;padding:12px;font-size:14px;cursor:pointer;margin-top:15px;">💬 Share to Confession Cart</button>
-      <button onclick="orderPlaced=false;clearCart();closeCheckout();" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px;">Shop More</button>
+      <button onclick="shareConf(${saved})" style="width:100%;background:#2B2147;color:#fff;border:none;border-radius:4px;padding:12px;font-size:14px;cursor:pointer;margin-top:15px;">💬 Share to Confession Cart</button>
+      <button onclick="orderPlaced=false;clearCart();closeCheckout();" style="width:100%;background:#FF4F8B;border:1px solid #F0397A;border-radius:4px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px;">Shop More</button>
     </div>`;
   orderPlaced=true; cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); launchConfetti();
   renderConfirmTotal();
@@ -539,13 +538,13 @@ async function renderConfirmTotal() {
   const total = (Number(sum.totalSaved) || 0).toLocaleString();
   totalEl.textContent = `Money you did not spend so far: $${total} (${sum.orders} order${sum.orders===1?'':'s'})`;
   if (currentUser) {
-    keepEl.innerHTML = `<div style="font-size:13px;color:#555;margin-bottom:4px;">Saved to your account. <a href="account.html" style="color:#007185;">See your total →</a></div>`;
+    keepEl.innerHTML = `<div style="font-size:13px;color:#555;margin-bottom:4px;">Saved to your account. <a href="account.html" style="color:#5B3FD0;">See your total →</a></div>`;
   } else {
     keepEl.innerHTML = `
-      <div style="background:#FFF8E7;border:1px solid #FF9900;border-radius:4px;padding:12px;font-size:14px;">
+      <div style="background:#FFF0F6;border:1px solid #A98BFF;border-radius:4px;padding:12px;font-size:14px;">
         <div style="font-weight:700;margin-bottom:4px;">Don't lose your $${escHtml(total)}</div>
         <div style="font-size:13px;color:#555;margin-bottom:10px;">Right now it lives only in this browser. A free account keeps it on every device.</div>
-        <button type="button" onclick="openAuth('signup','Free. Keeps your $${escHtml(total)} total on every device.')" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Keep my total, create free account</button>
+        <button type="button" onclick="openAuth('signup','Free. Keeps your $${escHtml(total)} total on every device.')" style="width:100%;background:#FF4F8B;border:1px solid #F0397A;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Keep my total, create free account</button>
       </div>`;
   }
 }

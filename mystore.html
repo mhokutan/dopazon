@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#131921">
+<meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="shared.css">
 <style>
@@ -17,8 +17,8 @@
   .ms-name{font-size:19px;font-weight:700;word-break:break-word;}
   .ms-tagline{font-size:13px;color:#555;margin-top:2px;word-break:break-word;}
   .ms-actions{display:flex;gap:8px;flex-wrap:wrap;}
-  .ms-danger{border-color:#e5b3bd;color:#B12704;}
-  .ms-danger:hover{border-color:#B12704;}
+  .ms-danger{border-color:#e5b3bd;color:#C8104F;}
+  .ms-danger:hover{border-color:#C8104F;}
   .ms-sub{font-size:14px;font-weight:700;margin:18px 0 4px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
   .ms-price{font-size:13px;color:#555;}
   .ms-empty{font-size:13px;color:#777;padding:10px 0;}
@@ -29,7 +29,7 @@
   .ms-form textarea{height:70px;resize:vertical;}
   .ms-form .emoji-in{font-size:22px;text-align:center;max-width:90px;}
   .ms-form-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
-  .ms-err{color:#CC0C39;font-size:12.5px;margin-top:8px;}
+  .ms-err{color:#C8104F;font-size:12.5px;margin-top:8px;}
   .ms-note{font-size:12.5px;color:#555;margin-top:10px;}
   @media(max-width:600px){.ms-form .row{grid-template-columns:1fr;}}
 </style>
@@ -44,15 +44,15 @@
   <div class="search-bar">
     <select class="search-select" aria-label="Search in department"><option>All</option></select>
     <input class="search-input" type="search" aria-label="Search Dopazon" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
-    <button class="search-btn" aria-label="Search" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <button class="search-btn" aria-label="Search" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1433" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
-  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Sign in</span><strong>Your stuff</strong></a>
+  <a href="confessions.html" class="header-link"><span>Read the</span><strong>Confessions</strong></a>
   <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
-  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="shop.html" class="nav-link" style="font-weight:700;">✨ Everything</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="shop.html" class="nav-link">Shop</a>
   <a href="orders.html" class="nav-link">Your Orders</a>
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function load(user) {
   me = user || null;
   const greet = document.getElementById('acctGreet');
-  greet.textContent = me ? 'Hello, ' + (me.user_metadata?.name || me.email.split('@')[0]) : 'Hello, sign in';
+  greet.textContent = me ? 'Hi, ' + (me.user_metadata?.name || me.email.split('@')[0]) : 'Sign in';
   document.getElementById('msSignedOut').style.display = me ? 'none' : '';
   if (!me) {
     document.getElementById('msLoading').style.display = 'none';
@@ -182,7 +182,7 @@ function render() {
   if (stores.length) {
     html += open?.kind === 'newStore'
       ? `<div class="acct-card">${storeForm(null)}</div>`
-      : `<p class="ms-note">Your products show up in the <a href="shop.html" style="color:#007185;">shop</a> for everyone.
+      : `<p class="ms-note">Your products show up in the <a href="shop.html" style="color:#5B3FD0;">shop</a> for everyone.
          <button class="acct-btn-ghost" data-act="new-store" style="margin-left:6px;">Open another store</button></p>`;
   }
 

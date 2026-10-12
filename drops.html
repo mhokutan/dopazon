@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#131921">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://www.dopazon.com/drops">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dopazon">
@@ -24,27 +24,27 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   /* Hero */
-  .drops-hero{background:linear-gradient(135deg,#1a0a2e,#2d1b69,#131921);color:#fff;padding:30px 20px;text-align:center;}
+  .drops-hero{background:linear-gradient(135deg,#1a0a2e,#2d1b69,#1C1433);color:#fff;padding:30px 20px;text-align:center;}
   .drops-hero h1{font-size:38px;font-weight:700;margin-bottom:6px;}
-  .drops-hero h1 span{color:#FF9900;}
+  .drops-hero h1 span{color:#A98BFF;}
   .drops-hero p{color:#ccc;font-size:15px;margin-bottom:20px;}
   /* Timer bar */
-  .timer-bar{background:#CC0C39;color:#fff;text-align:center;padding:10px;font-size:16px;font-weight:700;display:flex;justify-content:center;align-items:center;gap:12px;}
-  .timer-box{background:#0F1111;padding:6px 14px;border-radius:4px;font-size:24px;font-weight:700;font-family:monospace;min-width:55px;text-align:center;}
+  .timer-bar{background:#C8104F;color:#fff;text-align:center;padding:10px;font-size:16px;font-weight:700;display:flex;justify-content:center;align-items:center;gap:12px;}
+  .timer-box{background:#1C1433;padding:6px 14px;border-radius:4px;font-size:24px;font-weight:700;font-family:monospace;min-width:55px;text-align:center;}
   .timer-sep{font-size:24px;}
   /* Streak */
-  .streak-bar{background:#fff;border-bottom:2px solid #FF9900;padding:10px 20px;display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap;}
+  .streak-bar{background:#fff;border-bottom:2px solid #A98BFF;padding:10px 20px;display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap;}
   .streak-info{font-size:14px;font-weight:700;}
   .streak-days{display:flex;gap:6px;}
   .streak-day{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:11px;}
-  .streak-day.done{background:#FF9900;border-color:#FF9900;color:#0F1111;font-weight:700;}
-  .streak-day.today{background:#232F3E;border-color:#232F3E;color:#fff;font-weight:700;}
+  .streak-day.done{background:#A98BFF;border-color:#A98BFF;color:#1C1433;font-weight:700;}
+  .streak-day.today{background:#2B2147;border-color:#2B2147;color:#fff;font-weight:700;}
   /* Main */
   .drops-main{max-width:1200px;margin:20px auto;padding:0 15px;display:grid;grid-template-columns:1fr 280px;gap:20px;}
   /* Drop cards */
   .drop-card{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:16px;display:grid;grid-template-columns:200px 1fr;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
   .drop-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);}
-  .drop-card.winner{border:3px solid #FF9900;}
+  .drop-card.winner{border:3px solid #A98BFF;}
   .drop-img{background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:90px;padding:0;overflow:hidden;}
   .drop-img img{width:100%;height:100%;min-height:200px;object-fit:cover;}
   .archive-emoji img{width:100%;height:70px;object-fit:cover;border-radius:4px;}
@@ -52,37 +52,37 @@
   .drop-info{padding:20px;}
   .drop-badges{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
   .drop-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;}
-  .drop-badge.lightning{background:#CC0C39;color:#fff;}
-  .drop-badge.prime{background:#00A8E0;color:#fff;}
-  .drop-badge.winner-badge{background:#FF9900;color:#0F1111;}
+  .drop-badge.lightning{background:#C8104F;color:#fff;}
+  .drop-badge.prime{background:#5B3FD0;color:#fff;}
+  .drop-badge.winner-badge{background:#A98BFF;color:#1C1433;}
   .drop-title{font-size:18px;font-weight:700;margin-bottom:6px;line-height:1.3;}
   .drop-desc{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5;}
   .drop-price-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
   .drop-original{font-size:14px;color:#565959;text-decoration:line-through;}
-  .drop-free{font-size:28px;font-weight:700;color:#CC0C39;}
-  .drop-savings{font-size:13px;color:#CC0C39;}
-  .drop-prime{color:#00A8E0;font-size:13px;font-weight:700;}
+  .drop-free{font-size:28px;font-weight:700;color:#C8104F;}
+  .drop-savings{font-size:13px;color:#C8104F;}
+  .drop-prime{color:#5B3FD0;font-size:13px;font-weight:700;}
   /* Progress bar */
   .drop-progress-label{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:4px;}
   .drop-progress{height:8px;background:#eee;border-radius:4px;overflow:hidden;margin-bottom:12px;}
-  .drop-progress-fill{height:100%;background:#CC0C39;border-radius:4px;transition:width 0.3s;}
+  .drop-progress-fill{height:100%;background:#C8104F;border-radius:4px;transition:width 0.3s;}
   /* Reactions row */
   .drop-reactions{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
   .react-btn{background:#f5f5f5;border:1px solid #ddd;border-radius:20px;padding:5px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;}
-  .react-btn:hover{border-color:#FF9900;background:#FFF8EE;}
-  .react-btn.active{background:#FFF8EE;border-color:#FF9900;}
+  .react-btn:hover{border-color:#A98BFF;background:#FFF0F6;}
+  .react-btn.active{background:#FFF0F6;border-color:#A98BFF;}
   /* Vote bar */
   .vote-bar{display:flex;gap:8px;align-items:center;margin-bottom:14px;}
   .vote-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:6px 14px;font-size:13px;cursor:pointer;}
   .vote-btn:hover{background:#eee;}
-  .vote-btn.yes{border-color:#067D62;color:#067D62;background:#E7F4E8;}
-  .vote-btn.no{border-color:#CC0C39;color:#CC0C39;background:#FFEEEE;}
+  .vote-btn.yes{border-color:#0B8A5F;color:#0B8A5F;background:#E7F4E8;}
+  .vote-btn.no{border-color:#C8104F;color:#C8104F;background:#FFEEEE;}
   .vote-result{font-size:12px;color:#555;}
   /* CTA buttons */
-  .drop-add-btn{background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;margin-right:8px;}
-  .drop-add-btn:hover{background:#F7CA00;}
-  .drop-detail-btn{background:none;border:1px solid #aaa;border-radius:4px;padding:10px 16px;font-size:13px;cursor:pointer;color:#007185;}
-  .drop-detail-btn:hover{border-color:#007185;}
+  .drop-add-btn{background:#FF4F8B;border:1px solid #F0397A;border-radius:4px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;margin-right:8px;}
+  .drop-add-btn:hover{background:#F0397A;}
+  .drop-detail-btn{background:none;border:1px solid #aaa;border-radius:4px;padding:10px 16px;font-size:13px;cursor:pointer;color:#5B3FD0;}
+  .drop-detail-btn:hover{border-color:#5B3FD0;}
   /* Archive */
   .archive-section{background:#fff;border-radius:4px;padding:20px;margin-top:5px;}
   .archive-title{font-size:16px;font-weight:700;margin-bottom:12px;}
@@ -90,16 +90,16 @@
   .archive-card{border:1px solid #ddd;border-radius:4px;padding:10px;text-align:center;}
   .archive-emoji{font-size:40px;margin-bottom:6px;}
   .archive-day{font-size:11px;color:#777;margin-bottom:3px;}
-  .archive-winner{font-size:12px;font-weight:700;color:#0F1111;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .archive-amount{color:#CC0C39;font-size:12px;font-weight:700;}
+  .archive-winner{font-size:12px;font-weight:700;color:#1C1433;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .archive-amount{color:#C8104F;font-size:12px;font-weight:700;}
   /* Sidebar */
   .sidebar-widget{background:#fff;border-radius:4px;padding:15px;margin-bottom:15px;}
   .sidebar-widget h3{font-size:14px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #eee;}
   .notify-form{display:flex;flex-direction:column;gap:8px;}
   .notify-input{border:1px solid #aaa;border-radius:4px;padding:8px;font-size:13px;outline:none;}
-  .notify-input:focus{border-color:#FF9900;}
-  .notify-btn{background:#FF9900;border:none;border-radius:4px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
-  .notify-btn:hover{background:#FA8900;}
+  .notify-input:focus{border-color:#A98BFF;}
+  .notify-btn{background:#A98BFF;border:none;border-radius:4px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;}
+  .notify-btn:hover{background:#9677FF;}
   .prev-winner{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:13px;}
   .prev-winner:last-child{border:none;}
   @media(max-width:900px){.drops-main{grid-template-columns:1fr;}.drop-card{grid-template-columns:1fr;}.drop-img{height:180px;}}
@@ -117,7 +117,7 @@
     <select class="search-select" aria-label="Search in department"><option>All</option></select>
     <input class="search-input" type="search" aria-label="Search Dopazon" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
     <button class="search-btn" aria-label="Search" onclick="goSearch()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1C1433" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </button>
   </div>
   <a href="index.html" class="header-link"><span>Back to</span><strong>Dopazon</strong></a>
@@ -130,17 +130,16 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="index.html" class="nav-link" style="font-weight:700;">☰ All</a>
-  <a href="drops.html" class="nav-link" style="background:#131921;color:#FF9900;">⚡ Today's Drops</a>
-  <a href="shop.html" class="nav-link">DopePrime</a>
-  <a href="shop.html" class="nav-link">Shop</a>
+  <a href="index.html" class="nav-link" style="font-weight:700;">✨ Everything</a>
+  <a href="drops.html" class="nav-link" style="background:#1C1433;color:#A98BFF;">⚡ Today's Drops</a>
+    <a href="shop.html" class="nav-link">Shop</a>
   <a href="confessions.html" class="nav-link">💬 Confession Cart</a>
-  <a href="#" class="nav-link" style="color:#FF9900;">🎁 Always Free</a>
+  <a href="#" class="nav-link" style="color:#A98BFF;">🎁 Always Free</a>
 </nav>
 
 <!-- HERO -->
 <div class="drops-hero">
-  <div style="font-size:13px;color:#FF9900;font-weight:700;margin-bottom:8px;">⚡ DAILY DROPS</div>
+  <div style="font-size:13px;color:#A98BFF;font-weight:700;margin-bottom:8px;">⚡ DAILY DROPS</div>
   <h1>Today's <span>5 Free Drops</span></h1>
   <p>Every day, 5 absurd items you can add to cart — for absolutely nothing.<br>Gone at midnight. New drops tomorrow.</p>
 </div>
@@ -177,12 +176,12 @@
 
   <!-- Sidebar -->
   <aside>
-    <div class="sidebar-widget" style="background:#CC0C39;color:#fff;">
+    <div class="sidebar-widget" style="background:#C8104F;color:#fff;">
       <h3 style="color:#fff;border-color:rgba(255,255,255,0.3);">⚡ Don't Miss Tomorrow</h3>
       <p style="font-size:13px;color:#ffcdd2;margin-bottom:12px;">Get notified when new drops go live. It's free. Everything is.</p>
       <div class="notify-form">
         <input class="notify-input" type="email" id="notifyEmail" placeholder="your@email.com">
-        <button class="notify-btn" onclick="subscribeNotify()" style="background:#FFD814;color:#0F1111;">Notify Me 🔔</button>
+        <button class="notify-btn" onclick="subscribeNotify()" style="background:#FF4F8B;color:#1C1433;">Notify Me 🔔</button>
       </div>
     </div>
     <div class="sidebar-widget">
@@ -194,14 +193,14 @@
       <div style="font-size:13px;">
         <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Today's drops</span><strong>5</strong></div>
         <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Carts added</span><strong id="totalCarts">0</strong></div>
-        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Total saved</span><strong id="totalSaved" style="color:#CC0C39;">$0</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;"><span>Total saved</span><strong id="totalSaved" style="color:#C8104F;">$0</strong></div>
         <div style="display:flex;justify-content:space-between;padding:7px 0;"><span>Streaks active</span><strong>2,847</strong></div>
       </div>
     </div>
-    <div class="sidebar-widget" style="background:#131921;color:#fff;">
-      <h3 style="color:#FF9900;border-color:#333;">Want More?</h3>
+    <div class="sidebar-widget" style="background:#1C1433;color:#fff;">
+      <h3 style="color:#A98BFF;border-color:#333;">Want More?</h3>
       <p style="font-size:13px;color:#ccc;margin-bottom:10px;">Browse 18+ items across all categories. All free, always.</p>
-      <a href="shop.html" style="display:block;background:#FF9900;color:#0F1111;text-align:center;padding:10px;border-radius:4px;font-weight:700;text-decoration:none;font-size:14px;">Browse All Free Items →</a>
+      <a href="shop.html" style="display:block;background:#A98BFF;color:#1C1433;text-align:center;padding:10px;border-radius:4px;font-weight:700;text-decoration:none;font-size:14px;">Browse All Free Items →</a>
     </div>
   </aside>
 </div>
@@ -283,7 +282,7 @@ function dropCard(d, idx) {
     <div class="drop-info">
       <div class="drop-badges">
         <div class="drop-badge lightning">⚡ Lightning Drop</div>
-        <div class="drop-badge prime">DopePrime</div>
+        <div class="drop-badge prime">FREE</div>
         ${isFirst?'<div class="drop-badge winner-badge">🏆 Today\'s Top Drop</div>':''}
       </div>
       <div class="drop-title">${d.title}</div>
@@ -293,10 +292,10 @@ function dropCard(d, idx) {
         <span class="drop-free">FREE</span>
         <span class="drop-savings">Save $${d.price.toLocaleString()} (100%)</span>
       </div>
-      <div class="drop-prime">✓ DopePrime · Fake Delivery by 8pm</div>
-      <div style="font-size:12px;color:#CC0C39;margin:8px 0;font-weight:700;">🔥 ${viewers.toLocaleString()} people viewing this right now</div>
+      <div class="drop-prime">✓ Free fake delivery by 8pm</div>
+      <div style="font-size:12px;color:#C8104F;margin:8px 0;font-weight:700;">🔥 ${viewers.toLocaleString()} people viewing this right now</div>
       <div class="drop-progress-label">
-        <span style="color:#CC0C39;font-weight:700;">Flying out of (fake) stock</span>
+        <span style="color:#C8104F;font-weight:700;">Flying out of (fake) stock</span>
         <span>${progress}% grabbed</span>
       </div>
       <div class="drop-progress"><div class="drop-progress-fill" style="width:${progress}%"></div></div>
@@ -365,7 +364,7 @@ function vote(id, type, btn) {
 
 function showDesc(id) {
   const d = ALL_DROPS.find(x => x.id === id);
-  if (d) alert(d.title + '\n\n' + d.desc + '\n\nPrice: $0.00 (FREE)\nDopePrime delivery by 8pm (fake)');
+  if (d) alert(d.title + '\n\n' + d.desc + '\n\nPrice: $0.00 (FREE)\nFake delivery by 8pm');
 }
 
 function renderArchive() {
@@ -391,7 +390,7 @@ function renderTopDrops() {
       ${d.img?`<img class="prev-winner-img" src="${escHtml(dzImg(d.img,200,200))}" alt="${escHtml(d.title)}" loading="lazy" data-emoji="${escHtml(d.emoji)}" onerror="imgFallback(this)">`:`<span style="font-size:28px;">${d.emoji}</span>`}
       <div>
         <div style="font-size:13px;font-weight:600;">${escHtml(d.title.slice(0,35))}...</div>
-        <div style="font-size:12px;color:#CC0C39;font-weight:700;">$${d.price} → FREE</div>
+        <div style="font-size:12px;color:#C8104F;font-weight:700;">$${d.price} → FREE</div>
       </div>
     </div>
   `).join('');

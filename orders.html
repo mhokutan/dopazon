@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#131921">
+<meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
@@ -16,7 +16,7 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D7NNBGKNB3');</script>
 <style>
   .status-pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
-  .status-pill.delivered{background:#E7F4E8;color:#067D62;}
+  .status-pill.delivered{background:#E7F4E8;color:#0B8A5F;}
   .status-pill.transit{background:#FFF4E5;color:#B35C00;}
 </style>
 </head>
@@ -27,15 +27,15 @@
   <div class="search-bar">
     <select class="search-select" aria-label="Search in department"><option>All</option></select>
     <input class="search-input" type="search" aria-label="Search Dopazon" id="searchInput" placeholder="Search Dopazon" onkeydown="if(event.key==='Enter')goSearch()">
-    <button class="search-btn" aria-label="Search" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#0F1111" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <button class="search-btn" aria-label="Search" onclick="goSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1433" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="6"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
   </div>
-  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Hello, sign in</span><strong>Account &amp; Lists ▾</strong></a>
-  <a href="confessions.html" class="header-link"><span>Returns</span><strong>&amp; Confessions</strong></a>
+  <a href="account.html" class="header-link acct-link"><span id="acctGreet">Sign in</span><strong>Your stuff</strong></a>
+  <a href="confessions.html" class="header-link"><span>Read the</span><strong>Confessions</strong></a>
   <a href="shop.html?cart=1" class="cart-link"><span style="font-size:26px;position:relative;">🛒<span class="cart-count" id="cartCount">0</span></span><strong>Cart</strong></a>
 </header>
 
 <nav id="navbar">
-  <a href="shop.html" class="nav-link" style="font-weight:700;">☰ All</a>
+  <a href="shop.html" class="nav-link" style="font-weight:700;">✨ Everything</a>
   <a href="drops.html" class="nav-link">Today's Drops 🔥</a>
   <a href="shop.html" class="nav-link">Shop</a>
   <a href="orders.html" class="nav-link active">Your Orders</a>
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCartCount();
   const u = await DZ.init(sb);
   if (u) document.getElementById('acctGreet').textContent =
-    'Hello, ' + (u.user_metadata?.name || u.email.split('@')[0]);
+    'Hi, ' + (u.user_metadata?.name || u.email.split('@')[0]);
   orders = await DZ.getOrders();
   render();
 });
@@ -108,8 +108,8 @@ function render() {
     <div>
       <div class="order-head">
         <div>ORDER PLACED<strong>${placed.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></div>
-        <div>TOTAL<strong style="color:#CC0C39;">$0.00</strong></div>
-        <div>YOU SAVED<strong style="color:#067D62;">$${Number(o.saved||0).toLocaleString()}</strong></div>
+        <div>TOTAL<strong style="color:#C8104F;">$0.00</strong></div>
+        <div>YOU SAVED<strong style="color:#0B8A5F;">$${Number(o.saved||0).toLocaleString()}</strong></div>
         <div style="margin-left:auto;">ORDER #<strong>${escHtml(o.id||'—')}</strong></div>
       </div>
       <div class="order-body">
