@@ -4,6 +4,9 @@ const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
 // protects the data. Replaced the legacy anon JWT so the legacy keys, one of
 // which leaked, can be disabled without taking the site down.
 const SUPABASE_KEY = 'sb_publishable_Z5U1ezNeqISFqmrCEs1ItQ_HxX3J-o9';
+// Same pinned build + SRI as the <script> tags in the pages (and the CSP).
+const SUPABASE_JS_SRC = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
+const SUPABASE_JS_SRI = 'sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok';
 
 // ===== SHARED UTILS =====
 function escHtml(s){
@@ -114,7 +117,7 @@ function updateCartCount(){
         </div>
 
         <div id="dz-tab-suggest" style="display:none;">
-          <input id="dz-sg-name" type="text" placeholder="Product name (e.g. AirPods Pro clone)">
+          <input id="dz-sg-name" type="text" placeholder="Product name (e.g. noise-cancelling earbuds)">
           <select id="dz-sg-cat">
             <option value="">— Category —</option>
             <option>fashion</option><option>electronics</option><option>beauty</option>
@@ -128,6 +131,7 @@ function updateCartCount(){
           <textarea id="dz-sg-reason" placeholder="Why should Dopazon carry this? (optional)"></textarea>
         </div>
 
+        <div id="dz-fb-err" role="alert" style="display:none;color:#CC0C39;font-size:13px;margin-bottom:8px;"></div>
         <div id="dz-fb-success">
           <div class="dz-big-check">🎉</div>
           <strong style="font-size:16px;">Thanks! We got it.</strong>
@@ -152,9 +156,12 @@ let _dzTab='feedback';
 
 function dzCloseFb(){
   document.getElementById('dz-fb-overlay').classList.remove('open');
+  document.getElementById('dz-fb-err').style.display='none';
   document.getElementById('dz-fb-success').style.display='none';
-  document.getElementById('dz-fb-submit').style.display='';
+  const sub=document.getElementById('dz-fb-submit');
+  sub.style.display=''; sub.disabled=false; sub.textContent='Send →';
   document.getElementById('dz-fb-cancel').style.display='';
+  document.getElementById('dz-fb-cancel').textContent='Cancel';
   document.getElementById('dz-fb-msg') && (document.getElementById('dz-fb-msg').value='');
   document.getElementById('dz-sg-name') && (document.getElementById('dz-sg-name').value='');
   document.getElementById('dz-sg-reason') && (document.getElementById('dz-sg-reason').value='');
@@ -176,12 +183,31 @@ function dzSetStar(n){
   });
 }
 
+// The dopa*.html pages do not load supabase-js, so the widget used to throw
+// on `supabase` there and drop the message. Load it on demand instead.
+let _dzFbClient=null;
+function dzFeedbackClient(){
+  if(_dzFbClient) return _dzFbClient;
+  const make=()=>window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+  _dzFbClient = window.supabase ? Promise.resolve(make()) : new Promise((resolve,reject)=>{
+    const sc=document.createElement('script');
+    sc.src=SUPABASE_JS_SRC; sc.integrity=SUPABASE_JS_SRI; sc.crossOrigin='anonymous';
+    sc.onload=()=>window.supabase?resolve(make()):reject(new Error('supabase-js missing'));
+    sc.onerror=()=>reject(new Error('could not load supabase-js'));
+    document.head.appendChild(sc);
+  });
+  _dzFbClient.catch(()=>{_dzFbClient=null;});
+  return _dzFbClient;
+}
+
 async function dzSubmitFeedback(){
   const btn=document.getElementById('dz-fb-submit');
+  const errEl=document.getElementById('dz-fb-err');
+  errEl.style.display='none';
   btn.textContent='Sending…'; btn.disabled=true;
   try {
-    const { createClient } = supabase;
-    const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
+    const sb=await dzFeedbackClient();
+    let res;
     if(_dzTab==='feedback'){
       const msg=document.getElementById('dz-fb-msg').value.trim();
       if(!msg){
@@ -191,7 +217,7 @@ async function dzSubmitFeedback(){
         return;
       }
       document.getElementById('dz-fb-msg').style.borderColor='';
-      await sb.from('feedback').insert({message:msg,page:location.pathname,rating:_dzStar||null});
+      res=await sb.from('feedback').insert({message:msg,page:location.pathname,rating:_dzStar||null});
     } else {
       const name=document.getElementById('dz-sg-name').value.trim();
       if(!name){
@@ -203,13 +229,17 @@ async function dzSubmitFeedback(){
       document.getElementById('dz-sg-name').style.borderColor='';
       const cat=document.getElementById('dz-sg-cat').value;
       const reason=document.getElementById('dz-sg-reason').value.trim();
-      await sb.from('suggestions').insert({product_name:name,category:cat||null,reason:reason||null});
+      res=await sb.from('suggestions').insert({product_name:name,category:cat||null,reason:reason||null});
     }
+    // supabase-js returns {error} instead of throwing
+    if(res.error) throw res.error;
     document.getElementById('dz-fb-success').style.display='block';
     btn.style.display='none';
     document.getElementById('dz-fb-cancel').textContent='Close';
     setTimeout(dzCloseFb,3000);
   } catch(e){
     btn.textContent='Send →'; btn.disabled=false;
+    errEl.textContent='Sorry, that did not send. Please try again in a moment.';
+    errEl.style.display='block';
   }
 }
