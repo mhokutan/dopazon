@@ -422,9 +422,9 @@ function renderCheckout() {
   const panel = document.getElementById('checkoutContent');
   if (orderPlaced) return;
   if (cart.length === 0) { panel.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:60px;">🛒</div><p style="color:#555;margin-top:10px;">Cart is empty. Go add some free stuff!</p><a href="#" onclick="closeCheckout()" style="color:#007185;">Continue Shopping</a></div>`; return; }
-  const total = cart.reduce((s,p)=>s+p.price,0);
+  const total = cart.reduce((s,p)=>s+(Number(p.price)||0),0);
   panel.innerHTML = `
-    ${cart.map((p,i)=>`<div class="cart-item"><div class="cart-item-emoji">${p.emoji||'📦'}</div><div class="cart-item-info"><div class="cart-item-title">${escHtml(p.title)}</div><div class="cart-item-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:12px;">$${p.price}</span></div></div><button class="cart-item-remove" onclick="removeCart(${i})">🗑</button></div>`).join('')}
+    ${cart.map((p,i)=>`<div class="cart-item"><div class="cart-item-emoji">${escHtml(p.emoji||'📦')}</div><div class="cart-item-info"><div class="cart-item-title">${escHtml(p.title)}</div><div class="cart-item-price">FREE <span style="text-decoration:line-through;color:#aaa;font-size:12px;">$${escHtml(Number(p.price)||0)}</span></div></div><button class="cart-item-remove" onclick="removeCart(${i})" aria-label="Remove ${escHtml(p.title)}">🗑</button></div>`).join('')}
     <div class="order-total">
       <div class="order-row"><span>Items (${cart.length}):</span><span style="text-decoration:line-through;color:#aaa;">$${total.toLocaleString()}</span></div>
       <div class="order-row"><span>DopePrime Savings:</span><span style="color:#067D62;">-$${total.toLocaleString()}</span></div>
@@ -440,7 +440,7 @@ function clearCart() { cart=[]; localStorage.setItem('dz_cart',JSON.stringify(ca
 
 function placeOrder() {
   if (!currentUser) { closeCheckout(); openAuth('login'); return; }
-  const saved = cart.reduce((s,p)=>s+p.price,0);
+  const saved = cart.reduce((s,p)=>s+(Number(p.price)||0),0);
   const eta = new Date(Date.now()+30*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 
   // Record the order. DZ writes it to the account when signed in and to

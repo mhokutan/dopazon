@@ -423,7 +423,7 @@ function renderProduct(p) {
   } else {
     const angles = [p.emoji, p.emoji, p.emoji, p.emoji];
     document.getElementById('thumbs').innerHTML = angles.map((e,i) =>
-      `<div class="thumb ${i===0?'active':''}" onclick="selectThumb(this,'${e}')">${e}</div>`
+      `<div class="thumb ${i===0?'active':''}" data-emoji="${escHtml(e||'📦')}" onclick="selectThumb(this)">${escHtml(e||'📦')}</div>`
     ).join('');
   }
 
@@ -491,8 +491,8 @@ async function renderRelated(current) {
     </div>`).join('');
 }
 
-function selectThumb(el, emoji) {
-  document.getElementById('mainEmoji').textContent = emoji;
+function selectThumb(el) {
+  document.getElementById('mainEmoji').textContent = el.getAttribute('data-emoji') || '📦';
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
