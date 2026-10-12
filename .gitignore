@@ -1,4 +1,8 @@
-.claude/
+# Local Claude Code state stays out of git (permissions, dev-server config);
+# the project's skills and product context are shared on purpose.
+.claude/*
+!.claude/skills/
+!.claude/product-marketing.md
 node_modules/
 package-lock.json
 .env
