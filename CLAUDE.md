@@ -110,6 +110,17 @@ removed; applied 2026-10-12). `supabase_schema.sql` and
    owner's explicit approval; seeded rows are `user_id IS NULL`.
 10. **Screenshots after scrolling can come back blank** in the preview browser.
     Verify with DOM queries, not only screenshots.
+11. **No Amazon look or wording** (rebrand 2026-10-12, owner's call to lower
+    the Associates "variant of an Amazon mark" risk). Colours come from the
+    tokens at the top of `shared.css` (`--ink` #1C1433, `--pink` #FF4F8B,
+    `--pink-deep` #E0156B, `--violet` #A98BFF, `--violet-deep` #5B3FD0,
+    `--mint` #0B8A5F, `--page` #F3F1F8); never bring back #131921, #232F3E,
+    #FF9900, #FFD814 or the teal link colour. Light header, pill search and
+    pill nav, rounded cards. Do not write Amazon phrases: "Hello, sign in",
+    "Account & Lists", "Returns & Orders", "Deliver to", "Prime", "Buy Now",
+    "Sold by / Ships from / Fulfillment", "All Departments", "Customers also
+    viewed", "Verified Purchase". Violet `--violet` is for fills only; on
+    white text use `--violet-deep` or `--pink-deep` (contrast).
 
 ## How to verify a change
 
