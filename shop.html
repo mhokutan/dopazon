@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentUser = await DZ.init(sb);
   updateUserUI();
   // account/mystore send signed-out users here with ?signin=1&next=...
-  if (params.get('signin') === '1' && !currentUser) openAuth('login');
+  if (params.get('signin') && !currentUser) openAuth(params.get('signin') === 'signup' ? 'signup' : 'login');
   await loadDBData();
 });
 
