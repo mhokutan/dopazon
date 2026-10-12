@@ -1,6 +1,7 @@
 -- ============================================================
 -- DOPAZON — lock down SECURITY DEFINER functions, add size limits
--- Safe to re-run. Applied 2026-10-12 via the Supabase MCP.
+-- Safe to re-run (needs setup.sql's policies). Applied 2026-10-12
+-- via the Supabase MCP.
 --
 -- Only privileges, policies and CHECK constraints change here. No
 -- existing row is modified. Every CHECK was compared to the live data
@@ -24,6 +25,7 @@
 -- ============================================================
 
 BEGIN;
+SET LOCAL lock_timeout = '5s';
 
 -- ---------- 1 + 2. function privileges ----------------------
 REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
@@ -38,18 +40,16 @@ GRANT  EXECUTE ON FUNCTION public.increment_sames(uuid) TO authenticated;
 GRANT  EXECUTE ON FUNCTION public.decrement_sames(uuid) TO authenticated;
 
 -- ---------- 3. insert policies -------------------------------
-DROP POLICY IF EXISTS "confessions_insert" ON public.confessions;
-CREATE POLICY "confessions_insert" ON public.confessions
-  FOR INSERT
+-- ALTER (not DROP + CREATE): both policies exist since setup.sql, and
+-- the Supabase MCP hangs on DROP POLICY waiting for a confirmation.
+ALTER POLICY "confessions_insert" ON public.confessions
   WITH CHECK (
     (user_id IS NULL OR (SELECT auth.uid()) = user_id)
     AND coalesce(likes, 0) = 0
     AND coalesce(sames, 0) = 0
   );
 
-DROP POLICY IF EXISTS "anon insert suggestions" ON public.suggestions;
-CREATE POLICY "anon insert suggestions" ON public.suggestions
-  FOR INSERT TO anon, authenticated
+ALTER POLICY "anon insert suggestions" ON public.suggestions
   WITH CHECK (coalesce(votes, 1) = 1);
 
 -- ---------- 4. size limits ----------------------------------
