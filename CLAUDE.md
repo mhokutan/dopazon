@@ -48,6 +48,11 @@ RLS model — keep it this way:
   including you with the anon key. Read it with the DB connection or the dashboard.
 - Like/same counters change only through SECURITY DEFINER RPCs; there is no
   UPDATE policy on `confessions` on purpose.
+- **Views over private tables must be `WITH (security_invoker = true)`.** A
+  plain Postgres view runs as its owner and bypasses RLS on what it reads.
+  `my_savings` shipped without it and would have exposed every user's
+  totals (fix: `fix_my_savings_view.sql`). After any DDL, run the Supabase
+  security advisor and re-test anon access to the new object.
 
 SQL history (all already applied in production): `setup.sql` (consolidated
 schema + RLS), `add_user_data.sql` (orders, wishlist, streak),
