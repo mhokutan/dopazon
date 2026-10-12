@@ -58,7 +58,11 @@ SQL history (all already applied in production): `setup.sql` (consolidated
 schema + RLS), `add_user_data.sql` (orders, wishlist, streak),
 `fix_product_images.sql`, `fix_trademarks.sql`, `fix_my_savings_view.sql`
 (view runs as caller), `fix_products_store_ownership.sql` (a product may only
-point at the caller's own store; applied 2026-10-12, verified in pg_policies). `supabase_schema.sql` and
+point at the caller's own store; applied 2026-10-12, verified in pg_policies),
+`harden_rpcs_and_limits.sql` (definer RPC grants, insert checks, size limits),
+`fix_brand_photos.sql` + `fix_seed_titles.sql` (seeded rows only: branded or
+wrong photos replaced from checked pools or set NULL, brand-like names
+removed; applied 2026-10-12). `supabase_schema.sql` and
 `feedback_schema.sql` are deprecated stubs — do not run them.
 
 ## Rules learned the hard way
@@ -196,12 +200,24 @@ was verified. Small focused commits.
   (`harden_rpcs_and_limits.sql`, applied); supabase-js pinned + SRI; GA4
   funnel events above. Open: Supabase "leaked password protection" needs a
   paid plan, left off by the owner.
-- Brand/photo problems found in the catalogue (not fixed yet): logos or
-  brand text in nm2, ng2, nq1, sp4, no1, ss2, design of nv2; photo does not
-  show the product in s4, sh4, s8, ss4, s12.
+- Photo audit 2026-10-12: all 368 photo ids (catalogue, DB pools, pages)
+  rendered at 404px and the flagged ones re-checked at 1400px. 151 failed
+  (logo, readable brand text or recognisable branded design) and ~80 did
+  not show their product. Result: 159 of 297 catalogue products now show
+  their emoji (`img:null`), 186 of 1000 seeded DB products too (automotive,
+  electronics, gaming and toys have fewer than 3 clean photos left).
+  "Verified" before this date only meant "the URL loads". New photos need a
+  source: unsplash.com search is blocked from cloud sessions (401), so an
+  Unsplash API access key (env `UNSPLASH_ACCESS_KEY`) is the way to find
+  replacements; every new photo still needs the full-size brand check.
+- The owner checked s1 (sneaker) and kept it; the audit agent read its mesh
+  design as a known sportswear model. Owner's call.
+- `drops.html` keeps its own `ALL_DROPS` list of joke drop items (not the
+  shop catalogue); its photos were audited too.
 
-- Live and healthy. 297 catalogue products + 1000 seeded DB products, all with
-  verified Unsplash photos. Shop paginated. Account/orders/wishlist work.
+- Live and healthy. 297 catalogue products + 1000 seeded DB products. Shop
+  paginated; Featured sort shows products with a photo first.
+  Account/orders/wishlist work.
 - Signed-in sync (`dzstore.js` + `orders`/`wishlist` tables) is deployed but
   has **not** been tested end to end with a real signed-in session.
 - Traffic: no new signup since 2026-08-23. On 2026-10-07 Thomas came back and
@@ -221,8 +237,8 @@ was verified. Small focused commits.
 4. **"I almost bought this"** — user types a product (name, price, optional
    link) → Dopazon creates a fake product page for it → records the saving →
    affiliate link to the real item. Removes the catalogue/brand problem.
-5. Brand audit of the ~348 photos used by DB products (electronics, gaming,
-   automotive are the risky pools) and of the 4 hero + 2 banner images.
+5. ~~Brand audit of all photos.~~ Done 2026-10-12 (see Current state).
+   Next: source clean replacement photos (needs an Unsplash API key).
 6. Confessions is empty — seed it with clearly-labelled examples or hide it.
 7. ~~One-question feedback prompt right after checkout.~~ Done 2026-10-12.
 8. Move the root `*.sql` files into an ordered `supabase/migrations/` folder.
