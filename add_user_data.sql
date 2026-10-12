@@ -68,7 +68,9 @@ CREATE POLICY profiles_update ON profiles FOR UPDATE USING (auth.uid() = id);
 -- ------------------------------------------------------------
 -- Handy view of a user's lifetime numbers (respects RLS)
 -- ------------------------------------------------------------
-CREATE OR REPLACE VIEW my_savings AS
+-- security_invoker: without it the view runs as its owner and bypasses
+-- the RLS on orders, exposing every user's totals.
+CREATE OR REPLACE VIEW my_savings WITH (security_invoker = true) AS
 SELECT
   user_id,
   COUNT(*)                                   AS order_count,
@@ -77,6 +79,9 @@ SELECT
   MIN(placed_at)                             AS first_order_at
 FROM orders
 GROUP BY user_id;
+
+REVOKE ALL ON my_savings FROM anon;
+GRANT SELECT ON my_savings TO authenticated;
 
 -- Done. The site keeps using localStorage for signed-out visitors and
 -- copies anything it finds up to these tables on first sign-in.
