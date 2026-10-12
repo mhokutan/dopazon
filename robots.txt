@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /account
+Disallow: /orders
+Disallow: /wishlist
+Disallow: /mystore
+
+Sitemap: https://www.dopazon.com/sitemap.xml
