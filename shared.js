@@ -133,6 +133,8 @@ function updateCartCount(){
   style.textContent=`
     #dz-feedback-btn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#131921;color:#FF9900;border:none;border-radius:50px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.35);display:flex;align-items:center;gap:6px;transition:transform 0.15s;}
     #dz-feedback-btn:hover{transform:scale(1.06);background:#1a252f;}
+    /* phones: a small round button so it does not cover prices and buttons */
+    @media(max-width:600px){#dz-feedback-btn{bottom:14px;right:12px;width:44px;height:44px;padding:0;justify-content:center;font-size:20px;opacity:.92;}#dz-feedback-btn .dz-fb-label{display:none;}}
     #dz-fb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;}
     #dz-fb-overlay.open{display:flex;}
     #dz-fb-modal{background:#fff;border-radius:8px;padding:28px;width:100%;max-width:420px;margin:16px;box-shadow:0 8px 40px rgba(0,0,0,0.25);}
@@ -155,7 +157,7 @@ function updateCartCount(){
   document.head.appendChild(style);
 
   const html=`
-    <button type="button" id="dz-feedback-btn" aria-haspopup="dialog">💬 Feedback</button>
+    <button type="button" id="dz-feedback-btn" aria-haspopup="dialog" aria-label="Feedback"><span aria-hidden="true">💬</span><span class="dz-fb-label">Feedback</span></button>
     <div id="dz-fb-overlay" data-dz-dialog="dzCloseFb">
       <div id="dz-fb-modal" role="dialog" aria-modal="true" aria-labelledby="dz-fb-title">
         <h2 id="dz-fb-title">Share your thoughts</h2>

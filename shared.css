@@ -56,6 +56,9 @@ body{font-family:Arial,sans-serif;background:#EAEDED;color:#0F1111;}
   .header-link.acct-link strong{display:none;}
   .header-link.acct-link span{font-size:13px;}
   .cart-link{margin-left:0;}
+  /* dopa* service pages: logo, service name, cart on one row */
+  .svc-label{order:1;flex:1 1 0 !important;min-width:0;overflow:hidden;padding:0 4px !important;}
+  .svc-label span{font-size:16px !important;margin-right:6px !important;white-space:nowrap;}
 }
 
 /* ===== SPINNER ===== */
