@@ -212,6 +212,15 @@ was verified. Small focused commits.
   replacements; every new photo still needs the full-size brand check.
 - The owner checked s1 (sneaker) and kept it; the audit agent read its mesh
   design as a known sportswear model. Owner's call.
+- Amazon Associates (checked 2026-10-12): the disclosure "As an Amazon
+  Associate, Dopazon earns from qualifying purchases" now sits next to
+  every affiliate link (product page) and in the home footer; keep it on
+  any new page with `rel="sponsored"` links. Open risk for the owner: the
+  policies bar domains with a "variant or misspelling" of an Amazon mark,
+  and "dopazon" plus the Amazon-style look may be read that way. Product
+  data/images from Amazon need the Creators API (PA-API retired
+  2026-04-30), which needs 10 qualifying sales in 30 days; no scraping.
+  Affiliate links in email only to people who opted in.
 - `drops.html` keeps its own `ALL_DROPS` list of joke drop items (not the
   shop catalogue); its photos were audited too.
 
