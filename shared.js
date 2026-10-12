@@ -1,6 +1,9 @@
 // ===== SHARED CONFIG =====
 const SUPABASE_URL = 'https://jtsifootrchbsgrldfxk.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0c2lmb290cmNoYnNncmxkZnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzM4MjEsImV4cCI6MjA5NjUwOTgyMX0.GvpAsYR2LO8aXAw6y-oyrGRe0aj2neneVFFs5BmLrv8';
+// Publishable key (new Supabase API keys). Public by design — RLS is what
+// protects the data. Replaced the legacy anon JWT so the legacy keys, one of
+// which leaked, can be disabled without taking the site down.
+const SUPABASE_KEY = 'sb_publishable_Z5U1ezNeqISFqmrCEs1ItQ_HxX3J-o9';
 
 // ===== SHARED UTILS =====
 function escHtml(s){
