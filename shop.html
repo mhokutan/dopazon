@@ -57,6 +57,8 @@
   .place-order-btn:hover{background:#F7CA00;}
   .order-confirm{text-align:center;padding:30px 20px;}
   .tracking-step{display:flex;gap:12px;margin-bottom:15px;align-items:flex-start;}
+  .conf-ask-btn{flex:1;min-height:40px;background:#fff;border:1px solid #888;border-radius:20px;font-size:14px;cursor:pointer;}
+  .conf-ask-btn:hover{background:#F7F7F7;}.conf-ask-btn:disabled{opacity:.6;cursor:default;}
   .tracking-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:2px;}
   .tracking-dot.done{background:#067D62;}.tracking-dot.active{background:#FF9900;animation:pulse 1.5s infinite;}.tracking-dot.pending{background:#ddd;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
@@ -204,10 +206,12 @@
   <div class="modal">
     <button class="modal-close" onclick="closeAuth()">×</button>
     <h2 id="authTitle" style="margin-bottom:15px;">Sign in to Dopazon</h2>
+    <p id="authNote" style="display:none;font-size:13px;color:#555;margin:-8px 0 14px;"></p>
     <div class="form-group"><label>Email</label><input type="email" id="authEmail" placeholder="you@example.com"></div>
     <div class="form-group" id="nameGroup" style="display:none"><label>Name</label><input type="text" id="authName" placeholder="First name"></div>
     <div class="form-group"><label>Password</label><input type="password" id="authPass" placeholder="At least 6 characters"></div>
     <div class="error-msg" id="authError" style="display:none;"></div>
+    <div id="authInfo" role="status" style="display:none;background:#E7F4E8;border:1px solid #067D62;border-radius:4px;padding:10px;font-size:13px;color:#0F1111;margin-bottom:10px;"></div>
     <button class="form-submit" id="authSubmitBtn" onclick="submitAuth()">Sign in</button>
     <div style="text-align:center;margin-top:10px;font-size:13px;color:#555;">New to Dopazon? <a href="#" onclick="toggleAuthMode()" style="color:#007185;">Create account</a></div>
   </div>
@@ -439,7 +443,8 @@ function removeCart(i) { cart.splice(i,1); localStorage.setItem('dz_cart',JSON.s
 function clearCart() { cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); renderCheckout(); }
 
 function placeOrder() {
-  if (!currentUser) { closeCheckout(); openAuth('login'); return; }
+  // Guests can check out: DZ keeps their orders in localStorage and copies
+  // them to the account on first sign-in. Sign-up is offered afterwards.
   const saved = cart.reduce((s,p)=>s+(Number(p.price)||0),0);
   const eta = new Date(Date.now()+30*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 
@@ -455,7 +460,16 @@ function placeOrder() {
     <div class="order-confirm">
       <div style="font-size:80px;">🎉</div>
       <h2 style="color:#067D62;margin-bottom:8px;">Order Confirmed!</h2>
-      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;"><strong style="color:#067D62;">You saved $${saved.toLocaleString()}!</strong></div>
+      <div style="background:#E7F4E8;border-radius:4px;padding:12px;margin:12px 0;font-size:14px;"><strong style="color:#067D62;">You saved $${saved.toLocaleString()}!</strong><div id="confTotal" style="margin-top:4px;color:#0F1111;"></div></div>
+      <div id="confKeep"></div>
+      <div id="confAsk" style="border:1px solid #ddd;border-radius:4px;padding:12px;margin:12px 0;">
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">Quick one: did that scratch the itch?</div>
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <button type="button" class="conf-ask-btn" data-rating="5" onclick="answerCheckoutAsk(this)">😍 Yes</button>
+          <button type="button" class="conf-ask-btn" data-rating="3" onclick="answerCheckoutAsk(this)">😐 Kinda</button>
+          <button type="button" class="conf-ask-btn" data-rating="1" onclick="answerCheckoutAsk(this)">😒 No</button>
+        </div>
+      </div>
       <div style="text-align:left;background:#f9f9f9;border-radius:4px;padding:15px;margin-top:10px;">
         <h3 style="font-size:15px;margin-bottom:12px;">📍 Live Tracking</h3>
         <div class="tracking-step"><div class="tracking-dot done"></div><div><div style="font-weight:700;font-size:14px;">Order Confirmed</div><div style="font-size:12px;color:#555;">${new Date().toLocaleTimeString()}</div></div></div>
@@ -469,21 +483,63 @@ function placeOrder() {
     </div>`;
   orderPlaced=true; cart=[]; localStorage.setItem('dz_cart',JSON.stringify(cart)); updateCartCount(); launchConfetti();
   gtag('event','purchase',{value:0,currency:'USD'});
+  renderConfirmTotal();
+}
+
+// The running "money you did not spend" total, plus the reason to sign up:
+// a guest's total only lives in this browser.
+async function renderConfirmTotal() {
+  let sum;
+  try { sum = await DZ.savingsSummary(); } catch (e) { return; }
+  const totalEl = document.getElementById('confTotal');
+  const keepEl = document.getElementById('confKeep');
+  if (!totalEl || !keepEl) return;
+  const total = (Number(sum.totalSaved) || 0).toLocaleString();
+  totalEl.textContent = `Money you did not spend so far: $${total} (${sum.orders} order${sum.orders===1?'':'s'})`;
+  if (currentUser) {
+    keepEl.innerHTML = `<div style="font-size:13px;color:#555;margin-bottom:4px;">Saved to your account. <a href="account.html" style="color:#007185;">See your total →</a></div>`;
+  } else {
+    keepEl.innerHTML = `
+      <div style="background:#FFF8E7;border:1px solid #FF9900;border-radius:4px;padding:12px;font-size:14px;">
+        <div style="font-weight:700;margin-bottom:4px;">Don't lose your $${escHtml(total)}</div>
+        <div style="font-size:13px;color:#555;margin-bottom:10px;">Right now it lives only in this browser. A free account keeps it on every device.</div>
+        <button type="button" onclick="openAuth('signup','Free. Keeps your $${escHtml(total)} total on every device.')" style="width:100%;background:#FFD814;border:1px solid #FCD200;border-radius:4px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;">Keep my total, create free account</button>
+      </div>`;
+  }
+}
+
+async function answerCheckoutAsk(btn) {
+  const box = document.getElementById('confAsk');
+  const rating = Number(btn.getAttribute('data-rating'));
+  const answer = { 5: 'yes', 3: 'kinda', 1: 'no' }[rating] || 'unknown';
+  box.querySelectorAll('button').forEach(b => b.disabled = true);
+  let ok = false;
+  try {
+    const { error } = await sb.from('feedback').insert({ message: 'post-checkout: scratched the itch? ' + answer, page: '/shop#checkout', rating });
+    ok = !error;
+  } catch (e) {}
+  box.setAttribute('role', 'status');
+  box.innerHTML = ok
+    ? `<div style="font-size:14px;text-align:center;">Thanks! Noted. 🙏</div>`
+    : `<div style="font-size:14px;text-align:center;color:#555;">Couldn't send that one. Thanks anyway!</div>`;
 }
 
 function shareConf(amount) { localStorage.setItem('dz_pending_confession',JSON.stringify({amount,ts:Date.now()})); window.location='confessions.html'; }
 
 // ===== AUTH =====
-function openAuth(mode) {
+function openAuth(mode, note) {
   authMode=mode;
   document.getElementById('authModal').classList.add('active');
+  const noteEl=document.getElementById('authNote');
+  noteEl.textContent = note || ''; noteEl.style.display = note ? 'block' : 'none';
+  document.getElementById('authInfo').style.display='none';
   document.getElementById('authTitle').textContent = mode==='login'?'Sign in to Dopazon':'Create your account';
   document.getElementById('authSubmitBtn').textContent = mode==='login'?'Sign in':'Create account';
   document.getElementById('nameGroup').style.display = mode==='signup'?'block':'none';
   document.getElementById('authError').style.display='none';
 }
 function closeAuth() { document.getElementById('authModal').classList.remove('active'); }
-function toggleAuthMode() { openAuth(authMode==='login'?'signup':'login'); }
+function toggleAuthMode() { openAuth(authMode==='login'?'signup':'login', document.getElementById('authNote').textContent); }
 
 async function submitAuth() {
   if (authSubmitting) return;
@@ -505,10 +561,22 @@ async function submitAuth() {
       res = await sb.auth.signInWithPassword({email,password:pass});
     }
     if (res.error) throw res.error;
+    gtag('event', authMode==='signup'?'sign_up':'login');
+    if (authMode==='signup' && !res.data?.session) {
+      // Email confirmation is on: there is no session until the link is
+      // clicked. Say so instead of a "Welcome" that leaves them signed out.
+      const info=document.getElementById('authInfo');
+      info.innerHTML = `📬 Almost there! We sent a link to <strong>${escHtml(email)}</strong>. Click it to confirm, then sign in here. Your savings stay in this browser until then.`;
+      info.style.display='block';
+      authMode='login';
+      document.getElementById('authTitle').textContent='Confirm your email';
+      document.getElementById('nameGroup').style.display='none';
+      document.getElementById('authPass').value='';
+      return;
+    }
     closeAuth();
     const uname = res.data?.user?.user_metadata?.name || email.split('@')[0];
-    showToast(`👋 Welcome${authMode==='signup'?' to Dopazon':' back'}, <strong>${uname}</strong>!`);
-    gtag('event', authMode==='signup'?'sign_up':'login');
+    showToast(`👋 Welcome${authMode==='signup'?' to Dopazon':' back'}, <strong>${escHtml(uname)}</strong>!`);
   } catch(err) {
     errEl.textContent = err.message || 'Authentication failed. Please try again.';
     errEl.style.display='block';
