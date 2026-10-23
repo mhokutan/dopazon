@@ -16,6 +16,10 @@ commit messages stay in English.
   email confirmation ON), Postgres with RLS, accessed from the browser with
   `@supabase/supabase-js@2` from jsDelivr and the public anon key.
 - Google Analytics `G-D7NNBGKNB3` on every page.
+- Supabase is on the **free plan**: it pauses the project after ~7 days of
+  low activity. `.github/workflows/keep-supabase-awake.yml` reads one public
+  row every day (publishable key from `shared.js`, no secret). A red run
+  means the project is probably paused: unpause it in the dashboard.
 - Local preview: `npx serve -p 5500 .` (note: `serve` strips `.html` and drops
   the query string on redirect — open `/product?id=s1`, not `/product.html?id=s1`).
 

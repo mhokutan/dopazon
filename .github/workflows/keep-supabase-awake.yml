@@ -1,0 +1,49 @@
+# Free Supabase projects are paused after about 7 days with too little
+# activity. When that happens sign-in, the 1000 DB products, feedback and
+# confessions stop working. This job makes a small read every day so the
+# project stays active while traffic is low.
+#
+# It only uses the public publishable key and reads one row of a table that
+# is public by RLS anyway, so it needs no secret. URL and key are read from
+# shared.js, so a key change there is picked up automatically.
+#
+# If the project is already paused the request fails and the run turns red;
+# GitHub then emails the repo owner. Unpause it from the Supabase dashboard.
+#
+# Note: GitHub disables scheduled workflows after 60 days without commits
+# in a public repo. If that happens, re-enable it in the Actions tab.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: '23 7 * * *'   # every day, 07:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: shared.js
+          sparse-checkout-cone-mode: false
+
+      - name: Read one public row
+        run: |
+          set -euo pipefail
+          URL=$(grep -oE "https://[a-z0-9]+\.supabase\.co" shared.js | head -1)
+          KEY=$(grep -oE "sb_publishable_[A-Za-z0-9_-]+" shared.js | head -1)
+          test -n "$URL" && test -n "$KEY"
+          for attempt in 1 2 3; do
+            code=$(curl -s -o body.json -w '%{http_code}' --max-time 30 \
+              "$URL/rest/v1/products?select=id&limit=1" -H "apikey: $KEY") || code=000
+            echo "attempt $attempt: HTTP $code"
+            if [ "$code" = "200" ]; then cat body.json; echo; exit 0; fi
+            sleep 20
+          done
+          echo "::error::Supabase did not answer with 200. The project may be paused; check https://supabase.com/dashboard/project/jtsifootrchbsgrldfxk"
+          exit 1
