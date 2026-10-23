@@ -1,0 +1,19 @@
+# Files that are in the repo but are not part of the site. Vercel serves the
+# repo root as-is (no build step), so anything not listed here is public.
+# Never add vercel.json, robots.txt, sitemap.xml or any page asset.
+
+# Internal notes and docs
+CLAUDE.md
+README.md
+
+# Database schema, policies and migrations
+*.sql
+
+# Node scripts (seed_products.mjs); no page imports a .mjs
+*.mjs
+
+# Repo tooling
+.claude/
+.github/
+.gitignore
+.env*
